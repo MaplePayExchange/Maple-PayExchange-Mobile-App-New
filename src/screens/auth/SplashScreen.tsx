@@ -4,7 +4,11 @@
 |--------------------------------------------------
 */
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View, Image } from 'react-native';
+import { useUserStore } from '@/zustand/userStore';
+import { useNavigation } from '@react-navigation/native';
+import Animated, { FadeInRight } from 'react-native-reanimated';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
  |--------------------------------------------------
@@ -12,12 +16,93 @@ import { Text, View } from 'react-native';
  |--------------------------------------------------
  */
 import ScreenWrapper from '@/src/components/Wrapper';
-import { Pressable } from 'react-native-gesture-handler';
-import { useUserStore } from '@/zustand/userStore';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { RootStackParamList } from '@/types/route.params';
+import { clampFontSize, MAPLE_LOGO } from '@/constants/app.constant';
+
+/**
+|--------------------------------------------------
+| Interface definition
+|--------------------------------------------------
+*/
+type SplashScreenProps = NativeStackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
 export default function SplashScreen() {
-	const { setName, name } = useUserStore();
-	console.log(name);
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
+	const navigation = useNavigation<SplashScreenProps>();
+
+	/**
+	|--------------------------------------------------
+	| Store
+	|--------------------------------------------------
+	*/
+	const { isRegistered, verificationData } = useUserStore();
+	console.log(isRegistered, 'isRegistered');
+
+	/**
+	|--------------------------------------------------
+	| Navigates the user to the login screen
+	|--------------------------------------------------
+	*/
+	React.useEffect(() => {
+		console.log(verificationData);
+		/**
+		|--------------------------------------------------
+		| Navigates to the next screen from here
+		|--------------------------------------------------
+		*/
+		const timeout = setTimeout(() => {
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			if (verificationData?.currentStep === 'email') {
+				navigation.navigate(ROUTE_NAMES.CREATE_USER);
+				return;
+			}
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			if (verificationData?.currentStep === 'phone') {
+				navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
+				return;
+			}
+
+			/**
+			|--------------------------------------------------
+			| Goest to onboarding if there is no verification
+			| data
+			|--------------------------------------------------
+			*/
+			navigation.navigate(ROUTE_NAMES.ONBOARDING);
+		}, 3000);
+
+		/**
+		|--------------------------------------------------
+		| If the user is registered
+		|--------------------------------------------------
+		*/
+		if (isRegistered) {
+			clearTimeout(timeout);
+			navigation.navigate(ROUTE_NAMES.LOGIN);
+		}
+
+		/**
+		|--------------------------------------------------
+		| Clean up
+		|--------------------------------------------------
+		*/
+		return () => clearTimeout(timeout);
+	}, []);
+
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -25,15 +110,15 @@ export default function SplashScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<View>
-				<Text>SplashScreen</Text>
-				<Pressable
-					onPress={() => {
-						useUserStore.getState().setName('Finley');
-					}}
-				>
-					<Text>Press me</Text>
-				</Pressable>
+			<View className="flex-1 h-full items-center justify-center">
+				<Animated.View entering={FadeInRight.duration(100).springify()}>
+					<Image
+						source={MAPLE_LOGO}
+						width={clampFontSize(102, 59, 104)}
+						height={clampFontSize(102, 59, 104)}
+						style={[{ width: clampFontSize(102, 59, 104), height: clampFontSize(102, 59, 104) }]}
+					/>
+				</Animated.View>
 			</View>
 		</ScreenWrapper>
 	);

@@ -3,7 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
-import React from 'react';
+import React, { Component } from 'react';
 import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
 
 /**
@@ -13,10 +13,14 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
  */
 import LoginScreen from '../auth/LoginScreen';
 import SplashScreen from '../auth/SplashScreen';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 import CreateUserScreen from '../auth/CreateUserScreen';
+import OnboardingScreen from '../auth/OnboardingScreen';
 import BVNVerificationScreen from '../auth/BVNVerificationScreen';
 import PhoneVerificationScreen from '../auth/PhoneVerificationScreen';
 import EmailVerificationScreen from '../auth/EmailVerificationScreen';
+import VerifyPhoneNumberScreen from '../auth/VerifyPhoneNumberScreen';
+import VerifyEmailScreen from '../auth/VerifyEmailScreen';
 
 /**
 |--------------------------------------------------
@@ -32,28 +36,40 @@ const Stack = createStackNavigator();
 */
 const _ROUTES = [
 	{
-		name: 'SplashScreen',
+		name: ROUTE_NAMES.SPLASH,
 		component: SplashScreen,
 	},
 	{
-		name: 'PhoneVerificationScreen',
-		component: PhoneVerificationScreen,
+		name: ROUTE_NAMES.LOGIN,
+		component: LoginScreen,
 	},
 	{
-		name: 'EmailVerificationScreen',
-		component: EmailVerificationScreen,
+		name: ROUTE_NAMES.ONBOARDING,
+		component: OnboardingScreen,
 	},
 	{
-		name: 'CreateUserScreen',
+		name: ROUTE_NAMES.CREATE_USER,
 		component: CreateUserScreen,
 	},
 	{
-		name: 'BVNVerificationScreen',
+		name: ROUTE_NAMES.BVN_VERIFICATION,
 		component: BVNVerificationScreen,
 	},
 	{
-		name: 'LoginScreen',
-		component: LoginScreen,
+		name: ROUTE_NAMES.EMAIL_VERIFICATION,
+		component: EmailVerificationScreen,
+	},
+	{
+		name: ROUTE_NAMES.PHONE_VERIFICATION,
+		component: PhoneVerificationScreen,
+	},
+	{
+		name: ROUTE_NAMES.VERIFY_PHONE,
+		component: VerifyPhoneNumberScreen,
+	},
+	{
+		name: ROUTE_NAMES.VERIFY_EMAIL,
+		component: VerifyEmailScreen,
 	},
 ];
 

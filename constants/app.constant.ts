@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
 |--------------------------------------------------
 | Npm imports
@@ -122,3 +123,19 @@ export const colors = (theme?: 'dark' | 'light') => ({
 	WHITE: theme === 'dark' ? '#FFFFFF' : '#000000',
 	BLACK: theme === 'dark' ? '#FFFFFF' : '#000000',
 });
+
+/**
+|--------------------------------------------------
+| Images
+|--------------------------------------------------
+*/
+const _IMAGE_PATH = '../assets/images';
+
+export const LOADER = require(`${_IMAGE_PATH}/loader.png`);
+export const MONEY_PAD = require(`${_IMAGE_PATH}/maple_logo.png`);
+export const MAPLE_LOGO = require(`${_IMAGE_PATH}/maple_logo.png`);
+export const FLAG_CANADA = require(`${_IMAGE_PATH}/flag_canada.png`);
+export const FLAG_NIGERIA = require(`${_IMAGE_PATH}/flag_nigeria.png`);
+export const ONBOARDING_ONE = require(`${_IMAGE_PATH}/onboarding_one.png`);
+export const ONBOARDING_TWO = require(`${_IMAGE_PATH}/onboarding_two.png`);
+export const ONBOARDING_THREE = require(`${_IMAGE_PATH}/onboarding_three.png`);

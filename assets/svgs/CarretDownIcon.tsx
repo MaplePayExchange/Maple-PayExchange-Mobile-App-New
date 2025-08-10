@@ -4,7 +4,8 @@
 |--------------------------------------------------
 */
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Path, Svg } from 'react-native-svg';
 
 /**
 |--------------------------------------------------
@@ -12,7 +13,7 @@ import { Text, View } from 'react-native';
 |--------------------------------------------------
 */
 
-export default function LoginScreen() {
+export default function CarretDownIcon() {
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -20,7 +21,15 @@ export default function LoginScreen() {
     */
 	return (
 		<View>
-			<Text>LoginScre</Text>
+			<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+				<Path
+					stroke="#484848"
+					stroke-width="1.66667"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					d="M5 7.5L10 12.5L15 7.5"
+				/>
+			</Svg>
 		</View>
 	);
 }

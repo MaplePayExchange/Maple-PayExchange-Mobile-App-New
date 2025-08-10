@@ -14,18 +14,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 */
 
 interface Props {
+	className?: string;
 	usePadding?: boolean;
 	children: React.ReactNode;
 }
 
-export default function ScreenWrapper({ children, usePadding = true }: Props) {
+export default function ScreenWrapper({ children, className, usePadding = true }: Props) {
 	/**
     |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
-		<SafeAreaView className={usePadding ? 'p-4 flex-1' : ''}>
+		<SafeAreaView className={`${usePadding ? 'p-4 flex-1' : ''} ${className}`}>
 			{/**
             |--------------------------------------------------
             | Status bar

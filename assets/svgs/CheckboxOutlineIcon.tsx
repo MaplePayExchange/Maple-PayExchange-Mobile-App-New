@@ -4,7 +4,8 @@
 |--------------------------------------------------
 */
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Svg, Path } from 'react-native-svg';
 
 /**
 |--------------------------------------------------
@@ -12,7 +13,7 @@ import { Text, View } from 'react-native';
 |--------------------------------------------------
 */
 
-export default function LoginScreen() {
+export default function CheckboxOutlineIcon() {
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -20,7 +21,12 @@ export default function LoginScreen() {
     */
 	return (
 		<View>
-			<Text>LoginScre</Text>
+			<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+				<Path
+					d="M4 0.5H12C13.933 0.5 15.5 2.067 15.5 4V12C15.5 13.933 13.933 15.5 12 15.5H4C2.067 15.5 0.5 13.933 0.5 12V4C0.5 2.067 2.067 0.5 4 0.5Z"
+					stroke="#D0D5DD"
+				/>
+			</Svg>
 		</View>
 	);
 }
