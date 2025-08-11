@@ -1,0 +1,114 @@
+[
+	{
+		"first_name": "Abiola",
+		"last_name": "Akanni Jamiu",
+		"email": "akzahgahzah@yahoo.com",
+		"phone": "08118344219",
+		"role": "fane_validator",
+		"station": "Uromi (NRC)"
+	},
+	{
+		"first_name": "Denis",
+		"last_name": "Enyi",
+		"email": "enyidenisnrc@gmail.com",
+		"phone": "08033729237",
+		"role": "fane_validator",
+		"station": "Ekehen"
+	},
+	{
+		"first_name": "Okpara",
+		"last_name": "Tega Juliet",
+		"email": "tegaokpara@gmail.com",
+		"phone": "08023986382",
+		"role": "fane_validator",
+		"station": "Agbor"
+	},
+	{
+		"first_name": "Emico",
+		"last_name": "Shado",
+		"email": "emicoshado@yahoo.com",
+		"phone": "08038404449",
+		"role": "fane_validator",
+		"station": "Agbor"
+	},
+	{
+		"first_name": "Daniel",
+		"last_name": "Lawson Sokari",
+		"email": "bazini2004@gmail.com",
+		"phone": "08035975791",
+		"role": "fane_validator",
+		"station": "Itakpe"
+	},
+	{
+		"first_name": "Dahiru",
+		"last_name": "Abubakar Ibrahim",
+		"email": "dahiruabuibrahim@gmail.com",
+		"phone": "07055136914",
+		"role": "fane_validator",
+		"station": "Itakpe"
+	},
+	{
+		"first_name": "Gambo",
+		"last_name": "Nandom",
+		"email": "nandomgambo@gmail.com",
+		"phone": "08160380930",
+		"role": "fane_validator",
+		"station": "Ajaokuta"
+	},
+	{
+		"first_name": "Peace",
+		"last_name": "Nwaogwugwu",
+		"email": "Peacenwaogwugwu5ce@gmail.com",
+		"phone": "08137980650",
+		"role": "fane_validator",
+		"station": "Ujevwu"
+	},
+	{
+		"first_name": "Ebirim",
+		"last_name": "Victory Onyinyechi",
+		"email": "ebirimvictory4@gmail.com",
+		"phone": "07040849166",
+		"role": "fane_validator",
+		"station": "Ujevwu"
+	},
+	{
+		"first_name": "Uloko",
+		"last_name": "O Samuel",
+		"email": "Obogwuuloko@gmail.com",
+		"phone": "08068989601",
+		"role": "fane_validator",
+		"station": "Agenebode"
+	},
+	{
+		"first_name": "Moses",
+		"last_name": "T Adaa",
+		"email": "Mosestadaa@gmail.com",
+		"phone": "07035565438",
+		"role": "fane_validator",
+		"station": "Agenebode"
+	},
+	{
+		"first_name": "Olaogun",
+		"last_name": "Kazeem",
+		"email": "hardeygbolar@gmail.com",
+		"phone": "08035694553",
+		"role": "fane_validator",
+		"station": "PAR"
+	},
+	{
+		"first_name": "Kinkus",
+		"last_name": "Manasseh Achi",
+		"email": "kinkusmanasseh@gmail.com",
+		"phone": "08035872904",
+		"role": "fane_validator",
+		"station": "Igbanke"
+	},
+	{
+		"first_name": "Ughiovhe",
+		"last_name": "Conlon",
+		"email": "ughiovheconlon@gmail.com",
+		"phone": "08149487840",
+		"role": "fane_validator",
+		"station": "Ekehen"
+	}
+]

@@ -15,7 +15,7 @@ import { View, Text, TextInputProps, TextInput, Pressable, Modal, Image, Touchab
  |--------------------------------------------------
  */
 import MPText from './MPText';
-import { CarretDownIcon, CloseIcon, ErrorInfoIcon } from '@/assets/svgs';
+import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon } from '@/assets/svgs';
 import { FLAG_CANADA, FLAG_NIGERIA } from '@/constants/app.constant';
 
 /**
@@ -52,6 +52,7 @@ export default function InputField<T extends FieldValues>({
     |--------------------------------------------------
     */
 	const [visible, setVisible] = React.useState<boolean>(false);
+	const [showPassword, setShowPassword] = React.useState<boolean>(false);
 	const [phoneInput, setPhoneInput] = React.useState<(typeof COUNTRY_CODES)[0] | null>(null);
 
 	/**
@@ -65,6 +66,8 @@ export default function InputField<T extends FieldValues>({
 			getCountryCode?.(COUNTRY_CODES[0].code);
 		}
 	}, []);
+
+	console.log(showPassword);
 
 	/**
     |--------------------------------------------------
@@ -127,8 +130,22 @@ export default function InputField<T extends FieldValues>({
 									onChangeText={onChange}
 									placeholderClassName="text-sm"
 									placeholderTextColor="#767676"
+									className="max-w-[90%] min-w-[40%]"
+									key={showPassword ? 'visible' : 'hidden'}
 									{...rest}
+									secureTextEntry={type === 'password' && !showPassword}
 								/>
+
+								{type === 'password' && (
+									<Pressable
+										onPress={() => {
+											setShowPassword((prev) => !prev);
+										}}
+										className="ml-auto w-[20px]"
+									>
+										<EyeIcon />
+									</Pressable>
+								)}
 
 								{/**
 								|--------------------------------------------------

@@ -132,7 +132,7 @@ export const colors = (theme?: 'dark' | 'light') => ({
 const _IMAGE_PATH = '../assets/images';
 
 export const LOADER = require(`${_IMAGE_PATH}/loader.png`);
-export const MONEY_PAD = require(`${_IMAGE_PATH}/maple_logo.png`);
+export const MONEY_PAD = require(`${_IMAGE_PATH}/money_pad.png`);
 export const MAPLE_LOGO = require(`${_IMAGE_PATH}/maple_logo.png`);
 export const FLAG_CANADA = require(`${_IMAGE_PATH}/flag_canada.png`);
 export const FLAG_NIGERIA = require(`${_IMAGE_PATH}/flag_nigeria.png`);

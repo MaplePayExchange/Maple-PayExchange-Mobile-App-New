@@ -11,6 +11,7 @@ import {
 	Manrope_400Regular,
 	Manrope_600SemiBold,
 } from '@expo-google-fonts/manrope';
+import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import ToastManager from 'toastify-react-native';
@@ -38,6 +39,19 @@ export default function App() {
 		Manrope_400Regular,
 		Manrope_600SemiBold,
 	});
+
+	React.useEffect(() => {
+		const subscription = Linking.addEventListener('url', ({ url }) => {
+			console.log('App opened with URL:', url);
+		});
+
+		/**
+		|--------------------------------------------------
+		| Clean up
+		|--------------------------------------------------
+		*/
+		return () => subscription.remove();
+	}, []);
 
 	/**
     |--------------------------------------------------

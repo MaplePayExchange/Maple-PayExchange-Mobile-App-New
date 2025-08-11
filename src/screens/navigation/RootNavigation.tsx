@@ -14,6 +14,7 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
  */
 import TabNavigation from './TabNavigation';
 import AuthNavigation from './AuthNavigation';
+import { useUserStore } from '@/zustand/userStore';
 
 /**
 |--------------------------------------------------
@@ -28,7 +29,7 @@ export default function RootNavigation() {
     | Component states
     |--------------------------------------------------
     */
-	const [session, setSession] = React.useState<boolean>(false);
+	const { isLoggedIn } = useUserStore();
 
 	/**
     |--------------------------------------------------
@@ -38,10 +39,10 @@ export default function RootNavigation() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS }}>
-				{session ? (
-					<Stack.Screen name="TabNavigation" component={TabNavigation}></Stack.Screen>
+				{isLoggedIn ? (
+					<Stack.Screen name="TabNavigation" component={TabNavigation} />
 				) : (
-					<Stack.Screen name="AuthNavigation" component={AuthNavigation}></Stack.Screen>
+					<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
 				)}
 			</Stack.Navigator>
 		</NavigationContainer>

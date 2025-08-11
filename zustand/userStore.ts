@@ -12,6 +12,7 @@ import { persist } from 'zustand/middleware';
 |--------------------------------------------------
 */
 import { zustand_helper } from './helper';
+import { User } from '@/interfaces/user.interface';
 
 type VerificationData = {
 	email?: string;
@@ -20,6 +21,13 @@ type VerificationData = {
 	verificationType?: string;
 	currentStep?: 'phone' | 'email' | 'create account' | 'bvn' | 'veriff';
 };
+
+interface LoginResponse {
+	user: User | null;
+	access_token: string | null;
+	refresh_token: string | null;
+	token_type: 'BEARER' | string | null;
+}
 
 /**
 |--------------------------------------------------
@@ -30,6 +38,7 @@ interface UserState {
 	name: string;
 	isLoggedIn: boolean;
 	isRegistered: boolean;
+	userData: LoginResponse | undefined;
 	verificationData: VerificationData | undefined;
 
 	/**
@@ -40,6 +49,7 @@ interface UserState {
 	setName: (name: string) => void;
 	setIsLoggedIn: (status: boolean) => void;
 	setIsRegistered: (value: boolean) => void;
+	setUserData: (data: LoginResponse) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
 }
 
@@ -59,6 +69,7 @@ export const useUserStore = create<UserState>()(
 			name: '',
 			isLoggedIn: false,
 			isRegistered: false,
+			userData: undefined,
 			verificationData: undefined,
 
 			/**
@@ -110,6 +121,7 @@ export const useUserStore = create<UserState>()(
 
 					return state;
 				}),
+			setUserData: (data) => set({ userData: data }),
 		}),
 
 		/**
