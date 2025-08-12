@@ -46,7 +46,7 @@ export default function HeaderWrapper({
 						<BackArrowIcon />
 					</Pressable>
 				)}
-				<MPText weight="semibold" className="text-[24px] text-[#1A1A1A]">
+				<MPText style={{ lineHeight: 26 }} weight="semibold" className="text-2xl text-[#1A1A1A]">
 					{title}
 				</MPText>
 			</View>

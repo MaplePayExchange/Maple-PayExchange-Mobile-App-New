@@ -205,7 +205,7 @@ export default function InputField<T extends FieldValues>({
 						<TouchableOpacity
 							activeOpacity={0.8}
 							key={_code['short-name']}
-							className="items-center gap-3"
+							className="items-center gap-3 mb-4"
 							style={{ flexDirection: 'row' }}
 							onPress={() => {
 								setPhoneInput(_code);

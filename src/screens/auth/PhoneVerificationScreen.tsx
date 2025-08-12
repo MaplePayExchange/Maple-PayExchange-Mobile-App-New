@@ -82,6 +82,8 @@ export default function PhoneVerificationScreen() {
 				subtitle="Let’s get started. Enter your phone number to set up your account"
 			/>
 
+			<View className='my-3' />
+
 			{/**
 			|--------------------------------------------------
 			| Form

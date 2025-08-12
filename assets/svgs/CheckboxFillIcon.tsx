@@ -42,8 +42,8 @@ export default function CheckboxFillIcon() {
 						id="paint0_linear_684_2785"
 						gradientUnits="userSpaceOnUse"
 					>
-						<Stop S-color="#EE0979" />
-						<Stop offset="1" stop-color="#FF6A00" />
+						<Stop stopColor="#EE0979" />
+						<Stop offset="1" stopColor="#FF6A00" />
 					</LinearGradient>
 				</Defs>
 			</Svg>

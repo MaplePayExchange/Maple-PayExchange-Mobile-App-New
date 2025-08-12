@@ -35,7 +35,11 @@ export default function MPText({ children, weight = 'regular', className, ...pro
     |--------------------------------------------------
     */
 	return (
-		<Text {...props} className={`text-base leading-9 ${fontFamily} ${className}`} style={[props.style]}>
+		<Text
+			{...props}
+			className={`text-base leading-9 ${fontFamily} ${className}`}
+			style={[{ lineHeight: 20 }, props.style]}
+		>
 			{children}
 		</Text>
 	);

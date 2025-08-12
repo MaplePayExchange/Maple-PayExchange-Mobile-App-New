@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import { View } from 'react-native';
-import { Svg, Path, G, Defs, ClipPath } from 'react-native-svg';
+import { Svg, Path, G, Defs, ClipPath, Rect } from 'react-native-svg';
 
 /**
 |--------------------------------------------------
@@ -26,39 +26,39 @@ export default function SendIcon() {
 					<Path
 						d="M4.66671 4.44691C3.95609 4.44691 3.27983 4.36736 2.66671 4.22384C2.02673 4.07403 1.33337 4.53489 1.33337 5.20588V12.5452C1.33337 13.0841 1.33337 13.3536 1.46278 13.6314C1.53659 13.7899 1.70468 14.0055 1.83936 14.1144C2.0755 14.3054 2.27257 14.3515 2.66671 14.4438C3.27983 14.5873 3.95609 14.6668 4.66671 14.6668C5.94475 14.6668 7.11168 14.4095 8.00004 13.9855C8.8884 13.5615 10.0553 13.3042 11.3334 13.3042C12.044 13.3042 12.7202 13.3837 13.3334 13.5272C13.9734 13.677 14.6667 13.2162 14.6667 12.5452V5.20589C14.6667 4.66697 14.6667 4.39751 14.5373 4.11964C14.4635 3.96115 14.2954 3.74557 14.1607 3.63666C13.3334 2.95931 12 3.62832 12 3.62832"
 						stroke="#484848"
-						stroke-width="1.5"
+						strokeWidth="1.5"
 						stroke-linecap="round"
 					/>
 					<Path
 						d="M9.66671 9.00016C9.66671 9.92064 8.92052 10.6668 8.00004 10.6668C7.07957 10.6668 6.33337 9.92064 6.33337 9.00016C6.33337 8.07969 7.07957 7.3335 8.00004 7.3335C8.92052 7.3335 9.66671 8.07969 9.66671 9.00016Z"
 						stroke="#484848"
-						stroke-width="1.5"
+						strokeWidth="1.5"
 					/>
 					<Path
 						d="M3.66663 9.6665L3.66663 9.67249"
 						stroke="#484848"
-						stroke-width="2"
+						strokeWidth="2"
 						stroke-linecap="round"
 						stroke-linejoin="round"
 					/>
 					<Path
 						d="M12.3334 8.32812L12.3334 8.33411"
 						stroke="#484848"
-						stroke-width="2"
+						strokeWidth="2"
 						stroke-linecap="round"
 						stroke-linejoin="round"
 					/>
 					<Path
 						d="M6.33337 3.00016C6.66106 2.66303 7.53322 1.3335 8.00004 1.3335M9.66671 3.00016C9.33902 2.66303 8.46686 1.3335 8.00004 1.3335M8.00004 1.3335V5.3335"
 						stroke="#484848"
-						stroke-width="1.5"
+						strokeWidth="1.5"
 						stroke-linecap="round"
 						stroke-linejoin="round"
 					/>
 				</G>
 				<Defs>
 					<ClipPath id="clip0_684_1192">
-						<rect width="16" height="16" fill="white" />
+						<Rect width="16" height="16" fill="white" />
 					</ClipPath>
 				</Defs>
 			</Svg>

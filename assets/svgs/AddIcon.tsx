@@ -24,7 +24,7 @@ export default function AddIcon() {
 			<Svg width="17" height="16" viewBox="0 0 17 16" fill="none">
 				<Path
 					stroke="#484848"
-					stroke-width="1.5"
+					strokeWidth="1.5"
 					stroke-linecap="round"
 					stroke-linejoin="round"
 					d="M8.33337 2.6665V13.3332"

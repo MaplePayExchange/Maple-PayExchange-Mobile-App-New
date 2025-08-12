@@ -33,7 +33,7 @@ export default function Checkbox({ checked, className, component, onChange, labe
     */
 	return (
 		<View style={{ opacity: disabled ? 0.5 : 1 }} className={clsx('flex-row items-start', className)}>
-			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mt-0.5 mr-2`}>
+			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mt-1 mr-2`}>
 				{checked ? <CheckboxFillIcon /> : <CheckboxOutlineIcon />}
 			</Pressable>
 

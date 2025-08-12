@@ -24,4 +24,7 @@ export enum ROUTE_NAMES {
 	|--------------------------------------------------
 	*/
 	DASHBOARD = 'Home',
+	SUPPORT = 'Support',
+	PROFILE = 'Profile',
+	TRANSACTION = 'Transaction',
 }

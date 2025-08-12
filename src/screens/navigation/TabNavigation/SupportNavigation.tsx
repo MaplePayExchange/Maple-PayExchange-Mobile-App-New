@@ -11,8 +11,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 | Custom imports
 |--------------------------------------------------
 */
-import DashboardScreen from '../../stacks/DashboardScreen';
-import VerifyBvnScreen from '../../stacks/VerifyBvnScreen';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
+import SupportScreen from '../../stacks/SupportScreen';
 
 /**
 |--------------------------------------------------
@@ -26,12 +26,9 @@ const Stack = createStackNavigator();
 | Routes
 |--------------------------------------------------
 */
-const _ROUTES = [
-	{ name: 'DashboardScreen', component: DashboardScreen },
-	{ name: 'BVNVerificationScreen', component: VerifyBvnScreen },
-];
+const _ROUTES = [{ name: ROUTE_NAMES.SUPPORT, component: SupportScreen }];
 
-export default function HomeNavigation() {
+export default function SupportNavigation() {
 	/**
     |--------------------------------------------------
     | Rendered View

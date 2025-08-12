@@ -143,7 +143,7 @@ export default function OnboardingScreen() {
                                 | Title
                                 |--------------------------------------------------
                                 */}
-								<MPText weight="bold" className="text-white text-[24px] mb-3 tracking-tight">
+								<MPText weight="bold" className="text-white text-2xl mb-3 tracking-tight">
 									{item.title}
 								</MPText>
 
@@ -152,7 +152,11 @@ export default function OnboardingScreen() {
                                 | Subtitle
                                 |--------------------------------------------------
                                 */}
-								<MPText weight="semibold" className="leading-6 text-white text-sm">
+								<MPText
+									style={{ lineHeight: 20 }}
+									weight="semibold"
+									className="leading-6 text-white text-sm"
+								>
 									{item.subtitle}
 								</MPText>
 
@@ -176,7 +180,7 @@ export default function OnboardingScreen() {
                                 | Login
                                 |--------------------------------------------------
                                 */}
-								<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN)}>
+								<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}>
 									<MPText weight="semibold" className="text-[#f84f21] text-sm">
 										Login
 									</MPText>

@@ -2,10 +2,12 @@ export type RootStackParamList = {
 	Home: undefined;
 	SplashScreen: undefined;
 	KycStepsScreen: undefined;
+	DashboardScreen: undefined;
 	OnboardingScreen: undefined;
 	CreateUserScreen: undefined;
 	VerifyEmailScreen: undefined;
 	VerifyPhoneScreen: undefined;
+	TransactionScreen: undefined;
 	LoginScreen: { email?: string };
 	ForgotPasswordScreen: undefined;
 	BVNVerificationScreen: undefined;
