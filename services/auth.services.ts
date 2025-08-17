@@ -7,7 +7,7 @@ import * as Linking from 'expo-linking';
 import { Toast } from 'toastify-react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useUserStore } from '@/zustand/userStore';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -19,6 +19,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import axiosInstance from '@/lib/axiosInstance';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
+import { User } from '@/interfaces/user.interface';
+import { Wallet } from '@/interfaces/wallet.interface';
+import { TransactionInterface } from '@/interfaces/transaction.interface';
 
 interface RequestOtp {
 	bvn?: string;
@@ -68,9 +71,8 @@ const errorHandler = (error: any, message?: string) => {
 	console.log(error, 'main.error');
 	console.log('Failed to login user:', error?.response?.data?.error);
 
-	const errorMessage = error?.response?.data?.error.includes('E11000 duplicate')
-		? 'Encountered a duplicate data'
-		: error?.response?.data?.error;
+	const errorMessage = error?.response?.data?.error || error.response?.data?.message;
+	console.log(errorMessage, 'error.message');
 
 	/**
 	|--------------------------------------------------
@@ -78,10 +80,11 @@ const errorHandler = (error: any, message?: string) => {
 	|--------------------------------------------------
 	*/
 	Toast.show({
-		text1: 'Otp!',
+		text1: 'Error!',
 		type: 'error',
 		closeIconSize: 20,
 		iconColor: '#FFFFFF',
+		visibilityTime: 5000,
 		textColor: '#FFFFFF',
 		backgroundColor: '#fc3f35',
 		text2: errorMessage || message,
@@ -140,6 +143,8 @@ export const useRequestOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
+			console.log(data, 'data.record');
+			console.log(step);
 			/**
             |--------------------------------------------------
             | Show notification
@@ -161,12 +166,12 @@ export const useRequestOtp = (step: CurrentStep) => {
 				},
 			}));
 
-			if (data.record.isPhoneVerified === true) {
+			if (data.record?.isPhoneVerified === true && step === 'phone') {
 				navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
 				return;
 			}
 
-			if (data.record.isEmailVerified === true) {
+			if (data.record?.isEmailVerified === true && step === 'email') {
 				navigation.navigate(ROUTE_NAMES.CREATE_USER);
 				return;
 			}
@@ -249,6 +254,13 @@ export const useVerifyOtp = (step: CurrentStep) => {
 |--------------------------------------------------
 */
 export const useCreateUser = () => {
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
 	return useMutation<any, Error, CreateUser>({
 		/**
         |--------------------------------------------------
@@ -276,6 +288,7 @@ export const useCreateUser = () => {
 			| Navigates the user to the next steps screen
 			|--------------------------------------------------
 			*/
+			navigation.navigate(ROUTE_NAMES.KYC_STEPS);
 		},
 
 		/**
@@ -461,6 +474,7 @@ export const useStartVeriffSession = () => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
+			console.log(payload);
 			const response = await axiosInstance.post('/kyc/create-session', payload);
 			return response.data;
 		},
@@ -496,7 +510,185 @@ export const useStartVeriffSession = () => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
+			console.log(error.response.data, 'error.veriff');
 			errorHandler(error, 'Encountered an error starting kyc session');
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Bvn verification
+|--------------------------------------------------
+*/
+export const useSetTransactionPin = () => {
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+	/**
+	|--------------------------------------------------
+	| Query client
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	/**
+	|--------------------------------------------------
+	| Mutation
+	|--------------------------------------------------
+	*/
+	return useMutation<any, Error, { pin: string }>({
+		/**
+		|--------------------------------------------------
+		| Api call
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			const response = await axiosInstance.post('users/create-transaction-pin', payload);
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data, 'verify bvn');
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error handler
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			errorHandler(error, 'Encountered an error setting transaction pin');
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Get user data
+|--------------------------------------------------
+*/
+export const useGetUserInformation = () => {
+	return useQuery<
+		any,
+		Error,
+		{ user: User; message: string; wallets: Wallet[]; transactions: TransactionInterface[] }
+	>({
+		/**
+		|--------------------------------------------------
+		| Query key
+		|--------------------------------------------------
+		*/
+		queryKey: ['maple_user_data'],
+
+		/**
+		|--------------------------------------------------
+		| Query function (api call)
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const [response, walletResponse, transactionResponse] = await Promise.all([
+				axiosInstance.get('/users/profile'),
+				axiosInstance.get('/wallet'),
+				axiosInstance.get('/transactions'),
+			]);
+
+			/**
+			|--------------------------------------------------
+			| Storing the user information in the store
+			|--------------------------------------------------
+			*/
+			useUserStore.setState((state) => ({ userData: { ...state.userData, user: response.data.user } as any }));
+			console.log(response.data, walletResponse.data, transactionResponse.data, 'from auth.service');
+
+			/**
+			|--------------------------------------------------
+			| Returns the data
+			|--------------------------------------------------
+			*/
+			return {
+				user: response.data?.user,
+				wallets: walletResponse.data?.wallets,
+				transactions: transactionResponse.data?.items,
+			};
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Get user wallets
+|--------------------------------------------------
+*/
+export const useGetUserWallets = () => {
+	return useQuery<any, Error, { message: string; wallets: Wallet[] }>({
+		/**
+		|--------------------------------------------------
+		| Query key
+		|--------------------------------------------------
+		*/
+		queryKey: ['maple_user_wallets'],
+
+		/**
+		|--------------------------------------------------
+		| Query function (api call)
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const [response] = await Promise.all([axiosInstance.get('/wallet')]);
+
+			/**
+			|--------------------------------------------------
+			| Returns the data
+			|--------------------------------------------------
+			*/
+			return {
+				wallets: response.data?.wallets,
+			};
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Get user transaction
+|--------------------------------------------------
+*/
+export const useGetUserTransactions = () => {
+	return useQuery<any, Error, { message: string; transactions: TransactionInterface[] }>({
+		/**
+		|--------------------------------------------------
+		| Query key
+		|--------------------------------------------------
+		*/
+		queryKey: ['maple_user_transactions'],
+
+		/**
+		|--------------------------------------------------
+		| Query function (api call)
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const [response] = await Promise.all([axiosInstance.get('/transactions')]);
+
+			/**
+			|--------------------------------------------------
+			| Returns the data
+			|--------------------------------------------------
+			*/
+			return {
+				transactions: response.data?.items,
+			};
 		},
 	});
 };

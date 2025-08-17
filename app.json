@@ -9,7 +9,9 @@
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.mpexchange.mobileapp",
+			"associatedDomains": ["applinks:maple-server-new.vercel.app/"]
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -17,7 +19,22 @@
 				"backgroundColor": "#ffffff"
 			},
 			"edgeToEdgeEnabled": true,
-			"package": "com.mpexchange.mobileapp"
+			"package": "com.mpexchange.mobileapp",
+
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": true,
+					"data": [
+						{
+							"scheme": "https",
+							"host": "maple-server-new.vercel.app",
+							"pathPrefix": "/auth/callback"
+						}
+					],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			]
 		},
 		"web": {
 			"bundler": "metro",

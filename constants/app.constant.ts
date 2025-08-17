@@ -132,10 +132,18 @@ export const colors = (theme?: 'dark' | 'light') => ({
 const _IMAGE_PATH = '../assets/images';
 
 export const LOADER = require(`${_IMAGE_PATH}/loader.png`);
+export const INCOMING = require(`${_IMAGE_PATH}/incoming.png`);
+export const OUTGOING = require(`${_IMAGE_PATH}/outgoing.png`);
+export const EXCHANGE = require(`${_IMAGE_PATH}/exchange.png`);
 export const MONEY_PAD = require(`${_IMAGE_PATH}/money_pad.png`);
 export const MAPLE_LOGO = require(`${_IMAGE_PATH}/maple_logo.png`);
+export const SUCCESS_BADGE = require(`${_IMAGE_PATH}/success.png`);
+export const PENDING_BADGE = require(`${_IMAGE_PATH}/pending.png`);
 export const FLAG_CANADA = require(`${_IMAGE_PATH}/flag_canada.png`);
 export const FLAG_NIGERIA = require(`${_IMAGE_PATH}/flag_nigeria.png`);
 export const ONBOARDING_ONE = require(`${_IMAGE_PATH}/onboarding_one.png`);
 export const ONBOARDING_TWO = require(`${_IMAGE_PATH}/onboarding_two.png`);
+export const TRANSACTION_PIN = require(`${_IMAGE_PATH}/transaction_pin.png`);
 export const ONBOARDING_THREE = require(`${_IMAGE_PATH}/onboarding_three.png`);
+export const KYC_VERIFICATION = require(`${_IMAGE_PATH}/kyc_verification.png`);
+export const BVN_VERIFICATION = require(`${_IMAGE_PATH}/bvn_verification.png`);

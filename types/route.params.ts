@@ -3,6 +3,7 @@ export type RootStackParamList = {
 	SplashScreen: undefined;
 	KycStepsScreen: undefined;
 	DashboardScreen: undefined;
+	VerifyBvnScreen: undefined;
 	OnboardingScreen: undefined;
 	CreateUserScreen: undefined;
 	VerifyEmailScreen: undefined;
@@ -14,16 +15,7 @@ export type RootStackParamList = {
 	VerifyPhoneNumberScreen: undefined;
 	EmailVerificationScreen: undefined;
 	PhoneVerificationScreen: undefined;
+	SetTransactionPinScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
 };
-
-// {
-// 		lastName: string;
-// 		referral: string;
-// 		password: string;
-// 		firstName: string;
-// 		middleName: string;
-// 		dateOfBirth: string;
-// 		selectedCountry: string;
-// 	}

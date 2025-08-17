@@ -29,8 +29,7 @@ export default function RootNavigation() {
     | Component states
     |--------------------------------------------------
     */
-	// const { isLoggedIn } = useUserStore();
-	const isLoggedIn = true;
+	const { isLoggedIn } = useUserStore();
 
 	/**
     |--------------------------------------------------

@@ -11,6 +11,7 @@ import axios from 'axios';
 |--------------------------------------------------
 */
 import { appConfig } from '@/config/app.config';
+import { useUserStore } from '@/zustand/userStore';
 
 const axiosInstance = axios.create({
 	baseURL: appConfig.base_url,
@@ -23,7 +24,12 @@ const axiosInstance = axios.create({
 */
 axiosInstance.interceptors.request.use(
 	async (config) => {
-		const token = '';
+		/**
+		|--------------------------------------------------
+		| Gets the token
+		|--------------------------------------------------
+		*/
+		const token = useUserStore.getState().userData?.access_token;
 
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;

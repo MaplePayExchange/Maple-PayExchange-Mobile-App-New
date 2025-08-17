@@ -26,7 +26,7 @@ export default function ScreenWrapper({ children, className, usePadding = true }
     |--------------------------------------------------
     */
 	return (
-		<SafeAreaView className={`${usePadding ? 'p-4 flex-1' : ''} ${className}`}>
+		<SafeAreaView className={`bg-white ${usePadding ? 'p-4 flex-1' : ''} ${className}`}>
 			{/**
             |--------------------------------------------------
             | Status bar

@@ -80,7 +80,7 @@ export default function CreateUserScreen() {
 		handleSubmit,
 		formState: { isValid },
 	} = useForm({
-		defaultValues: { firstName: '', lastName: '', middleName: undefined, referral: undefined, password: '' },
+		defaultValues: { firstName: '', lastName: '', middleName: '', referral: '', password: '' },
 	});
 
 	/**
@@ -94,26 +94,31 @@ export default function CreateUserScreen() {
 		| Gets the device's id
 		|--------------------------------------------------
 		*/
-		const deviceId = await getDeviceHardwareId();
+		const deviceId = (await getDeviceHardwareId()) ?? `${data.lastName}${data.firstName}${verificationData?.email}`;
+
+		let payload: any = {
+			deviceId: deviceId,
+			lastName: data?.lastName,
+			password: data?.password,
+			firstName: data?.firstName,
+			birthDate: birthDate as string,
+			email: verificationData?.email as string,
+			country: selectedCountry?.name as string,
+			phone: verificationData?.phoneNumber as string,
+			sessionId: verificationData?.sessionId as string,
+		};
+
+		console.log(verificationData)
+
+		if (data.referral !== '') payload.referral = data.referral;
+		if (data.middleName !== '') payload.middleName = data.middleName;
 
 		/**
 		|--------------------------------------------------
 		| Api call to create the user
 		|--------------------------------------------------
 		*/
-		mutate({
-			deviceId: deviceId,
-			lastName: data?.lastName,
-			password: data?.password,
-			firstName: data?.firstName,
-			middleName: data?.middleName,
-			referralCode: data?.referral,
-			birthDate: birthDate as string,
-			email: verificationData?.email as string,
-			country: selectedCountry?.name as string,
-			phone: verificationData?.phoneNumber as string,
-			sessionId: verificationData?.sessionId as string,
-		});
+		mutate(payload);
 	};
 
 	/**
@@ -483,7 +488,7 @@ export default function CreateUserScreen() {
 							<MPText className="text-sm text-center mt-4">
 								<MPText className="text-[#484848]">Already have an account? </MPText>
 								<MPText
-									onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN)}
+									onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}
 									className="text-[#FF6A00]"
 								>
 									Log in

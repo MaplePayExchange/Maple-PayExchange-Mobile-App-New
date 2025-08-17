@@ -22,7 +22,7 @@ type VerificationData = {
 	currentStep?: 'phone' | 'email' | 'create account' | 'bvn' | 'veriff';
 };
 
-interface LoginResponse {
+export interface LoginResponse {
 	user: User | null;
 	access_token: string | null;
 	refresh_token: string | null;

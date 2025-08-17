@@ -27,4 +27,5 @@ export enum ROUTE_NAMES {
 	SUPPORT = 'Support',
 	PROFILE = 'Profile',
 	TRANSACTION = 'Transaction',
+	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
 }

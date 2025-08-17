@@ -5,7 +5,12 @@
 */
 import React from 'react';
 import { Entypo } from '@expo/vector-icons';
-import { Pressable, View, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
+import { Svg, Path } from 'react-native-svg';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigation } from '@react-navigation/native';
+import { RefreshControl } from 'react-native-gesture-handler';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Pressable, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -13,21 +18,40 @@ import { Pressable, View, ScrollView, Image, TouchableOpacity, Modal } from 'rea
  |--------------------------------------------------
  */
 import MPText from '@/src/components/MPText';
-import MPButton from '@/src/components/MPButton';
 import { useUserStore } from '@/zustand/userStore';
 import ScreenWrapper from '@/src/components/Wrapper';
-import { clampFontSize, MONEY_PAD } from '@/constants/app.constant';
-import { AddIcon, BellIcon, DetailsIcon, ExchangeIcon, PadlockIcon, RedRightArrowIcon, SendIcon } from '@/assets/svgs';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Wallet } from '@/interfaces/wallet.interface';
+import Transaction from '@/src/components/Transaction';
 import { RootStackParamList } from '@/types/route.params';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { useGetUserInformation } from '@/services/auth.services';
+import { MONEY_PAD, clampFontSize } from '@/constants/app.constant';
+import UnverifiedAcountModal from '@/src/components/UnverifiedAccountModal';
+import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
 
+/**
+|--------------------------------------------------
+| Dashboard types
+|--------------------------------------------------
+*/
 type PossibleActions = 'see_more_transactions' | 'details' | 'add' | 'send' | 'exchange' | 'notification';
 type DashboardScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 
 export default function DashboardScreen() {
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
 	const navigation = useNavigation<DashboardScreenProps>();
+
+	/**
+	|--------------------------------------------------
+	| Api calls
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+	const { data, isLoading, isPending, error } = useGetUserInformation();
+	const [selectedWallet, setSelectedWallet] = React.useState<Wallet | null>(null);
 
 	/**
 	|--------------------------------------------------
@@ -37,6 +61,7 @@ export default function DashboardScreen() {
 	const { userData } = useUserStore();
 	const isVerified = userData?.user?.isVerified;
 	const isBvnVerified = userData?.user?.isBvnVerified;
+
 	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
 
 	/**
@@ -50,7 +75,7 @@ export default function DashboardScreen() {
 		| Checking if the user has been verified
 		|--------------------------------------------------
 		*/
-		if (!isBvnVerified) {
+		if (!isBvnVerified || isVerified || typeof userData.user?.transactionPin === 'string') {
 			setShowBvnModal(true);
 			return;
 		}
@@ -85,13 +110,32 @@ export default function DashboardScreen() {
 	};
 
 	/**
+	|--------------------------------------------------
+	| Effect
+	|--------------------------------------------------
+	*/
+	React.useEffect(() => {
+		setSelectedWallet(data?.wallets?.[0] as Wallet);
+	}, [data]);
+
+	/**
     |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
 		<ScreenWrapper className="bg-white">
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				refreshControl={
+					<RefreshControl
+						refreshing={isPending}
+						onRefresh={() => {
+							queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+						}}
+					/>
+				}
+			>
 				{/**
 				|--------------------------------------------------
 				| Header
@@ -137,12 +181,25 @@ export default function DashboardScreen() {
 				*/}
 				<View className="h-[102px] w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
 					<View className="max-w-[200px] justify-center">
+						{/**
+						|--------------------------------------------------
+						| Header
+						|--------------------------------------------------
+						*/}
 						<View className="flex-row gap-2 items-center">
 							<MPText weight="medium" className="text-sm leading-6">
 								Account Verification
 							</MPText>
-							<RedRightArrowIcon />
+							<Pressable onPress={() => navigation.navigate('KycStepsScreen')}>
+								<RedRightArrowIcon />
+							</Pressable>
 						</View>
+
+						{/**
+						|--------------------------------------------------
+						| Subtext
+						|--------------------------------------------------
+						*/}
 						<MPText
 							weight="regular"
 							style={{ lineHeight: 20 }}
@@ -169,15 +226,67 @@ export default function DashboardScreen() {
 				|--------------------------------------------------
 				*/}
 				<View className="h-[220px] w-full rounded-[24px] py-6 px-5 mt-4 bg-[#031D30]">
-					<View className="justify-center items-center">
-						<PadlockIcon />
-						<MPText className="text-white text-xs mt-2" weight="semibold">
-							Wallet Locked
+					{/**
+					|--------------------------------------------------
+					| If bvn has not been verified, wallet is locked
+					|--------------------------------------------------
+					*/}
+					{!isBvnVerified && (
+						<View className="justify-center items-center">
+							<PadlockIcon />
+							<MPText className="text-white text-xs mt-2" weight="semibold">
+								Wallet Locked
+							</MPText>
+							<MPText style={{ lineHeight: 26 }} weight="semibold" className="text-2xl text-white">
+								00.00
+							</MPText>
+						</View>
+					)}
+
+					{/**
+					|--------------------------------------------------
+					| Wallet is unlocked
+					|--------------------------------------------------
+					*/}
+					<Pressable className="h-[20px] w-[68px] self-center bg-[#F7F7F7] rounded-[8px] flex-row items-center justify-center gap-1">
+						<MPText className="text-sm">{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}</MPText>
+						<MPText className="text-xs" weight="semibold">
+							{selectedWallet?.currency}
 						</MPText>
-						<MPText style={{ lineHeight: 26 }} weight="semibold" className="text-2xl text-white">
-							00.00
-						</MPText>
-					</View>
+
+						<Svg width="10" height="7" viewBox="0 0 10 7" fill="none">
+							<Path
+								d="M9.68453 1.55977L5.30953 5.93477C5.2689 5.97545 5.22065 6.00772 5.16754 6.02974C5.11442 6.05176 5.05749 6.06309 5 6.06309C4.9425 6.06309 4.88557 6.05176 4.83246 6.02974C4.77935 6.00772 4.7311 5.97545 4.69047 5.93477L0.315468 1.55977C0.233375 1.47768 0.187256 1.36634 0.187256 1.25024C0.187256 1.13415 0.233375 1.0228 0.315468 0.940712C0.397561 0.858619 0.508902 0.8125 0.624999 0.8125C0.741096 0.8125 0.852438 0.858619 0.93453 0.940712L5 5.00673L9.06547 0.940712C9.10612 0.900064 9.15437 0.86782 9.20748 0.845821C9.26059 0.823822 9.31751 0.8125 9.375 0.8125C9.43248 0.8125 9.48941 0.823822 9.54252 0.845821C9.59563 0.86782 9.64388 0.900064 9.68453 0.940712C9.72518 0.98136 9.75742 1.02962 9.77942 1.08273C9.80142 1.13584 9.81274 1.19276 9.81274 1.25024C9.81274 1.30773 9.80142 1.36465 9.77942 1.41776C9.75742 1.47087 9.72518 1.51913 9.68453 1.55977Z"
+								fill="#1A1A1A"
+							/>
+						</Svg>
+					</Pressable>
+
+					{/**
+					|--------------------------------------------------
+					| Wallet Balance
+					|--------------------------------------------------
+					*/}
+					<MPText weight="semibold" className="text-xs text-white self-center mt-4">
+						Wallet Balance
+					</MPText>
+
+					{/**
+					|--------------------------------------------------
+					| Balance
+					|--------------------------------------------------
+					*/}
+					<MPText
+						weight="semibold"
+						style={{ fontSize: 24, lineHeight: 30 }}
+						className="text-white text-[24px] self-center"
+					>
+						{selectedWallet?.currency === 'CAD' ? '$' : '₦'}{' '}
+						{selectedWallet?.walletBalance.toLocaleString('en-US', {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})}
+					</MPText>
 
 					{/**
 					|--------------------------------------------------
@@ -239,10 +348,30 @@ export default function DashboardScreen() {
 				| Transactions
 				|--------------------------------------------------
 				*/}
-				<View className="items-center h-[158px] justify-center">
-					<MPText weight="medium" className="text-sm text-[#767676]">
-						No transactions yet
-					</MPText>
+				{data?.transactions.length === 0 && (
+					<View className="items-center h-[158px] justify-center">
+						<MPText weight="medium" className="text-sm text-[#767676]">
+							No transactions yet
+						</MPText>
+					</View>
+				)}
+
+				{/**
+				|--------------------------------------------------
+				| When there are transactions
+				|--------------------------------------------------
+				*/}
+				<View className="gap-3 px-4">
+					{data?.transactions.map((transaction) => (
+						<React.Fragment key={transaction.reference}>
+							{/**
+							|--------------------------------------------------
+							| Transaction component
+							|--------------------------------------------------
+							*/}
+							<Transaction transaction={transaction} />
+						</React.Fragment>
+					))}
 				</View>
 
 				{/**
@@ -250,59 +379,14 @@ export default function DashboardScreen() {
 				| Modal for unverified account
 				|--------------------------------------------------
 				*/}
-				<Modal transparent visible={showBvnModal} animationType="slide">
-					<TouchableOpacity
-						activeOpacity={0.8}
-						className="flex-1 bg-black/10 p-6"
-						onPress={() => setShowBvnModal(false)}
-					>
-						<View className="mt-auto bg-white w-full h-[342px] rounded-[24px] p-3 justify-center items-center py-5 px-6">
-							<Image
-								source={MONEY_PAD}
-								className="mt-[51px]"
-								style={{ width: clampFontSize(110, 70, 190), height: clampFontSize(109, 70, 188) }}
-							/>
-
-							{/**
-							|--------------------------------------------------
-							| Text
-							|--------------------------------------------------
-							*/}
-							<MPText weight="semibold" className="text-black">
-								Verify Account with BVN
-							</MPText>
-							<MPText style={{ lineHeight: 20 }} className="leading-5 text-xs text-center max-w-[290px]">
-								Please ensure that your account is verified in order to obtain a virtual account for
-								receiving funds into your MaplePay wallet.
-							</MPText>
-
-							{/**
-							|--------------------------------------------------
-							| Verify bvn button
-							|--------------------------------------------------
-							*/}
-							<MPButton
-								useGradientBg
-								className="mt-auto"
-								onPress={() => {
-									setShowBvnModal(false);
-									navigation.navigate(ROUTE_NAMES.BVN_VERIFICATION);
-								}}
-							>
-								<MPText weight="bold" className="text-white text-sm">
-									Verify BVN
-								</MPText>
-							</MPButton>
-						</View>
-					</TouchableOpacity>
-				</Modal>
+				<UnverifiedAcountModal
+					userData={userData}
+					showBvnModal={showBvnModal}
+					setShowBvnModal={setShowBvnModal}
+					isVerified={isVerified as boolean}
+					isBvnVerified={isBvnVerified as boolean}
+				/>
 			</ScrollView>
 		</ScreenWrapper>
 	);
-}
-
-{
-	/* <MPButton onPress={() => useUserStore.setState({ isLoggedIn: false })}>
-				<MPText>Log out</MPText>
-			</MPButton> */
 }
