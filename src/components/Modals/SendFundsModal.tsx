@@ -14,6 +14,7 @@ import { View, Modal, Pressable, Image } from 'react-native';
 import MPText from '../MPText';
 import { BENEFICIARY, fontSizes, SEND_FUNDS } from '@/constants/app.constant';
 import { useNavigation } from '@react-navigation/native';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 interface Props {
 	visible: boolean;
@@ -40,13 +41,13 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 			title: 'Send funds to new Interac email',
 			subtitle: 'Send funds to new recipient',
 			onClickBeneficiary: () => console.log('object'),
-			onClickNewReceipient: () => console.log('object'),
+			onClickNewReceipient: () => navigation.navigate(ROUTE_NAMES.SEND_CAD_FUNDS as never),
 		},
 		NGN: {
 			title: 'Send Funds to bank account',
 			subtitle: 'Send funds to new recipient',
 			onClickBeneficiary: () => console.log('object'),
-			onClickNewReceipient: () => console.log('object'),
+			onClickNewReceipient: () => navigation.navigate(ROUTE_NAMES.SEND_NGN_FUNDS as never),
 		},
 	};
 
@@ -64,7 +65,13 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
                     | Sending to new beneficiary
                     |--------------------------------------------------
                     */}
-					<Pressable className="h-[66px] gap-4 flex-row items-center w-full rounded-3xl border border-[#EEEEEE] py-3 px-4">
+					<Pressable
+						onPress={() => {
+							details?.[type]?.onClickNewReceipient();
+							setVisible(false);
+						}}
+						className="h-[66px] gap-4 flex-row items-center w-full rounded-3xl border border-[#EEEEEE] py-3 px-4"
+					>
 						<Image source={SEND_FUNDS} style={{ height: fontSizes.FONT40, width: fontSizes.FONT40 }} />
 
 						{/**

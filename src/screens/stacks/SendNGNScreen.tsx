@@ -11,11 +11,11 @@ import {
 	ScrollView,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
+	TextInput,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -23,34 +23,31 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
  | Custom imports
  |--------------------------------------------------
  */
+import { SearchIcon } from '@/assets/svgs';
 import MPText from '@/src/components/MPText';
-import Checkbox from '@/src/components/Checkbox';
 import MPButton from '@/src/components/MPButton';
+import Checkbox from '@/src/components/Checkbox';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import InputField from '@/src/components/InputField';
 import SelectField from '@/src/components/SelectField';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '@/types/route.params';
-import { useGetSecurityQuestions } from '@/services/user.services';
+import { useGetBanksList, useVerifyBankAccount } from '@/services/user.services';
 
-const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
+type SendNGNScreenProps = NativeStackNavigationProp<RootStackParamList, 'SendNGNScreen'>;
 
-type SendCADScreenProps = NativeStackNavigationProp<RootStackParamList, 'SendCADScreen'>;
-export default function SendCADScreen() {
-	/**
-	|--------------------------------------------------
-	| Navigation
-	|--------------------------------------------------
-	*/
-	const navigation = useNavigation<SendCADScreenProps>();
+export default function SendNGNScreen() {
+	const navigation = useNavigation<SendNGNScreenProps>();
 
 	/**
-	|--------------------------------------------------
-	| Api
-	|--------------------------------------------------
-	*/
-	const { data, isLoading } = useGetSecurityQuestions();
+    |--------------------------------------------------
+    | Api call to get the banks
+    |--------------------------------------------------
+    */
+	const { data, isLoading } = useGetBanksList();
+	const { mutate, isPending, data: receipientData } = useVerifyBankAccount();
 
 	/**
     |--------------------------------------------------
@@ -62,35 +59,73 @@ export default function SendCADScreen() {
 		control,
 		setValue,
 		handleSubmit,
-		formState: { errors },
+		formState: { isValid },
 	} = useForm({
 		defaultValues: {
-			lastName: '',
 			narration: '',
-			firstName: '',
-			interacEmail: '',
-			securityAnswer: '',
-			securityQuestion: '',
+			recipientName: '',
+			accountNumber: '',
 			saveAsBeneficiary: false,
+			bank: { code: '', name: '', _id: '', id: '' },
 		},
 	});
-
-	/**
-    |--------------------------------------------------
-    | Watching the email for validity
-    |--------------------------------------------------
-    */
-	const isValid = emailPattern.test(watch('interacEmail'));
-	const isValidSecurityAnswer = watch('securityAnswer') !== '';
-	const isValidSecurityQuestion = watch('securityQuestion') !== '';
 
 	/**
     |--------------------------------------------------
     | States
     |--------------------------------------------------
     */
+	const [selectedBank, setSelectedBank] = React.useState<{
+		id: number;
+		_id: string;
+		code: number;
+		name: string;
+	} | null>(null);
+	const [searchQuery, setSearchQuery] = React.useState<string>('');
 	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
-	const [selectedQuestion, setSelectedQuestion] = React.useState<string | null>(null);
+
+	/**
+    |--------------------------------------------------
+    | ...
+    |--------------------------------------------------
+    */
+	const accountNumber = watch('accountNumber');
+	const isRecipient = watch('recipientName') !== '';
+
+	/**
+    |--------------------------------------------------
+    | Fetches the account information
+    |--------------------------------------------------
+    */
+	React.useEffect(() => {
+		/**
+        |--------------------------------------------------
+        | Once the account number is 10
+        |--------------------------------------------------
+        */
+		if (accountNumber.length === 10) {
+			mutate({
+				accountNumber: accountNumber,
+				bank: { code: selectedBank?.code ?? 0, name: selectedBank?.name ?? '' },
+			});
+		} else {
+			setValue('recipientName', '');
+		}
+	}, [accountNumber]);
+
+	/**
+     |--------------------------------------------------
+     | ...
+     |--------------------------------------------------
+     */
+	React.useEffect(() => {
+		/**
+        |--------------------------------------------------
+        | ...
+        |--------------------------------------------------
+        */
+		if (receipientData) setValue('recipientName', receipientData?.result?.accountName);
+	}, [receipientData]);
 
 	/**
 	|--------------------------------------------------
@@ -99,13 +134,11 @@ export default function SendCADScreen() {
 	*/
 	const onSubmit = (data: any) => {
 		let payload: any = {
-			lastName: data.lastName,
-			firstName: data.firstName,
-			transactionType: 'CAD-to-CAD',
-			interacEmail: data.interacEmail,
-			securityAnswer: data.securityAnswer,
-			securityQuestion: data.securityQuestion,
-			saveAsBeneficiary: data.saveAsBeneficiary,
+			bank: selectedBank as any,
+			transactionType: 'NGN-to-NGN',
+			accountName: data?.recipientName,
+			accountNumber: data?.accountNumber,
+			saveAsBeneficiary: data?.saveAsBeneficiary,
 		};
 
 		if (data.narration !== '') payload.narration = data.narration;
@@ -185,51 +218,144 @@ export default function SendCADScreen() {
 
 							{/**
                             |--------------------------------------------------
-                            | Interac email
+                            | Banks list
                             |--------------------------------------------------
                             */}
-							<InputField
-								type="email"
-								control={control}
-								name="interacEmail"
-								label="Interac email"
-								placeholder="Enter interac email"
-								rules={{ pattern: { value: emailPattern, message: 'Invalid email!' } }}
+							<SelectField
+								isLoading={isLoading}
+								label="Bank name"
+								wrapperClassName="mt-4"
+								closeOnModalClick={false}
+								/**
+                                |--------------------------------------------------
+                                | Trigger
+                                |--------------------------------------------------
+                                */
+								triggerChildren={
+									<View>
+										<MPText weight="medium" className="text-base text-[#484848]">
+											{selectedBank?.name || 'Select bank'}
+										</MPText>
+									</View>
+								}
+								/**
+                                |--------------------------------------------------
+                                | Content
+                                |--------------------------------------------------
+                                */
+								contentChildren={
+									<View className="gap-3 pb-6 min-h-[400px]">
+										{/**
+                                        |--------------------------------------------------
+                                        | Title
+                                        |--------------------------------------------------
+                                        */}
+										<MPText weight="semibold" className="text-sm text-center mb-5">
+											Banks
+										</MPText>
+
+										{/**
+                                        |--------------------------------------------------
+                                        | Content
+                                        |--------------------------------------------------
+                                        */}
+										<View className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5">
+											<TextInput
+												className="text-sm"
+												value={searchQuery}
+												placeholder="Search"
+												placeholderTextColor="#484848"
+												onChangeText={(value) => setSearchQuery(value)}
+											/>
+
+											{/**
+                                            |--------------------------------------------------
+                                            | Search icon
+                                            |--------------------------------------------------
+                                            */}
+											<SearchIcon />
+										</View>
+
+										{/**
+                                        |--------------------------------------------------
+                                        | Conent
+                                        |--------------------------------------------------
+                                        */}
+										<ScrollView
+											showsVerticalScrollIndicator={false}
+											contentContainerClassName="gap-3"
+										>
+											{data?.banks
+												?.filter((item) =>
+													item.name.toLowerCase().includes(searchQuery.toLowerCase())
+												)
+												?.map((item) => (
+													<Pressable
+														key={item._id}
+														onPress={() => {
+															setSelectedBank(item);
+															setValue('bank', {
+																_id: item._id,
+																name: item.name,
+																id: item.id.toString(),
+																code: item.code.toString(),
+															});
+														}}
+														className={clsx(
+															'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
+															item._id.toLowerCase() === selectedBank?._id
+																? 'border-[#FF6A00]'
+																: 'border-[#EEEEEE]'
+														)}
+													>
+														<MPText weight="medium" className="text-sm">
+															{item.name}
+														</MPText>
+													</Pressable>
+												))}
+										</ScrollView>
+									</View>
+								}
 							/>
 
 							<View className="my-2" />
 
 							{/**
                             |--------------------------------------------------
-                            | Recipients First name
+                            | Account number
                             |--------------------------------------------------
                             */}
 							<InputField
 								type="text"
-								name="firstName"
 								control={control}
-								label="Recipients first name"
-								placeholder="Recipients first name"
-								rules={{ required: { value: true, message: 'This field is required' } }}
+								name="accountNumber"
+								isLoading={isPending}
+								label="Account number"
+								keyboardType="number-pad"
+								placeholder="Account number"
+								rules={{
+									required: { value: true, message: 'This field is required' },
+									pattern: { value: /^\d{10}$/, message: 'Invalid account number' },
+								}}
 							/>
 
 							<View className="my-2" />
 
 							{/**
                             |--------------------------------------------------
-                            | Recipients last name
+                            | Receipients information
                             |--------------------------------------------------
                             */}
-							<InputField
-								type="text"
-								control={control}
-								name="lastName"
-								label="Recipients last name"
-								placeholder="Recipients last name"
-								rules={{ required: { value: true, message: 'This field is required' } }}
-							/>
+							{isRecipient && (
+								<InputField
+									type="email"
+									control={control}
+									name="recipientName"
+									className="pointer-events-none opacity-60"
+								/>
+							)}
 
-							<View className="my-2" />
+							{isRecipient && <View className="my-2" />}
 
 							{/**
                             |--------------------------------------------------
@@ -243,92 +369,7 @@ export default function SendCADScreen() {
 								label="Narration"
 								control={control}
 								numberOfLines={4}
-								wrapperClassName="min-h-[102px]"
-							/>
-
-							{/**
-                            |--------------------------------------------------
-                            | Select field
-                            |--------------------------------------------------
-                            */}
-							<SelectField
-								wrapperClassName="mt-4"
-								label="Security question"
-								/**
-                                |--------------------------------------------------
-                                | Trigger
-                                |--------------------------------------------------
-                                */
-								triggerChildren={
-									<View>
-										<MPText weight="medium" className="text-base text-[#484848]">
-											{selectedQuestion || 'Select security question'}
-										</MPText>
-									</View>
-								}
-								/**
-                                |--------------------------------------------------
-                                | Content
-                                |--------------------------------------------------
-                                */
-								contentChildren={
-									<View className="gap-3 pb-6">
-										{/**
-										|--------------------------------------------------
-										| Title
-										|--------------------------------------------------
-										*/}
-										<MPText weight="semibold" className="text-sm text-center mb-5">
-											Security Questions
-										</MPText>
-
-										{/**
-										|--------------------------------------------------
-										| Conent
-										|--------------------------------------------------
-										*/}
-										<ScrollView
-											showsVerticalScrollIndicator={false}
-											contentContainerClassName="gap-3"
-										>
-											{data?.securityQuestions.map((item) => (
-												<Pressable
-													key={item._id}
-													onPress={() => {
-														setSelectedQuestion(item.text);
-														setValue('securityQuestion', item.text);
-													}}
-													className={clsx(
-														'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
-														item.text.toLowerCase() === selectedQuestion?.toLowerCase()
-															? 'border-[#FF6A00]'
-															: 'border-[#EEEEEE]'
-													)}
-												>
-													<MPText weight="medium" className="text-sm">
-														{item.text}
-													</MPText>
-												</Pressable>
-											))}
-										</ScrollView>
-									</View>
-								}
-							/>
-
-							<View className="my-2" />
-
-							{/**
-                            |--------------------------------------------------
-                            | Security answer
-                            |--------------------------------------------------
-                            */}
-							<InputField
-								type="text"
-								control={control}
-								name="securityAnswer"
-								label="Security answer"
-								placeholder="Security answer"
-								rules={{ required: { value: true, message: 'This field is required' } }}
+								wrapperClassName="min-h-[102px] h-[102px]"
 							/>
 
 							{/**
@@ -337,7 +378,7 @@ export default function SendCADScreen() {
                             |--------------------------------------------------
                             */}
 							<Checkbox
-								className="mt-6"
+								className="mt-5"
 								checked={saveAsBeneficiary}
 								label="Save as beneficiary"
 								onChange={(value) => {
@@ -354,8 +395,8 @@ export default function SendCADScreen() {
 							<MPButton
 								onPress={handleSubmit(onSubmit)}
 								className="mt-6 max-w-[96px] self-center"
-								disabled={!isValid || !isValidSecurityAnswer || !isValidSecurityQuestion}
-								useGradientBg={isValid && isValidSecurityAnswer && isValidSecurityQuestion}
+								disabled={!isValid || selectedBank === null}
+								useGradientBg={isValid && selectedBank !== null}
 							>
 								<MPText weight="semibold" className="text-sm text-white">
 									Continue

@@ -7,7 +7,8 @@ import clsx from 'clsx';
 import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
-import { View, Text, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpacity } from 'react-native';
+import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
+import { View, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpacity } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -15,8 +16,8 @@ import { View, Text, TextInputProps, TextInput, Pressable, Modal, Image, Touchab
  |--------------------------------------------------
  */
 import MPText from './MPText';
-import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon } from '@/assets/svgs';
 import { FLAG_CANADA, FLAG_NIGERIA } from '@/constants/app.constant';
+import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon } from '@/assets/svgs';
 
 /**
 |--------------------------------------------------
@@ -27,6 +28,7 @@ interface Props<T extends FieldValues> extends TextInputProps {
 	name: Path<T>;
 	rules?: object;
 	label?: string;
+	isLoading?: boolean;
 	control: Control<T>;
 	wrapperClassName?: string;
 	getCountryCode?: (value: string) => void;
@@ -42,6 +44,7 @@ export default function InputField<T extends FieldValues>({
 	name,
 	label,
 	control,
+	isLoading,
 	rules = {},
 	type = 'text',
 	getCountryCode,
@@ -158,6 +161,43 @@ export default function InputField<T extends FieldValues>({
 								{error && (
 									<View className="ml-auto">
 										<ErrorInfoIcon />
+									</View>
+								)}
+
+								{/**
+								|--------------------------------------------------
+								| Loading
+								|--------------------------------------------------
+								*/}
+								{isLoading && (
+									<View className="ml-auto">
+										<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+											<G clipPath="url(#clip0_5_1384)">
+												<_Path
+													d="M10.0001 18.3333C14.6025 18.3333 18.3334 14.6023 18.3334 9.99996C18.3334 5.39759 14.6025 1.66663 10.0001 1.66663C5.39771 1.66663 1.66675 5.39759 1.66675 9.99996C1.66675 14.6023 5.39771 18.3333 10.0001 18.3333Z"
+													stroke="url(#paint0_linear_5_1384)"
+													strokeWidth="1.66667"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+												/>
+											</G>
+											<Defs>
+												<LinearGradient
+													id="paint0_linear_5_1384"
+													x1="10.0001"
+													y1="1.66663"
+													x2="10.0001"
+													y2="18.3333"
+													gradientUnits="userSpaceOnUse"
+												>
+													<Stop stopColor="#EE0979" />
+													<Stop offset="1" stopColor="#FF6A00" />
+												</LinearGradient>
+												<ClipPath id="clip0_5_1384">
+													<Rect width="20" height="20" fill="white" />
+												</ClipPath>
+											</Defs>
+										</Svg>
 									</View>
 								)}
 							</View>

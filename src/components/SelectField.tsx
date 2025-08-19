@@ -6,6 +6,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { Modal, Pressable, View } from 'react-native';
+import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
 
 /**
  |--------------------------------------------------
@@ -13,13 +14,15 @@ import { Modal, Pressable, View } from 'react-native';
  |--------------------------------------------------
  */
 import MPText from './MPText';
-import { CarretDownIcon } from '@/assets/svgs';
+import { CarretDownIcon, CloseIcon } from '@/assets/svgs';
 
 interface Props {
 	label?: string;
 	disabled?: boolean;
+	isLoading?: boolean;
 	wrapperClassName?: string;
 	triggerClassName?: string;
+	closeOnModalClick?: boolean;
 	onSelect?: (value: any) => void;
 	triggerChildren?: React.ReactNode;
 	contentChildren?: React.ReactNode;
@@ -28,10 +31,12 @@ interface Props {
 export default function SelectField({
 	label,
 	disabled,
+	isLoading,
 	triggerChildren,
 	triggerClassName,
 	contentChildren,
 	wrapperClassName,
+	closeOnModalClick = true,
 }: Props) {
 	/**
     |--------------------------------------------------
@@ -86,7 +91,37 @@ export default function SelectField({
                 |--------------------------------------------------
                 */}
 				<Pressable className="ml-auto pointer-events-none">
-					<CarretDownIcon />
+					{isLoading ? (
+						<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+							<G clipPath="url(#clip0_5_1384)">
+								<_Path
+									d="M10.0001 18.3333C14.6025 18.3333 18.3334 14.6023 18.3334 9.99996C18.3334 5.39759 14.6025 1.66663 10.0001 1.66663C5.39771 1.66663 1.66675 5.39759 1.66675 9.99996C1.66675 14.6023 5.39771 18.3333 10.0001 18.3333Z"
+									stroke="url(#paint0_linear_5_1384)"
+									strokeWidth="1.66667"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
+							</G>
+							<Defs>
+								<LinearGradient
+									id="paint0_linear_5_1384"
+									x1="10.0001"
+									y1="1.66663"
+									x2="10.0001"
+									y2="18.3333"
+									gradientUnits="userSpaceOnUse"
+								>
+									<Stop stopColor="#EE0979" />
+									<Stop offset="1" stopColor="#FF6A00" />
+								</LinearGradient>
+								<ClipPath id="clip0_5_1384">
+									<Rect width="20" height="20" fill="white" />
+								</ClipPath>
+							</Defs>
+						</Svg>
+					) : (
+						<CarretDownIcon />
+					)}
 				</Pressable>
 			</Pressable>
 
@@ -96,8 +131,32 @@ export default function SelectField({
             |--------------------------------------------------
             */}
 			<Modal transparent visible={showModal} animationType="slide">
-				<Pressable onPress={() => setShowModal(false)} className="flex-1 bg-black/10">
+				<Pressable
+					className="flex-1 bg-black/10"
+					onPress={() => {
+						if (closeOnModalClick) setShowModal(false);
+					}}
+				>
 					<View className="bg-white min-h-[200px] max-h-[80%] rounded-3xl p-5 mt-auto">
+						{/**
+						|--------------------------------------------------
+						| Carret Arrow
+						|--------------------------------------------------
+						*/}
+						<Pressable
+							className="ml-auto absolute right-4 top-4 z-30"
+							onPress={() => {
+								setShowModal(false);
+							}}
+						>
+							<CloseIcon />
+						</Pressable>
+
+						{/**
+						|--------------------------------------------------
+						| Children
+						|--------------------------------------------------
+						*/}
 						{contentChildren}
 					</View>
 				</Pressable>

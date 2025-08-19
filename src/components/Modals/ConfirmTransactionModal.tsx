@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { View, Modal } from 'react-native';
 
@@ -17,11 +18,12 @@ import ScreenWrapper from '../Wrapper';
 import CustomKeyboard from '../CustomKeyboard';
 
 interface Props {
-	visible: boolean;
 	setVisible: any;
+	visible: boolean;
+	isLoading?: boolean;
 	onComplete?: (value: string) => void;
 }
-export default function ConfirmTransactionModal({ onComplete, visible, setVisible }: Props) {
+export default function ConfirmTransactionModal({ onComplete, visible, setVisible, isLoading }: Props) {
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -30,7 +32,7 @@ export default function ConfirmTransactionModal({ onComplete, visible, setVisibl
 	return (
 		<Modal visible={visible} animationType="slide">
 			<View className="mt-[70px]" />
-			<ScreenWrapper>
+			<ScreenWrapper className={clsx(isLoading && 'pointer-events-none opacity-45')}>
 				<HeaderWrapper onlClick={() => setVisible(false)} useNavigation title="Confirm Transaction" center />
 
 				{/**

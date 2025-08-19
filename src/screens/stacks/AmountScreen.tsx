@@ -22,6 +22,7 @@ import { useUserStore } from '@/zustand/userStore';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import SelectField from '@/src/components/SelectField';
+import { useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
 
@@ -29,6 +30,14 @@ type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
 	const route = useRoute<AmountScreenProps>();
 	const params = route.params;
+
+	/**
+	|--------------------------------------------------
+	| Api
+	|--------------------------------------------------
+	*/
+	const { mutate: mutateNGN, isPending: isPendingNGN } = useSendWalletToBank(() => setShowTransactionPin(false));
+	const { mutate: mutateCAD, isPending: isPendingCAD } = useSendFundsToInterac(() => setShowTransactionPin(false));
 
 	/**
 	|--------------------------------------------------
@@ -71,6 +80,35 @@ export default function AmountScreen() {
 			*/
 			const formatted = raw === '' ? '' : num.toLocaleString();
 			setAmountToSend(formatted);
+		}
+	};
+
+	/**
+	|--------------------------------------------------
+	| Handles submission
+	|--------------------------------------------------
+	*/
+	const handleSubmission = (pin: string) => {
+		if (params.transactionType === 'CAD-to-CAD') {
+			mutateCAD({
+				currency: 'CAD',
+				transactionPin: pin,
+				amount: Number(amountToSend),
+				lastName: params.lastName as string,
+				email: params.interacEmail as string,
+				firstName: params.firstName as string,
+				securityQuestion: params.securityQuestion as string,
+				securityQuestionAnswer: params.securityAnswer as string,
+			});
+		} else {
+			mutateNGN({
+				currency: 'NGN',
+				transactionPin: pin,
+				bank: params.bank as any,
+				amount: Number(amountToSend),
+				accountName: params.accountName as string,
+				accountNumber: params.accountNumber as string,
+			});
 		}
 	};
 
@@ -175,8 +213,8 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<SelectField
-								triggerClassName="h-[32px]"
-								wrapperClassName="w-[96px] h-[32px]"
+								triggerClassName="h-[32px] max-h-[32px]"
+								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 								disabled={transactionType !== 'SWAP'}
 								triggerChildren={
 									<View>
@@ -216,6 +254,17 @@ export default function AmountScreen() {
 							</MPText>
 						</View>
 					</View>
+
+					{/**
+					|--------------------------------------------------
+					| Insufficient balance warning
+					|--------------------------------------------------
+					*/}
+					{Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend ?? 0) && (
+						<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+							Insufficient funds in your wallet
+						</MPText>
+					)}
 
 					{/**
 					|--------------------------------------------------
@@ -266,8 +315,8 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<SelectField
-								triggerClassName="h-[32px]"
-								wrapperClassName="w-[96px] h-[32px]"
+								triggerClassName="h-[32px] max-h-[32px]"
+								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 								disabled={transactionType !== 'SWAP'}
 								triggerChildren={
 									<View>
@@ -320,10 +369,14 @@ export default function AmountScreen() {
 				|--------------------------------------------------
 				*/}
 				<MPButton
-					disabled={amountToSend === ''}
-					useGradientBg={amountToSend !== ''}
-					className="w-[91px] mt-4 self-center"
+					className="w-[91px] max-w-[91px] mt-6 self-center"
 					onPress={() => setShowTransactionPreviewModal(true)}
+					useGradientBg={
+						amountToSend !== '' && Number(selectedWallet?.walletBalance ?? 0) > Number(amountToSend ?? 0)
+					}
+					disabled={
+						amountToSend === '' || Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend ?? 0)
+					}
 				>
 					<MPText weight="semibold" className="text-sm text-white">
 						Continue
@@ -356,7 +409,8 @@ export default function AmountScreen() {
 			<ConfirmTransactionModal
 				visible={showTransactionPin}
 				setVisible={setShowTransactionPin}
-				onComplete={(value) => console.log(value)}
+				isLoading={isPendingCAD || isPendingNGN}
+				onComplete={(value) => handleSubmission(value)}
 			/>
 		</ScreenWrapper>
 	);

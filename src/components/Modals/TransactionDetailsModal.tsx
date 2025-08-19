@@ -91,8 +91,9 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         */}
 						<DataRepresentation
 							label="Amount received"
-							value={(transaction?.amountReceived ?? 0)?.toLocaleString()}
+							value={`${transaction.sourceCurrency === 'NGN' ? '₦' : '$'}${(transaction?.amountReceived ?? 0)?.toLocaleString()}`}
 						/>
+
 						{/**
                         |--------------------------------------------------
                         | Reference

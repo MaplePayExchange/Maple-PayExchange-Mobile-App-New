@@ -1,6 +1,8 @@
 export type RootStackParamList = {
 	Home: undefined;
 	SplashScreen: undefined;
+	SendCADScreen: undefined;
+	SendNGNScreen: undefined;
 	KycStepsScreen: undefined;
 	DashboardScreen: undefined;
 	VerifyBvnScreen: undefined;
@@ -16,6 +18,7 @@ export type RootStackParamList = {
 	EmailVerificationScreen: undefined;
 	PhoneVerificationScreen: undefined;
 	SetTransactionPinScreen: undefined;
+	SendFundsFeedbackScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
 	AmountScreen: {

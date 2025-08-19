@@ -25,12 +25,12 @@ import { Wallet } from '@/interfaces/wallet.interface';
 import Transaction from '@/src/components/Transaction';
 import { RootStackParamList } from '@/types/route.params';
 import { useGetUserInformation } from '@/services/auth.services';
+import SendFundsModal from '@/src/components/Modals/SendFundsModal';
 import { MONEY_PAD, clampFontSize } from '@/constants/app.constant';
 import FundWalletModal from '@/src/components/Modals/FundWalletModal';
 import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
-import SendFundsModal from '@/src/components/Modals/SendFundsModal';
 
 /**
 |--------------------------------------------------
@@ -83,10 +83,10 @@ export default function DashboardScreen() {
 		| Checking if the user has been verified
 		|--------------------------------------------------
 		*/
-		// if (!isBvnVerified || isVerified || typeof userData.user?.transactionPin === 'string') {
-		// 	setShowBvnModal(true);
-		// 	return;
-		// }
+		if (!isBvnVerified || isVerified || typeof userData.user?.transactionPin === 'string') {
+			setShowBvnModal(true);
+			return;
+		}
 
 		/**
 		|--------------------------------------------------
@@ -366,7 +366,7 @@ export default function DashboardScreen() {
 									|--------------------------------------------------
 									*/}
 									<MPButton useGradientBg className="w-[128px] self-center mt-6">
-										<Pressable className="bg-white w-[98%] h-[93%] rounded-[40px] justify-center items-center">
+										<Pressable className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center">
 											<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 												Add new wallet
 											</MPText>

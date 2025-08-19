@@ -69,7 +69,7 @@ export default function LoginScreen() {
 	*/
 	const onSubmit = async (data: any) => {
 		const deviceId = await getDeviceHardwareId();
-		mutate({ password: data.password, email: data.email, deviceId });
+		mutate({ password: data.password, email: data.email, deviceId: deviceId as string });
 	};
 
 	/**

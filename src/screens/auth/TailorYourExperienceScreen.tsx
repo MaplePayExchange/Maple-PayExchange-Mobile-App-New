@@ -25,9 +25,9 @@ export default function TailorYourExperienceScreen() {
     |--------------------------------------------------
     */
 	const route = useRoute<TailorYourExperienceRouteProp>();
-	const { ...rest } = route.params;
+	// const { ...rest } = route.params;
 
-	console.log(rest);
+	// console.log(rest);
 
 	/**
     |--------------------------------------------------

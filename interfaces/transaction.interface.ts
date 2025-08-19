@@ -72,3 +72,27 @@ export interface TransactionInterface {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface InteracTransactionRequest {
+	email: string;
+	amount: number;
+	lastName: string;
+	firstName: string;
+	description?: string;
+	transactionPin: string;
+	securityQuestion: string;
+	securityQuestionAnswer: string;
+	currency: (typeof _ALLOWED_CURRENCIES)[number];
+}
+
+export interface BankTransferRequest {
+	bank: {
+		name: string;
+		code: string;
+	};
+	amount: number;
+	accountName: string;
+	accountNumber: string;
+	transactionPin: string;
+	currency: (typeof _ALLOWED_CURRENCIES)[number];
+}

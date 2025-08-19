@@ -59,7 +59,8 @@ export default function Transaction({ onClick, transaction }: Props) {
 	| Details
 	|--------------------------------------------------
 	*/
-	const details = transaction.description || transaction.sourceCurrency + ' - ' + transaction.destinationCurrency;
+	const details =
+		transaction.description?.slice(0, 10) || transaction.sourceCurrency + ' - ' + transaction.destinationCurrency;
 
 	/**
 	|--------------------------------------------------
@@ -74,13 +75,21 @@ export default function Transaction({ onClick, transaction }: Props) {
     |--------------------------------------------------
     */
 	return (
-		<TouchableOpacity onPress={onClick} activeOpacity={0.8} className="flex-row gap-4 items-start">
+		<TouchableOpacity
+			onPress={() => {
+				onClick?.();
+				setShowTransactionDetailsModal(true);
+			}}
+			activeOpacity={0.8}
+			className="flex-row gap-4 items-start"
+		>
 			{/**
             |--------------------------------------------------
             | Icon
             |--------------------------------------------------
             */}
 			<Image
+				className="mt-1"
 				style={{ width: clampFontSize(40, 30, 80), height: clampFontSize(40, 30, 80) }}
 				source={type === 'fund_exchange' ? EXCHANGE : type === 'incoming_transaction' ? INCOMING : OUTGOING}
 			/>

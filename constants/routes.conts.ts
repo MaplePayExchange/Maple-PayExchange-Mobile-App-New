@@ -28,6 +28,7 @@ export enum ROUTE_NAMES {
 	PROFILE = 'Profile',
 	TRANSACTION = 'Transaction',
 	AMOUNT_SCREEN = 'AmountScreen',
+	SEND_NGN_FUNDS = 'SendNGNScreen',
 	SEND_CAD_FUNDS = 'SendCADScreen',
 	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
 	SEND_FUNDS_FEEDBACK = 'SendFundsFeedbackScreen',
