@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Pressable, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { Pressable, View, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -18,6 +18,7 @@ import { Pressable, View, ScrollView, Image, TouchableOpacity } from 'react-nati
  |--------------------------------------------------
  */
 import MPText from '@/src/components/MPText';
+import MPButton from '@/src/components/MPButton';
 import { useUserStore } from '@/zustand/userStore';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { Wallet } from '@/interfaces/wallet.interface';
@@ -25,8 +26,11 @@ import Transaction from '@/src/components/Transaction';
 import { RootStackParamList } from '@/types/route.params';
 import { useGetUserInformation } from '@/services/auth.services';
 import { MONEY_PAD, clampFontSize } from '@/constants/app.constant';
-import UnverifiedAcountModal from '@/src/components/UnverifiedAccountModal';
+import FundWalletModal from '@/src/components/Modals/FundWalletModal';
+import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
+import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
+import SendFundsModal from '@/src/components/Modals/SendFundsModal';
 
 /**
 |--------------------------------------------------
@@ -51,18 +55,21 @@ export default function DashboardScreen() {
 	*/
 	const queryClient = useQueryClient();
 	const { data, isLoading, isPending, error } = useGetUserInformation();
-	const [selectedWallet, setSelectedWallet] = React.useState<Wallet | null>(null);
+	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
+	const [showWalletModal, setShowWalletModal] = React.useState<boolean>(false);
+	const [showWalletDetails, setShowWalletDetails] = React.useState<boolean>(false);
+	const [showSendFundsModal, setShowSendFundsModal] = React.useState<boolean>(false);
+	const [showFundWalletModal, setShowFundWalletModal] = React.useState<boolean>(false);
+	const [showExchangeFundsModal, setShowExchangeFundsModal] = React.useState<boolean>(false);
 
 	/**
 	|--------------------------------------------------
 	| States
 	|--------------------------------------------------
 	*/
-	const { userData } = useUserStore();
+	const { userData, selectedWallet, setSelectedWallet } = useUserStore();
 	const isVerified = userData?.user?.isVerified;
 	const isBvnVerified = userData?.user?.isBvnVerified;
-
-	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
 
 	/**
 	|--------------------------------------------------
@@ -70,15 +77,16 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	const handleInitiateAction = (type: PossibleActions) => {
+		console.log(type);
 		/**
 		|--------------------------------------------------
 		| Checking if the user has been verified
 		|--------------------------------------------------
 		*/
-		if (!isBvnVerified || isVerified || typeof userData.user?.transactionPin === 'string') {
-			setShowBvnModal(true);
-			return;
-		}
+		// if (!isBvnVerified || isVerified || typeof userData.user?.transactionPin === 'string') {
+		// 	setShowBvnModal(true);
+		// 	return;
+		// }
 
 		/**
 		|--------------------------------------------------
@@ -104,9 +112,57 @@ export default function DashboardScreen() {
 				navigation.navigate('TransactionScreen');
 				break;
 
+			/**
+			|--------------------------------------------------
+			| Case details
+			|--------------------------------------------------
+			*/
+			case 'details':
+				console.log('object');
+				setShowWalletDetails(true);
+
+			/**
+			|--------------------------------------------------
+			| Show fund wallet modal
+			|--------------------------------------------------
+			*/
+			case 'add':
+				console.log('object');
+				setShowFundWalletModal(true);
+
+			/**
+			|--------------------------------------------------
+			| Send funds
+			|--------------------------------------------------
+			*/
+			case 'send':
+				setShowSendFundsModal(true);
+
+			/**
+			|--------------------------------------------------
+			| Exchange funds
+			|--------------------------------------------------
+			*/
+			case 'exchange':
+				setShowExchangeFundsModal(true);
+
 			default:
 				break;
 		}
+	};
+
+	/**
+	|--------------------------------------------------
+	| handle Dismissing all modals
+	|--------------------------------------------------
+	*/
+	const handleDismissAllModals = () => {
+		setShowBvnModal(false);
+		setShowWalletModal(false);
+		setShowWalletDetails(false);
+		setShowSendFundsModal(false);
+		setShowFundWalletModal(false);
+		setShowExchangeFundsModal(false);
 	};
 
 	/**
@@ -180,34 +236,36 @@ export default function DashboardScreen() {
 				|--------------------------------------------------
 				*/}
 				<View className="h-[102px] w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
-					<View className="max-w-[200px] justify-center">
-						{/**
-						|--------------------------------------------------
-						| Header
-						|--------------------------------------------------
-						*/}
-						<View className="flex-row gap-2 items-center">
-							<MPText weight="medium" className="text-sm leading-6">
-								Account Verification
-							</MPText>
-							<Pressable onPress={() => navigation.navigate('KycStepsScreen')}>
-								<RedRightArrowIcon />
-							</Pressable>
-						</View>
+					{!isVerified && (
+						<View className="max-w-[200px] justify-center">
+							{/**
+							|--------------------------------------------------
+							| Header
+							|--------------------------------------------------
+							*/}
+							<View className="flex-row gap-2 items-center">
+								<MPText weight="medium" className="text-sm leading-6">
+									Account Verification
+								</MPText>
+								<Pressable onPress={() => setShowBvnModal(true)}>
+									<RedRightArrowIcon />
+								</Pressable>
+							</View>
 
-						{/**
-						|--------------------------------------------------
-						| Subtext
-						|--------------------------------------------------
-						*/}
-						<MPText
-							weight="regular"
-							style={{ lineHeight: 20 }}
-							className="leading-5 text-wrap text-xs mt-1 text-[#484848]"
-						>
-							Verify your identity to create your wallet(s) and start exchanging money.
-						</MPText>
-					</View>
+							{/**
+							|--------------------------------------------------
+							| Subtext
+							|--------------------------------------------------
+							*/}
+							<MPText
+								weight="regular"
+								style={{ lineHeight: 20 }}
+								className="leading-5 text-wrap text-xs mt-1 text-[#484848]"
+							>
+								Verify your identity to create your wallet(s) and start exchanging money.
+							</MPText>
+						</View>
+					)}
 
 					{/**
 					|--------------------------------------------------
@@ -248,7 +306,10 @@ export default function DashboardScreen() {
 					| Wallet is unlocked
 					|--------------------------------------------------
 					*/}
-					<Pressable className="h-[20px] w-[68px] self-center bg-[#F7F7F7] rounded-[8px] flex-row items-center justify-center gap-1">
+					<Pressable
+						onPress={() => setShowWalletModal(true)}
+						className="h-[20px] w-[68px] self-center bg-[#F7F7F7] rounded-[8px] flex-row items-center justify-center gap-1"
+					>
 						<MPText className="text-sm">{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}</MPText>
 						<MPText className="text-xs" weight="semibold">
 							{selectedWallet?.currency}
@@ -260,6 +321,60 @@ export default function DashboardScreen() {
 								fill="#1A1A1A"
 							/>
 						</Svg>
+
+						{/**
+						|--------------------------------------------------
+						| Modal to select wallet type
+						|--------------------------------------------------
+						*/}
+						<Modal transparent visible={showWalletModal} animationType="slide">
+							<TouchableOpacity
+								activeOpacity={0.98}
+								onPress={() => setShowWalletModal(false)}
+								className="flex-1 bg-black/10 justify-center p-6"
+							>
+								<View className="bg-white rounded-3xl min-h-[246px] p-4">
+									<MPText weight="semibold" className="text-sm text-center">
+										MY WALLETS
+									</MPText>
+
+									{/**
+									|--------------------------------------------------
+									| Wallets
+									|--------------------------------------------------
+									*/}
+									<View className="mt-6 gap-4">
+										{data?.wallets.map((wallet) => (
+											<Pressable
+												key={wallet?._id}
+												onPress={() => {
+													setSelectedWallet(wallet);
+													setShowWalletModal(false);
+												}}
+												className="h-[46px] w-full rounded-[10px] bg-[#F7F7F7] justify-center px-6"
+											>
+												<MPText weight="medium" className="text-sm">
+													{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
+												</MPText>
+											</Pressable>
+										))}
+									</View>
+
+									{/**
+									|--------------------------------------------------
+									| Action button
+									|--------------------------------------------------
+									*/}
+									<MPButton useGradientBg className="w-[128px] self-center mt-6">
+										<Pressable className="bg-white w-[98%] h-[93%] rounded-[40px] justify-center items-center">
+											<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+												Add new wallet
+											</MPText>
+										</Pressable>
+									</MPButton>
+								</View>
+							</TouchableOpacity>
+						</Modal>
 					</Pressable>
 
 					{/**
@@ -318,6 +433,42 @@ export default function DashboardScreen() {
 								</MPText>
 							</View>
 						))}
+
+						{/**
+						|--------------------------------------------------
+						| Wallet details
+						|--------------------------------------------------
+						*/}
+						<WalletDetailsModal
+							selectedWallet={selectedWallet}
+							onDismiss={handleDismissAllModals}
+							showWalletDetails={showWalletDetails}
+							setShowWalletDetails={setShowWalletDetails}
+							accountName={`${data?.user.firstName} ${data?.user.lastName}`}
+						/>
+
+						{/**
+						|--------------------------------------------------
+						| Fund wallet modal
+						|--------------------------------------------------
+						*/}
+						<FundWalletModal
+							selectedWallet={selectedWallet}
+							onDismiss={handleDismissAllModals}
+							showFundWalletModal={showFundWalletModal}
+							setShowFundWalletModal={setShowFundWalletModal}
+						/>
+
+						{/**
+						|--------------------------------------------------
+						| Send funds
+						|--------------------------------------------------
+						*/}
+						<SendFundsModal
+							visible={showSendFundsModal}
+							setVisible={setShowSendFundsModal}
+							type={selectedWallet?.currency as 'CAD' | 'NGN'}
+						/>
 					</View>
 				</View>
 

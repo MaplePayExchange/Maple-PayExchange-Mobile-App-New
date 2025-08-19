@@ -7,9 +7,9 @@ import * as Linking from 'expo-linking';
 import { Toast } from 'toastify-react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useUserStore } from '@/zustand/userStore';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 /**
 |--------------------------------------------------
@@ -17,10 +17,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 |--------------------------------------------------
 */
 import axiosInstance from '@/lib/axiosInstance';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
-import { RootStackParamList } from '@/types/route.params';
 import { User } from '@/interfaces/user.interface';
 import { Wallet } from '@/interfaces/wallet.interface';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { RootStackParamList } from '@/types/route.params';
 import { TransactionInterface } from '@/interfaces/transaction.interface';
 
 interface RequestOtp {
@@ -104,7 +104,7 @@ const successNotificationHanlder = (title: string, message: string) => {
 		closeIconSize: 20,
 		iconColor: '#FFFFFF',
 		textColor: '#FFFFFF',
-		backgroundColor: '#33BB77',
+		backgroundColor: '#E2F9D2',
 	});
 };
 

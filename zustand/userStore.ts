@@ -13,6 +13,7 @@ import { persist } from 'zustand/middleware';
 */
 import { zustand_helper } from './helper';
 import { User } from '@/interfaces/user.interface';
+import { Wallet } from '@/interfaces/wallet.interface';
 
 type VerificationData = {
 	email?: string;
@@ -38,6 +39,7 @@ interface UserState {
 	name: string;
 	isLoggedIn: boolean;
 	isRegistered: boolean;
+	selectedWallet: Wallet | null;
 	userData: LoginResponse | undefined;
 	verificationData: VerificationData | undefined;
 
@@ -50,6 +52,7 @@ interface UserState {
 	setIsLoggedIn: (status: boolean) => void;
 	setIsRegistered: (value: boolean) => void;
 	setUserData: (data: LoginResponse) => void;
+	setSelectedWallet: (wallet: Wallet) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
 }
 
@@ -70,6 +73,7 @@ export const useUserStore = create<UserState>()(
 			isLoggedIn: false,
 			isRegistered: false,
 			userData: undefined,
+			selectedWallet: null,
 			verificationData: undefined,
 
 			/**
@@ -80,6 +84,7 @@ export const useUserStore = create<UserState>()(
 			setName: (name) => set({ name }),
 			setIsLoggedIn: (status) => set({ isLoggedIn: status }),
 			setIsRegistered: (value) => set({ isRegistered: value }),
+			setSelectedWallet: (value) => set({ selectedWallet: value }),
 			setVerificationData: (data) =>
 				set((state) => {
 					/**

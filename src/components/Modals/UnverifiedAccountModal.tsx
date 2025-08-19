@@ -5,6 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Modal, Pressable, ScrollView, Image } from 'react-native';
 
 /**
@@ -12,7 +13,7 @@ import { View, Modal, Pressable, ScrollView, Image } from 'react-native';
  | Custom imports
  |--------------------------------------------------
  */
-import MPText from './MPText';
+import MPText from '../MPText';
 import {
 	MONEY_PAD,
 	clampFontSize,
@@ -20,12 +21,11 @@ import {
 	BVN_VERIFICATION,
 	TRANSACTION_PIN,
 } from '@/constants/app.constant';
-import MPButton from './MPButton';
+import MPButton from '../MPButton';
 import { CloseIcon } from '@/assets/svgs';
-import { LoginResponse, useUserStore } from '@/zustand/userStore';
-import { useStartVeriffSession } from '@/services/auth.services';
-import { useNavigation } from '@react-navigation/native';
+import { LoginResponse } from '@/zustand/userStore';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { useStartVeriffSession } from '@/services/auth.services';
 
 /**
 |--------------------------------------------------

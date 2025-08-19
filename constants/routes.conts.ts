@@ -27,5 +27,9 @@ export enum ROUTE_NAMES {
 	SUPPORT = 'Support',
 	PROFILE = 'Profile',
 	TRANSACTION = 'Transaction',
+	AMOUNT_SCREEN = 'AmountScreen',
+	SEND_CAD_FUNDS = 'SendCADScreen',
 	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
+	SEND_FUNDS_FEEDBACK = 'SendFundsFeedbackScreen',
+	SEND_FUNDS_ERROR_FEEDBACK = 'SendFundsErrorFeedbackScreen',
 }

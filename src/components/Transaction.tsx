@@ -13,7 +13,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
  |--------------------------------------------------
  */
 import MPText from './MPText';
-import TransactionDetailsModal from './TransactionDetailsModal';
+import TransactionDetailsModal from './Modals/TransactionDetailsModal';
 import { TransactionInterface } from '@/interfaces/transaction.interface';
 import { clampFontSize, EXCHANGE, INCOMING, OUTGOING } from '@/constants/app.constant';
 

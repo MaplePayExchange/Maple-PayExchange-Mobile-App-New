@@ -13,10 +13,10 @@ import { View, Modal, Pressable } from 'react-native';
  |--------------------------------------------------
  */
 import clsx from 'clsx';
-import MPText from './MPText';
-import MPButton from './MPButton';
+import MPText from '../MPText';
+import MPButton from '../MPButton';
 import { CloseIcon } from '@/assets/svgs';
-import DataRepresentation from './DataRepresentation';
+import DataRepresentation from '../DataRepresentation';
 import { TransactionInterface } from '@/interfaces/transaction.interface';
 
 interface Props {

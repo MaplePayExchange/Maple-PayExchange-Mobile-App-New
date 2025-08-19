@@ -14,15 +14,20 @@ import { Pressable, View } from 'react-native';
 import MPText from './MPText';
 import { BackArrowIcon } from '@/assets/svgs';
 import { useNavigation } from '@react-navigation/native';
+import clsx from 'clsx';
 
 interface Props {
 	title: string;
+	center?: boolean;
 	subtitle?: string;
+	onlClick?: () => void;
 	useNavigation?: boolean;
 }
 
 export default function HeaderWrapper({
+	center,
 	subtitle,
+	onlClick,
 	title = 'This is the title',
 	useNavigation: useNavigate = true,
 }: Props) {
@@ -40,15 +45,23 @@ export default function HeaderWrapper({
             | Header
             |--------------------------------------------------
             */}
-			<View className="flex items-center gap-4" style={{ flexDirection: 'row' }}>
+			<View className="flex flex-row items-center gap-4">
 				{useNavigate && (
-					<Pressable onPress={() => navigation.goBack()}>
+					<Pressable
+						onPress={() => {
+							if (onlClick) onlClick?.();
+							else navigation.goBack();
+						}}
+					>
 						<BackArrowIcon />
 					</Pressable>
 				)}
-				<MPText style={{ lineHeight: 26 }} weight="semibold" className="text-2xl text-[#1A1A1A]">
-					{title}
-				</MPText>
+
+				<View className={clsx(center && '-translate-x-[50%] left-1/2 absolute')}>
+					<MPText weight="semibold" style={{ lineHeight: 26 }} className={clsx('text-2xl text-[#1A1A1A]')}>
+						{title}
+					</MPText>
+				</View>
 			</View>
 
 			{/**

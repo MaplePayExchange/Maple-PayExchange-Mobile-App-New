@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
@@ -12,9 +13,8 @@ import { Pressable, View } from 'react-native';
 |--------------------------------------------------
 */
 import MPText from '@/src/components/MPText';
+import { fontSizes } from '@/constants/app.constant';
 import { CheckboxFillIcon, CheckboxOutlineIcon } from '@/assets/svgs';
-import clsx from 'clsx';
-import { clampFontSize } from '@/constants/app.constant';
 
 interface CheckboxProps {
 	label?: string;
@@ -33,7 +33,7 @@ export default function Checkbox({ checked, className, component, onChange, labe
     */
 	return (
 		<View style={{ opacity: disabled ? 0.5 : 1 }} className={clsx('flex-row items-start', className)}>
-			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mt-1 mr-2`}>
+			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mt-0.5 mr-2`}>
 				{checked ? <CheckboxFillIcon /> : <CheckboxOutlineIcon />}
 			</Pressable>
 
@@ -46,7 +46,7 @@ export default function Checkbox({ checked, className, component, onChange, labe
 				<MPText
 					weight="medium"
 					className="text-[#767676] leading-4 w-[88%]"
-					style={{ fontSize: clampFontSize(12, 10, 27) }}
+					style={{ fontSize: fontSizes.FONT12 }}
 				>
 					{label}
 				</MPText>

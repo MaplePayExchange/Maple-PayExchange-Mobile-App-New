@@ -28,6 +28,7 @@ interface Props<T extends FieldValues> extends TextInputProps {
 	rules?: object;
 	label?: string;
 	control: Control<T>;
+	wrapperClassName?: string;
 	getCountryCode?: (value: string) => void;
 	type?: 'phone' | 'email' | 'text' | 'password';
 }
@@ -44,6 +45,7 @@ export default function InputField<T extends FieldValues>({
 	rules = {},
 	type = 'text',
 	getCountryCode,
+	wrapperClassName,
 	...rest
 }: Props<T>) {
 	/**
@@ -61,13 +63,11 @@ export default function InputField<T extends FieldValues>({
     |--------------------------------------------------
     */
 	React.useEffect(() => {
-		if (phoneInput === null) {
+		if (type === 'phone' && phoneInput === null) {
 			setPhoneInput(COUNTRY_CODES[0]);
 			getCountryCode?.(COUNTRY_CODES[0].code);
 		}
 	}, []);
-
-	console.log(showPassword);
 
 	/**
     |--------------------------------------------------
@@ -89,14 +89,17 @@ export default function InputField<T extends FieldValues>({
                             |--------------------------------------------------
                             */}
 							{label && (
-								<MPText weight="medium" className="text-sm">
+								<MPText weight="medium" className="text-sm mb-1.5">
 									{label}
 								</MPText>
 							)}
 
 							<View
 								style={{ flexDirection: 'row' }}
-								className={clsx('rounded-[12px] px-4 text-base bg-[#1018280D] h-[42px] items-center')}
+								className={clsx(
+									'rounded-[12px] px-4 text-base bg-[#1018280D] min-h-[42px] items-center',
+									wrapperClassName
+								)}
 							>
 								{/**
                                 |--------------------------------------------------

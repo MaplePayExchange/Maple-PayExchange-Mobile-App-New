@@ -18,4 +18,18 @@ export type RootStackParamList = {
 	SetTransactionPinScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
+	AmountScreen: {
+		lastName?: string;
+		firstName?: string;
+		accountName?: string;
+		interacEmail?: string;
+		accountNumber?: string;
+		securityAnswer?: string;
+		currency?: 'CAD' | 'NGN';
+		securityQuestion?: string;
+		saveAsBeneficiary?: boolean;
+		narration?: string | undefined;
+		bank?: { code: string; name: string };
+		transactionType: 'SWAP' | 'CAD-to-CAD' | 'NGN-to-NGN';
+	};
 };

@@ -35,7 +35,6 @@ axiosInstance.interceptors.request.use(
 			config.headers.Authorization = `Bearer ${token}`;
 		}
 
-		console.log(config.baseURL);
 		console.log(config.url);
 
 		return config;
