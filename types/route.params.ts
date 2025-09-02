@@ -11,6 +11,9 @@ export type RootStackParamList = {
 	VerifyEmailScreen: undefined;
 	VerifyPhoneScreen: undefined;
 	TransactionScreen: undefined;
+	SendFundsBeneficiaryScreen: {
+		currency: 'CAD' | 'NGN';
+	};
 	LoginScreen: { email?: string };
 	ForgotPasswordScreen: undefined;
 	BVNVerificationScreen: undefined;

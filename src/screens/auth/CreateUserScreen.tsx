@@ -39,6 +39,7 @@ import { useCreateUser } from '@/services/auth.services';
 import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@/assets/svgs';
+import utils from '@/lib/utils';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -65,7 +66,11 @@ export default function CreateUserScreen() {
 	const { verificationData } = useUserStore();
 	const { mutate, isPending } = useCreateUser();
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
-	const [birthDate, setBirthDate] = React.useState<Date | string | null>(null);
+	const [selectedYear, setSelectedYear] = React.useState<number>(2010);
+	const [birthDate, setBirthDate] = React.useState<Date | string | null>(
+		`${2010}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+	);
+	const [showYearPopup, setShowYearPopup] = React.useState<boolean>(false);
 	const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
 	const [showCountriesModal, setShowCountriesModal] = React.useState<boolean>(false);
 	const [selectedCountry, setSelectedCountry] = React.useState<(typeof Countries)[0] | null>(null);
@@ -108,7 +113,7 @@ export default function CreateUserScreen() {
 			sessionId: verificationData?.sessionId as string,
 		};
 
-		console.log(verificationData)
+		console.log(verificationData);
 
 		if (data.referral !== '') payload.referral = data.referral;
 		if (data.middleName !== '') payload.middleName = data.middleName;
@@ -135,6 +140,7 @@ export default function CreateUserScreen() {
 			*/}
 			<HeaderWrapper
 				title="Create Your Account"
+				onlClick={() => navigation.navigate('OnboardingScreen')}
 				subtitle="Ensure you enter your legal names as shown on your government-issued identity document"
 			/>
 
@@ -252,7 +258,7 @@ export default function CreateUserScreen() {
 								</Modal>
 							</TouchableOpacity>
 
-							<View className="gap-4 flex-1 mt-4">
+							<View className="gap-6 flex-1 mt-6">
 								{/**
 								|--------------------------------------------------
 								| First name
@@ -318,7 +324,7 @@ export default function CreateUserScreen() {
 								|--------------------------------------------------
 								*/}
 								<View>
-									<MPText weight="medium" className="text-sm">
+									<MPText weight="medium" className="text-sm mb-2">
 										Birthday
 									</MPText>
 									<TouchableOpacity
@@ -343,10 +349,12 @@ export default function CreateUserScreen() {
 										|--------------------------------------------------
 										*/}
 										<Modal animationType="slide" transparent visible={showCalendarModal}>
-											<View className="w-full bg-white mt-auto h-[480px] rounded-t-3xl">
+											<View className="w-full relative bg-white mt-auto h-[480px] rounded-t-3xl">
 												<Calendar
+													key={birthDate as string}
 													onDayPress={(day) => {
-														setBirthDate(day.dateString);
+														const [year, month, _day] = day.dateString.split('-');
+														setBirthDate(`${selectedYear}-${month}-${_day}`);
 													}}
 													markedDates={{
 														[birthDate as string]: {
@@ -366,14 +374,56 @@ export default function CreateUserScreen() {
 														textDisabledColor: '#a4a3a4',
 														selectedDayBackgroundColor: '#FF6A00',
 													}}
+													current={birthDate as string}
 												/>
+
+												<Pressable
+													onPress={() => {
+														setShowYearPopup(true);
+													}}
+													className="bg-transparent absolute h-[30px] w-[100px] top-4 right-[34%]"
+												/>
+
+												{/**
+												|--------------------------------------------------
+												| Year view
+												|--------------------------------------------------
+												*/}
+												{showYearPopup && (
+													<View className="absolute bg-white w-[95%] z-30 self-center overflow-hidden max-h-[400px] top-12 border border-slate-100 rounded-3xl p-5">
+														<ScrollView showsVerticalScrollIndicator={false}>
+															<View className="flex-row flex-wrap gap-5 justify-between">
+																{utils.generateYears().map((year) => (
+																	<Pressable
+																		key={year}
+																		onPress={() => {
+																			setSelectedYear(year);
+																			setShowYearPopup(false);
+																			setBirthDate(
+																				`${year}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+																			);
+																		}}
+																		className={clsx(
+																			'rounded-md py-1 px-2 w-[50px] border',
+																			selectedYear === year
+																				? 'border-[#FF6A00]'
+																				: 'border-slate-300'
+																		)}
+																	>
+																		<MPText>{year}</MPText>
+																	</Pressable>
+																))}
+															</View>
+														</ScrollView>
+													</View>
+												)}
 
 												{/**
 												|--------------------------------------------------
 												| Action buttons
 												|--------------------------------------------------
 												*/}
-												<View className="flex-row gap-4 mt-4 border-t border-t-[#EAECF0] p-6">
+												<View className="flex-row gap-4 mt-4 border-t border-t-[#EAECF0] p-6 flex-1">
 													{/**
 													|--------------------------------------------------
 													| Cancel button
@@ -381,7 +431,7 @@ export default function CreateUserScreen() {
 													*/}
 													<MPButton
 														onPress={() => setShowCalendarModal(false)}
-														className="w-[48%] rounded-[12px] h-[40px] border border-[#D0D5DD]"
+														className="max-w-[48%] rounded-[12px] h-[40px] border border-[#D0D5DD]"
 													>
 														<MPText weight="semibold" className="text-sm">
 															Cancel
@@ -396,7 +446,7 @@ export default function CreateUserScreen() {
 													<MPButton
 														useGradientBg
 														onPress={() => setShowCalendarModal(false)}
-														className="w-[48%] h-[40px] rounded-[12px]"
+														className="max-w-[48%] h-[40px] rounded-[12px]"
 													>
 														<MPText weight="bold" className="text-white text-sm">
 															Apply
@@ -431,17 +481,33 @@ export default function CreateUserScreen() {
 										},
 									}}
 								/>
-								<View>
-									<MPText className={clsx('text-xs text-[#767676] leading-6')} weight="medium">
+								<View className='-translate-y-2'>
+									<MPText
+										weight="medium"
+										style={{ fontSize: 12 }}
+										className={clsx('text-xs text-[#767676] leading-6')}
+									>
 										Min 8 characters
 									</MPText>
-									<MPText className={clsx('text-xs text-[#767676] leading-6')} weight="medium">
+									<MPText
+										weight="medium"
+										style={{ fontSize: 12 }}
+										className={clsx('text-xs text-[#767676] leading-6')}
+									>
 										At least 1 uppercase
 									</MPText>
-									<MPText className={clsx('text-xs text-[#767676] leading-6')} weight="medium">
+									<MPText
+										weight="medium"
+										style={{ fontSize: 12 }}
+										className={clsx('text-xs text-[#767676] leading-6')}
+									>
 										At least 1 special character (e.g &%$#*)
 									</MPText>
-									<MPText className={clsx('text-xs text-[#767676] leading-6')} weight="medium">
+									<MPText
+										weight="medium"
+										style={{ fontSize: 12 }}
+										className={clsx('text-xs text-[#767676] leading-6')}
+									>
 										At least 1 number
 									</MPText>
 								</View>
@@ -485,7 +551,7 @@ export default function CreateUserScreen() {
 							| Already have an account
 							|--------------------------------------------------
 							*/}
-							<MPText className="text-sm text-center mt-4">
+							<MPText className="text-sm text-center mt-6">
 								<MPText className="text-[#484848]">Already have an account? </MPText>
 								<MPText
 									onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}

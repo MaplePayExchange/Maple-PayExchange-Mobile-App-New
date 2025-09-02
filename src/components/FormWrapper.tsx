@@ -3,7 +3,6 @@
 | Npm imports
 |--------------------------------------------------
 */
-import React from 'react';
 import {
 	Platform,
 	Keyboard,
@@ -12,6 +11,7 @@ import {
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
 } from 'react-native';
+import React from 'react';
 
 /**
 |--------------------------------------------------

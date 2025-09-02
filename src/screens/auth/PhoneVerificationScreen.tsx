@@ -82,7 +82,7 @@ export default function PhoneVerificationScreen() {
 				subtitle="Let’s get started. Enter your phone number to set up your account"
 			/>
 
-			<View className='my-3' />
+			<View className="my-3" />
 
 			{/**
 			|--------------------------------------------------
@@ -117,7 +117,7 @@ export default function PhoneVerificationScreen() {
 				className="mt-6"
 				checked={terms.terms}
 				component={
-					<View className="flex-row items-center w-[88%] flex-wrap">
+					<View className="flex-row flex-1 items-center w-[88%] flex-wrap">
 						<MPText
 							weight="medium"
 							className="text-[#767676] leading-4"
@@ -141,8 +141,6 @@ export default function PhoneVerificationScreen() {
 						>
 							{' '}
 							and{' '}
-						</MPText>
-						<MPText>
 							<MPText
 								weight="medium"
 								onPress={() => console.log('object')}
@@ -202,8 +200,14 @@ export default function PhoneVerificationScreen() {
 			|--------------------------------------------------
 			*/}
 			<MPText className="text-sm text-center mt-4">
-				<MPText className="text-[#484848]">Already have an account? </MPText>
-				<MPText className="text-[#FF6A00]">Log in</MPText>
+				<MPText className="text-[#484848] text-sm">Already have an account? </MPText>
+				<MPText
+					weight="semibold"
+					className="text-[#FF6A00] text-sm"
+					onPress={() => navigation.navigate('LoginScreen', {})}
+				>
+					Log in
+				</MPText>
 			</MPText>
 		</ScreenWrapper>
 	);

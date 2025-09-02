@@ -1,33 +1,36 @@
 {
-  "cli": {
-    "version": ">= 10.2.1"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "simulator": true
-      }
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {
-       "ios": {
-        "image": "macos-sequoia-15.3-xcode-16.2"
-      },
-      
-      "android": {
-        "buildType": "app-bundle"
-      },
-      "env":{
-        "APP_URL" : "https://mapel-backend-service.vercel.app/api"
+	"cli": {
+		"version": ">= 10.2.1"
+	},
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal",
+			"ios": {
+				"simulator": true
+			}
+		},
+		"preview": {
+			"distribution": "internal",
+			"android": {
+				"buildType": "apk"
+			}
+		},
+		"production": {
+			"ios": {
+				"image": "macos-sequoia-15.3-xcode-16.2"
+			},
 
-      }
-    }
-  },
-  "submit": {
-    "production": {}
-  }
+			"android": {
+				"buildType": "apk"
+			},
+
+			"env": {
+				"APP_URL": "https://mapel-backend-service.vercel.app/api"
+			}
+		}
+	},
+	"submit": {
+		"production": {}
+	}
 }

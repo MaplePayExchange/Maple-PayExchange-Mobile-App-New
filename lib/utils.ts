@@ -66,14 +66,9 @@ class Utils {
 		|--------------------------------------------------
 		*/
 		Toast.show({
-			text1: 'Error!',
-			type: 'error',
-			closeIconSize: 20,
-			iconColor: '#FFFFFF',
-			visibilityTime: 5000,
-			textColor: '#FFFFFF',
-			backgroundColor: '#fc3f35',
-			text2: errorMessage || message,
+			theme: 'dark',
+			text2: message,
+			type: 'custom' as any,
 		});
 	};
 
@@ -86,13 +81,27 @@ class Utils {
 		Toast.show({
 			text1: title,
 			text2: message,
-			type: 'success',
-			closeIconSize: 20,
-			iconColor: '#FFFFFF',
-			textColor: '#FFFFFF',
-			backgroundColor: '#E2F9D2',
+			theme: 'light',
+			type: 'custom' as any,
 		});
 	};
+
+	/**
+	|--------------------------------------------------
+	| Generates a list of years
+	|--------------------------------------------------
+	*/
+	generateYears() {
+		const startYear = 1940;
+		const endYear = new Date().getFullYear() - 15;
+		const years = [];
+
+		for (let year = startYear; year <= endYear; year++) {
+			years.push(year);
+		}
+
+		return years;
+	}
 }
 
 export default new Utils();

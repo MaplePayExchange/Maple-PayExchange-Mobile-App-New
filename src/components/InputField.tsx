@@ -8,7 +8,7 @@ import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
-import { View, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpacity } from 'react-native';
+import { View, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -16,8 +16,9 @@ import { View, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpac
  |--------------------------------------------------
  */
 import MPText from './MPText';
+import CountriesData from '@/data/country.json';
 import { FLAG_CANADA, FLAG_NIGERIA } from '@/constants/app.constant';
-import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon } from '@/assets/svgs';
+import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon, SearchIcon } from '@/assets/svgs';
 
 /**
 |--------------------------------------------------
@@ -35,10 +36,12 @@ interface Props<T extends FieldValues> extends TextInputProps {
 	type?: 'phone' | 'email' | 'text' | 'password';
 }
 
-const COUNTRY_CODES = [
-	{ code: '+1', 'short-name': 'CAD', 'long-name': 'Canada', flag: FLAG_CANADA },
-	{ code: '+234', 'short-name': 'NGN', 'long-name': 'Nigeria', flag: FLAG_NIGERIA },
-];
+interface CountryCode {
+	name: string;
+	flag: string;
+	code: string;
+	dial_code: string;
+}
 
 export default function InputField<T extends FieldValues>({
 	name,
@@ -57,8 +60,9 @@ export default function InputField<T extends FieldValues>({
     |--------------------------------------------------
     */
 	const [visible, setVisible] = React.useState<boolean>(false);
+	const [searchQuery, setSearchQuery] = React.useState<string>('');
 	const [showPassword, setShowPassword] = React.useState<boolean>(false);
-	const [phoneInput, setPhoneInput] = React.useState<(typeof COUNTRY_CODES)[0] | null>(null);
+	const [phoneInput, setPhoneInput] = React.useState<CountryCode | null>(null);
 
 	/**
     |--------------------------------------------------
@@ -67,8 +71,8 @@ export default function InputField<T extends FieldValues>({
     */
 	React.useEffect(() => {
 		if (type === 'phone' && phoneInput === null) {
-			setPhoneInput(COUNTRY_CODES[0]);
-			getCountryCode?.(COUNTRY_CODES[0].code);
+			setPhoneInput(CountriesData[0]);
+			getCountryCode?.(CountriesData[0].dial_code);
 		}
 	}, []);
 
@@ -116,7 +120,7 @@ export default function InputField<T extends FieldValues>({
 										onPress={() => setVisible(!visible)}
 									>
 										<MPText weight="medium" className="text-sm text-[#333333]">
-											{phoneInput?.['short-name']}
+											{phoneInput?.flag}
 										</MPText>
 										<CarretDownIcon />
 									</Pressable>
@@ -128,7 +132,7 @@ export default function InputField<T extends FieldValues>({
                                 |--------------------------------------------------
                                 */}
 								{type === 'phone' && (
-									<TextInput value={phoneInput?.code} className="pointer-events-none pr-0.5" />
+									<TextInput value={phoneInput?.dial_code} className="pointer-events-none pr-0.5" />
 								)}
 								<TextInput
 									value={value}
@@ -139,6 +143,7 @@ export default function InputField<T extends FieldValues>({
 									className="max-w-[90%] min-w-[40%]"
 									key={showPassword ? 'visible' : 'hidden'}
 									{...rest}
+									style={{ color: 'black' }}
 									secureTextEntry={type === 'password' && !showPassword}
 								/>
 
@@ -223,7 +228,7 @@ export default function InputField<T extends FieldValues>({
             |--------------------------------------------------
             */}
 			<Modal animationType="slide" transparent visible={visible}>
-				<View className="w-full bg-white mt-auto h-[50%] rounded-t-3xl p-6">
+				<View className="w-full bg-white mt-auto h-[70%] rounded-t-3xl p-6">
 					<View className="items-center justify-between mb-4" style={{ flexDirection: 'row' }}>
 						<MPText weight="semibold" className="text-base">
 							Country code
@@ -240,39 +245,65 @@ export default function InputField<T extends FieldValues>({
 					</View>
 
 					{/**
+					|--------------------------------------------------
+					| Content
+					|--------------------------------------------------
+					*/}
+					<View className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5">
+						<TextInput
+							className="text-sm"
+							value={searchQuery}
+							placeholder="Search"
+							placeholderTextColor="#484848"
+							onChangeText={(value) => setSearchQuery(value)}
+						/>
+
+						{/**
+						|--------------------------------------------------
+						| Search icon
+						|--------------------------------------------------
+						*/}
+						<SearchIcon />
+					</View>
+
+					{/**
                     |--------------------------------------------------
                     | Country code
                     |--------------------------------------------------
                     */}
-					{COUNTRY_CODES.map((_code) => (
-						<TouchableOpacity
-							activeOpacity={0.8}
-							key={_code['short-name']}
-							className="items-center gap-3 mb-4"
-							style={{ flexDirection: 'row' }}
-							onPress={() => {
-								setPhoneInput(_code);
-								getCountryCode?.(_code.code);
-								setVisible(false);
-							}}
-						>
-							{/**
-							|--------------------------------------------------
-							| Flag icon
-							|--------------------------------------------------
-							*/}
-							<Image source={_code.flag} className="w-[20px] h-[20px]" />
+					<ScrollView>
+						{CountriesData.filter((item) =>
+							item.name.toLowerCase().includes(searchQuery.toLowerCase())
+						).map((_code) => (
+							<TouchableOpacity
+								key={_code.code}
+								activeOpacity={0.8}
+								className="items-center gap-3 mb-4"
+								style={{ flexDirection: 'row' }}
+								onPress={() => {
+									setPhoneInput(_code);
+									getCountryCode?.(_code.dial_code);
+									setVisible(false);
+								}}
+							>
+								{/**
+								|--------------------------------------------------
+								| Flag icon
+								|--------------------------------------------------
+								*/}
+								<MPText>{_code.flag}</MPText>
 
-							{/**
-							|--------------------------------------------------
-							| Label
-							|--------------------------------------------------
-							*/}
-							<MPText>
-								{_code.code} - {_code['short-name']}
-							</MPText>
-						</TouchableOpacity>
-					))}
+								{/**
+								|--------------------------------------------------
+								| Label
+								|--------------------------------------------------
+								*/}
+								<MPText>
+									{_code.code} - {_code.dial_code}
+								</MPText>
+							</TouchableOpacity>
+						))}
+					</ScrollView>
 				</View>
 			</Modal>
 		</React.Fragment>

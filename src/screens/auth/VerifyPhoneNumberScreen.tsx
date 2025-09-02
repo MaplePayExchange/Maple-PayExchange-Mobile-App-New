@@ -47,7 +47,7 @@ export default function VerifyPhoneNumberScreen() {
 	*/
 	const { verificationData } = useUserStore();
 	const { mutate, isPending } = useVerifyOtp('phone');
-	const [countDown, setCountDown] = React.useState<number>(30);
+	const [countDown, setCountDown] = React.useState<number>(60);
 	const { mutate: mutateRequestOtp, isPending: isPendingRequestOtp } = useRequestOtp('phone');
 
 	/**
@@ -64,7 +64,7 @@ export default function VerifyPhoneNumberScreen() {
 		|--------------------------------------------------
 		*/
 		const interval = setInterval(() => {
-			setCountDown(countDown - 1);
+			setCountDown((prevCount) => (prevCount !== 0 ? prevCount - 1 : 0));
 		}, 1000);
 
 		/**
@@ -144,7 +144,7 @@ export default function VerifyPhoneNumberScreen() {
 					className="text-sm text-[#FF6A00]"
 					onPress={() => {
 						mutateRequestOtp({ phoneNumber: verificationData?.phoneNumber, verificationType: 'phone' });
-						setCountDown(30);
+						setCountDown(60);
 					}}
 				>
 					Resend {countDown}

@@ -20,8 +20,8 @@ import { useUserStore } from '@/zustand/userStore';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
-import { clampFontSize, MONEY_PAD } from '@/constants/app.constant';
 import { useStartVeriffSession } from '@/services/auth.services';
+import { clampFontSize, MONEY_PAD } from '@/constants/app.constant';
 
 type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycStepsScreen'>;
 export default function KysStepsScreen() {

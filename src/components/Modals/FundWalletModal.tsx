@@ -5,9 +5,10 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { Svg, Path } from 'react-native-svg';
+import Tooltip from '../Tooltip';
 import { View, Modal, Pressable } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
+import { Svg, Path, Defs, Stop, LinearGradient } from 'react-native-svg';
 
 /**
  |--------------------------------------------------
@@ -19,7 +20,7 @@ import utils from '@/lib/utils';
 import MPButton from '../MPButton';
 import HeaderWrapper from '../Header';
 import ScreenWrapper from '../Wrapper';
-import { CopyIcon } from '@/assets/svgs';
+import { CopyIcon, InfoIcon } from '@/assets/svgs';
 import { Wallet } from '@/interfaces/wallet.interface';
 import { useVerifyInteracTransfer } from '@/services/user.services';
 
@@ -41,6 +42,7 @@ export default function FundWalletModal({
 	|--------------------------------------------------
 	*/
 	const queryClient = useQueryClient();
+	const [showTip, setShowtip] = React.useState<boolean>(false);
 	const { mutate, isPending } = useVerifyInteracTransfer(() => setShowFundWalletModal(false));
 
 	/**
@@ -72,8 +74,12 @@ export default function FundWalletModal({
                     */}
 					<View className="bg-[#F9F9F9] p-5 rounded-3xl">
 						{selectedWallet?.currency === 'CAD' && (
-							<View className="h-[20px] w-full rounded-3xl bg-[#FFFAEB] px-6 border-[#FEDF89] border justify-center mb-4">
-								<MPText weight="medium" className="text-xs text-[#B54708]" style={{ lineHeight: 12 }}>
+							<View className="h-[20px] w-[60%] rounded-3xl bg-[#FFFAEB] px-6 border-[#FEDF89] border justify-center mb-4">
+								<MPText
+									weight="medium"
+									className="text-xs text-[#B54708]"
+									style={{ lineHeight: 14, fontSize: 12 }}
+								>
 									No third-party deposits.{' '}
 								</MPText>
 							</View>
@@ -85,16 +91,43 @@ export default function FundWalletModal({
                         |--------------------------------------------------
                         */}
 						<View className={clsx(selectedWallet?.currency === 'CAD' ? 'flex' : 'hidden')}>
-							<MPText weight="semibold" className="text-base">
-								Fund via Interac auto-deposit
-							</MPText>
+							<View className="flex-row items-center gap-2 z-50">
+								<MPText style={{ fontSize: 16 }} weight="semibold" className="text-base">
+									Fund via Interac
+								</MPText>
+
+								<View className="relative">
+									{/**
+									|--------------------------------------------------
+									| Icon
+									|--------------------------------------------------
+									*/}
+									<Pressable onPress={() => setShowtip(!showTip)}>
+										<InfoIcon />
+									</Pressable>
+
+									{/**
+									|--------------------------------------------------
+									| Popup
+									|--------------------------------------------------
+									*/}
+									{showTip && (
+										<Tooltip
+											position="center"
+											text="Interac e-Transfer must be sent from a bank account with the same legal name as your Maple account."
+										/>
+									)}
+								</View>
+							</View>
+
 							{/**
                             |--------------------------------------------------
                             | Instructions
                             |--------------------------------------------------
                             */}
-							<MPText weight="semibold" className="text-sm text-[#767676]">
-								Follow the instructions below to fund your Maple CAD wallet:
+							<MPText weight="medium" className="text-sm text-[#767676]">
+								Follow the instructions below to fund your Maple CAD wallet, payment details can be
+								shared across apps:
 							</MPText>
 
 							{/**
@@ -125,7 +158,10 @@ export default function FundWalletModal({
 									style={{ lineHeight: 18 }}
 									className="text-sm flex-1 text-[#767676]"
 								>
-									Log into your banking app and send money to your Interac email
+									Log into your banking app and send money to{' '}
+									<MPText weight="semibold" className="text-black">
+										payments@mpexchange.ca
+									</MPText>
 								</MPText>
 							</View>
 
@@ -157,7 +193,7 @@ export default function FundWalletModal({
 									style={{ lineHeight: 18 }}
 									className="text-sm flex-1 text-[#767676]"
 								>
-									Make sure you are sending money from your verified Interac address
+									Make sure you are sending money from your verified interac address
 								</MPText>
 							</View>
 
@@ -189,7 +225,7 @@ export default function FundWalletModal({
 									style={{ lineHeight: 18 }}
 									className="text-sm flex-1 text-[#767676]"
 								>
-									It takes an average of 10-20 minutes for the funds ro appear in your wallet
+									It takes an average of 10-20 minutes for the funds to appear in your wallet
 								</MPText>
 							</View>
 
@@ -200,7 +236,11 @@ export default function FundWalletModal({
                             */}
 							<View className="h-[74px] bg-white rounded-3xl p-4 flex-row items-center mt-6">
 								<View>
-									<MPText weight="regular" className="text-xs text-[#767676]">
+									<MPText
+										weight="regular"
+										style={{ fontSize: 12 }}
+										className="text-xs text-[#767676]"
+									>
 										INTERAC EMAIL ADDRESS
 									</MPText>
 									<MPText className="text-sm" weight="medium">
@@ -217,21 +257,26 @@ export default function FundWalletModal({
 									className="ml-auto"
 									onPress={() => utils.copyToClipboard(selectedWallet?.email as string)}
 								>
-									<CopyIcon color="#FF6A00" />
+									<CopyIcon color="#767676" />
 								</Pressable>
 							</View>
 
 							<MPButton useGradientBg className="w-[194px] self-center mt-6">
-								<Pressable
-									onPress={() =>
-										mutate({ startDate: new Date(new Date().setDate(17)).toISOString() })
-									}
-									className="bg-white w-[98%] h-[93%] rounded-[40px] justify-center items-center"
-								>
+								<Pressable className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center">
 									<MPText weight="semibold" className="text-sm text-[#FF6A00]">
-										{isPending ? 'Verifying...' : 'I have made the payment'}
+										See rate
 									</MPText>
 								</Pressable>
+							</MPButton>
+
+							<MPButton
+								useGradientBg
+								className="w-[194px] self-center mt-6"
+								onPress={() => mutate({ startDate: new Date(new Date().setDate(17)).toISOString() })}
+							>
+								<MPText weight="semibold" className="text-sm text-white">
+									{isPending ? 'Verifying...' : 'I have made the payment'}
+								</MPText>
 							</MPButton>
 						</View>
 
@@ -241,15 +286,38 @@ export default function FundWalletModal({
                         |--------------------------------------------------
                         */}
 						<View className={clsx(selectedWallet?.currency === 'NGN' ? 'flex' : 'hidden')}>
-							<MPText weight="semibold" className="text-base">
-								Fund wallet via bank transfer
-							</MPText>
+							<View className="flex-row items-center gap-2 z-50">
+								<MPText style={{ fontSize: 16 }} weight="semibold" className="text-base">
+									Fund wallet via bank transfer
+								</MPText>
+
+								<View className="relative">
+									{/**
+									|--------------------------------------------------
+									| Icon
+									|--------------------------------------------------
+									*/}
+									<Pressable onPress={() => setShowtip(!showTip)}>
+										<InfoIcon />
+									</Pressable>
+
+									{/**
+									|--------------------------------------------------
+									| Popup
+									|--------------------------------------------------
+									*/}
+									{showTip && (
+										<Tooltip text="The bank transfer must be sent from a bank with the same legal name as your Maple Pay Account." />
+									)}
+								</View>
+							</View>
+
 							{/**
                             |--------------------------------------------------
                             | Instructions
                             |--------------------------------------------------
                             */}
-							<MPText weight="semibold" className="text-sm text-[#767676]">
+							<MPText weight="medium" className="text-sm text-[#767676] mt-1">
 								Transfer money from your bank to the following account:
 							</MPText>
 
@@ -266,7 +334,11 @@ export default function FundWalletModal({
                                     |--------------------------------------------------
                                     */}
 									<View>
-										<MPText weight="medium" className="text-sm text-[#767676]">
+										<MPText
+											weight="medium"
+											style={{ fontSize: 12 }}
+											className="text-sm text-[#767676]"
+										>
 											BANK NAME
 										</MPText>
 										<MPText weight="medium" className="text-sm">
@@ -300,7 +372,11 @@ export default function FundWalletModal({
                                     |--------------------------------------------------
                                     */}
 									<View>
-										<MPText weight="medium" className="text-sm text-[#767676]">
+										<MPText
+											weight="medium"
+											style={{ fontSize: 12 }}
+											className="text-sm text-[#767676]"
+										>
 											ACCOUNT NUMBER
 										</MPText>
 										<MPText weight="medium" className="text-sm">
@@ -336,7 +412,11 @@ export default function FundWalletModal({
                                     |--------------------------------------------------
                                     */}
 									<View>
-										<MPText weight="medium" className="text-sm text-[#767676]">
+										<MPText
+											weight="medium"
+											style={{ fontSize: 12 }}
+											className="text-sm text-[#767676]"
+										>
 											ACCOUNT HOLDER
 										</MPText>
 										<MPText weight="medium" className="text-sm">
@@ -358,22 +438,48 @@ export default function FundWalletModal({
 									</Pressable>
 								</View>
 
-								<MPButton useGradientBg className="w-[194px] self-center mt-6">
-									<Pressable
-										onPress={() => {
-											queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
-											setShowFundWalletModal(false);
-										}}
-										className="bg-white w-[98%] h-[93%] rounded-[40px] justify-center items-center"
-									>
-										<MPText weight="semibold" className="text-sm text-[#FF6A00]">
-											{isPending ? 'Verifying...' : 'I have made the payment'}
-										</MPText>
-									</Pressable>
+								<MPButton
+									useGradientBg
+									className="w-[194px] self-center mt-6"
+									onPress={() => {
+										queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+										setShowFundWalletModal(false);
+									}}
+								>
+									<MPText weight="semibold" className="text-sm text-[#FFFFFF]">
+										{isPending ? 'Verifying...' : 'I have made the payment'}
+									</MPText>
 								</MPButton>
 							</View>
 						</View>
 					</View>
+
+					{selectedWallet?.currency === 'CAD' && (
+						<Pressable className="flex-row items-center justify-center gap-3 mt-6">
+							<MPText weight="semibold" className="text-[#FF6A00]">
+								How to fund via interac
+							</MPText>
+							<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+								<Path
+									d="M13.8538 8.35354L9.35375 12.8535C9.25993 12.9474 9.13268 13.0001 9 13.0001C8.86732 13.0001 8.74007 12.9474 8.64625 12.8535C8.55243 12.7597 8.49972 12.6325 8.49972 12.4998C8.49972 12.3671 8.55243 12.2399 8.64625 12.146L12.2931 8.49979H2.5C2.36739 8.49979 2.24021 8.44711 2.14645 8.35334C2.05268 8.25958 2 8.1324 2 7.99979C2 7.86718 2.05268 7.74 2.14645 7.64624C2.24021 7.55247 2.36739 7.49979 2.5 7.49979H12.2931L8.64625 3.85354C8.55243 3.75972 8.49972 3.63247 8.49972 3.49979C8.49972 3.36711 8.55243 3.23986 8.64625 3.14604C8.74007 3.05222 8.86732 2.99951 9 2.99951C9.13268 2.99951 9.25993 3.05222 9.35375 3.14604L13.8538 7.64604C13.9002 7.69248 13.9371 7.74762 13.9623 7.80832C13.9874 7.86902 14.0004 7.93408 14.0004 7.99979C14.0004 8.0655 13.9874 8.13056 13.9623 8.19126C13.9371 8.25196 13.9002 8.3071 13.8538 8.35354Z"
+									fill="url(#paint0_linear_1129_4386)"
+								/>
+								<Defs>
+									<LinearGradient
+										id="paint0_linear_1129_4386"
+										x1="8.0002"
+										y1="2.99951"
+										x2="8.0002"
+										y2="13.0001"
+										gradientUnits="userSpaceOnUse"
+									>
+										<Stop stopColor="#EE0979" />
+										<Stop offset="1" stopColor="#FF6A00" />
+									</LinearGradient>
+								</Defs>
+							</Svg>
+						</Pressable>
+					)}
 				</ScreenWrapper>
 			</View>
 		</Modal>

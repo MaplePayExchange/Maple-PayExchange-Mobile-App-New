@@ -160,9 +160,9 @@ export const useRequestOtp = (step: CurrentStep) => {
 			useUserStore.setState((state) => ({
 				verificationData: {
 					...state.verificationData,
-					email: data?.email,
-					sessionId: data?.sessionId,
-					phoneNumber: data?.phoneNumber,
+					email: data?.email || data?.record?.email,
+					sessionId: data?.sessionId || data?.record?.sessionId,
+					phoneNumber: data?.phoneNumber || data?.record?.phoneNumber,
 				},
 			}));
 
@@ -222,14 +222,12 @@ export const useVerifyOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
-			console.log('✅ User created:', data);
 			useUserStore.setState((state) => ({
 				verificationData: {
 					...state.verificationData,
 					currentStep: step,
 					email: data?.email,
 					sessionId: data?.sessionId,
-					phoneNumber: data?.phoneNumber,
 				},
 			}));
 
@@ -288,7 +286,7 @@ export const useCreateUser = () => {
 			| Navigates the user to the next steps screen
 			|--------------------------------------------------
 			*/
-			navigation.navigate(ROUTE_NAMES.KYC_STEPS);
+			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		},
 
 		/**

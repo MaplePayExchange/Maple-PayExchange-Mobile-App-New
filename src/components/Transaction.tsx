@@ -100,14 +100,16 @@ export default function Transaction({ onClick, transaction }: Props) {
             |--------------------------------------------------
             */}
 			<View className="items-start">
-				<MPText weight="medium" className="text-sm">
+				<MPText weight="medium" className="text-sm mb-1">
 					{type === 'fund_exchange'
 						? 'Fund exchange'
 						: type === 'incoming_transaction'
 							? 'Incoming Transaction'
 							: 'Outgoing Transaction'}
 				</MPText>
-				<MPText className="text-xs text-[#767676]">{details}</MPText>
+				<MPText style={{ fontSize: 12 }} className="text-xs text-[#767676]">
+					{details}
+				</MPText>
 			</View>
 
 			{/**
@@ -116,10 +118,12 @@ export default function Transaction({ onClick, transaction }: Props) {
             |--------------------------------------------------
             */}
 			<View className="items-end ml-auto">
-				<MPText weight="semibold" className="text-sm">
+				<MPText weight="semibold" className="text-sm mb-1">
 					{currencyType === 'CAD' ? '$' : '₦'} {amount}
 				</MPText>
-				<MPText className="text-xs text-[#767676]">{transactionDate}</MPText>
+				<MPText style={{ fontSize: 12 }} className="text-xs text-[#767676]">
+					{transactionDate}
+				</MPText>
 			</View>
 
 			{/**

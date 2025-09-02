@@ -16,7 +16,7 @@ import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
-import { clampFontSize, MONEY_PAD } from '@/constants/app.constant';
+import { clampFontSize, SEND_FUNDS_FEEDBACK } from '@/constants/app.constant';
 
 export default function SendFundsFeedbackScreen() {
 	/**
@@ -42,7 +42,7 @@ export default function SendFundsFeedbackScreen() {
             */}
 			<View className="justify-center items-center flex-1">
 				<Image
-					source={MONEY_PAD}
+					source={SEND_FUNDS_FEEDBACK}
 					style={{ width: clampFontSize(173, 100, 200), height: clampFontSize(171, 100, 200) }}
 				/>
 

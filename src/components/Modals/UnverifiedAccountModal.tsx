@@ -59,7 +59,6 @@ export default function UnverifiedAcountModal({
     | States
     |--------------------------------------------------
     */
-	const { mutate, isPending } = useStartVeriffSession();
 
 	/**
     |--------------------------------------------------
@@ -110,7 +109,7 @@ export default function UnverifiedAcountModal({
 								style={{ fontSize: 24, lineHeight: 32 }}
 								className="text-[24px] text-[#1A1A1A]"
 							>
-								Verify your identity to start using MPExchange
+								Complete your verification to start using MPExchange
 							</MPText>
 
 							{/**
@@ -128,16 +127,13 @@ export default function UnverifiedAcountModal({
                             | Identities
                             |--------------------------------------------------
                             */}
-							<View
-								className={clsx('mb-12 gap-6 mt-[40px]', isPending && 'pointer-events-none opacity-50')}
-							>
+							<View className={clsx('mb-12 gap-6 mt-[40px]')}>
 								<KYCSteps
-									isLoading={isPending}
 									icon={KYC_VERIFICATION}
 									label="KYC Verification"
 									subtext="Complete KYC verification"
 									status={isVerified ? 'completed' : 'pending'}
-									onClick={() => mutate({ email: userData?.user?.mail.email as string })}
+									onClick={() => navigation.navigate(ROUTE_NAMES.KYC_STEPS as never)}
 								/>
 								<KYCSteps
 									icon={BVN_VERIFICATION}
@@ -170,8 +166,7 @@ export default function UnverifiedAcountModal({
                                 */}
 								<MPButton
 									useGradientBg
-									isLoading={isPending}
-									onPress={() => mutate({ email: userData?.user?.mail.email as string })}
+									onPress={() => navigation.navigate(ROUTE_NAMES.KYC_STEPS as never)}
 								>
 									<MPText weight="semibold" className="text-white text-sm">
 										Start

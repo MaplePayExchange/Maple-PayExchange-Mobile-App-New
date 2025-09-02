@@ -265,6 +265,16 @@ export default function AmountScreen() {
 							Insufficient funds in your wallet
 						</MPText>
 					)}
+					{/**
+					|--------------------------------------------------
+					| If the amount is less than 100 naira
+					|--------------------------------------------------
+					*/}
+					{params.transactionType === 'NGN-to-NGN' && Number(amountToSend) < 100 && (
+						<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+							You can't send less than 100
+						</MPText>
+					)}
 
 					{/**
 					|--------------------------------------------------

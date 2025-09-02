@@ -92,7 +92,7 @@ export default function SplashScreen() {
 		*/
 		if (isRegistered) {
 			clearTimeout(timeout);
-			navigation.navigate(ROUTE_NAMES.LOGIN);
+			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		}
 
 		/**

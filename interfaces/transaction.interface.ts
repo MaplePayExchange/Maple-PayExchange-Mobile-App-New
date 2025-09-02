@@ -81,6 +81,7 @@ export interface InteracTransactionRequest {
 	description?: string;
 	transactionPin: string;
 	securityQuestion: string;
+	saveBeneficiary?: boolean;
 	securityQuestionAnswer: string;
 	currency: (typeof _ALLOWED_CURRENCIES)[number];
 }
@@ -94,5 +95,6 @@ export interface BankTransferRequest {
 	accountName: string;
 	accountNumber: string;
 	transactionPin: string;
+	saveBeneficiary?: boolean;
 	currency: (typeof _ALLOWED_CURRENCIES)[number];
 }

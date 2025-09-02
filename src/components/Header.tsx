@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
@@ -13,8 +14,8 @@ import { Pressable, View } from 'react-native';
  */
 import MPText from './MPText';
 import { BackArrowIcon } from '@/assets/svgs';
+import { fontSizes } from '@/constants/app.constant';
 import { useNavigation } from '@react-navigation/native';
-import clsx from 'clsx';
 
 interface Props {
 	title: string;
@@ -58,7 +59,11 @@ export default function HeaderWrapper({
 				)}
 
 				<View className={clsx(center && '-translate-x-[50%] left-1/2 absolute')}>
-					<MPText weight="semibold" style={{ lineHeight: 26 }} className={clsx('text-2xl text-[#1A1A1A]')}>
+					<MPText
+						weight="semibold"
+						className={clsx('text-[#1A1A1A]')}
+						style={{ lineHeight: 26, fontSize: fontSizes.FONT24 }}
+					>
 						{title}
 					</MPText>
 				</View>
@@ -69,7 +74,7 @@ export default function HeaderWrapper({
             | Subtitle
             |--------------------------------------------------
             */}
-			<MPText weight="medium" className="text-sm mt-1 text-[#767676] leading-6">
+			<MPText weight="medium" style={{ fontSize: fontSizes.FONT14 }} className="mt-1 text-[#767676] leading-6">
 				{subtitle}
 			</MPText>
 		</View>

@@ -5,6 +5,7 @@
 */
 export { default as AddIcon } from './AddIcon';
 export { default as EyeIcon } from './EyeIcon';
+export { default as InfoIcon } from './InfoIcon';
 export { default as CopyIcon } from './CopyIcon';
 export { default as BellIcon } from './BellIcon';
 export { default as HomeIcon } from './HomeIcon';

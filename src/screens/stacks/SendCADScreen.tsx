@@ -261,7 +261,11 @@ export default function SendCADScreen() {
                                 */
 								triggerChildren={
 									<View>
-										<MPText weight="medium" className="text-base text-[#484848]">
+										<MPText
+											weight="medium"
+											style={{ fontSize: 13 }}
+											className="text-base text-[#484848]"
+										>
 											{selectedQuestion || 'Select security question'}
 										</MPText>
 									</View>
@@ -305,7 +309,11 @@ export default function SendCADScreen() {
 															: 'border-[#EEEEEE]'
 													)}
 												>
-													<MPText weight="medium" className="text-sm">
+													<MPText
+														weight="medium"
+														className="text-sm"
+														style={{ fontSize: 12 }}
+													>
 														{item.text}
 													</MPText>
 												</Pressable>

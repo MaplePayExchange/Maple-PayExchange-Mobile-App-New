@@ -13,7 +13,6 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
  */
 import LoginScreen from '../auth/LoginScreen';
 import SplashScreen from '../auth/SplashScreen';
-import KysStepsScreen from '../auth/KycStepsScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import CreateUserScreen from '../auth/CreateUserScreen';
 import OnboardingScreen from '../auth/OnboardingScreen';
@@ -45,10 +44,6 @@ const _ROUTES = [
 	{
 		name: ROUTE_NAMES.LOGIN,
 		component: LoginScreen,
-	},
-	{
-		name: ROUTE_NAMES.KYC_STEPS,
-		component: KysStepsScreen,
 	},
 	{
 		name: ROUTE_NAMES.CREATE_USER,

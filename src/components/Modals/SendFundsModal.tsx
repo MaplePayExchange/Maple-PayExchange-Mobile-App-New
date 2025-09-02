@@ -79,11 +79,15 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
                         | Label
                         |--------------------------------------------------
                         */}
-						<View>
+						<View className='gap-1'>
 							<MPText weight="medium" className="text-sm">
 								{details?.[type]?.title}
 							</MPText>
-							<MPText style={{ lineHeight: 14 }} weight="medium" className="text-xs text-[#767676]">
+							<MPText
+								weight="medium"
+								className="text-xs text-[#767676]"
+								style={{ lineHeight: 14, fontSize: 12 }}
+							>
 								{details?.[type]?.subtitle}
 							</MPText>
 						</View>
@@ -101,11 +105,15 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
                         | Label
                         |--------------------------------------------------
                         */}
-						<View>
+						<View className="gap-1">
 							<MPText weight="medium" className="text-sm">
 								Send funds to beneficiary
 							</MPText>
-							<MPText style={{ lineHeight: 14 }} weight="medium" className="text-xs text-[#767676]">
+							<MPText
+								weight="medium"
+								className="text-xs text-[#767676]"
+								style={{ lineHeight: 14, fontSize: 12 }}
+							>
 								Send funds to saved beneficiary
 							</MPText>
 						</View>

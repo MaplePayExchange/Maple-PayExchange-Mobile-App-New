@@ -24,6 +24,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
  */
 import './global.css';
 import RootNavigation from './src/screens/navigation/RootNavigation';
+import CustomToast from './src/components/CustomToast';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,10 @@ export default function App() {
 		Manrope_400Regular,
 		Manrope_600SemiBold,
 	});
+
+	const toastConfig = {
+		custom: (props: any) => <CustomToast {...props} />,
+	};
 
 	React.useEffect(() => {
 		const subscription = Linking.addEventListener('url', ({ url }) => {
@@ -88,7 +93,7 @@ export default function App() {
 			| Toast manager
 			|--------------------------------------------------
 			*/}
-			<ToastManager animationStyle="fade" />
+			<ToastManager animationStyle="fade" config={toastConfig} />
 		</View>
 	);
 }

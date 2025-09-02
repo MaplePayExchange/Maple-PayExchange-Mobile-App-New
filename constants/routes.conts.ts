@@ -32,5 +32,6 @@ export enum ROUTE_NAMES {
 	SEND_CAD_FUNDS = 'SendCADScreen',
 	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
 	SEND_FUNDS_FEEDBACK = 'SendFundsFeedbackScreen',
+	SEND_FUNDS_BENEFICIARY = 'SendFundsBeneficiaryScreen',
 	SEND_FUNDS_ERROR_FEEDBACK = 'SendFundsErrorFeedbackScreen',
 }

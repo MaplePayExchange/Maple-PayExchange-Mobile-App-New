@@ -30,6 +30,13 @@ export interface LoginResponse {
 	token_type: 'BEARER' | string | null;
 }
 
+interface BiometricsData {
+	email?: string;
+	password?: string;
+	isTurnedOn?: boolean;
+	hasPromptedUser?: boolean;
+}
+
 /**
 |--------------------------------------------------
 | User interface
@@ -39,8 +46,10 @@ interface UserState {
 	name: string;
 	isLoggedIn: boolean;
 	isRegistered: boolean;
+	showBiometricsModal: boolean;
 	selectedWallet: Wallet | null;
 	userData: LoginResponse | undefined;
+	biometricsInfo: BiometricsData | null;
 	verificationData: VerificationData | undefined;
 
 	/**
@@ -53,6 +62,8 @@ interface UserState {
 	setIsRegistered: (value: boolean) => void;
 	setUserData: (data: LoginResponse) => void;
 	setSelectedWallet: (wallet: Wallet) => void;
+	setBiometricsModal: (value: boolean) => void;
+	setBiometricsInfo: (data: BiometricsData | null) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
 }
 
@@ -74,6 +85,8 @@ export const useUserStore = create<UserState>()(
 			isRegistered: false,
 			userData: undefined,
 			selectedWallet: null,
+			biometricsInfo: null,
+			showBiometricsModal: false,
 			verificationData: undefined,
 
 			/**
@@ -84,7 +97,9 @@ export const useUserStore = create<UserState>()(
 			setName: (name) => set({ name }),
 			setIsLoggedIn: (status) => set({ isLoggedIn: status }),
 			setIsRegistered: (value) => set({ isRegistered: value }),
+			setBiometricsInfo: (data) => set({ biometricsInfo: data }),
 			setSelectedWallet: (value) => set({ selectedWallet: value }),
+			setBiometricsModal: (value) => set({ showBiometricsModal: value }),
 			setVerificationData: (data) =>
 				set((state) => {
 					/**

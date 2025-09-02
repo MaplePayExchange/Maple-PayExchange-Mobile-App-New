@@ -37,7 +37,11 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 	*/
 	return (
 		<View className="justify-center items-center">
-			<MPText weight="medium" className={clsx('text-sm', focused && 'text-[#FF6A00]')}>
+			<MPText
+				weight="medium"
+				style={{ fontSize: 12 }}
+				className={clsx('text-sm', focused ? 'text-[#FF6A00]' : 'text-[#A3A3A3]')}
+			>
 				{children}
 			</MPText>
 
@@ -47,7 +51,7 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 			|--------------------------------------------------
 			*/}
 			{focused && (
-				<View className="h-[6px] w-[50px] bg-[#EE0979] rounded-t-[6px] overflow-hidden">
+				<View className="h-[4px] w-[50px] bg-[#EE0979] rounded-t-[6px] overflow-hidden">
 					<LinearGradient
 						end={{ x: 1, y: 0 }}
 						start={{ x: 0, y: 0 }}

@@ -25,9 +25,9 @@ export default function RedRightArrowIcon() {
 				<Path
 					d="M15.8335 9.99902L3.3335 9.99902"
 					stroke="url(#paint0_linear_170_5886)"
-					stroke-width="1.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+					strokeWidth="1.5"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				/>
 				<Path
 					d="M12.5 5.83301L15.9596 9.29257C16.2929 9.6259 16.4596 9.79257 16.4596 9.99967C16.4596 10.2068 16.2929 10.3734 15.9596 10.7068L12.5 14.1663"

@@ -75,9 +75,9 @@ export const fontSizes = {
 	FONT9: clampFontSize(9, 6, 11),
 	FONT10: clampFontSize(10, 7, 12),
 	FONT11: clampFontSize(11, 8, 13),
-	FONT12: clampFontSize(12, 9, 14),
+	FONT12: clampFontSize(12, 12, 14),
 	FONT13: clampFontSize(13, 9, 15),
-	FONT14: clampFontSize(14, 10, 16),
+	FONT14: clampFontSize(14, 14, 16),
 	FONT15: clampFontSize(15, 10, 17),
 	FONT16: clampFontSize(16, 11, 18),
 	FONT17: clampFontSize(17, 11, 19),
@@ -144,9 +144,11 @@ export const SEND_FUNDS = require(`${_IMAGE_PATH}/send_funds.png`);
 export const FLAG_CANADA = require(`${_IMAGE_PATH}/flag_canada.png`);
 export const BENEFICIARY = require(`${_IMAGE_PATH}/beneficiary.png`);
 export const FLAG_NIGERIA = require(`${_IMAGE_PATH}/flag_nigeria.png`);
-export const ONBOARDING_ONE = require(`${_IMAGE_PATH}/onboarding_one.png`);
+export const ONBOARDING_ONE = require(`${_IMAGE_PATH}/onboarding_one.jpg`);
 export const ONBOARDING_TWO = require(`${_IMAGE_PATH}/onboarding_two.png`);
 export const TRANSACTION_PIN = require(`${_IMAGE_PATH}/transaction_pin.png`);
 export const ONBOARDING_THREE = require(`${_IMAGE_PATH}/onboarding_three.png`);
 export const KYC_VERIFICATION = require(`${_IMAGE_PATH}/kyc_verification.png`);
 export const BVN_VERIFICATION = require(`${_IMAGE_PATH}/bvn_verification.png`);
+export const SEND_FUNDS_FEEDBACK = require(`${_IMAGE_PATH}/send_money_feedback.png`);
+export const SEND_FUNDS_FEEDBACK_ERROR = require(`${_IMAGE_PATH}/send_funds_error.png`);

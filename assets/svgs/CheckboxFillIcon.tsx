@@ -23,15 +23,15 @@ export default function CheckboxFillIcon() {
 		<View>
 			<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 				<Path
-					d="M0 4C0 1.79086 1.79086 0 4 0H12C14.2091 0 16 1.79086 16 4V12C16 14.2091 14.2091 16 12 16H4C1.79086 16 0 14.2091 0 12V4Z"
+					d="M0 4C0 2.29086 2.29086 0 4 0H12C14.2091 0 16 2.29086 16 4V12C16 14.2091 14.2091 16 12 16H4C2.29086 16 0 14.2091 0 12V4Z"
 					fill="url(#paint0_linear_684_2785)"
 				/>
 				<Path
 					stroke="white"
-					stroke-width="1.6666"
+					strokeWidth="1.6666"
 					d="M12 5L6.5 10.5L4 8"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+					strokeLinecap="round"
+					strokeLinejoin="round"
 				/>
 				<Defs>
 					<LinearGradient

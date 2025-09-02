@@ -3,8 +3,11 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { BlurView } from 'expo-blur';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, ImageBackground, FlatList, NativeSyntheticEvent, NativeScrollEvent, Dimensions } from 'react-native';
 
@@ -15,10 +18,9 @@ import { View, ImageBackground, FlatList, NativeSyntheticEvent, NativeScrollEven
  */
 import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { ONBOARDING_ONE, ONBOARDING_THREE, ONBOARDING_TWO } from '@/constants/app.constant';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 const { width } = Dimensions.get('window');
 
@@ -71,44 +73,46 @@ export default function OnboardingScreen() {
 	const autoScrollInterval = 4000;
 
 	/**
-    |--------------------------------------------------
-    | Auto scroll effect
-    |--------------------------------------------------
-    */
+	|--------------------------------------------------
+	| Auto scroll effect
+	|--------------------------------------------------
+	*/
 	React.useEffect(() => {
+		if (currentStep >= ONBOARDING_DATA.length - 1) return;
+
 		/**
-        |--------------------------------------------------
-        | Scroll timer
-        |--------------------------------------------------
-        */
+		|--------------------------------------------------
+		| Scroll timer
+		|--------------------------------------------------
+		*/
 		const timer = setInterval(() => {
 			/**
-            |--------------------------------------------------
-            | Gets the next index
-            |--------------------------------------------------
-            */
-			const nextIndex = currentStep < ONBOARDING_DATA.length - 1 ? currentStep + 1 : 0;
+			|--------------------------------------------------
+			| Gets the next index
+			|--------------------------------------------------
+			*/
+			const nextIndex = currentStep + 1;
 
 			/**
-            |--------------------------------------------------
-            | Scrolls to the next index
-            |--------------------------------------------------
-            */
+			|--------------------------------------------------
+			| Scrolls to the next index
+			|--------------------------------------------------
+			*/
 			flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
 
 			/**
-            |--------------------------------------------------
-            | Increments the current step
-            |--------------------------------------------------
-            */
+			|--------------------------------------------------
+			| Increments the current step
+			|--------------------------------------------------
+			*/
 			setCurrentStep(nextIndex);
 		}, autoScrollInterval);
 
 		/**
-        |--------------------------------------------------
-        | Clean up
-        |--------------------------------------------------
-        */
+		|--------------------------------------------------
+		| Clean up
+		|--------------------------------------------------
+		*/
 		return () => clearInterval(timer);
 	}, [currentStep]);
 
@@ -133,17 +137,49 @@ export default function OnboardingScreen() {
 			pagingEnabled
 			ref={flatListRef}
 			data={ONBOARDING_DATA}
-			renderItem={({ item }) => {
+			renderItem={({ item, index }) => {
 				return (
 					<ImageBackground source={item.image} className="flex-1 h-full" style={{ width, flex: 1 }}>
-						<BlurView intensity={30} tint="systemUltraThinMaterialDark" className="mt-auto h-[268px]">
+						<SafeAreaView className="z-20">
+							{/**
+							|--------------------------------------------------
+							| Indicator
+							|--------------------------------------------------
+							*/}
+							<View className="flex-row justify-between gap-4 px-6 z-40">
+								<View
+									className={clsx(
+										'w-[30%] h-[6px] rounded-lg',
+										index >= 0 ? 'bg-white' : 'bg-[#FFFFFF80]'
+									)}
+								/>
+								<View
+									className={clsx(
+										'w-[30%] h-[6px] rounded-lg',
+										index >= 1 ? 'bg-white' : 'bg-[#FFFFFF80]'
+									)}
+								/>
+								<View
+									className={clsx(
+										'w-[30%] h-[6px] rounded-lg',
+										index >= 2 ? 'bg-white' : 'bg-[#FFFFFF80]'
+									)}
+								/>
+							</View>
+						</SafeAreaView>
+
+						<BlurView intensity={20} tint="systemUltraThinMaterialDark" className="mt-auto h-[268px] z-20">
 							<View className="p-6">
 								{/**
                                 |--------------------------------------------------
                                 | Title
                                 |--------------------------------------------------
                                 */}
-								<MPText weight="bold" className="text-white text-2xl mb-3 tracking-tight">
+								<MPText
+									weight="bold"
+									style={{ fontSize: 24, lineHeight: 32 }}
+									className="text-white text-2xl mb-3 tracking-tight"
+								>
 									{item.title}
 								</MPText>
 
@@ -153,8 +189,8 @@ export default function OnboardingScreen() {
                                 |--------------------------------------------------
                                 */}
 								<MPText
-									style={{ lineHeight: 20 }}
 									weight="semibold"
+									style={{ lineHeight: 20, fontSize: 14 }}
 									className="leading-6 text-white text-sm"
 								>
 									{item.subtitle}
@@ -187,6 +223,13 @@ export default function OnboardingScreen() {
 								</MPButton>
 							</View>
 						</BlurView>
+
+						{/**
+						|--------------------------------------------------
+						| Overlay
+						|--------------------------------------------------
+						*/}
+						<View className="w-full z-10 absolute h-full flex-1 bg-black/30" />
 					</ImageBackground>
 				);
 			}}

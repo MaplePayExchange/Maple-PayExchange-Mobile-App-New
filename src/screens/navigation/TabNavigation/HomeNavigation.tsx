@@ -12,14 +12,16 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 |--------------------------------------------------
 */
 import AmountScreen from '../../stacks/AmountScreen';
+import SendNGNScreen from '../../stacks/SendNGNScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import SendCADScreen from '../../stacks/SendCADScreen';
+import KysStepsScreen from '../../stacks/KycStepsScreen';
 import DashboardScreen from '../../stacks/DashboardScreen';
 import VerifyBvnScreen from '../../stacks/VerifyBvnScreen';
 import SetTransactionPinScreen from '../../stacks/SetTransactionPinScreen';
 import SendFundsFeedbackScreen from '../../stacks/SendFundsFeedbackScreen';
+import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
 import SendFundsErrorFeedbackScreen from '../../stacks/SendFundsErrorFeedbackScreen';
-import SendNGNScreen from '../../stacks/SendNGNScreen';
 
 /**
 |--------------------------------------------------
@@ -34,7 +36,9 @@ const Stack = createStackNavigator();
 |--------------------------------------------------
 */
 const _ROUTES = [
+	{ name: ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, component: SendFundsBeneficiaryScreen },
 	{ name: 'DashboardScreen', component: DashboardScreen },
+	{ name: ROUTE_NAMES.KYC_STEPS, component: KysStepsScreen },
 	{ name: ROUTE_NAMES.AMOUNT_SCREEN, component: AmountScreen },
 	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },
 	{ name: ROUTE_NAMES.SEND_NGN_FUNDS, component: SendNGNScreen },

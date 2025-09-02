@@ -84,15 +84,30 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
 								value={`${transaction.sourceCurrency}${transaction.sourceAmount}`}
 							/>
 						)}
+
 						{/**
                         |--------------------------------------------------
                         | Amount received
                         |--------------------------------------------------
                         */}
-						<DataRepresentation
-							label="Amount received"
-							value={`${transaction.sourceCurrency === 'NGN' ? '₦' : '$'}${(transaction?.amountReceived ?? 0)?.toLocaleString()}`}
-						/>
+						{transaction.type === 'Incoming' && (
+							<DataRepresentation
+								label="Amount received"
+								value={`${transaction.sourceCurrency === 'NGN' ? '₦' : '$'}${(transaction?.amountReceived ?? 0)?.toLocaleString()}`}
+							/>
+						)}
+
+						{/**
+                        |--------------------------------------------------
+                        | Amount sent
+                        |--------------------------------------------------
+                        */}
+						{transaction.type === 'Outgoing' && (
+							<DataRepresentation
+								label="Amount received"
+								value={`${transaction.sourceCurrency === 'NGN' ? '₦' : '$'}${(transaction?.amountSent ?? 0)?.toLocaleString()}`}
+							/>
+						)}
 
 						{/**
                         |--------------------------------------------------
