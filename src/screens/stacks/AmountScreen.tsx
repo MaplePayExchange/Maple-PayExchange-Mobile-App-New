@@ -22,9 +22,10 @@ import { useUserStore } from '@/zustand/userStore';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import SelectField from '@/src/components/SelectField';
-import { useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
+import DataRepresentation from '@/src/components/DataRepresentation';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
+import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -36,6 +37,12 @@ export default function AmountScreen() {
 	| Api
 	|--------------------------------------------------
 	*/
+	const { data: rates } = useGetRates();
+	const NGNRate = rates?.items?.find((rate) => rate.exchange === 'NGN-TO-CAD');
+	const CADRate = rates?.items?.find((rate) => rate.exchange === 'CAD-TO-NGN');
+	const { mutate: mutateExchange, isPending: isPendingExchange } = useExchangeCurrency(() =>
+		setShowTransactionPin(false)
+	);
 	const { mutate: mutateNGN, isPending: isPendingNGN } = useSendWalletToBank(() => setShowTransactionPin(false));
 	const { mutate: mutateCAD, isPending: isPendingCAD } = useSendFundsToInterac(() => setShowTransactionPin(false));
 
@@ -67,18 +74,25 @@ export default function AmountScreen() {
 
 		/**
 		|--------------------------------------------------
-		| If not a valid number, reject input (optional)
+		| Allow numbers with optional decimals
 		|--------------------------------------------------
 		*/
-		if (raw === '' || /^[0-9]+$/.test(raw)) {
-			const num = raw === '' ? 0 : parseInt(raw, 10);
+		if (raw === '' || /^[0-9]*\.?[0-9]*$/.test(raw)) {
+			const num = raw === '' ? 0 : parseFloat(raw);
 
 			/**
 			|--------------------------------------------------
-			| Format with commas
+			| Format with commas (keep decimals if any)
 			|--------------------------------------------------
 			*/
-			const formatted = raw === '' ? '' : num.toLocaleString();
+			const parts = raw.split('.');
+			const formatted =
+				parts.length > 1
+					? `${parseInt(parts[0], 10).toLocaleString()}.${parts[1]}`
+					: raw === ''
+						? ''
+						: num.toLocaleString();
+
 			setAmountToSend(formatted);
 		}
 	};
@@ -93,23 +107,80 @@ export default function AmountScreen() {
 			mutateCAD({
 				currency: 'CAD',
 				transactionPin: pin,
-				amount: Number(amountToSend),
 				lastName: params.lastName as string,
 				email: params.interacEmail as string,
 				firstName: params.firstName as string,
+				saveBeneficiary: params.saveAsBeneficiary,
+				amount: Number(amountToSend.replaceAll(',', '')),
 				securityQuestion: params.securityQuestion as string,
 				securityQuestionAnswer: params.securityAnswer as string,
 			});
-		} else {
+		} else if (params.transactionType === 'NGN-to-NGN') {
 			mutateNGN({
 				currency: 'NGN',
 				transactionPin: pin,
 				bank: params.bank as any,
-				amount: Number(amountToSend),
 				accountName: params.accountName as string,
+				saveBeneficiary: params.saveAsBeneficiary,
 				accountNumber: params.accountNumber as string,
+				amount: Number(amountToSend.replaceAll(',', '')),
+			});
+		} else {
+			mutateExchange({
+				transactionPin: pin,
+				currency: selectedWallet?.currency as any,
+				amount: Number(amountToSend.replaceAll(',', '')),
+				exchangeCurrency: selectedWallet?.currency === 'NGN' ? 'CAD' : 'NGN',
+				rate: (selectedWallet?.currency === 'NGN' ? NGNRate?.rate : CADRate?.rate) || 0,
 			});
 		}
+	};
+
+	/**
+	|--------------------------------------------------
+	| Handle conversion information
+	|--------------------------------------------------
+	*/
+	const handleConversionInfo = (infoType: 'rate' | 'conversion') => {
+		let info = '';
+
+		/**
+		|--------------------------------------------------
+		| If the transaction type is not an exchange
+		|--------------------------------------------------
+		*/
+		if (params.transactionType !== 'SWAP' && infoType === 'rate') {
+			info = `${selectedWallet?.currency === 'NGN' ? `${1} NGN = ${1} NGN` : `${1} CAD = ${1} CAD`}`;
+		}
+
+		/**
+		|--------------------------------------------------
+		| If the transaction type is an exchange
+		|--------------------------------------------------
+		*/
+		if (params.transactionType === 'SWAP' && infoType === 'rate') {
+			info = `${selectedWallet?.currency === 'NGN' ? `${NGNRate?.rate} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate} NGN`}`;
+		}
+
+		/**
+		|--------------------------------------------------
+		| If the transaction type is not an exchange
+		|--------------------------------------------------
+		*/
+		if (params.transactionType !== 'SWAP' && infoType === 'conversion') {
+			info = `${selectedWallet?.currency === 'NGN' ? `=₦${amountToSend}` : `=$${amountToSend}`}`;
+		}
+
+		/**
+		|--------------------------------------------------
+		| If the transaction type is an exchange
+		|--------------------------------------------------
+		*/
+		if (params.transactionType === 'SWAP' && infoType === 'conversion') {
+			info = `${selectedWallet?.currency === 'NGN' ? `=$${Number(Number(amountToSend.replaceAll(',', '')) / Number(NGNRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}` : `=₦${Number(Number(amountToSend.replaceAll(',', '')) * Number(CADRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`}`;
+		}
+
+		return info;
 	};
 
 	/**
@@ -199,8 +270,8 @@ export default function AmountScreen() {
 								|--------------------------------------------------
 								*/}
 								<TextInput
-									value={amountToSend}
 									placeholder="0"
+									value={amountToSend}
 									keyboardType="numeric"
 									onChangeText={handleChange}
 									className="text-[18px] font-semibold w-auto"
@@ -265,6 +336,7 @@ export default function AmountScreen() {
 							Insufficient funds in your wallet
 						</MPText>
 					)}
+
 					{/**
 					|--------------------------------------------------
 					| If the amount is less than 100 naira
@@ -275,6 +347,21 @@ export default function AmountScreen() {
 							You can't send less than 100
 						</MPText>
 					)}
+
+					{/**
+					|--------------------------------------------------
+					| Exchange rate
+					|--------------------------------------------------
+					*/}
+					<View className="h-[108px] rounded-2xl bg-[#ECEDEE] w-full p-4 justify-between my-4">
+						<DataRepresentation
+							label="Today's rate"
+							valueClassName="text-[#767676]"
+							value={handleConversionInfo('rate')}
+						/>
+
+						<DataRepresentation label="Amount we'll send" value={handleConversionInfo('conversion')} />
+					</View>
 
 					{/**
 					|--------------------------------------------------
@@ -299,7 +386,13 @@ export default function AmountScreen() {
 							*/}
 							<View className="flex-row items-center gap-1">
 								<MPText weight="semibold" className="text-[18px]">
-									{selectedWallet?.currency === 'CAD' ? '$' : '₦'}
+									{params.transactionType === 'SWAP' && selectedWallet?.currency === 'CAD'
+										? '₦'
+										: params.transactionType === 'CAD-to-CAD'
+											? '$'
+											: params.transactionType === 'NGN-to-NGN'
+												? '₦'
+												: '$'}
 								</MPText>
 
 								{/**
@@ -309,13 +402,16 @@ export default function AmountScreen() {
 								*/}
 								<TextInput
 									placeholder="0"
-									value={amountToSend}
 									keyboardType="numeric"
 									onChangeText={handleChange}
 									className={clsx(
 										'text-[18px] font-semibold w-auto',
 										transactionType === 'SWAP' ? '' : 'pointer-events-none'
 									)}
+									value={handleConversionInfo('conversion')
+										.replace('=', '')
+										.replace('$', '')
+										.replace('₦', '')}
 								/>
 							</View>
 
@@ -327,12 +423,22 @@ export default function AmountScreen() {
 							<SelectField
 								triggerClassName="h-[32px] max-h-[32px]"
 								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
-								disabled={transactionType !== 'SWAP'}
+								disabled={params.transactionType !== 'SWAP'}
 								triggerChildren={
 									<View>
 										<MPText weight="medium" className="text-sm text-black">
-											{selectedWallet?.currency === 'CAD' ? '🇨🇦' : '🇳🇬'}{' '}
-											{selectedWallet?.currency}
+											{params.transactionType === 'SWAP'
+												? selectedWallet?.currency === 'NGN'
+													? '🇨🇦'
+													: '🇳🇬'
+												: params.transactionType === 'CAD-to-CAD'
+													? '🇨🇦'
+													: '🇳🇬'}{' '}
+											{params.transactionType === 'SWAP' && selectedWallet?.currency === 'NGN'
+												? 'CAD'
+												: params.transactionType === 'CAD-to-CAD'
+													? 'CAD'
+													: 'NGN'}
 										</MPText>
 									</View>
 								}
@@ -382,10 +488,22 @@ export default function AmountScreen() {
 					className="w-[91px] max-w-[91px] mt-6 self-center"
 					onPress={() => setShowTransactionPreviewModal(true)}
 					useGradientBg={
-						amountToSend !== '' && Number(selectedWallet?.walletBalance ?? 0) > Number(amountToSend ?? 0)
+						amountToSend !== '' &&
+						(params.transactionType === 'SWAP'
+							? Number(amountToSend.replaceAll(',', '')) >= 2
+							: params.transactionType === 'CAD-to-CAD'
+								? Number(amountToSend.replaceAll(',', '')) >= 10
+								: Number(amountToSend.replaceAll(',', '')) > 100) &&
+						Number(selectedWallet?.walletBalance ?? 0) > Number(amountToSend.replaceAll(',', '') ?? 0)
 					}
 					disabled={
-						amountToSend === '' || Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend ?? 0)
+						amountToSend === '' ||
+						Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend.replaceAll(',', '') ?? 0) ||
+						(params.transactionType === 'SWAP'
+							? Number(amountToSend.replaceAll(',', '')) < 2
+							: params.transactionType === 'CAD-to-CAD'
+								? Number(amountToSend.replaceAll(',', '')) < 10
+								: Number(amountToSend.replaceAll(',', '')) < 100)
 					}
 				>
 					<MPText weight="semibold" className="text-sm text-white">
@@ -409,6 +527,8 @@ export default function AmountScreen() {
 					setShowTransactionPin(true);
 					setShowTransactionPreviewModal(false);
 				}}
+				transactionType={params.transactionType === 'SWAP' ? 'SWAP' : 'SEND'}
+				receivedAmount={handleConversionInfo('conversion').replace('=', '')}
 			/>
 
 			{/**
@@ -419,8 +539,8 @@ export default function AmountScreen() {
 			<ConfirmTransactionModal
 				visible={showTransactionPin}
 				setVisible={setShowTransactionPin}
-				isLoading={isPendingCAD || isPendingNGN}
 				onComplete={(value) => handleSubmission(value)}
+				isLoading={isPendingCAD || isPendingNGN || isPendingExchange}
 			/>
 		</ScreenWrapper>
 	);

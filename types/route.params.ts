@@ -1,11 +1,13 @@
+import { BankAccount, FundSwapTransaction } from '@/interfaces/transaction.interface';
+
 export type RootStackParamList = {
 	Home: undefined;
 	SplashScreen: undefined;
-	SendCADScreen: undefined;
-	SendNGNScreen: undefined;
 	KycStepsScreen: undefined;
 	DashboardScreen: undefined;
 	VerifyBvnScreen: undefined;
+	SendCADScreen?: BankAccount;
+	SendNGNScreen?: BankAccount;
 	OnboardingScreen: undefined;
 	CreateUserScreen: undefined;
 	VerifyEmailScreen: undefined;
@@ -24,6 +26,7 @@ export type RootStackParamList = {
 	SendFundsFeedbackScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
+	ExchangeFundsFeedbackScreen?: FundSwapTransaction;
 	AmountScreen: {
 		lastName?: string;
 		firstName?: string;

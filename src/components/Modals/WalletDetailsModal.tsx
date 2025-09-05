@@ -37,7 +37,7 @@ export default function WalletDetailsModal({
     */
 	return (
 		<Modal transparent visible={showWalletDetails} animationType="slide" onDismiss={onDismiss}>
-			<View className="flex-1 bg-black/10">
+			<Pressable onPress={() => setShowWalletDetails(false)} className="flex-1 bg-black/10">
 				<View className="rounded-3xl bg-white mt-auto p-4 min-h-[306px]">
 					{/**
                     |--------------------------------------------------
@@ -193,7 +193,7 @@ export default function WalletDetailsModal({
 						)}
 					</View>
 				</View>
-			</View>
+			</Pressable>
 		</Modal>
 	);
 }

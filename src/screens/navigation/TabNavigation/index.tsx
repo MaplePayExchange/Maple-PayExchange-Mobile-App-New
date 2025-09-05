@@ -80,7 +80,27 @@ export default function TabNavigation() {
     |--------------------------------------------------
     */
 	return (
-		<Tab.Navigator screenOptions={{ headerShown: false }}>
+		<Tab.Navigator
+			screenOptions={{
+				headerShown: false,
+				tabBarStyle: {
+					height: 64,
+					bottom: 24,
+					width: '95%',
+					paddingTop: 2,
+					borderWidth: 0.2,
+					paddingInline: 24,
+					borderRadius: 9999,
+					alignSelf: 'center',
+					position: 'absolute',
+					alignItems: 'center',
+					backgroundColor: 'white',
+					borderColor: '#D1D1D1',
+					justifyContent: 'center',
+					transform: [{ translateX: '2.5%' }],
+				},
+			}}
+		>
 			{/**
 			|--------------------------------------------------
 			| Home

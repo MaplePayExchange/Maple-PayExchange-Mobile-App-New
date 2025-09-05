@@ -32,6 +32,7 @@ import BiometricsModal from '@/src/components/Modals/BiometricsModal';
 import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
+import CustomRefreshControl from '@/src/components/CustomRefreshControl';
 
 /**
 |--------------------------------------------------
@@ -55,13 +56,12 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	const queryClient = useQueryClient();
-	const { data, isLoading, isPending, error } = useGetUserInformation();
+	const { data, isPending, isLoading } = useGetUserInformation();
 	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
 	const [showWalletModal, setShowWalletModal] = React.useState<boolean>(false);
 	const [showWalletDetails, setShowWalletDetails] = React.useState<boolean>(false);
 	const [showSendFundsModal, setShowSendFundsModal] = React.useState<boolean>(false);
 	const [showFundWalletModal, setShowFundWalletModal] = React.useState<boolean>(false);
-	const [showExchangeFundsModal, setShowExchangeFundsModal] = React.useState<boolean>(false);
 
 	/**
 	|--------------------------------------------------
@@ -127,7 +127,6 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'details':
-				// console.log('object');
 				setShowWalletDetails(true);
 				break;
 
@@ -156,7 +155,10 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'exchange':
-				setShowExchangeFundsModal(true);
+				navigation.navigate('AmountScreen', {
+					transactionType: 'SWAP',
+					accountName: `${userData?.user?.firstName} ${userData?.user?.lastName}`,
+				});
 				break;
 
 			default:
@@ -175,7 +177,6 @@ export default function DashboardScreen() {
 		setShowWalletDetails(false);
 		setShowSendFundsModal(false);
 		setShowFundWalletModal(false);
-		setShowExchangeFundsModal(false);
 	};
 
 	/**
@@ -184,7 +185,9 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	React.useEffect(() => {
-		setSelectedWallet(selectedWallet || (data?.wallets?.[0] as Wallet));
+		const walletToShow =
+			data?.wallets.find((wallet) => wallet.currency === selectedWallet?.currency) || data?.wallets?.[0];
+		setSelectedWallet(walletToShow as Wallet);
 	}, [data]);
 
 	/**
@@ -199,12 +202,21 @@ export default function DashboardScreen() {
 				refreshControl={
 					<RefreshControl
 						refreshing={isPending}
+						tintColor="transparent"
+						colors={['transparent']}
 						onRefresh={() => {
 							queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 						}}
 					/>
 				}
 			>
+				{/**
+				|--------------------------------------------------
+				| IsPending
+				|--------------------------------------------------
+				*/}
+				{(isPending || isLoading) && <CustomRefreshControl refreshing={isPending || isLoading} />}
+
 				{/**
 				|--------------------------------------------------
 				| Header

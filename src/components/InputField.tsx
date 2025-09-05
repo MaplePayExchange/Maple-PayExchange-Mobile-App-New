@@ -8,7 +8,7 @@ import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
-import { View, TextInputProps, TextInput, Pressable, Modal, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TextInputProps, TextInput, Pressable, Modal, TouchableOpacity, ScrollView } from 'react-native';
 
 /**
  |--------------------------------------------------

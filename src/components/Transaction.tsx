@@ -119,7 +119,8 @@ export default function Transaction({ onClick, transaction }: Props) {
             */}
 			<View className="items-end ml-auto">
 				<MPText weight="semibold" className="text-sm mb-1">
-					{currencyType === 'CAD' ? '$' : '₦'} {amount}
+					{currencyType === 'CAD' ? '$' : '₦'}{' '}
+					{amount.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
 				</MPText>
 				<MPText style={{ fontSize: 12 }} className="text-xs text-[#767676]">
 					{transactionDate}

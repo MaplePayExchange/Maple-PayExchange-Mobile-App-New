@@ -104,7 +104,7 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         */}
 						{transaction.type === 'Outgoing' && (
 							<DataRepresentation
-								label="Amount received"
+								label="Amount sent"
 								value={`${transaction.sourceCurrency === 'NGN' ? '₦' : '$'}${(transaction?.amountSent ?? 0)?.toLocaleString()}`}
 							/>
 						)}
@@ -114,7 +114,10 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         | Reference
                         |--------------------------------------------------
                         */}
-						<DataRepresentation label="Transaction ID" value={transaction?.reference} />
+						<DataRepresentation
+							label="Transaction ID"
+							value={`${transaction?.reference?.slice(0, 10)}...`}
+						/>
 						{/**
                         |--------------------------------------------------
                         | Transaction status

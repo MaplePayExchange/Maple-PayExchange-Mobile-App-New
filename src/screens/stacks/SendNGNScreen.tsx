@@ -16,6 +16,7 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -32,13 +33,20 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import InputField from '@/src/components/InputField';
 import SelectField from '@/src/components/SelectField';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
-import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '@/types/route.params';
 import { useGetBanksList, useVerifyBankAccount } from '@/services/user.services';
 
+type SendNGNProps = RouteProp<RootStackParamList, 'SendNGNScreen'>;
 type SendNGNScreenProps = NativeStackNavigationProp<RootStackParamList, 'SendNGNScreen'>;
-
 export default function SendNGNScreen() {
+	const route = useRoute<SendNGNProps>();
+	const params = route.params;
+
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
 	const navigation = useNavigation<SendNGNScreenProps>();
 
 	/**
@@ -63,10 +71,10 @@ export default function SendNGNScreen() {
 	} = useForm({
 		defaultValues: {
 			narration: '',
-			recipientName: '',
-			accountNumber: '',
 			saveAsBeneficiary: false,
-			bank: { code: '', name: '', _id: '', id: '' },
+			recipientName: params?.accountName || '',
+			accountNumber: params?.accountNumber || '',
+			bank: { code: params?.bankCode || '', name: params?.bankName || '', _id: '', id: '' },
 		},
 	});
 
@@ -75,14 +83,14 @@ export default function SendNGNScreen() {
     | States
     |--------------------------------------------------
     */
+	const [searchQuery, setSearchQuery] = React.useState<string>('');
+	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
 	const [selectedBank, setSelectedBank] = React.useState<{
 		id: number;
 		_id: string;
-		code: number;
+		code: string;
 		name: string;
-	} | null>(null);
-	const [searchQuery, setSearchQuery] = React.useState<string>('');
-	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
+	} | null>(params?.type ? { id: 1234, _id: '', code: params?.bankCode || '', name: params?.bankName || '' } : null);
 
 	/**
     |--------------------------------------------------
@@ -103,10 +111,13 @@ export default function SendNGNScreen() {
         | Once the account number is 10
         |--------------------------------------------------
         */
-		if (accountNumber.length === 10) {
+		if (accountNumber.length === 10 && !params?.type) {
 			mutate({
-				accountNumber: accountNumber,
-				bank: { code: selectedBank?.code ?? 0, name: selectedBank?.name ?? '' },
+				accountNumber: params?.accountNumber || accountNumber,
+				bank: {
+					name: params?.type ? params.bankName || '' : (selectedBank?.name ?? ''),
+					code: params?.type ? (Number(params.bankCode) as any) : (selectedBank?.code ?? 0),
+				},
 			});
 		} else {
 			setValue('recipientName', '');
@@ -124,8 +135,9 @@ export default function SendNGNScreen() {
         | ...
         |--------------------------------------------------
         */
-		if (receipientData) setValue('recipientName', receipientData?.result?.accountName);
-	}, [receipientData]);
+		if (params?.type) setValue('recipientName', params?.accountName || '');
+		if (receipientData && !params?.type) setValue('recipientName', receipientData?.result?.accountName);
+	}, [receipientData, params?.type]);
 
 	/**
 	|--------------------------------------------------
@@ -134,11 +146,11 @@ export default function SendNGNScreen() {
 	*/
 	const onSubmit = (data: any) => {
 		let payload: any = {
-			bank: selectedBank as any,
 			transactionType: 'NGN-to-NGN',
 			accountName: data?.recipientName,
 			accountNumber: data?.accountNumber,
 			saveAsBeneficiary: data?.saveAsBeneficiary,
+			bank: { ...selectedBank, code: selectedBank?.code.toString() } as any,
 		};
 
 		if (data.narration !== '') payload.narration = data.narration;
@@ -293,7 +305,12 @@ export default function SendNGNScreen() {
 													<Pressable
 														key={item._id}
 														onPress={() => {
-															setSelectedBank(item);
+															setSelectedBank({
+																id: item.id,
+																_id: item._id,
+																name: item.name,
+																code: item.code.toString(),
+															});
 															setValue('bank', {
 																_id: item._id,
 																name: item.name,

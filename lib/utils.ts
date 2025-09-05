@@ -29,7 +29,7 @@ class Utils {
             |--------------------------------------------------
             */
 			if (Platform.OS === 'android') {
-				ToastAndroid.show('Copied to clipboard!', ToastAndroid.SHORT);
+				ToastAndroid.showWithGravity('Copied to clipboard!', ToastAndroid.SHORT, 3);
 			} else {
 				Alert.alert('Copied to clipboard!');
 			}

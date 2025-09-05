@@ -98,3 +98,39 @@ export interface BankTransferRequest {
 	saveBeneficiary?: boolean;
 	currency: (typeof _ALLOWED_CURRENCIES)[number];
 }
+
+export interface BankAccount {
+	_id: string;
+	user: string;
+	bankName?: string;
+	bankCode?: string;
+	nickname?: string;
+	mapleEmail?: string;
+	accountName?: string;
+	accountNumber?: string;
+	interacEmail?: string;
+	type: 'Bank' | 'MapleEmail' | 'Interac';
+}
+
+export interface ExchangePayload {
+	rate: number;
+	amount: number;
+	transactionPin: string;
+	currency: (typeof _ALLOWED_CURRENCIES)[number];
+	exchangeCurrency: (typeof _ALLOWED_CURRENCIES)[number];
+}
+
+export interface FundSwapTransaction {
+	user: string;
+	type: 'FundSwap';
+	walletId: string;
+	preAmount: number;
+	reference: string;
+	amountSent: number;
+	status: 'successful';
+	sourceAmount: number;
+	amountRecieved: number;
+	sourceCurrency: string;
+	destinationAmount: number;
+	destinationCurrency: string;
+}

@@ -14,7 +14,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import utils from '@/lib/utils';
 import axiosInstance from '@/lib/axiosInstance';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
-import { BankTransferRequest, InteracTransactionRequest } from '@/interfaces/transaction.interface';
+import {
+	BankAccount,
+	BankTransferRequest,
+	ExchangePayload,
+	FundSwapTransaction,
+	InteracTransactionRequest,
+} from '@/interfaces/transaction.interface';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types/route.params';
 
@@ -127,10 +133,52 @@ export const useGetBanksList = () => {
 
 /**
 |--------------------------------------------------
+| Gets the security questions
+|--------------------------------------------------
+*/
+export const useGetRates = () => {
+	return useQuery<any, Error, { items: { rate: number; exchange: string; createdDate: Date; updatedDate: Date }[] }>({
+		/**
+		|--------------------------------------------------
+		| Key
+		|--------------------------------------------------
+		*/
+		queryKey: ['maple_rates'],
+
+		/**
+		|--------------------------------------------------
+		| Query function
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const response = await axiosInstance.get('/rates');
+			return response.data;
+		},
+
+		// staleTime: 100_000_000_000_000,
+	});
+};
+
+/**
+|--------------------------------------------------
 | Send fund to interac
 |--------------------------------------------------
 */
 export const useSendFundsToInterac = (onError: () => void) => {
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ExchangeFundsFeedbackScreen'>>();
+
 	return useMutation<any, Error, InteracTransactionRequest>({
 		/**
 		|--------------------------------------------------
@@ -140,6 +188,20 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		mutationFn: async (payload) => {
 			console.log(payload, ':send.payload');
 			const response = await axiosInstance.post('/wallet/wallet-to-interac', payload);
+
+			/**
+			|--------------------------------------------------
+			| Saves the beneficiary
+			|--------------------------------------------------
+			*/
+			if (payload.saveBeneficiary) {
+				await axiosInstance.post('/beneficiaries/create-beneficiary', {
+					type: 'Interac',
+					interacEmail: payload.email,
+					fullName: `${payload.firstName} ${payload.lastName}`,
+				});
+			}
+
 			return response.data;
 		},
 
@@ -150,6 +212,8 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		*/
 		onSuccess: (data) => {
 			console.log(data);
+			navigation.navigate(ROUTE_NAMES.SEND_FUNDS_FEEDBACK);
+			queryClient.invalidateQueries({ queryKey: ['user_beneficiaries', 'maple_user_data'] });
 			utils.successNotificationHanlder('Interac!', 'Transaction request completed successfully');
 		},
 
@@ -179,6 +243,13 @@ export const useSendWalletToBank = (onError: () => void) => {
 	*/
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
 	return useMutation<any, Error, BankTransferRequest>({
 		/**
 		|--------------------------------------------------
@@ -188,6 +259,28 @@ export const useSendWalletToBank = (onError: () => void) => {
 		mutationFn: async (payload) => {
 			console.log(payload, ':send.payload');
 			const response = await axiosInstance.post('/wallet/wallet-to-bank', payload);
+
+			/**
+			|--------------------------------------------------
+			| Saves the beneficiary
+			|--------------------------------------------------
+			*/
+			if (payload.saveBeneficiary) {
+				await axiosInstance.post('/beneficiaries/create-beneficiary', {
+					type: 'Bank',
+					bankCode: payload.bank.code,
+					bankName: payload.bank.name,
+					accountName: payload.accountName,
+					fullName: `${payload.accountName}`,
+					accountNumber: payload.accountNumber,
+				});
+			}
+
+			/**
+			|--------------------------------------------------
+			| Returns the data
+			|--------------------------------------------------
+			*/
 			return response.data;
 		},
 
@@ -200,7 +293,72 @@ export const useSendWalletToBank = (onError: () => void) => {
 			console.log(data);
 			onError?.();
 			navigation.navigate(ROUTE_NAMES.SEND_FUNDS_FEEDBACK);
+			queryClient.invalidateQueries({ queryKey: ['user_beneficiaries'] });
 			utils.successNotificationHanlder('Fiat!', 'Transaction request completed successfully');
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			onError?.();
+			console.log(error.response.data);
+			utils.errorHandler(error, 'Error sending NGN!');
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Send fund to interac
+|--------------------------------------------------
+*/
+export const useExchangeCurrency = (onError: () => void) => {
+	/**
+	|--------------------------------------------------
+	| Navigation
+	|--------------------------------------------------
+	*/
+	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ExchangeFundsFeedbackScreen'>>();
+
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	return useMutation<{ transaction: FundSwapTransaction }, Error, ExchangePayload>({
+		/**
+		|--------------------------------------------------
+		| mutation
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			console.log(payload, ':send.payload');
+			const response = await axiosInstance.post('/wallet/currency-conversion', payload);
+
+			/**
+			|--------------------------------------------------
+			| Returns the data
+			|--------------------------------------------------
+			*/
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data);
+			onError?.();
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+			navigation.navigate(ROUTE_NAMES.EXCHANGE_FUNDS_FEEDBACK, data.transaction);
+			utils.successNotificationHanlder('Exchange!', 'Transaction request completed successfully');
 		},
 
 		/**
@@ -255,5 +413,28 @@ export const useVerifyBankAccount = () => {
 		onError: (error: any) => {
 			utils.errorHandler(error, 'Encountered an error setting transaction pin');
 		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Gets the users beneficiaries
+|--------------------------------------------------
+*/
+export const useGetBeneficiaries = () => {
+	return useQuery<any, Error, { items: BankAccount[] }>({
+		queryKey: ['user_beneficiaries'],
+
+		/**
+		|--------------------------------------------------
+		| Query function
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const response = await axiosInstance.get('/beneficiaries');
+			return response.data;
+		},
+
+		staleTime: 100_000_000_000_000,
 	});
 };
