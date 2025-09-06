@@ -5,9 +5,10 @@
 */
 import clsx from 'clsx';
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { RootStackParamList } from '@/types/route.params';
 import { View, Pressable, TextInput } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -22,6 +23,7 @@ import { useUserStore } from '@/zustand/userStore';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import SelectField from '@/src/components/SelectField';
+import { Wallet } from '@/interfaces/wallet.interface';
 import DataRepresentation from '@/src/components/DataRepresentation';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
@@ -31,6 +33,10 @@ type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
 	const route = useRoute<AmountScreenProps>();
 	const params = route.params;
+
+	const navigation = useNavigation();
+	const queryClient = useQueryClient();
+	const userData = queryClient.getQueryData(['maple_user_data']) as any;
 
 	/**
 	|--------------------------------------------------
@@ -52,12 +58,137 @@ export default function AmountScreen() {
 	|--------------------------------------------------
 	*/
 	const { selectedWallet } = useUserStore();
-	const transactionType = 'CAD' as 'CAD' | 'NGN' | 'SWAP';
 	const [amountToSend, setAmountToSend] = React.useState<string>('');
 	const [showTransactionPin, setShowTransactionPin] = React.useState<boolean>(false);
+	const [transactionType, setTransactionType] = React.useState<'SWAP' | 'CAD-to-CAD' | 'NGN-to-NGN'>(
+		params.transactionType
+	);
 	const [showTransactionPreviewModal, setShowTransactionPreviewModal] = React.useState<boolean>(false);
+	const [sourceDestination, setSourceDestination] = React.useState<{
+		source: string;
+		destination: string;
+		sourceFlag: string;
+		destinationFlag: string;
+	}>(() => {
+		/**
+		|--------------------------------------------------
+		| For CAD
+		|--------------------------------------------------
+		*/
+		if (params.transactionType === 'CAD-to-CAD') {
+			return { source: 'CAD', destination: 'CAD', sourceFlag: '🇨🇦', destinationFlag: '🇨🇦' };
+		}
+		if (params.transactionType === 'SWAP' && selectedWallet?.currency === 'CAD') {
+			return { source: 'CAD', destination: 'NGN', sourceFlag: '🇨🇦', destinationFlag: '🇳🇬' };
+		}
 
+		/**
+		|--------------------------------------------------
+		| For NGN
+		|--------------------------------------------------
+		*/
+		if (params.transactionType === 'NGN-to-NGN') {
+			return { source: 'NGN', destination: 'NGN', sourceFlag: '🇳🇬', destinationFlag: '🇳🇬' };
+		}
+		if (params.transactionType === 'SWAP' && selectedWallet?.currency === 'NGN') {
+			return { source: 'NGN', destination: 'CAD', sourceFlag: '🇳🇬', destinationFlag: '🇨🇦' };
+		}
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		return { source: 'NGN', destination: 'CAD', sourceFlag: '🇳🇬', destinationFlag: '🇨🇦' };
+	});
+
+	const rawAmount = Number(amountToSend.replaceAll(',', '') || 0);
+
+	/**
+	 |--------------------------------------------------
+	 | Beneficiary information
+	 |--------------------------------------------------
+	 */
 	const beneficiary = params?.accountName || `${params?.firstName} ${params?.lastName}` || 'Adaeze Ibekwe';
+
+	/**
+	|--------------------------------------------------
+	| Getting the wallet balance
+	|--------------------------------------------------
+	*/
+	const handleGetWalletBalance = () => {
+		let balance = 0;
+		/**
+		|--------------------------------------------------
+		| If the transaction type is NGN to NGN
+		|--------------------------------------------------
+		*/
+		if (sourceDestination.source === 'NGN') {
+			balance = (userData?.wallets.find((wallet: any) => wallet.currency === 'NGN') as Wallet).walletBalance ?? 0;
+		}
+
+		/**
+		|--------------------------------------------------
+		| If the transaction type is CAD to CAD
+		|--------------------------------------------------
+		*/
+		if (sourceDestination.source === 'CAD') {
+			balance = (userData?.wallets.find((wallet: any) => wallet.currency === 'CAD') as Wallet).walletBalance ?? 0;
+		}
+
+		return balance;
+	};
+
+	/**
+	|--------------------------------------------------
+	| If the amount is valid
+	|--------------------------------------------------
+	*/
+	const isValidAmount =
+		amountToSend !== '' &&
+		((transactionType === 'SWAP' && sourceDestination.source === 'CAD' && rawAmount >= 2) ||
+			(transactionType === 'SWAP' &&
+				sourceDestination.source === 'NGN' &&
+				rawAmount >= (NGNRate?.rate ?? 1150)) ||
+			(transactionType === 'CAD-to-CAD' && rawAmount >= 10) ||
+			(transactionType !== 'SWAP' && transactionType !== 'CAD-to-CAD' && rawAmount > 100)) &&
+		handleGetWalletBalance() > rawAmount;
+
+	/**
+	|--------------------------------------------------
+	| Returns the appropriate symbols
+	|--------------------------------------------------
+	*/
+	const handleCurrencySymbol = () => {
+		const currencySymbols: Record<string, string> = {
+			CAD: '$',
+			NGN: '₦',
+		};
+
+		let sourceSymbol = '';
+		let destinationSymbol = '';
+
+		if (transactionType.includes('to')) {
+			/**
+			|--------------------------------------------------
+			| Handles "CAD-to-CAD", "NGN-to-NGN"
+			|--------------------------------------------------
+			*/
+			const [source, destination] = transactionType.split('-to-');
+			sourceSymbol = currencySymbols[source] || '';
+			destinationSymbol = currencySymbols[destination] || '';
+		} else if (transactionType === 'SWAP' && selectedWallet?.currency) {
+			/**
+			|--------------------------------------------------
+			| Handles generic SWAP case
+			|--------------------------------------------------
+			*/
+			sourceSymbol = currencySymbols[sourceDestination.source] || '';
+			destinationSymbol = currencySymbols[sourceDestination.destination] || '';
+		}
+
+		return { sourceSymbol, destinationSymbol };
+	};
 
 	/**
 	|--------------------------------------------------
@@ -149,8 +280,8 @@ export default function AmountScreen() {
 		| If the transaction type is not an exchange
 		|--------------------------------------------------
 		*/
-		if (params.transactionType !== 'SWAP' && infoType === 'rate') {
-			info = `${selectedWallet?.currency === 'NGN' ? `${1} NGN = ${1} NGN` : `${1} CAD = ${1} CAD`}`;
+		if (transactionType !== 'SWAP' && infoType === 'rate') {
+			info = `${transactionType === 'NGN-to-NGN' ? `${1} NGN = ${1} NGN` : `${1} CAD = ${1} CAD`}`;
 		}
 
 		/**
@@ -158,7 +289,7 @@ export default function AmountScreen() {
 		| If the transaction type is an exchange
 		|--------------------------------------------------
 		*/
-		if (params.transactionType === 'SWAP' && infoType === 'rate') {
+		if (transactionType === 'SWAP' && infoType === 'rate') {
 			info = `${selectedWallet?.currency === 'NGN' ? `${NGNRate?.rate} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate} NGN`}`;
 		}
 
@@ -167,8 +298,8 @@ export default function AmountScreen() {
 		| If the transaction type is not an exchange
 		|--------------------------------------------------
 		*/
-		if (params.transactionType !== 'SWAP' && infoType === 'conversion') {
-			info = `${selectedWallet?.currency === 'NGN' ? `=₦${amountToSend}` : `=$${amountToSend}`}`;
+		if (transactionType !== 'SWAP' && infoType === 'conversion') {
+			info = `${transactionType === 'NGN-to-NGN' ? `=₦${amountToSend}` : `=$${amountToSend}`}`;
 		}
 
 		/**
@@ -176,12 +307,76 @@ export default function AmountScreen() {
 		| If the transaction type is an exchange
 		|--------------------------------------------------
 		*/
-		if (params.transactionType === 'SWAP' && infoType === 'conversion') {
-			info = `${selectedWallet?.currency === 'NGN' ? `=$${Number(Number(amountToSend.replaceAll(',', '')) / Number(NGNRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}` : `=₦${Number(Number(amountToSend.replaceAll(',', '')) * Number(CADRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`}`;
+		if (transactionType === 'SWAP' && infoType === 'conversion') {
+			info = `${sourceDestination.source === 'NGN' ? `=$${Number(Number(amountToSend.replaceAll(',', '')) / Number(NGNRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}` : `=₦${Number(Number(amountToSend.replaceAll(',', '')) * Number(CADRate?.rate ?? 1)).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`}`;
 		}
 
 		return info;
 	};
+
+	/**
+	|--------------------------------------------------
+	| On focus
+	|--------------------------------------------------
+	*/
+	navigation.addListener('focus', () => {
+		setTransactionType(params.transactionType);
+	});
+
+	const handleChangeWallet = (wallet: Wallet, type: 'source' | 'destination') => {
+		/**
+		|--------------------------------------------------
+		| Currency to flag mapping
+		|--------------------------------------------------
+		*/
+		const currencyMap: Record<'NGN' | 'CAD', string> = {
+			NGN: '🇳🇬',
+			CAD: '🇨🇦',
+		};
+
+		setSourceDestination(() => {
+			let updatedState: any;
+
+			if (type === 'source') {
+				updatedState = {
+					source: wallet.currency,
+					destination: wallet.currency === 'CAD' ? 'NGN' : 'CAD',
+					sourceFlag: wallet.currency === 'CAD' ? currencyMap.CAD : currencyMap.NGN,
+					destinationFlag: wallet.currency === 'CAD' ? currencyMap.NGN : currencyMap.CAD,
+				};
+			} else {
+				updatedState = {
+					destination: wallet.currency,
+					source: wallet.currency === 'CAD' ? 'NGN' : 'CAD',
+					sourceFlag: wallet.currency === 'CAD' ? currencyMap.NGN : currencyMap.CAD,
+					sourcedestinationFlag: wallet.currency === 'CAD' ? currencyMap.CAD : currencyMap.NGN,
+				};
+			}
+
+			return updatedState;
+		});
+	};
+
+	/**
+	|--------------------------------------------------
+	| Currency changer
+	|--------------------------------------------------
+	*/
+	const renderCurrencyChanger = (type: 'source' | 'destination', flag: 'sourceFlag' | 'destinationFlag') => (
+		<View className="mt-12 gap-4">
+			{userData?.wallets.map((wallet: any) => (
+				<Pressable
+					key={wallet?._id}
+					onPress={() => handleChangeWallet(wallet, type)}
+					className="h-[46px] w-full rounded-[10px] bg-[#F7F7F7] justify-center px-6"
+				>
+					<MPText weight="medium" className="text-sm">
+						{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
+					</MPText>
+				</Pressable>
+			))}
+		</View>
+	);
 
 	/**
     |--------------------------------------------------
@@ -261,7 +456,7 @@ export default function AmountScreen() {
 							*/}
 							<View className="flex-row items-center gap-1">
 								<MPText weight="semibold" className="text-[18px]">
-									{selectedWallet?.currency === 'CAD' ? '$' : '₦'}
+									{handleCurrencySymbol().sourceSymbol}
 								</MPText>
 
 								{/**
@@ -284,17 +479,18 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<SelectField
+								closeOnModalClick
 								triggerClassName="h-[32px] max-h-[32px]"
+								disabled={params.transactionType !== 'SWAP'}
 								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
-								disabled={transactionType !== 'SWAP'}
 								triggerChildren={
 									<View>
 										<MPText weight="medium" className="text-sm text-black">
-											{selectedWallet?.currency === 'CAD' ? '🇨🇦' : '🇳🇬'}{' '}
-											{selectedWallet?.currency}
+											{sourceDestination.sourceFlag} {sourceDestination.source}
 										</MPText>
 									</View>
 								}
+								contentChildren={renderCurrencyChanger('source', 'sourceFlag')}
 							/>
 						</View>
 
@@ -317,8 +513,8 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<MPText weight="regular" className="text-[#767676] text-sm">
-								{selectedWallet?.currency === 'CAD' ? '$' : '₦'}
-								{(selectedWallet?.walletBalance ?? 0).toLocaleString(undefined, {
+								{handleCurrencySymbol().sourceSymbol}
+								{handleGetWalletBalance().toLocaleString(undefined, {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})}
@@ -331,7 +527,7 @@ export default function AmountScreen() {
 					| Insufficient balance warning
 					|--------------------------------------------------
 					*/}
-					{Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend ?? 0) && (
+					{handleGetWalletBalance() < Number(amountToSend ?? 0) && (
 						<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
 							Insufficient funds in your wallet
 						</MPText>
@@ -347,6 +543,32 @@ export default function AmountScreen() {
 							You can't send less than 100
 						</MPText>
 					)}
+
+					{/**
+					|--------------------------------------------------
+					| If the amount is less than what is allowed
+					|--------------------------------------------------
+					*/}
+					{params.transactionType === 'SWAP' &&
+						sourceDestination.source === 'NGN' &&
+						Number(amountToSend) < (NGNRate?.rate ?? 0) && (
+							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								The amount you're trying to exchange is too low
+							</MPText>
+						)}
+
+					{/**
+					|--------------------------------------------------
+					| If the amount is less than what is allowed
+					|--------------------------------------------------
+					*/}
+					{params.transactionType === 'SWAP' &&
+						sourceDestination.source === 'CAD' &&
+						Number(amountToSend) < 1 && (
+							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								The amount you're trying to exchange is too low
+							</MPText>
+						)}
 
 					{/**
 					|--------------------------------------------------
@@ -386,13 +608,7 @@ export default function AmountScreen() {
 							*/}
 							<View className="flex-row items-center gap-1">
 								<MPText weight="semibold" className="text-[18px]">
-									{params.transactionType === 'SWAP' && selectedWallet?.currency === 'CAD'
-										? '₦'
-										: params.transactionType === 'CAD-to-CAD'
-											? '$'
-											: params.transactionType === 'NGN-to-NGN'
-												? '₦'
-												: '$'}
+									{handleCurrencySymbol().destinationSymbol}
 								</MPText>
 
 								{/**
@@ -421,27 +637,18 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<SelectField
+								closeOnModalClick
 								triggerClassName="h-[32px] max-h-[32px]"
-								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 								disabled={params.transactionType !== 'SWAP'}
+								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 								triggerChildren={
 									<View>
 										<MPText weight="medium" className="text-sm text-black">
-											{params.transactionType === 'SWAP'
-												? selectedWallet?.currency === 'NGN'
-													? '🇨🇦'
-													: '🇳🇬'
-												: params.transactionType === 'CAD-to-CAD'
-													? '🇨🇦'
-													: '🇳🇬'}{' '}
-											{params.transactionType === 'SWAP' && selectedWallet?.currency === 'NGN'
-												? 'CAD'
-												: params.transactionType === 'CAD-to-CAD'
-													? 'CAD'
-													: 'NGN'}
+											{sourceDestination.destinationFlag} {sourceDestination.destination}
 										</MPText>
 									</View>
 								}
+								contentChildren={renderCurrencyChanger('destination', 'destinationFlag')}
 							/>
 						</View>
 
@@ -469,8 +676,8 @@ export default function AmountScreen() {
 							|--------------------------------------------------
 							*/}
 							<MPText weight="regular" className="text-[#767676] text-sm">
-								{selectedWallet?.currency === 'CAD' ? '$' : '₦'}
-								{(selectedWallet?.walletBalance ?? 0).toLocaleString(undefined, {
+								{handleCurrencySymbol().sourceSymbol}
+								{handleGetWalletBalance().toLocaleString(undefined, {
 									minimumFractionDigits: 2,
 									maximumFractionDigits: 2,
 								})}
@@ -485,26 +692,10 @@ export default function AmountScreen() {
 				|--------------------------------------------------
 				*/}
 				<MPButton
+					disabled={!isValidAmount}
+					useGradientBg={isValidAmount}
 					className="w-[91px] max-w-[91px] mt-6 self-center"
 					onPress={() => setShowTransactionPreviewModal(true)}
-					useGradientBg={
-						amountToSend !== '' &&
-						(params.transactionType === 'SWAP'
-							? Number(amountToSend.replaceAll(',', '')) >= 2
-							: params.transactionType === 'CAD-to-CAD'
-								? Number(amountToSend.replaceAll(',', '')) >= 10
-								: Number(amountToSend.replaceAll(',', '')) > 100) &&
-						Number(selectedWallet?.walletBalance ?? 0) > Number(amountToSend.replaceAll(',', '') ?? 0)
-					}
-					disabled={
-						amountToSend === '' ||
-						Number(selectedWallet?.walletBalance ?? 0) < Number(amountToSend.replaceAll(',', '') ?? 0) ||
-						(params.transactionType === 'SWAP'
-							? Number(amountToSend.replaceAll(',', '')) < 2
-							: params.transactionType === 'CAD-to-CAD'
-								? Number(amountToSend.replaceAll(',', '')) < 10
-								: Number(amountToSend.replaceAll(',', '')) < 100)
-					}
 				>
 					<MPText weight="semibold" className="text-sm text-white">
 						Continue
@@ -527,7 +718,7 @@ export default function AmountScreen() {
 					setShowTransactionPin(true);
 					setShowTransactionPreviewModal(false);
 				}}
-				transactionType={params.transactionType === 'SWAP' ? 'SWAP' : 'SEND'}
+				transactionType={transactionType === 'SWAP' ? 'SWAP' : 'SEND'}
 				receivedAmount={handleConversionInfo('conversion').replace('=', '')}
 			/>
 

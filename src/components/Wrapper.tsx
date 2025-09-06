@@ -3,8 +3,9 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -27,20 +28,30 @@ export default function ScreenWrapper({ children, className, usePadding = true }
     |--------------------------------------------------
     */
 	return (
-		<SafeAreaView className={`bg-white ${usePadding ? 'p-4 flex-1' : ''} ${className}`}>
+		<SafeAreaView
+			style={{ paddingBottom: 0, marginBottom: 0 }}
+			className={`bg-[#031d30] ${usePadding ? 'flex-1' : ''} ${className}`}
+		>
 			{/**
             |--------------------------------------------------
             | Status bar
             |--------------------------------------------------
             */}
-			<StatusBar style="auto" />
+			<StatusBar style="light" translucent backgroundColor="transparent" />
 
 			{/**
             |--------------------------------------------------
             | Children
             |--------------------------------------------------
             */}
-			<View className="pb-[48px] flex-1">{children}</View>
+			<View
+				style={{ height: 3000 }}
+				className={clsx('flex-1 p-4 bg-white', Platform.OS === 'android' ? 'pb-[68px]' : 'pb-[48px]')}
+			>
+				{children}
+			</View>
+
+			<View className="w-full h-10 bg-white absolute bottom-0" />
 		</SafeAreaView>
 	);
 }

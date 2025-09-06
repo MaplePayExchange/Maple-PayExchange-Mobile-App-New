@@ -26,7 +26,7 @@ const Stack = createStackNavigator();
 | Routes
 |--------------------------------------------------
 */
-const _ROUTES = [{ name: 'TransactionScreen', component: TransactionScreen }];
+const _ROUTES = [{ name: ROUTE_NAMES.TRANSACTIONS_SCREEN, component: TransactionScreen }];
 
 export default function TransactionNavigation() {
 	/**

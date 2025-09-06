@@ -30,6 +30,7 @@ export enum ROUTE_NAMES {
 	AMOUNT_SCREEN = 'AmountScreen',
 	SEND_NGN_FUNDS = 'SendNGNScreen',
 	SEND_CAD_FUNDS = 'SendCADScreen',
+	TRANSACTIONS_SCREEN = 'TransactionsScreen',
 	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
 	SEND_FUNDS_FEEDBACK = 'SendFundsFeedbackScreen',
 	SEND_FUNDS_BENEFICIARY = 'SendFundsBeneficiaryScreen',

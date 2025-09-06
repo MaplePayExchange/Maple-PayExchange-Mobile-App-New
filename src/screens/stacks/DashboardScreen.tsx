@@ -33,6 +33,7 @@ import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 /**
 |--------------------------------------------------
@@ -109,7 +110,7 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'see_more_transactions':
-				navigation.navigate('TransactionScreen');
+				navigation.navigate(ROUTE_NAMES.TRANSACTION as never);
 				break;
 
 			/**
@@ -201,7 +202,7 @@ export default function DashboardScreen() {
 				showsVerticalScrollIndicator={false}
 				refreshControl={
 					<RefreshControl
-						refreshing={isPending}
+						refreshing={false}
 						tintColor="transparent"
 						colors={['transparent']}
 						onRefresh={() => {

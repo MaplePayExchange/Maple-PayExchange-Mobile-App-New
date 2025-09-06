@@ -85,7 +85,7 @@ export default function TabNavigation() {
 				headerShown: false,
 				tabBarStyle: {
 					height: 64,
-					bottom: 24,
+					bottom: 14,
 					width: '95%',
 					paddingTop: 2,
 					borderWidth: 0.2,
@@ -97,6 +97,7 @@ export default function TabNavigation() {
 					backgroundColor: 'white',
 					borderColor: '#D1D1D1',
 					justifyContent: 'center',
+					shadowColor: '#ffffff',
 					transform: [{ translateX: '2.5%' }],
 				},
 			}}

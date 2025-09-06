@@ -16,6 +16,7 @@ export type RootStackParamList = {
 	SendFundsBeneficiaryScreen: {
 		currency: 'CAD' | 'NGN';
 	};
+	TransactionsScreen: undefined;
 	LoginScreen: { email?: string };
 	ForgotPasswordScreen: undefined;
 	BVNVerificationScreen: undefined;

@@ -40,7 +40,7 @@ export default function HeaderWrapper({
     |--------------------------------------------------
     */
 	return (
-		<View>
+		<View className="h-[50px] justify-center">
 			{/**
             |--------------------------------------------------
             | Header

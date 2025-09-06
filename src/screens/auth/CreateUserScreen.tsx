@@ -40,6 +40,7 @@ import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@/assets/svgs';
 import utils from '@/lib/utils';
+import CalendarModal from '@/src/components/Calendar';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -66,11 +67,9 @@ export default function CreateUserScreen() {
 	const { verificationData } = useUserStore();
 	const { mutate, isPending } = useCreateUser();
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
-	const [selectedYear, setSelectedYear] = React.useState<number>(2010);
 	const [birthDate, setBirthDate] = React.useState<Date | string | null>(
 		`${2010}-${new Date().getMonth() + 1}-${new Date().getDate()}`
 	);
-	const [showYearPopup, setShowYearPopup] = React.useState<boolean>(false);
 	const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
 	const [showCountriesModal, setShowCountriesModal] = React.useState<boolean>(false);
 	const [selectedCountry, setSelectedCountry] = React.useState<(typeof Countries)[0] | null>(null);
@@ -349,111 +348,13 @@ export default function CreateUserScreen() {
 										|--------------------------------------------------
 										*/}
 										<Modal animationType="slide" transparent visible={showCalendarModal}>
-											<View className="w-full relative bg-white mt-auto h-[480px] rounded-t-3xl">
-												<Calendar
-													key={birthDate as string}
-													onDayPress={(day) => {
-														const [year, month, _day] = day.dateString.split('-');
-														setBirthDate(`${selectedYear}-${month}-${_day}`);
-													}}
-													markedDates={{
-														[birthDate as string]: {
-															selected: true,
-															disableTouchEvent: true,
-															selectedTextColor: 'white',
-															customTextStyle: { fontWeight: '700' },
-														},
-													}}
-													theme={{
-														textDayFontSize: 14,
-														arrowColor: '#000000',
-														textDayFontFamily: '400',
-														textDayHeaderFontSize: 14,
-														textMonthFontWeight: '600',
-														textDayHeaderFontWeight: '400',
-														textDisabledColor: '#a4a3a4',
-														selectedDayBackgroundColor: '#FF6A00',
-													}}
-													current={birthDate as string}
-												/>
-
-												<Pressable
-													onPress={() => {
-														setShowYearPopup(true);
-													}}
-													className="bg-transparent absolute h-[30px] w-[100px] top-4 right-[34%]"
-												/>
-
-												{/**
-												|--------------------------------------------------
-												| Year view
-												|--------------------------------------------------
-												*/}
-												{showYearPopup && (
-													<View className="absolute bg-white w-[95%] z-30 self-center overflow-hidden max-h-[400px] top-12 border border-slate-100 rounded-3xl p-5">
-														<ScrollView showsVerticalScrollIndicator={false}>
-															<View className="flex-row flex-wrap gap-5 justify-between">
-																{utils.generateYears().map((year) => (
-																	<Pressable
-																		key={year}
-																		onPress={() => {
-																			setSelectedYear(year);
-																			setShowYearPopup(false);
-																			setBirthDate(
-																				`${year}-${new Date().getMonth() + 1}-${new Date().getDate()}`
-																			);
-																		}}
-																		className={clsx(
-																			'rounded-md py-1 px-2 w-[50px] border',
-																			selectedYear === year
-																				? 'border-[#FF6A00]'
-																				: 'border-slate-300'
-																		)}
-																	>
-																		<MPText>{year}</MPText>
-																	</Pressable>
-																))}
-															</View>
-														</ScrollView>
-													</View>
-												)}
-
-												{/**
-												|--------------------------------------------------
-												| Action buttons
-												|--------------------------------------------------
-												*/}
-												<View className="flex-row gap-4 mt-4 border-t border-t-[#EAECF0] p-6 flex-1">
-													{/**
-													|--------------------------------------------------
-													| Cancel button
-													|--------------------------------------------------
-													*/}
-													<MPButton
-														onPress={() => setShowCalendarModal(false)}
-														className="max-w-[48%] rounded-[12px] h-[40px] border border-[#D0D5DD]"
-													>
-														<MPText weight="semibold" className="text-sm">
-															Cancel
-														</MPText>
-													</MPButton>
-
-													{/**
-													|--------------------------------------------------
-													| Apply button
-													|--------------------------------------------------
-													*/}
-													<MPButton
-														useGradientBg
-														onPress={() => setShowCalendarModal(false)}
-														className="max-w-[48%] h-[40px] rounded-[12px]"
-													>
-														<MPText weight="bold" className="text-white text-sm">
-															Apply
-														</MPText>
-													</MPButton>
-												</View>
-											</View>
+											<CalendarModal
+												onApply={(date) => {
+													setBirthDate(date as string);
+												}}
+												initialDate={birthDate as string}
+												onClose={() => setShowCalendarModal(false)}
+											/>
 										</Modal>
 									</TouchableOpacity>
 								</View>
@@ -481,7 +382,7 @@ export default function CreateUserScreen() {
 										},
 									}}
 								/>
-								<View className='-translate-y-2'>
+								<View className="-translate-y-2">
 									<MPText
 										weight="medium"
 										style={{ fontSize: 12 }}

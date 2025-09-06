@@ -21,7 +21,17 @@ import { User } from '@/interfaces/user.interface';
 import { Wallet } from '@/interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
-import { TransactionInterface } from '@/interfaces/transaction.interface';
+import { Currency, TransactionInterface } from '@/interfaces/transaction.interface';
+
+export interface TransactionFilters {
+	page?: number;
+	limit?: number;
+	endDate?: string;
+	startDate?: string;
+	currency?: Currency;
+	type?: 'FundSwap' | 'Incoming' | 'Outgoing' | 'Reward';
+	filter?: 'today' | 'lastWeek' | 'lastMonth' | 'lastYear';
+}
 
 interface RequestOtp {
 	bvn?: string;
@@ -662,14 +672,14 @@ export const useGetUserWallets = () => {
 | Get user transaction
 |--------------------------------------------------
 */
-export const useGetUserTransactions = () => {
-	return useQuery<any, Error, { message: string; transactions: TransactionInterface[] }>({
+export const useGetUserTransactions = (filter?: TransactionFilters) => {
+	return useQuery<any, Error, { message: string; transactions: TransactionInterface[]; meta: any }>({
 		/**
 		|--------------------------------------------------
 		| Query key
 		|--------------------------------------------------
 		*/
-		queryKey: ['maple_user_transactions'],
+		queryKey: [`${JSON.stringify(filter)}-maple_user_transactions`],
 
 		/**
 		|--------------------------------------------------
@@ -677,7 +687,8 @@ export const useGetUserTransactions = () => {
 		|--------------------------------------------------
 		*/
 		queryFn: async () => {
-			const [response] = await Promise.all([axiosInstance.get('/transactions')]);
+			console.log(filter, 'filter');
+			const response = await axiosInstance.get('/transactions', { params: filter });
 
 			/**
 			|--------------------------------------------------
@@ -685,6 +696,7 @@ export const useGetUserTransactions = () => {
 			|--------------------------------------------------
 			*/
 			return {
+				meta: response.data?.meta,
 				transactions: response.data?.items,
 			};
 		},
