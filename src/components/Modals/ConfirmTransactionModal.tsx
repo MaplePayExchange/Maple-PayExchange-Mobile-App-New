@@ -5,7 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { View, Modal } from 'react-native';
+import { View, Modal, Platform } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -31,7 +31,7 @@ export default function ConfirmTransactionModal({ onComplete, visible, setVisibl
     */
 	return (
 		<Modal visible={visible} animationType="slide">
-			<View className="mt-[70px]" />
+			{Platform.OS === 'ios' && <View className="mt-[70px]" />}
 			<ScreenWrapper className={clsx(isLoading && 'pointer-events-none opacity-45')}>
 				<HeaderWrapper onlClick={() => setVisible(false)} useNavigation title="Confirm Transaction" center />
 

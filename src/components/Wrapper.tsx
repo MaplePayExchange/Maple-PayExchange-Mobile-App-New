@@ -29,29 +29,22 @@ export default function ScreenWrapper({ children, className, usePadding = true }
     */
 	return (
 		<SafeAreaView
-			style={{ paddingBottom: 0, marginBottom: 0 }}
-			className={`bg-[#031d30] ${usePadding ? 'flex-1' : ''} ${className}`}
+			edges={{ bottom: 'off', top: 'maximum' }}
+			className={`bg-white ${usePadding ? 'flex-1' : ''} ${className}`}
 		>
 			{/**
             |--------------------------------------------------
             | Status bar
             |--------------------------------------------------
             */}
-			<StatusBar style="light" translucent backgroundColor="transparent" />
+			<StatusBar style="dark" translucent backgroundColor="transparent" />
 
 			{/**
             |--------------------------------------------------
             | Children
             |--------------------------------------------------
             */}
-			<View
-				style={{ height: 3000 }}
-				className={clsx('flex-1 p-4 bg-white', Platform.OS === 'android' ? 'pb-[68px]' : 'pb-[48px]')}
-			>
-				{children}
-			</View>
-
-			<View className="w-full h-10 bg-white absolute bottom-0" />
+			<View className={clsx('flex-1 p-4 bg-white')}>{children}</View>
 		</SafeAreaView>
 	);
 }

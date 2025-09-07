@@ -4,7 +4,8 @@
  |--------------------------------------------------
  */
 import { useNavigation } from '@react-navigation/native';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient, InfiniteData } from '@tanstack/react-query';
 
 /**
 |--------------------------------------------------
@@ -19,10 +20,19 @@ import {
 	BankTransferRequest,
 	ExchangePayload,
 	FundSwapTransaction,
+	INotification,
 	InteracTransactionRequest,
 } from '@/interfaces/transaction.interface';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types/route.params';
+
+interface NotificationResponse {
+	notifications: INotification[];
+	meta: {
+		page: number;
+		limit: number;
+		total: number;
+	};
+}
 
 /**
 |--------------------------------------------------
@@ -436,5 +446,51 @@ export const useGetBeneficiaries = () => {
 		},
 
 		staleTime: 100_000_000_000_000,
+	});
+};
+
+/**
+|--------------------------------------------------
+| Gets the users beneficiaries
+|--------------------------------------------------
+*/
+export const useGetNotifications = (filters?: { limit: number }) => {
+	return useInfiniteQuery<NotificationResponse, Error, InfiniteData<NotificationResponse>>({
+		/**
+		|--------------------------------------------------
+		| Cache key
+		|--------------------------------------------------
+		*/
+		queryKey: ['user_notifications', filters],
+
+		/**
+		|--------------------------------------------------
+		| Initial page is always 1
+		|--------------------------------------------------
+		*/
+		initialPageParam: 1,
+
+		/**
+		|--------------------------------------------------
+		| Fetch function
+		|--------------------------------------------------
+		*/
+		queryFn: async ({ pageParam }): Promise<NotificationResponse> => {
+			const response = await axiosInstance.get('/notifications', {
+				params: { ...filters, page: pageParam },
+			});
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Find next page
+		|--------------------------------------------------
+		*/
+		getNextPageParam: (lastPage) => {
+			const { page, limit, total } = lastPage.meta;
+			const maxPage = Math.ceil(total / limit);
+			return page < maxPage ? page + 1 : undefined;
+		},
 	});
 };

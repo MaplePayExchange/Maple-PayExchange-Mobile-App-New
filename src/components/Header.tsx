@@ -40,7 +40,7 @@ export default function HeaderWrapper({
     |--------------------------------------------------
     */
 	return (
-		<View className="h-[50px] justify-center">
+		<View>
 			{/**
             |--------------------------------------------------
             | Header
@@ -62,7 +62,7 @@ export default function HeaderWrapper({
 					<MPText
 						weight="semibold"
 						className={clsx('text-[#1A1A1A]')}
-						style={{ lineHeight: 26, fontSize: fontSizes.FONT24 }}
+						style={{ lineHeight: 26, fontSize: fontSizes.FONT16 }}
 					>
 						{title}
 					</MPText>
@@ -74,7 +74,7 @@ export default function HeaderWrapper({
             | Subtitle
             |--------------------------------------------------
             */}
-			<MPText weight="medium" style={{ fontSize: fontSizes.FONT14 }} className="mt-1 text-[#767676] leading-6">
+			<MPText weight="medium" className="mt-1 text-[#767676] leading-6 text-sm">
 				{subtitle}
 			</MPText>
 		</View>

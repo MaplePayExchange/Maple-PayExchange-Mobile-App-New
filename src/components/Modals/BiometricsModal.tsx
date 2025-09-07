@@ -16,6 +16,7 @@ import MPText from '../MPText';
 import Toggler from '../Toggler';
 import { useUserStore } from '@/zustand/userStore';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
+import MPButton from '../MPButton';
 
 interface Props {
 	visible: boolean;
@@ -111,7 +112,7 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 					<MPText weight="bold" style={{ fontSize: 18 }} className="mt-5">
 						Enable biometrics
 					</MPText>
-					<MPText weight="regular" className="text-[#767676] text-center mt-1">
+					<MPText weight="regular" className="text-[#767676] text-center text-sm mt-1">
 						You can enable face ID/ touch ID to gain access to your account easily.
 					</MPText>
 
@@ -127,6 +128,27 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 						checked={biometricsInfo?.isTurnedOn}
 						subtitle="Use fingerprint or face to unlock "
 					/>
+
+					<View className="flex-row justify-between mt-8 mb-8">
+						<MPButton onPress={() => setVisible()} className="w-[45%]">
+							<MPText className="text-sm text-[#FF6A00]" weight="semibold">
+								Cancel
+							</MPText>
+						</MPButton>
+
+						<MPButton
+							onPress={() => {
+								setVisible();
+								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true });
+							}}
+							useGradientBg
+							className="w-[45%]"
+						>
+							<MPText weight="semibold" className="text-sm text-white">
+								Remind me later
+							</MPText>
+						</MPButton>
+					</View>
 				</View>
 			</Pressable>
 		</Modal>

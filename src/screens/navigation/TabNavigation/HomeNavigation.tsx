@@ -18,11 +18,12 @@ import SendCADScreen from '../../stacks/SendCADScreen';
 import KysStepsScreen from '../../stacks/KycStepsScreen';
 import DashboardScreen from '../../stacks/DashboardScreen';
 import VerifyBvnScreen from '../../stacks/VerifyBvnScreen';
+import NotificationScreen from '../../stacks/NotificationScreen';
 import SetTransactionPinScreen from '../../stacks/SetTransactionPinScreen';
 import SendFundsFeedbackScreen from '../../stacks/SendFundsFeedbackScreen';
 import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
-import SendFundsErrorFeedbackScreen from '../../stacks/SendFundsErrorFeedbackScreen';
 import ExchangeFundsFeedbackScreen from '../../stacks/ExchangeFundsFeedbackScreen';
+import SendFundsErrorFeedbackScreen from '../../stacks/SendFundsErrorFeedbackScreen';
 
 /**
 |--------------------------------------------------
@@ -43,6 +44,7 @@ const _ROUTES = [
 	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },
 	{ name: ROUTE_NAMES.SEND_NGN_FUNDS, component: SendNGNScreen },
 	{ name: ROUTE_NAMES.BVN_VERIFICATION, component: VerifyBvnScreen },
+	{ name: ROUTE_NAMES.NOTIFICATION_SCREEN, component: NotificationScreen },
 	{ name: ROUTE_NAMES.SEND_FUNDS_FEEDBACK, component: SendFundsFeedbackScreen },
 	{ name: ROUTE_NAMES.SET_TRANSACTION_PIN, component: SetTransactionPinScreen },
 	{ name: ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, component: SendFundsBeneficiaryScreen },

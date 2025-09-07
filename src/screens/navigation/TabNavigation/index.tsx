@@ -16,11 +16,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 */
 import MPText from '@/src/components/MPText';
 import HomeNavigation from './HomeNavigation';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
-import { HomeIcon, SettingsIcon, SupportIcon, TransactionIcon } from '@/assets/svgs';
-import TransactionNavigation from './TransactionNavigation';
 import SupportNavigation from './SupportNavigation';
 import ProfileNavigation from './ProfileNavigation';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
+import TransactionNavigation from './TransactionNavigation';
+import { HomeIcon, SettingsIcon, SupportIcon, TransactionIcon } from '@/assets/svgs';
 
 const Tab = createBottomTabNavigator();
 
@@ -85,20 +85,19 @@ export default function TabNavigation() {
 				headerShown: false,
 				tabBarStyle: {
 					height: 64,
-					bottom: 14,
 					width: '95%',
 					paddingTop: 2,
+					zIndex: 99999,
 					borderWidth: 0.2,
+					marginBottom: 24,
 					paddingInline: 24,
 					borderRadius: 9999,
 					alignSelf: 'center',
-					position: 'absolute',
 					alignItems: 'center',
 					backgroundColor: 'white',
 					borderColor: '#D1D1D1',
 					justifyContent: 'center',
 					shadowColor: '#ffffff',
-					transform: [{ translateX: '2.5%' }],
 				},
 			}}
 		>

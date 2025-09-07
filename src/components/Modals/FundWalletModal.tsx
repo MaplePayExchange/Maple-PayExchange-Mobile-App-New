@@ -6,7 +6,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import Tooltip from '../Tooltip';
-import { View, Modal, Pressable } from 'react-native';
+import { View, Modal, Pressable, Platform } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Svg, Path, Defs, Stop, LinearGradient } from 'react-native-svg';
 
@@ -52,7 +52,7 @@ export default function FundWalletModal({
     */
 	return (
 		<Modal visible={showFundWalletModal} animationType="slide" onDismiss={onDismiss}>
-			<View className="mt-[50px]" />
+			{Platform.OS === 'ios' && <View className="mt-[70px]" />}
 			<View className="flex-1 bg-white">
 				<ScreenWrapper>
 					{/**

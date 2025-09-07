@@ -135,7 +135,7 @@ export default function ForgotPasswordScreen() {
 								weight="semibold"
 								className={clsx(isValid ? 'text-white' : 'text-[#D1D1D1] text-sm')}
 							>
-								Send password reset link
+								Reset password
 							</MPText>
 						</MPButton>
 
@@ -151,7 +151,7 @@ export default function ForgotPasswordScreen() {
 							<MPText
 								weight="semibold"
 								className="text-[#FF6A00] text-sm"
-								onPress={() => navigation.navigate(ROUTE_NAMES.PHONE_VERIFICATION)}
+								onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}
 							>
 								Login
 							</MPText>

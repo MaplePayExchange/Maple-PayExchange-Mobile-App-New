@@ -134,3 +134,16 @@ export interface FundSwapTransaction {
 	destinationAmount: number;
 	destinationCurrency: string;
 }
+
+export interface INotification {
+	to: string;
+	title?: string;
+	message: string;
+	isRead?: boolean;
+	createdAt?: Date;
+	updatedAt?: Date;
+	from?: string | null;
+	metadata?: Record<string, any>;
+	status?: 'pending' | 'sent' | 'failed';
+	type: 'login' | 'rates' | 'reward' | 'security' | 'transaction' | 'account-creation' | 'account-verification';
+}

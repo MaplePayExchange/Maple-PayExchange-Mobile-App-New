@@ -142,7 +142,7 @@ export default function LoginScreen() {
 								}}
 							/>
 						</View>
-						<Pressable className="mt-2">
+						<Pressable onPress={() => navigation.navigate('ForgotPasswordScreen')} className="mt-2">
 							<MPText weight="semibold" className="text-[#FF6A00] text-sm">
 								Forgot password?
 							</MPText>

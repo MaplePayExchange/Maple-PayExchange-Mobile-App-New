@@ -4,12 +4,11 @@
 |--------------------------------------------------
 */
 import * as Linking from 'expo-linking';
-import { Toast } from 'toastify-react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useUserStore } from '@/zustand/userStore';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 /**
 |--------------------------------------------------
@@ -22,6 +21,7 @@ import { Wallet } from '@/interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { Currency, TransactionInterface } from '@/interfaces/transaction.interface';
+import utils from '@/lib/utils';
 
 export interface TransactionFilters {
 	page?: number;
@@ -31,6 +31,20 @@ export interface TransactionFilters {
 	currency?: Currency;
 	type?: 'FundSwap' | 'Incoming' | 'Outgoing' | 'Reward';
 	filter?: 'today' | 'lastWeek' | 'lastMonth' | 'lastYear';
+}
+
+interface TransactionResponse {
+	transactions: TransactionInterface[];
+	meta: {
+		page: number;
+		limit: number;
+		total: number;
+	};
+}
+
+interface InfiniteData<T> {
+	pages: T[];
+	pageParams: unknown[];
 }
 
 interface RequestOtp {
@@ -74,52 +88,6 @@ type CurrentStep = 'phone' | 'email' | 'create account' | 'bvn' | 'veriff';
 
 /**
 |--------------------------------------------------
-| Error handler
-|--------------------------------------------------
-*/
-const errorHandler = (error: any, message?: string) => {
-	console.log(error, 'main.error');
-	console.log('Failed to login user:', error?.response?.data?.error);
-
-	const errorMessage = error?.response?.data?.error || error.response?.data?.message;
-	console.log(errorMessage, 'error.message');
-
-	/**
-	|--------------------------------------------------
-	| Error notification
-	|--------------------------------------------------
-	*/
-	Toast.show({
-		text1: 'Error!',
-		type: 'error',
-		closeIconSize: 20,
-		iconColor: '#FFFFFF',
-		visibilityTime: 5000,
-		textColor: '#FFFFFF',
-		backgroundColor: '#fc3f35',
-		text2: errorMessage || message,
-	});
-};
-
-/**
-|--------------------------------------------------
-| Success handler
-|--------------------------------------------------
-*/
-const successNotificationHanlder = (title: string, message: string) => {
-	Toast.show({
-		text1: title,
-		text2: message,
-		type: 'success',
-		closeIconSize: 20,
-		iconColor: '#FFFFFF',
-		textColor: '#FFFFFF',
-		backgroundColor: '#E2F9D2',
-	});
-};
-
-/**
-|--------------------------------------------------
 | For requesting otps
 |--------------------------------------------------
 */
@@ -160,7 +128,7 @@ export const useRequestOtp = (step: CurrentStep) => {
             | Show notification
             |--------------------------------------------------
             */
-			successNotificationHanlder('Otp!', 'Otp has been sent to your provided contact');
+			utils.successNotificationHanlder('Otp!', 'Otp has been sent to your provided contact');
 
 			/**
 			|--------------------------------------------------
@@ -201,7 +169,7 @@ export const useRequestOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});
 };
@@ -251,7 +219,7 @@ export const useVerifyOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});
 };
@@ -305,7 +273,7 @@ export const useCreateUser = () => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error creating user');
+			utils.errorHandler(error, 'Encountered an error creating user');
 		},
 	});
 };
@@ -352,7 +320,7 @@ export const useLogin = () => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error login in');
+			utils.errorHandler(error, 'Encountered an error login in');
 		},
 	});
 };
@@ -402,7 +370,7 @@ export const useForgotPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});
 };
@@ -452,7 +420,7 @@ export const useResetPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});
 };
@@ -463,13 +431,6 @@ export const useResetPassword = (email: string) => {
 |--------------------------------------------------
 */
 export const useStartVeriffSession = () => {
-	/**
-	|--------------------------------------------------
-	| Navigation
-	|--------------------------------------------------
-	*/
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
 	/**
 	|--------------------------------------------------
 	| Mutation
@@ -494,22 +455,6 @@ export const useStartVeriffSession = () => {
 		*/
 		onSuccess: async (data) => {
 			console.log(data);
-			const kycUrl = data?.veriffUrl;
-			const redirectUrl = Linking.createURL('maple://maple.server.com');
-
-			const result = await WebBrowser.openAuthSessionAsync(kycUrl, redirectUrl);
-
-			/**
-			|--------------------------------------------------
-			| ...
-			|--------------------------------------------------
-			*/
-			if (result.type === 'success') {
-				console.log('User returned from KYC:', result.url);
-				navigation.navigate(ROUTE_NAMES.LOGIN, { email: undefined });
-			} else {
-				console.log('User cancelled or error');
-			}
 		},
 
 		/**
@@ -519,7 +464,7 @@ export const useStartVeriffSession = () => {
 		*/
 		onError: (error: any) => {
 			console.log(error.response.data, 'error.veriff');
-			errorHandler(error, 'Encountered an error starting kyc session');
+			utils.errorHandler(error, 'Encountered an error starting kyc session');
 		},
 	});
 };
@@ -530,13 +475,6 @@ export const useStartVeriffSession = () => {
 |--------------------------------------------------
 */
 export const useSetTransactionPin = () => {
-	/**
-	|--------------------------------------------------
-	| Navigation
-	|--------------------------------------------------
-	*/
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
 	/**
 	|--------------------------------------------------
 	| Query client
@@ -576,7 +514,7 @@ export const useSetTransactionPin = () => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			errorHandler(error, 'Encountered an error setting transaction pin');
+			utils.errorHandler(error, 'Encountered an error setting transaction pin');
 		},
 	});
 };
@@ -667,38 +605,49 @@ export const useGetUserWallets = () => {
 	});
 };
 
-/**
-|--------------------------------------------------
-| Get user transaction
-|--------------------------------------------------
-*/
-export const useGetUserTransactions = (filter?: TransactionFilters) => {
-	return useQuery<any, Error, { message: string; transactions: TransactionInterface[]; meta: any }>({
+export const useGetUserTransactions = (filter?: TransactionFilters, isEnabled?: boolean) => {
+	return useInfiniteQuery<TransactionResponse, Error, InfiniteData<TransactionResponse>>({
 		/**
 		|--------------------------------------------------
-		| Query key
+		| Unique key for caching
 		|--------------------------------------------------
 		*/
-		queryKey: [`${JSON.stringify(filter)}-maple_user_transactions`],
+		queryKey: ['maple_user_transactions', filter],
 
 		/**
 		|--------------------------------------------------
-		| Query function (api call)
+		| Initial page parameter
 		|--------------------------------------------------
 		*/
-		queryFn: async () => {
-			console.log(filter, 'filter');
-			const response = await axiosInstance.get('/transactions', { params: filter });
+		initialPageParam: 1,
 
-			/**
-			|--------------------------------------------------
-			| Returns the data
-			|--------------------------------------------------
-			*/
+		/**
+		|--------------------------------------------------
+		| Query function
+		|--------------------------------------------------
+		*/
+		queryFn: async ({ pageParam = 1 }): Promise<TransactionResponse> => {
+			const response = await axiosInstance.get('/transactions', {
+				params: { ...filter, page: pageParam },
+			});
+
 			return {
 				meta: response.data?.meta,
 				transactions: response.data?.items,
 			};
 		},
+
+		/**
+		|--------------------------------------------------
+		| Tell React Query how to find the next page
+		|--------------------------------------------------
+		*/
+		getNextPageParam: (lastPage) => {
+			const { page, limit, total } = lastPage.meta;
+			const maxPage = Math.ceil(total / limit);
+			return page < maxPage ? page + 1 : undefined;
+		},
+
+		enabled: isEnabled ?? true,
 	});
 };

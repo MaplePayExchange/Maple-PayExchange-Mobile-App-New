@@ -4,7 +4,7 @@
 |--------------------------------------------------
 */
 import React from 'react';
-import { View, Modal } from 'react-native';
+import { View, Modal, Platform } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -45,7 +45,7 @@ export default function TransactionConfirmationModal({
     */
 	return (
 		<Modal visible={visible} animationType="slide">
-			<View className="mt-[50px]" />
+			{Platform.OS === 'ios' && <View className="mt-[70px]" />}
 			<ScreenWrapper>
 				<HeaderWrapper onlClick={() => setVisible(false)} center useNavigation title="Transaction Summary" />
 

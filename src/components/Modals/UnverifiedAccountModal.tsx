@@ -23,9 +23,8 @@ import {
 } from '@/constants/app.constant';
 import MPButton from '../MPButton';
 import { CloseIcon } from '@/assets/svgs';
-import { LoginResponse } from '@/zustand/userStore';
+import { User } from '@/interfaces/user.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
-import { useStartVeriffSession } from '@/services/auth.services';
 
 /**
 |--------------------------------------------------
@@ -36,7 +35,7 @@ interface Props {
 	isVerified: boolean;
 	showBvnModal: boolean;
 	isBvnVerified: boolean;
-	userData: LoginResponse | undefined;
+	userData: User | undefined;
 	setShowBvnModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -56,20 +55,14 @@ export default function UnverifiedAcountModal({
 
 	/**
     |--------------------------------------------------
-    | States
-    |--------------------------------------------------
-    */
-
-	/**
-    |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
-		<Modal transparent visible={showBvnModal} animationType="slide">
+		<Modal visible={showBvnModal} animationType="slide">
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1 }}>
 				<Pressable className="flex-1 bg-white" onPress={() => setShowBvnModal(false)}>
-					<View className="mt-auto w-full p-3 justify-center items-center py-5 px-6">
+					<View className="mt-[10%] w-full p-3 justify-center items-center py-5 px-6">
 						<View className="">
 							<View className="items-center mt-6 relative">
 								<Image
@@ -119,7 +112,7 @@ export default function UnverifiedAcountModal({
                             */}
 							<MPText weight="medium" className="text-sm leading-5 mt-4 text-[#767676]">
 								This is a legal requirement, and verification protects you from fraud and identity
-								theft.
+								theft; this information is not shared with anyone.
 							</MPText>
 
 							{/**
@@ -133,23 +126,32 @@ export default function UnverifiedAcountModal({
 									label="KYC Verification"
 									subtext="Complete KYC verification"
 									status={isVerified ? 'completed' : 'pending'}
-									onClick={() => navigation.navigate(ROUTE_NAMES.KYC_STEPS as never)}
+									onClick={() => {
+										setShowBvnModal(false);
+										navigation.navigate(
+											...([ROUTE_NAMES.KYC_STEPS, { email: userData?.mail.email }] as never)
+										);
+									}}
 								/>
 								<KYCSteps
 									icon={BVN_VERIFICATION}
 									label="BVN Verification"
 									subtext="Complete your BVN verification"
 									status={isBvnVerified ? 'completed' : 'pending'}
-									onClick={() => navigation.navigate(ROUTE_NAMES.BVN_VERIFICATION as never)}
+									onClick={() => {
+										setShowBvnModal(false);
+										navigation.navigate(ROUTE_NAMES.BVN_VERIFICATION as never);
+									}}
 								/>
 								<KYCSteps
 									icon={TRANSACTION_PIN}
-									label="Set Transaction Pinn"
+									label="Set Transaction Pin"
 									subtext="Set your transaction pin"
-									onClick={() => navigation.navigate(ROUTE_NAMES.SET_TRANSACTION_PIN as never)}
-									status={
-										typeof userData?.user?.transactionPin === 'string' ? 'completed' : 'pending'
-									}
+									onClick={() => {
+										setShowBvnModal(false);
+										navigation.navigate(ROUTE_NAMES.SET_TRANSACTION_PIN as never);
+									}}
+									status={typeof userData?.transactionPin === 'string' ? 'completed' : 'pending'}
 								/>
 							</View>
 
@@ -166,7 +168,12 @@ export default function UnverifiedAcountModal({
                                 */}
 								<MPButton
 									useGradientBg
-									onPress={() => navigation.navigate(ROUTE_NAMES.KYC_STEPS as never)}
+									onPress={() => {
+										setShowBvnModal(false);
+										navigation.navigate(
+											...([ROUTE_NAMES.KYC_STEPS, { email: userData?.mail.email }] as never)
+										);
+									}}
 								>
 									<MPText weight="semibold" className="text-white text-sm">
 										Start

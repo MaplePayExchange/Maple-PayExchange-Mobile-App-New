@@ -79,7 +79,7 @@ export const fontSizes = {
 	FONT13: clampFontSize(13, 9, 15),
 	FONT14: clampFontSize(14, 14, 16),
 	FONT15: clampFontSize(15, 10, 17),
-	FONT16: clampFontSize(16, 11, 18),
+	FONT16: clampFontSize(16, 16, 18),
 	FONT17: clampFontSize(17, 11, 19),
 	FONT18: clampFontSize(18, 12, 20),
 	FONT19: clampFontSize(19, 12, 21),

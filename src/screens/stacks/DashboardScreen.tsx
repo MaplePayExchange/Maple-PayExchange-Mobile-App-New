@@ -23,17 +23,17 @@ import { useUserStore } from '@/zustand/userStore';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { Wallet } from '@/interfaces/wallet.interface';
 import Transaction from '@/src/components/Transaction';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { useGetUserInformation } from '@/services/auth.services';
 import SendFundsModal from '@/src/components/Modals/SendFundsModal';
 import { MONEY_PAD, clampFontSize } from '@/constants/app.constant';
 import FundWalletModal from '@/src/components/Modals/FundWalletModal';
 import BiometricsModal from '@/src/components/Modals/BiometricsModal';
+import CustomRefreshControl from '@/src/components/CustomRefreshControl';
 import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
-import CustomRefreshControl from '@/src/components/CustomRefreshControl';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 /**
 |--------------------------------------------------
@@ -71,6 +71,7 @@ export default function DashboardScreen() {
 	*/
 	const {
 		userData,
+		setIsLoggedIn,
 		selectedWallet,
 		biometricsInfo,
 		setBiometricsInfo,
@@ -119,7 +120,7 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'notification':
-				navigation.navigate('TransactionScreen');
+				navigation.navigate(ROUTE_NAMES.NOTIFICATION_SCREEN as never);
 				break;
 
 			/**
@@ -197,7 +198,7 @@ export default function DashboardScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper className="bg-white">
+		<ScreenWrapper className="bg-white pb-0">
 			<ScrollView
 				showsVerticalScrollIndicator={false}
 				refreshControl={
@@ -567,7 +568,7 @@ export default function DashboardScreen() {
 				|--------------------------------------------------
 				*/}
 				<UnverifiedAcountModal
-					userData={userData}
+					userData={data?.user}
 					showBvnModal={showBvnModal}
 					setShowBvnModal={setShowBvnModal}
 					isVerified={isVerified as boolean}

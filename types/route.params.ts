@@ -3,7 +3,6 @@ import { BankAccount, FundSwapTransaction } from '@/interfaces/transaction.inter
 export type RootStackParamList = {
 	Home: undefined;
 	SplashScreen: undefined;
-	KycStepsScreen: undefined;
 	DashboardScreen: undefined;
 	VerifyBvnScreen: undefined;
 	SendCADScreen?: BankAccount;
@@ -17,9 +16,11 @@ export type RootStackParamList = {
 		currency: 'CAD' | 'NGN';
 	};
 	TransactionsScreen: undefined;
+	NotificationScreen?: undefined;
 	LoginScreen: { email?: string };
 	ForgotPasswordScreen: undefined;
 	BVNVerificationScreen: undefined;
+	KycStepsScreen: { email?: string };
 	VerifyPhoneNumberScreen: undefined;
 	EmailVerificationScreen: undefined;
 	PhoneVerificationScreen: undefined;

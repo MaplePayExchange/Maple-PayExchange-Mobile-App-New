@@ -102,13 +102,13 @@ export default function CreateUserScreen() {
 
 		let payload: any = {
 			deviceId: deviceId,
-			lastName: data?.lastName,
 			password: data?.password,
-			firstName: data?.firstName,
 			birthDate: birthDate as string,
-			email: verificationData?.email as string,
+			lastName: data?.lastName.trim(),
+			firstName: data?.firstName.trim(),
 			country: selectedCountry?.name as string,
 			phone: verificationData?.phoneNumber as string,
+			email: verificationData?.email?.trim() as string,
 			sessionId: verificationData?.sessionId as string,
 		};
 

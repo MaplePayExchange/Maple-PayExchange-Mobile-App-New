@@ -12,7 +12,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 |--------------------------------------------------
 */
 import { ROUTE_NAMES } from '@/constants/routes.conts';
-import TransactionScreen from '../../stacks/TransactionScreen copy';
+import TransactionScreen from '../../stacks/TransactionScreen';
 
 /**
 |--------------------------------------------------

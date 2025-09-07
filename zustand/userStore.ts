@@ -34,6 +34,7 @@ interface BiometricsData {
 	email?: string;
 	password?: string;
 	isTurnedOn?: boolean;
+	remindMeLater?: boolean;
 	hasPromptedUser?: boolean;
 }
 

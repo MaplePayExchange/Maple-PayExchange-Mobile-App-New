@@ -24,10 +24,9 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import CalendarModal from '@/src/components/Calendar';
 import Transaction from '@/src/components/Transaction';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
-import { TransactionInterface } from '@/interfaces/transaction.interface';
 import { TransactionFilters, useGetUserTransactions } from '@/services/auth.services';
 
-let isFetching = false;
+let usingFilters = false;
 export default function TransactionsScreen() {
 	const navigation = useNavigation();
 	const queryClient = useQueryClient();
@@ -41,7 +40,6 @@ export default function TransactionsScreen() {
 	const [currentPage, setCurrentPage] = React.useState<number>(1);
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
 	const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
-	const [transactions, setTransactions] = React.useState<TransactionInterface[]>([]);
 	const [range, setRange] = React.useState<{ start: string; end: string | null }>({ start: '', end: null });
 	const [filters, setFilters] = React.useState<TransactionFilters | undefined>({ limit: 20, page: currentPage });
 
@@ -50,7 +48,12 @@ export default function TransactionsScreen() {
 	| Api calls
 	|--------------------------------------------------
 	*/
-	const { data, refetch, isPending, isLoading } = useGetUserTransactions({ ...filters });
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isPending } = useGetUserTransactions(
+		{ ...filters },
+		usingFilters === false ? true : false
+	);
+
+	const transactions = data?.pages?.flatMap((page) => page.transactions) ?? [];
 
 	/**
 	|--------------------------------------------------
@@ -58,7 +61,9 @@ export default function TransactionsScreen() {
 	|--------------------------------------------------
 	*/
 	const handleFilters = (filter: keyof TransactionFilters, value: string | number) => {
+		usingFilters = true;
 		setFilters((prevFilters) => ({ ...prevFilters, [filter]: value }));
+		usingFilters = false;
 	};
 
 	/**
@@ -82,7 +87,6 @@ export default function TransactionsScreen() {
 
 		if (filters?.currency || filters?.endDate || filters?.type || filters?.filter) {
 			setFilters((prevState) => ({ ...prevState, page: undefined }));
-			setTransactions([]);
 		}
 
 		/**
@@ -90,8 +94,8 @@ export default function TransactionsScreen() {
 		| Fetches the data
 		|--------------------------------------------------
 		*/
-		queryClient.invalidateQueries({ queryKey: [`${JSON.stringify(filters)}-maple_user_transactions`] });
-		await refetch();
+		const queryKey = filters ? `${JSON.stringify(filters)}-maple_user_transactions` : `maple_user_transactions`;
+		queryClient.invalidateQueries({ queryKey: [queryKey] });
 	};
 
 	/**
@@ -104,20 +108,6 @@ export default function TransactionsScreen() {
 		setFilters({ page: 1, limit: 20 });
 		setRange({ start: '', end: null });
 	});
-
-	/**
-	|--------------------------------------------------
-	| Storing the transactions
-	|--------------------------------------------------
-	*/
-	React.useEffect(() => {
-		if (data?.transactions) {
-			setTransactions((prevTransactions) => [
-				...prevTransactions,
-				...(data?.transactions as TransactionInterface[]),
-			]);
-		}
-	}, [data]);
 
 	/**
     |--------------------------------------------------
@@ -185,33 +175,12 @@ export default function TransactionsScreen() {
 					| If the user has scrolled to the end
 					|--------------------------------------------------
 					*/
-					if (isScrolledToEnd && !isFetching && contentOffset.y > 0) {
-						console.log(currentPage);
-
-						if (data?.meta.totalPages > currentPage) {
-							setCurrentPage(currentPage + 1);
-							setFilters((prevFilters) => ({ ...prevFilters, page: currentPage + 1 }));
-
-							/**
-							 |--------------------------------------------------
-							 | ...
-							 |--------------------------------------------------
-							 */
-							isFetching = true;
-							await handleApplyFilter();
-							console.log('User reached end');
-
-							/**
-							|--------------------------------------------------
-							| ...
-							|--------------------------------------------------
-							*/
-							isFetching = false;
-						}
+					if (isScrolledToEnd && hasNextPage && !isFetchingNextPage) {
+						fetchNextPage();
 					}
 				}}
 			>
-				{(!isLoading || !isPending) && (
+				{(!isLoading || !isPending || isFetchingNextPage) && (
 					<View className="gap-6">
 						{transactions
 							?.filter((trans) =>
@@ -222,6 +191,17 @@ export default function TransactionsScreen() {
 							?.map((transaction, index) => (
 								<Transaction key={`${transaction.reference}-${index}`} transaction={transaction} />
 							))}
+
+						{/**
+						|--------------------------------------------------
+						| If there are no more transactions
+						|--------------------------------------------------
+						*/}
+						{!hasNextPage && (
+							<MPText weight="medium" className="text-sm self-center text-[#FF6A00]">
+								No more transactions
+							</MPText>
+						)}
 					</View>
 				)}
 
