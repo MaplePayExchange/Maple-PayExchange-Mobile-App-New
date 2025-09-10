@@ -1,0 +1,34 @@
+[
+	{
+		"tag": "email_notification",
+		"name": "Not receiving notifications (SMS, email, or in-app)",
+		"question": {
+			"header": "Not receiving notifications (SMS, email, or in-app)",
+			"subtext": "If you aren’t receiving alerts:"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Ensure notifications are enabled in your device settings.",
+				"Check spam/junk folder for emails."
+			]
+		}
+	},
+	{
+		"tag": "email_notification",
+		"name": "Managing notification preferences",
+		"question": {
+			"header": "Managing notification preferences",
+			"subtext": "To manage alerts:"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Go to Profile > Account Settings > Notifications.",
+				"Choose what you’d like to receive (transaction alerts, promotions, reminders)."
+			]
+		}
+	}
+]

@@ -9,7 +9,7 @@ import { Text, TextProps } from 'react-native';
 interface Props extends TextProps {
 	className?: string;
 	children: React.ReactNode;
-	weight?: 'regular' | 'bold' | 'medium' | 'semibold';
+	weight?: 'regular' | 'bold' | 'medium' | 'semibold' | 'extra-bold';
 }
 
 export default function MPText({ children, weight = 'regular', className, ...props }: Props) {
@@ -27,7 +27,9 @@ export default function MPText({ children, weight = 'regular', className, ...pro
 					? 'font-manrope-medium'
 					: weight === 'semibold'
 						? 'font-manrope-semibold'
-						: undefined;
+						: weight === 'extra-bold'
+							? 'font-manrope-extrabold'
+							: undefined;
 
 	/**
     |--------------------------------------------------

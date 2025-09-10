@@ -13,6 +13,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 */
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import SupportScreen from '../../stacks/SupportScreen';
+import SupportDetailsScreen from '../../stacks/SupportDetailsScreen';
 
 /**
 |--------------------------------------------------
@@ -26,7 +27,10 @@ const Stack = createStackNavigator();
 | Routes
 |--------------------------------------------------
 */
-const _ROUTES = [{ name: ROUTE_NAMES.SUPPORT, component: SupportScreen }];
+const _ROUTES = [
+	{ name: ROUTE_NAMES.SUPPORT, component: SupportScreen },
+	{ name: ROUTE_NAMES.SUPPORT_DETAILS_SCREEN, component: SupportDetailsScreen },
+];
 
 export default function SupportNavigation() {
 	/**

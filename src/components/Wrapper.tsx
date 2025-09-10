@@ -28,10 +28,7 @@ export default function ScreenWrapper({ children, className, usePadding = true }
     |--------------------------------------------------
     */
 	return (
-		<SafeAreaView
-			edges={{ bottom: 'off', top: 'maximum' }}
-			className={`bg-white ${usePadding ? 'flex-1' : ''} ${className}`}
-		>
+		<SafeAreaView edges={{ bottom: 'off', top: 'maximum' }} className={`bg-white flex-1 ${className}`}>
 			{/**
             |--------------------------------------------------
             | Status bar
@@ -44,7 +41,7 @@ export default function ScreenWrapper({ children, className, usePadding = true }
             | Children
             |--------------------------------------------------
             */}
-			<View className={clsx('flex-1 p-4 bg-white')}>{children}</View>
+			<View className={clsx('flex-1 bg-white', usePadding ? 'p-4' : 'p-0')}>{children}</View>
 		</SafeAreaView>
 	);
 }

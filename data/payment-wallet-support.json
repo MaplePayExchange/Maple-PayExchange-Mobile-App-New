@@ -1,0 +1,215 @@
+[
+	{
+		"tag": "payment_wallet",
+		"name": "Can’t find your payment?",
+		"question": {
+			"header": "Can’t find your payment?",
+			"subtext": "If a payment doesn’t appear immediately, it may be pending, delayed by the bank, or under review."
+		},
+		"solution": {
+			"type": "single",
+			"header": "What you can do:",
+			"bullet-points": [
+				"Check your Transaction History.",
+				"Verify the recipient details (account number, bank, etc.).",
+				"Confirm your wallet was funded before sending.",
+				"Some transfers may take up to 10 – 30 minutes depending on the method."
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "Transaction not received",
+		"question": {
+			"header": "Transaction not received",
+			"subtext": "We understand how important it is for your funds to arrive on time. If your transaction hasn’t been received, here are a few possible reasons and what you can do:"
+		},
+		"solution": {
+			"type": "multiple",
+			"solutions": [
+				{
+					"header": "1. Check your transaction history",
+					"bullet-points": [
+						"Go to Transactions from your dashboard",
+						"Tap the specific transaction to view its status - in progress, pending, completed or failed.",
+						"In progress: We’re confirming with partner banks",
+						"Pending: Your transfer is still processing",
+						"Completed: The funds have been sent",
+						"Failed: The transfer didn’t go through (check for refund)"
+					]
+				},
+				{
+					"header": "2. Confirm your funding source",
+					"bullet-points": [
+						"If you used Interac e-Transfer or bank transfer, double-check that the funds were actually sent from your bank."
+					]
+				},
+				{
+					"header": "3. Check your email/SMS notifications",
+					"bullet-points": ["You may have received confirmation from your bank or from us."]
+				},
+				{
+					"header": "4. Allow processing time",
+					"bullet-points": [
+						"Bank transfers or Interac e-Transfers can take 10–30 minutes depending on the bank."
+					]
+				}
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "How to fund my wallet (CAD / NGN)",
+		"question": {
+			"header": "How to fund my wallet (CAD / NGN)",
+			"subtext": "You can add funds to your wallet easily."
+		},
+		"solution": {
+			"type": "single",
+			"header": "Steps:",
+			"bullet-points": [
+				"Log in to the app.",
+				"Select Add within the Wallet you want to fund.",
+				"Follow the on-screen instructions for payment (Interac e-transfer, bank transfer, etc.).Note: We do not accept third-party deposits."
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "Withdrawing money to my bank account",
+		"question": {
+			"header": "Withdrawing money to my bank account",
+			"subtext": "To withdraw funds:"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Log in to the app.",
+				"Select Send within the Wallet you want to withdraw from",
+				"Enter your Interac details for CAD/recipient’s details or your Naira bank details/recipient’s details for NGN or choose from saved beneficiaries.",
+				"Follow the on-screen instructions to enter amount to send",
+				"Confirm the transaction.",
+				"Enter your transaction PIN"
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "Why was my transaction declined?",
+		"question": {
+			"header": "Why was my transaction declined?",
+			"subtext": "Transactions may fail due to:"
+		},
+		"solution": {
+			"type": "single",
+			"header": "What you can do:",
+			"bullet-points": [
+				"Insufficient wallet balance.",
+				"Invalid recipient details.",
+				"Daily transaction limits.",
+				"Network or bank delays."
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": null,
+		"question": {
+			"header": null,
+			"subtext": null
+		},
+		"solution": {
+			"header": "What you can do:",
+			"subtext": null,
+			"bullet-points": [
+				"Double-check the recipient info.",
+				"Make sure you haven’t exceeded limits.",
+				"If funds were deducted but not delivered, contact support."
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "Transaction limits (daily, weekly, monthly)",
+		"question": {
+			"header": "Transaction limits (daily, weekly, monthly)",
+			"subtext": "We set limits to protect customers and comply with regulations."
+		},
+		"solution": {
+			"type": "single",
+			"header": "General limits:",
+			"subtext": null,
+			"bullet-points": null
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": null,
+		"question": {
+			"header": null,
+			"subtext": null
+		},
+		"solution": {
+			"type": "single",
+			"header": "CAD:",
+			"subtext": null,
+			"bullet-points": ["Daily limit: [$10,000]", "Weekly limit: [$20,000]", "Monthly limit: [$50,000]"]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": null,
+		"question": {
+			"header": null,
+			"subtext": null
+		},
+		"solution": {
+			"type": "single",
+			"header": "NGN:",
+			"subtext": null,
+			"bullet-points": [
+				"Daily limit: [N10,000,000]",
+				"Weekly limit: [N20,000,000]",
+				"Monthly limit: [N50,000,000]"
+			]
+		},
+		"tip": "Tip: Users may request higher limits by reaching out to support and providing supporting proof"
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "How to check exchange rates",
+		"question": {
+			"header": "How to check exchange rates",
+			"subtext": "To see live rates:"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"subtext": null,
+			"bullet-points": [
+				"Open the app.",
+				"Click Profile on the bottom right",
+				"Under Finance Settings, click Exchange Rates",
+				"Use the built-in currency converter."
+			]
+		}
+	},
+	{
+		"tag": "payment_wallet",
+		"name": "Understanding pending or failed payments",
+		"question": {
+			"header": "Understanding pending or failed payments",
+			"subtext": null
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"subtext": null,
+			"bullet-points": [
+				"Pending: Your transfer is still being processed. Please allow up to 24 hours.",
+				"Failed: Your payment could not be completed. Funds may return to your wallet."
+			]
+		}
+	}
+]

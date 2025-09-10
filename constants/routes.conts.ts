@@ -33,6 +33,7 @@ export enum ROUTE_NAMES {
 	NOTIFICATION_SCREEN = 'NotificationScreen',
 	TRANSACTIONS_SCREEN = 'TransactionsScreen',
 	SET_TRANSACTION_PIN = 'SetTransactionPinScreen',
+	SUPPORT_DETAILS_SCREEN = 'SupportDetailsScreen',
 	SEND_FUNDS_FEEDBACK = 'SendFundsFeedbackScreen',
 	SEND_FUNDS_BENEFICIARY = 'SendFundsBeneficiaryScreen',
 	EXCHANGE_FUNDS_FEEDBACK = 'ExchangeFundsFeedbackScreen',

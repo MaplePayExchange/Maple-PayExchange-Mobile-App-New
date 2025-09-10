@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { WebView } from 'react-native-webview';
 import { View, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { PermissionStatus, useCameraPermissions } from 'expo-camera';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -39,6 +40,7 @@ export default function KysStepsScreen() {
 	| States
 	|--------------------------------------------------
 	*/
+	const [status, requestPermission] = useCameraPermissions();
 	const { mutate, isPending, data } = useStartVeriffSession();
 	const [showBrowser, setShowBrowser] = React.useState<boolean>(false);
 	const redirectUrl = 'https://maple-server-new.vercel.app/auth/callback';
@@ -50,7 +52,10 @@ export default function KysStepsScreen() {
 	*/
 	React.useEffect(() => {
 		if (data?.veriffUrl) setShowBrowser(true);
-	}, [data]);
+		if (status?.status !== PermissionStatus.GRANTED) {
+			requestPermission();
+		}
+	}, [data, status]);
 
 	/**
     |--------------------------------------------------
@@ -116,16 +121,31 @@ export default function KysStepsScreen() {
 						|--------------------------------------------------
 						*/}
 						<View className="mt-1 mb-12">
+							{/**
+							|--------------------------------------------------
+							| Passport
+							|--------------------------------------------------
+							*/}
 							<View className="flex-row gap-1 items-center">
 								<Entypo name="dot-single" size={16} color="black" />
 								<MPText className="text-sm leading-5 text-[#767676]">International passport</MPText>
 							</View>
 
+							{/**
+							|--------------------------------------------------
+							| Drivers license
+							|--------------------------------------------------
+							*/}
 							<View className="flex-row gap-1 items-center">
 								<Entypo name="dot-single" size={16} color="black" />
 								<MPText className="text-sm leading-5 text-[#767676]">Driver’s license</MPText>
 							</View>
 
+							{/**
+							|--------------------------------------------------
+							| PR card
+							|--------------------------------------------------
+							*/}
 							<View className="flex-row gap-1 items-center">
 								<Entypo name="dot-single" size={16} color="black" />
 								<MPText className="text-sm leading-5 text-[#767676]">PR card</MPText>
@@ -173,27 +193,29 @@ export default function KysStepsScreen() {
 			| Webview
 			|--------------------------------------------------
 			*/}
-			<View style={{ flex: 1 }}>
-				<WebView
-					useWebView2
-					javaScriptEnabled={true}
-					domStorageEnabled={true}
-					startInLoadingState={true}
-					source={{ uri: data?.veriffUrl }}
-					onNavigationStateChange={(event) => {
-						/**
-						|--------------------------------------------------
-						| Detect redirect
-						|--------------------------------------------------
-						*/
-						if (event.url.startsWith(redirectUrl)) {
-							setShowBrowser(false);
-							console.log('User returned from KYC:', event.url);
-							navigation.navigate('DashboardScreen');
-						}
-					}}
-				/>
-			</View>
+			{showBrowser && (
+				<View style={{ flex: 1 }}>
+					<WebView
+						useWebView2
+						javaScriptEnabled={true}
+						domStorageEnabled={true}
+						startInLoadingState={true}
+						source={{ uri: data?.veriffUrl }}
+						onNavigationStateChange={(event) => {
+							/**
+							|--------------------------------------------------
+							| Detect redirect
+							|--------------------------------------------------
+							*/
+							if (event.url.startsWith(redirectUrl)) {
+								setShowBrowser(false);
+								navigation.navigate('DashboardScreen');
+							}
+						}}
+						mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"
+					/>
+				</View>
+			)}
 		</ScreenWrapper>
 	);
 }

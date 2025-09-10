@@ -1,0 +1,106 @@
+[
+	{
+		"tag": "login_issue",
+		"name": "Login Issue",
+		"question": {
+			"header": "Login Issue",
+			"subtext": "If you’re unable to log in, it may be due to an incorrect password, expired session, or account lock."
+		},
+		"solution": {
+			"type": "single",
+			"header": "What you can do:",
+			"bullet-points": [
+				"Double-check your username, email, or phone number.",
+				"Make sure Caps Lock isn’t on when typing your password.",
+				"If you’ve forgotten your password, select “Forgot Password” to reset it."
+			]
+		}
+	},
+	{
+		"tag": "login_issue",
+		"name": "Forgot my password",
+		"question": {
+			"header": "Forgot my password",
+			"subtext": "You can reset your password anytime."
+		},
+		"solution": {
+			"type": "single",
+			"header": "Steps:",
+			"bullet-points": [
+				"Go to the Login screen/Profile – Security Settings and tap “Forgot Password”.",
+				"Enter your registered email.",
+				"Follow the instructions sent to you.",
+				"Create a new password."
+			]
+		}
+	},
+	{
+		"tag": "login_issue",
+		"name": "Reset my Transaction PIN",
+		"question": {
+			"header": "Reset my Transaction PIN",
+			"subtext": "You can reset your password or PIN anytime."
+		},
+		"solution": {
+			"type": "single",
+			"header": "Steps:",
+			"bullet-points": [
+				"Go to the Profile – Security Settings and tap “Change your PIN”.",
+				"Enter Old PIN.",
+				"Enter New PIN"
+			]
+		}
+	},
+	{
+		"tag": "login_issue",
+		"name": "KYC Verification delay (Why is my account verification still pending?)",
+		"question": {
+			"header": "KYC Verification delay (Why is my account verification still pending?)",
+			"subtext": "Verification ensures your account complies with financial regulations. Sometimes, checks may take longer if documents are unclear or require manual review."
+		},
+		"solution": {
+			"type": "single",
+			"header": "What you can do:",
+			"bullet-points": [
+				"Confirm that you’ve uploaded all required documents.",
+				"Ensure your ID details are correct.",
+				"If verification takes longer than 48 hours, please contact support."
+			]
+		}
+	},
+	{
+		"tag": "login_issue",
+		"name": "BVN Verification delay (Why is my BVN verification still pending?)",
+		"question": {
+			"header": "BVN Verification delay (Why is my BVN verification still pending?)",
+			"subtext": "Verification ensures your account complies with financial regulations. Sometimes, checks may take longer if documents are unclear or require manual review."
+		},
+		"solution": {
+			"type": "single",
+			"header": "What you can do:",
+			"bullet-points": [
+				"Confirm that you’ve uploaded all required documents.",
+				"Ensure your ID details are correct.",
+				"If verification takes longer than 48 hours, please contact support."
+			]
+		}
+	},
+	{
+		"tag": "login_issue",
+		"name": "Updating my personal information",
+		"question": {
+			"header": "Updating my personal information",
+			"subtext": "You are unable to edit this profile because your account has already been verified. If you need to edit or update information, please reach out to support."
+		},
+		"solution": {
+			"type": "single",
+			"header": "Closing or deactivating my account",
+			"subtext": "We’re sorry to see you go! If you’d like to close your account:",
+			"bullet-points": [
+				"Ensure your wallet balance is zero.",
+				"Contact customer support with your request.",
+				"Our team will guide you through final steps."
+			]
+		}
+	}
+]

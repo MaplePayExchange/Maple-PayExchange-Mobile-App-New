@@ -1,3 +1,4 @@
+import { FAQItem } from '@/interfaces/support.interface';
 import { BankAccount, FundSwapTransaction } from '@/interfaces/transaction.interface';
 
 export type RootStackParamList = {
@@ -43,4 +44,5 @@ export type RootStackParamList = {
 		bank?: { code: string; name: string };
 		transactionType: 'SWAP' | 'CAD-to-CAD' | 'NGN-to-NGN';
 	};
+	SupportDetailsScreen: FAQItem[];
 };

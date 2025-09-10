@@ -10,6 +10,7 @@ import {
 	Manrope_500Medium,
 	Manrope_400Regular,
 	Manrope_600SemiBold,
+	Manrope_800ExtraBold,
 } from '@expo-google-fonts/manrope';
 import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
@@ -39,6 +40,7 @@ export default function App() {
 		Manrope_500Medium,
 		Manrope_400Regular,
 		Manrope_600SemiBold,
+		Manrope_800ExtraBold,
 	});
 
 	const toastConfig = {

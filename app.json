@@ -16,11 +16,12 @@
 				"NSLocationAlwaysUsageDescription": "This app uses your location to send you notifications based on your location.",
 				"NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
 				"NSFaceIDUsageDescription": "This app uses Face ID and Touch ID to verify the user's identity and protect sensitive data",
-				"NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
+				"NSCameraUsageDescription": "This app uses the camera to scan documents",
 				"ITSAppUsesNonExemptEncryption": false
 			}
 		},
 		"android": {
+			"permissions": ["CAMERA"],
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/maple_logo.png",
 				"backgroundColor": "#ffffff"

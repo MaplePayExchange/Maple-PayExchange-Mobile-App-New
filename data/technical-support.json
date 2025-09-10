@@ -1,0 +1,29 @@
+[
+	{
+		"tag": "technical_support",
+		"name": "App not loading or crashing",
+		"question": {
+			"header": "App not loading or crashing",
+			"subtext": "If your app won’t open or keeps crashing:"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": ["Restart your phone.", "Update to the latest version.", "Reinstall the app if necessary."]
+		}
+	},
+	{
+		"tag": "technical_support",
+		"name": "How to update the app",
+		"question": {
+			"header": "How to update the app",
+			"subtext": "Visit your App Store / Google Play Store and check for updates. Always use the latest version for best performance."
+		},
+		"solution": {
+			"type": "single",
+			"header": "Contacting customer support",
+			"subtext": "You can reach us by:",
+			"bullet-points": ["Live chat in the app", "Email at [support@mpexchange.ca]", "WhatsApp [289-952-9645]"]
+		}
+	}
+]
