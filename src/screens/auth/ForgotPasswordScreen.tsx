@@ -72,7 +72,7 @@ export default function ForgotPasswordScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			<HeaderWrapper title="Forgot Password" />
 			<MPText weight="semibold" className="text-base">
 				Reset password

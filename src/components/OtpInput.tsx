@@ -31,14 +31,48 @@ export default function OTPInput({
 	const [otp, setOtp] = useState<string[]>(Array(length).fill(''));
 
 	/**
-    |--------------------------------------------------
-    | Handles input field
-    |--------------------------------------------------
-    */
+  |--------------------------------------------------
+  | Handles input / paste
+  |--------------------------------------------------
+  */
 	const handleChange = (text: string, index: number) => {
-		const newOtp = [...otp];
-		newOtp[index] = text;
+		let newOtp = [...otp];
 
+		/**
+		|--------------------------------------------------
+		| If user pastes multiple characters
+		|--------------------------------------------------
+		*/
+		if (text.length > 1) {
+			const chars = text.split('').slice(0, length - index);
+			chars.forEach((char, i) => {
+				newOtp[index + i] = char;
+			});
+
+			setOtp(newOtp);
+
+			/**
+			|--------------------------------------------------
+			| Focus the next empty box if available
+			|--------------------------------------------------
+			*/
+			const nextIndex = index + text.length - 1;
+			if (nextIndex < length) {
+				inputsRef.current[nextIndex]?.focus();
+			}
+
+			if (newOtp.every((digit) => digit !== '')) {
+				onComplete(newOtp.join(''));
+			}
+			return;
+		}
+
+		/**
+		|--------------------------------------------------
+		| Normal single character input
+		|--------------------------------------------------
+		*/
+		newOtp[index] = text;
 		setOtp(newOtp);
 
 		if (text && index < length - 1) {

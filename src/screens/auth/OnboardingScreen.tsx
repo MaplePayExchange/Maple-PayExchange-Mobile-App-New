@@ -169,59 +169,61 @@ export default function OnboardingScreen() {
 						</SafeAreaView>
 
 						<BlurView intensity={20} tint="systemUltraThinMaterialDark" className="mt-auto h-[268px] z-20">
-							<View className="p-6">
-								{/**
-                                |--------------------------------------------------
-                                | Title
-                                |--------------------------------------------------
-                                */}
-								<MPText
-									weight="bold"
-									style={{ fontSize: 24, lineHeight: 32 }}
-									className="text-white text-2xl mb-3 tracking-tight"
-								>
-									{item.title}
-								</MPText>
-
-								{/**
-                                |--------------------------------------------------
-                                | Subtitle
-                                |--------------------------------------------------
-                                */}
-								<MPText
-									weight="semibold"
-									style={{ lineHeight: 20, fontSize: 14 }}
-									className="leading-6 text-white text-sm"
-								>
-									{item.subtitle}
-								</MPText>
-
-								{/**
-                                |--------------------------------------------------
-                                | Action button
-                                |--------------------------------------------------
-                                */}
-								<MPButton
-									useGradientBg
-									className="mt-6"
-									onPress={() => navigation.navigate(ROUTE_NAMES.PHONE_VERIFICATION)}
-								>
-									<MPText weight="semibold" className="text-white text-sm">
-										Create an account
+							<SafeAreaView>
+								<View className="p-6">
+									{/**
+									|--------------------------------------------------
+									| Title
+									|--------------------------------------------------
+									*/}
+									<MPText
+										weight="bold"
+										style={{ fontSize: 24, lineHeight: 32 }}
+										className="text-white text-2xl mb-3 tracking-tight"
+									>
+										{item.title}
 									</MPText>
-								</MPButton>
 
-								{/**
-                                |--------------------------------------------------
-                                | Login
-                                |--------------------------------------------------
-                                */}
-								<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}>
-									<MPText weight="semibold" className="text-[#f84f21] text-sm">
-										Login
+									{/**
+									|--------------------------------------------------
+									| Subtitle
+									|--------------------------------------------------
+									*/}
+									<MPText
+										weight="semibold"
+										style={{ lineHeight: 20, fontSize: 14 }}
+										className="leading-6 text-white text-sm"
+									>
+										{item.subtitle}
 									</MPText>
-								</MPButton>
-							</View>
+
+									{/**
+									|--------------------------------------------------
+									| Action button
+									|--------------------------------------------------
+									*/}
+									<MPButton
+										useGradientBg
+										className="mt-6"
+										onPress={() => navigation.navigate(ROUTE_NAMES.PHONE_VERIFICATION)}
+									>
+										<MPText weight="semibold" className="text-white text-sm">
+											Create an account
+										</MPText>
+									</MPButton>
+
+									{/**
+									|--------------------------------------------------
+									| Login
+									|--------------------------------------------------
+									*/}
+									<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}>
+										<MPText weight="semibold" className="text-[#f84f21] text-sm">
+											Login
+										</MPText>
+									</MPButton>
+								</View>
+							</SafeAreaView>
 						</BlurView>
 
 						{/**

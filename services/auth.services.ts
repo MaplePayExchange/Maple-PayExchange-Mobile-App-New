@@ -128,7 +128,9 @@ export const useRequestOtp = (step: CurrentStep) => {
             | Show notification
             |--------------------------------------------------
             */
-			utils.successNotificationHanlder('Otp!', 'Otp has been sent to your provided contact');
+			if (step !== 'bvn') {
+				utils.successNotificationHanlder('Otp!', 'Otp has been sent to your provided contact');
+			}
 
 			/**
 			|--------------------------------------------------
@@ -393,7 +395,7 @@ export const useResetPassword = (email: string) => {
 	| Mutation
 	|--------------------------------------------------
 	*/
-	return useMutation<any, Error, { email: string; newPassword: string; token: string }>({
+	return useMutation<any, Error, { email: string; newPassword: string; token: string; confirmPassword: string }>({
 		/**
 		|--------------------------------------------------
 		| Api call

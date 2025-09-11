@@ -5,7 +5,11 @@
 */
 import dayjs from 'dayjs';
 import React from 'react';
+import * as Sharing from 'expo-sharing';
+import ViewShot from 'react-native-view-shot';
+import * as FileSystem from 'expo-file-system/legacy';
 import { View, Modal, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  |--------------------------------------------------
@@ -14,6 +18,7 @@ import { View, Modal, Pressable } from 'react-native';
  */
 import clsx from 'clsx';
 import MPText from '../MPText';
+import Receipt from '../Receipt';
 import MPButton from '../MPButton';
 import { CloseIcon } from '@/assets/svgs';
 import DataRepresentation from '../DataRepresentation';
@@ -26,13 +31,63 @@ interface Props {
 }
 export default function TransactionDetailsModal({ showModal, setShowModal, transaction }: Props) {
 	/**
+	|--------------------------------------------------
+	| States
+	|--------------------------------------------------
+	*/
+	const viewShotRef = React.useRef<ViewShot>(null);
+	const insets = useSafeAreaInsets();
+
+	/**
+	|--------------------------------------------------
+	| Function to handle the download
+	|--------------------------------------------------
+	*/
+	const handleDownload = async () => {
+		try {
+			if (!viewShotRef.current) {
+				console.warn('Receipt component not rendered yet');
+				return;
+			}
+
+			console.log(viewShotRef.current);
+			/**
+			|--------------------------------------------------
+			| Capture the receipt component as PNG
+			|--------------------------------------------------
+			*/
+			const uri = await viewShotRef?.current?.capture?.();
+
+			console.log(uri, 'uri');
+
+			/**
+			|--------------------------------------------------
+			| Save to filesystem using expo-file-system
+			|--------------------------------------------------
+			*/
+			const fileName = `Receipt_${Date.now()}.png`;
+			const path = `${FileSystem.documentDirectory}${fileName}`;
+			await FileSystem.copyAsync({ from: uri as string, to: path });
+
+			/**
+			|--------------------------------------------------
+			| Share it using expo-sharing
+			|--------------------------------------------------
+			*/
+			await Sharing.shareAsync(path, { mimeType: 'image/png', dialogTitle: 'Download Receipt' });
+		} catch (err) {
+			console.error('Error generating receipt:', err);
+		}
+	};
+
+	/**
     |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
 		<Modal visible={showModal} transparent animationType="slide">
-			<View className="flex-1 bg-black/10 justify-end">
+			<View className="flex-1 bg-black/10 justify-end" style={{}}>
 				{/**
                 |--------------------------------------------------
                 | Content
@@ -163,7 +218,14 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         | Action buttons
                         |--------------------------------------------------
                         */}
-						<MPButton useGradientBg className="mt-8">
+						<ViewShot
+							ref={viewShotRef}
+							options={{ format: 'jpg', quality: 1 }}
+							style={{ position: 'absolute', bottom: -99999 }}
+						>
+							<Receipt transaction={transaction} />
+						</ViewShot>
+						<MPButton onPress={handleDownload} useGradientBg className="mt-8">
 							<MPText weight="semibold" className="text-white">
 								Download receipt
 							</MPText>

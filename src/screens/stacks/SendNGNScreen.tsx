@@ -8,16 +8,16 @@ import {
 	Platform,
 	Keyboard,
 	Pressable,
+	TextInput,
 	ScrollView,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
-	TextInput,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------

@@ -131,7 +131,7 @@ export default function CreateUserScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			{/**
 			|--------------------------------------------------
 			| Header
@@ -151,7 +151,7 @@ export default function CreateUserScreen() {
 			<KeyboardAvoidingView
 				className="flex-1 mt-8"
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 64}
 			>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<ScrollView

@@ -5,7 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,17 +18,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 interface Props {
 	className?: string;
 	usePadding?: boolean;
+	useBottomInset?: boolean;
 	children: React.ReactNode;
 }
 
-export default function ScreenWrapper({ children, className, usePadding = true }: Props) {
+export default function ScreenWrapper({ children, className, usePadding = true, useBottomInset = false }: Props) {
 	/**
     |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
-		<SafeAreaView edges={{ bottom: 'off', top: 'maximum' }} className={`bg-white flex-1 ${className}`}>
+		<SafeAreaView
+			edges={{ bottom: useBottomInset === true ? 'maximum' : 'off', top: 'maximum' }}
+			className={`bg-white flex-1 ${className}`}
+		>
 			{/**
             |--------------------------------------------------
             | Status bar

@@ -82,7 +82,7 @@ export default function LoginScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			<HeaderWrapper useNavigation={false} title="Welcome Back!" subtitle="Login to your account" />
 
 			{/**

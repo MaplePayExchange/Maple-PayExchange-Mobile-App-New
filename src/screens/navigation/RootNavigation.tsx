@@ -4,7 +4,9 @@
 |--------------------------------------------------
 */
 import React from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
 
 /**
@@ -15,7 +17,6 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
 import TabNavigation from './TabNavigation';
 import AuthNavigation from './AuthNavigation';
 import { useUserStore } from '@/zustand/userStore';
-import { View } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -38,20 +39,22 @@ export default function RootNavigation() {
     |--------------------------------------------------
     */
 	return (
-		<NavigationContainer>
-			<Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS }}>
-				{isLoggedIn ? (
-					<Stack.Screen
-						layout={({ children }) => {
-							return <View className="flex-1 bg-white">{children}</View>;
-						}}
-						name="TabNavigation"
-						component={TabNavigation}
-					/>
-				) : (
-					<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
-				)}
-			</Stack.Navigator>
-		</NavigationContainer>
+		<SafeAreaProvider>
+			<NavigationContainer>
+				<Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS }}>
+					{isLoggedIn ? (
+						<Stack.Screen
+							layout={({ children }) => {
+								return <View className="flex-1 bg-white">{children}</View>;
+							}}
+							name="TabNavigation"
+							component={TabNavigation}
+						/>
+					) : (
+						<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
+					)}
+				</Stack.Navigator>
+			</NavigationContainer>
+		</SafeAreaProvider>
 	);
 }

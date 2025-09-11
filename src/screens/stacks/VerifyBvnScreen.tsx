@@ -6,6 +6,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, Modal, View } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -16,14 +18,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
 import { useUserStore } from '@/zustand/userStore';
+import { User } from '@/interfaces/user.interface';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import InputField from '@/src/components/InputField';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useRequestOtp } from '@/services/auth.services';
 import { SUCCESS_BADGE } from '@/constants/app.constant';
 import { RootStackParamList } from '@/types/route.params';
-import { useNavigation } from '@react-navigation/native';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 type VerifyBvnScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 
@@ -34,6 +36,10 @@ export default function VerifyBvnScreen() {
 	|--------------------------------------------------
 	*/
 	const navigation = useNavigation<VerifyBvnScreenProps>();
+
+	const queryClient = useQueryClient();
+	const data: any = queryClient.getQueryData(['maple_user_data']);
+	const user = data?.user as User;
 
 	/**
 	|--------------------------------------------------
@@ -49,11 +55,7 @@ export default function VerifyBvnScreen() {
 	| Form handler
 	|--------------------------------------------------
 	*/
-	const {
-		control,
-		handleSubmit,
-		formState: { isValid },
-	} = useForm({
+	const { control, handleSubmit } = useForm({
 		defaultValues: { bvn: '' },
 	});
 
@@ -157,7 +159,7 @@ export default function VerifyBvnScreen() {
 			*/}
 			<Modal transparent visible={showSuccessModal}>
 				<View className="flex-1 bg-black/10 p-6">
-					<View className="mt-auto rounded-3xl bg-white p-5 h-[290px] w-full items-center">
+					<View className="mt-auto rounded-3xl bg-white p-5 min-h-[220px] w-full items-center">
 						<Image source={SUCCESS_BADGE} />
 
 						{/**
@@ -166,22 +168,36 @@ export default function VerifyBvnScreen() {
 						|--------------------------------------------------
 						*/}
 						<MPText style={{ fontSize: 20, lineHeight: 32 }} weight="semibold" className="text-[20px] mt-4">
-							Verification Complete
+							BVN Verification Complete
 						</MPText>
-						<MPText className="text-center max-w-[290px] text-[#484848] text-sm">
-							You’re verified! Let’s secure your account before you proceed.
-						</MPText>
+						{typeof user.transactionPin !== 'string' ? (
+							<MPText className="text-center max-w-[290px] text-[#484848] text-sm">
+								You bvn has been verified! Let’s secure your account before you proceed.
+							</MPText>
+						) : (
+							<MPText className="text-center max-w-[290px] text-[#484848] text-sm">
+								Your BVN has been verified!.
+							</MPText>
+						)}
 
 						{/**
 						|--------------------------------------------------
 						| Action button
 						|--------------------------------------------------
 						*/}
-						<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
-							<MPText weight="semibold" className="text-sm text-white">
-								Create transaction pin
-							</MPText>
-						</MPButton>
+						{typeof user.transactionPin !== 'string' ? (
+							<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
+								<MPText weight="semibold" className="text-sm text-white">
+									Create transaction pin
+								</MPText>
+							</MPButton>
+						) : (
+							<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
+								<MPText weight="semibold" className="text-sm text-white">
+									Cancel
+								</MPText>
+							</MPButton>
+						)}
 					</View>
 				</View>
 			</Modal>

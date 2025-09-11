@@ -22,8 +22,6 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { RootStackParamList } from '@/types/route.params';
 import { useResetPassword } from '@/services/auth.services';
 
-const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
-
 type ResetPasswordScreenProps = RouteProp<RootStackParamList, 'ResetPasswordScreen'>;
 export default function ResetPasswordScreen() {
 	/**
@@ -32,7 +30,7 @@ export default function ResetPasswordScreen() {
     |--------------------------------------------------
     */
 	const route = useRoute<ResetPasswordScreenProps>();
-	// const { email } = route.params;
+	const { email } = route.params;
 
 	/**
     |--------------------------------------------------
@@ -67,7 +65,12 @@ export default function ResetPasswordScreen() {
     |--------------------------------------------------
     */
 	const onSubmit = (data: any) => {
-		mutate({ email: data.email, token: data.token, newPassword: data.newPassword });
+		mutate({
+			email: email,
+			token: data.token,
+			newPassword: data.newPassword,
+			confirmPassword: data.newPassword,
+		});
 	};
 
 	/**
@@ -76,7 +79,7 @@ export default function ResetPasswordScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			<HeaderWrapper title="Reset Password" />
 			<MPText weight="semibold" className="text-base">
 				Reset password

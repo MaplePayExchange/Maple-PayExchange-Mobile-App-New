@@ -13,7 +13,6 @@ import { Pressable, View } from 'react-native';
 |--------------------------------------------------
 */
 import MPText from '@/src/components/MPText';
-import { fontSizes } from '@/constants/app.constant';
 import { CheckboxFillIcon, CheckboxOutlineIcon } from '@/assets/svgs';
 
 interface CheckboxProps {
@@ -33,7 +32,7 @@ export default function Checkbox({ checked, className, component, onChange, labe
     */
 	return (
 		<View style={{ opacity: disabled ? 0.5 : 1 }} className={clsx('flex-row items-start', className)}>
-			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mt-0.5 mr-2`}>
+			<Pressable onPress={() => !disabled && onChange(!checked)} className={`mr-2 mt-[2px] flex-row items-start`}>
 				{checked ? <CheckboxFillIcon /> : <CheckboxOutlineIcon />}
 			</Pressable>
 
@@ -43,14 +42,11 @@ export default function Checkbox({ checked, className, component, onChange, labe
             |--------------------------------------------------
             */}
 			{label && (
-				<MPText
-					weight="medium"
-					className="text-[#767676] leading-4 w-[88%]"
-					style={{ fontSize: fontSizes.FONT12 }}
-				>
+				<MPText weight="medium" className="text-[#767676] text-xs w-[88%]" style={{ lineHeight: 15 }}>
 					{label}
 				</MPText>
 			)}
+
 			{component && component}
 		</View>
 	);

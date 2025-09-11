@@ -68,7 +68,7 @@ export default function EmailVerificationScreen() {
 	|--------------------------------------------------
 	*/
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			{/**
 			|--------------------------------------------------
 			| Header

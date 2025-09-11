@@ -29,15 +29,17 @@ export default function DataRepresentation({ label, value, labelClassName, value
     |--------------------------------------------------
     */
 	return (
-		<View className={clsx('flex-row w-full justify-between items-center', wrapperClassName)}>
+		<View className={clsx('flex-row w-full gap-12 justify-between items-start', wrapperClassName)}>
 			{/**
             |--------------------------------------------------
             | Label
             |--------------------------------------------------
             */}
-			<MPText weight="regular" className={clsx('text-sm', labelClassName)}>
-				{label || 'Label'}
-			</MPText>
+			<View className="max-w-[50%]">
+				<MPText weight="regular" className={clsx('text-sm', labelClassName)}>
+					{label || 'Label'}
+				</MPText>
+			</View>
 
 			{/**
             |--------------------------------------------------
@@ -45,9 +47,11 @@ export default function DataRepresentation({ label, value, labelClassName, value
             |--------------------------------------------------
             */}
 			{typeof value === 'string' ? (
-				<MPText weight="medium" className={clsx('text-sm', valueClassName)}>
-					{value || 'Value'}
-				</MPText>
+				<View className="flow-row justify-end max-w-[50%]">
+					<MPText weight="medium" className={clsx('text-sm text-right text-wrap', valueClassName)}>
+						{value || 'Value'}
+					</MPText>
+				</View>
 			) : (
 				value
 			)}

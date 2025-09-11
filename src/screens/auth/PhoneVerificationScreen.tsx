@@ -70,7 +70,7 @@ export default function PhoneVerificationScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<ScreenWrapper useBottomInset>
 			{/**
 			|--------------------------------------------------
 			| Header
@@ -118,41 +118,31 @@ export default function PhoneVerificationScreen() {
 				checked={terms.terms}
 				component={
 					<View className="flex-row flex-1 items-center w-[88%] flex-wrap">
-						<MPText
-							weight="medium"
-							className="text-[#767676] leading-4"
-							style={{ fontSize: clampFontSize(12, 10, 27) }}
-						>
+						<MPText weight="medium" style={{ lineHeight: 15 }} className="text-[#767676] leading-4 text-xs">
 							By checking this box, you agree to the
 						</MPText>
 						<MPText
 							weight="medium"
+							style={{ lineHeight: 15 }}
 							onPress={() => console.log('object')}
-							className="leading-4 text-[#FF6A00]"
-							style={{ fontSize: clampFontSize(12, 10, 27) }}
+							className="leading-4 text-xs text-[#FF6A00]"
 						>
 							{' '}
-							Terms and Conditions,
+							Terms and Conditions,{' '}
 						</MPText>
-						<MPText
-							weight="medium"
-							className="text-[#767676] leading-4"
-							style={{ fontSize: clampFontSize(12, 10, 27) }}
-						>
-							{' '}
-							and{' '}
+						<MPText weight="medium" style={{ lineHeight: 15 }} className="text-[#767676] leading-4 text-xs">
 							<MPText
 								weight="medium"
+								style={{ lineHeight: 15 }}
 								onPress={() => console.log('object')}
-								className="leading-4 text-[#FF6A00]"
-								style={{ fontSize: clampFontSize(12, 10, 27) }}
+								className="leading-4 text-xs text-[#FF6A00]"
 							>
 								Privacy Policy{' '}
 							</MPText>
 							<MPText
 								weight="medium"
-								className="text-[#767676] leading-4"
-								style={{ fontSize: clampFontSize(12, 10, 27) }}
+								style={{ lineHeight: 15 }}
+								className="text-[#767676] leading-4 text-xs"
 							>
 								including verification of your identity with your mobile provider/third party.
 							</MPText>

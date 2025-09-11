@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 /**
@@ -74,6 +75,8 @@ const iconConfig = (focused: boolean) => {
 };
 
 export default function TabNavigation() {
+	const insets = useSafeAreaInsets();
+
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -89,7 +92,6 @@ export default function TabNavigation() {
 					paddingTop: 2,
 					zIndex: 99999,
 					borderWidth: 0.2,
-					marginBottom: 24,
 					paddingInline: 24,
 					borderRadius: 9999,
 					alignSelf: 'center',
@@ -98,6 +100,7 @@ export default function TabNavigation() {
 					borderColor: '#D1D1D1',
 					justifyContent: 'center',
 					shadowColor: '#ffffff',
+					marginBottom: insets.bottom,
 				},
 			}}
 		>

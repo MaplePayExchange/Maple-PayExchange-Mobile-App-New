@@ -91,7 +91,7 @@ export default function SupportScreen() {
 		| Phone to initiate chat with
 		|--------------------------------------------------
 		*/
-		const phone = '+2348012345678';
+		const phone = '+16475760680';
 
 		/**
 		|--------------------------------------------------
@@ -148,7 +148,7 @@ export default function SupportScreen() {
 					| Content
 					|--------------------------------------------------
 					*/}
-					<View className={clsx('flex-1 bg-white')} style={{ width: Dimensions.get('screen').width }}>
+					<View className={clsx('flex-1 bg-white pb-16')} style={{ width: Dimensions.get('screen').width }}>
 						<LinearGradient
 							end={{ x: 0, y: 1 }}
 							start={{ x: 0, y: 0 }}
@@ -276,8 +276,11 @@ export default function SupportScreen() {
 							| WhatsAppChatting
 							|--------------------------------------------------
 							*/}
-							<View className="h-[102px] w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
-								<Pressable onPress={handleOpenWhatsApp} className="max-w-[230px] justify-center">
+							<Pressable
+								onPress={handleOpenWhatsApp}
+								className="h-[102px] w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between"
+							>
+								<View className="max-w-[230px] justify-center">
 									{/**
 									|--------------------------------------------------
 									| Header
@@ -287,9 +290,8 @@ export default function SupportScreen() {
 										<MPText weight="semibold" className="text-sm leading-6 text-black">
 											Reach out on WhatsApp
 										</MPText>
-										<Pressable>
-											<RedRightArrowIcon />
-										</Pressable>
+
+										<RedRightArrowIcon />
 									</View>
 
 									{/**
@@ -304,7 +306,7 @@ export default function SupportScreen() {
 									>
 										Having issues with transactions, your account? Talk to us on WhatsApp
 									</MPText>
-								</Pressable>
+								</View>
 
 								{/**
 								|--------------------------------------------------
@@ -315,14 +317,14 @@ export default function SupportScreen() {
 									source={WHATSAPP}
 									style={{ width: clampFontSize(40, 40, 100), height: clampFontSize(40, 40, 100) }}
 								/>
-							</View>
+							</Pressable>
 
 							{/**
 							|--------------------------------------------------
 							| Chat agent
 							|--------------------------------------------------
 							*/}
-							<View className="h-[102px] w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
+							<View className="h-[102px] opacity-40 pointer-events-none w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
 								<View className="max-w-[230px] justify-center">
 									{/**
 									|--------------------------------------------------

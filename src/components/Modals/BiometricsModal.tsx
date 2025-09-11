@@ -14,9 +14,9 @@ import { Svg, Path, Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
  */
 import MPText from '../MPText';
 import Toggler from '../Toggler';
+import MPButton from '../MPButton';
 import { useUserStore } from '@/zustand/userStore';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
-import MPButton from '../MPButton';
 
 interface Props {
 	visible: boolean;
@@ -30,7 +30,7 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
     |--------------------------------------------------
     */
 	const { authenticate } = useBiometricAuth();
-	const { setBiometricsInfo, biometricsInfo } = useUserStore();
+	const { setBiometricsInfo, biometricsInfo, setBiometricsModal } = useUserStore();
 
 	/**
 	|--------------------------------------------------
@@ -130,19 +130,24 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 					/>
 
 					<View className="flex-row justify-between mt-8 mb-8">
-						<MPButton onPress={() => setVisible()} className="w-[45%]">
+						<MPButton onPress={() => setVisible()} className="w-[45%] max-w-[45%]">
 							<MPText className="text-sm text-[#FF6A00]" weight="semibold">
 								Cancel
 							</MPText>
 						</MPButton>
 
+						{/**
+						|--------------------------------------------------
+						| Remind me later
+						|--------------------------------------------------
+						*/}
 						<MPButton
+							useGradientBg
+							className="w-[45%] max-w-[45%]"
 							onPress={() => {
-								setVisible();
+								setBiometricsModal(false);
 								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true });
 							}}
-							useGradientBg
-							className="w-[45%]"
 						>
 							<MPText weight="semibold" className="text-sm text-white">
 								Remind me later

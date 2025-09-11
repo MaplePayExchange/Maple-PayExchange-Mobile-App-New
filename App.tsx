@@ -16,6 +16,7 @@ import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import ToastManager from 'toastify-react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /**
@@ -24,8 +25,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
  |--------------------------------------------------
  */
 import './global.css';
-import RootNavigation from './src/screens/navigation/RootNavigation';
 import CustomToast from './src/components/CustomToast';
+import RootNavigation from './src/screens/navigation/RootNavigation';
 
 const queryClient = new QueryClient();
 
@@ -73,7 +74,7 @@ export default function App() {
     |--------------------------------------------------
     */
 	return (
-		<View style={[styles.container]}>
+		<SafeAreaProvider style={[styles.container]}>
 			{/**
             |--------------------------------------------------
             | Status bar theme
@@ -96,7 +97,7 @@ export default function App() {
 			|--------------------------------------------------
 			*/}
 			<ToastManager animationStyle="fade" config={toastConfig} />
-		</View>
+		</SafeAreaProvider>
 	);
 }
 

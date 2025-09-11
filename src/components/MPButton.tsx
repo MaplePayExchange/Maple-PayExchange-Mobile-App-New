@@ -6,7 +6,7 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -14,6 +14,8 @@ import { TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native
  |--------------------------------------------------
  */
 import MPText from './MPText';
+import Svg, { ForeignObject, G, Mask } from 'react-native-svg';
+import SpinningSVG from './SpinningSvg';
 
 interface Props extends TouchableOpacityProps {
 	isLoading?: boolean;
@@ -65,13 +67,7 @@ export default function MPButton({
 						style={[commonStyles as any, customClassName]}
 						colors={['#EE0979', '#FF6A00']}
 					>
-						{isLoading ? (
-							<MPText weight="medium" className="text-white">
-								Submitting...
-							</MPText>
-						) : (
-							children
-						)}
+						{isLoading ? <SpinningSVG loading={isLoading} /> : children}
 					</LinearGradient>
 				) : /**
 					|--------------------------------------------------
@@ -79,9 +75,7 @@ export default function MPButton({
 					|--------------------------------------------------
 					*/
 				isLoading ? (
-					<MPText weight="medium" className="text-white">
-						Submitting...
-					</MPText>
+					<SpinningSVG color="#000000" loading={isLoading} />
 				) : (
 					children
 				)}

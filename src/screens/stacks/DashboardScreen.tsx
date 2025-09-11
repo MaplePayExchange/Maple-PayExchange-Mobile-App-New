@@ -71,7 +71,6 @@ export default function DashboardScreen() {
 	*/
 	const {
 		userData,
-		setIsLoggedIn,
 		selectedWallet,
 		biometricsInfo,
 		setBiometricsInfo,
@@ -88,13 +87,12 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	const handleInitiateAction = (type: PossibleActions) => {
-		console.log(type);
 		/**
 		|--------------------------------------------------
 		| Checking if the user has been verified
 		|--------------------------------------------------
 		*/
-		if (!isVerified) {
+		if (!isVerified || !isBvnVerified || typeof userData?.user?.transactionPin !== 'string') {
 			setShowBvnModal(true);
 			return;
 		}
@@ -129,6 +127,7 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'details':
+				setBiometricsModal(true);
 				setShowWalletDetails(true);
 				break;
 
@@ -239,7 +238,7 @@ export default function DashboardScreen() {
 					<MPText className="text-xl text-[#A4A6AA]">
 						Hello,{' '}
 						<MPText weight="semibold" className="text-xl text-[#1A1A1A]">
-							{data?.user?.firstName || 'John'} {data?.user?.lastName || 'Doe'}
+							{data?.user?.firstName || ''} {data?.user?.lastName || ''}
 						</MPText>
 					</MPText>
 
@@ -268,7 +267,7 @@ export default function DashboardScreen() {
 					| If bvn has not been verified, wallet is locked
 					|--------------------------------------------------
 					*/}
-					{!isVerified && (
+					{!isVerified && !isLoading && (
 						<View className="justify-center items-center">
 							<PadlockIcon />
 							<MPText style={{ fontSize: 12 }} className="text-white text-xs mt-2" weight="semibold">
@@ -289,7 +288,7 @@ export default function DashboardScreen() {
 					| Wallet is unlocked
 					|--------------------------------------------------
 					*/}
-					{isVerified && (
+					{isVerified && !isLoading && (
 						<Pressable
 							onPress={() => setShowWalletModal(true)}
 							className="h-[20px] w-[68px] self-center bg-[#F7F7F7] rounded-[8px] flex-row items-center justify-center gap-1"
@@ -577,13 +576,13 @@ export default function DashboardScreen() {
 
 				{/**
 				|--------------------------------------------------
-				|
+				| Biometrics modal
 				|--------------------------------------------------
 				*/}
 				<BiometricsModal
 					setVisible={() => {
 						setBiometricsModal(!showBiometricsModal);
-						setBiometricsInfo({ hasPromptedUser: true, ...biometricsInfo });
+						setBiometricsInfo({ ...biometricsInfo, hasPromptedUser: true });
 					}}
 					visible={biometricsInfo?.hasPromptedUser ? showBiometricsModal : true}
 				/>
