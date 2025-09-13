@@ -6,8 +6,8 @@
 import clsx from 'clsx';
 import React from 'react';
 import Tooltip from '../Tooltip';
-import { View, Modal, Pressable, Platform } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
+import { View, Modal, Pressable, Platform, Share } from 'react-native';
 import { Svg, Path, Defs, Stop, LinearGradient } from 'react-native-svg';
 
 /**
@@ -23,18 +23,21 @@ import ScreenWrapper from '../Wrapper';
 import { CopyIcon, InfoIcon } from '@/assets/svgs';
 import { Wallet } from '@/interfaces/wallet.interface';
 import { useVerifyInteracTransfer } from '@/services/user.services';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface Props {
 	onDismiss?: () => void;
 	showFundWalletModal: boolean;
 	selectedWallet: Wallet | null;
 	setShowFundWalletModal: React.Dispatch<React.SetStateAction<boolean>>;
+	setShowCurrencyConverModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function FundWalletModal({
 	onDismiss,
 	selectedWallet,
 	showFundWalletModal,
 	setShowFundWalletModal,
+	setShowCurrencyConverModal,
 }: Props) {
 	/**
 	|--------------------------------------------------
@@ -74,7 +77,8 @@ export default function FundWalletModal({
                     */}
 					<View className="bg-[#F9F9F9] p-5 rounded-3xl">
 						{selectedWallet?.currency === 'CAD' && (
-							<View className="h-[20px] w-[60%] rounded-3xl bg-[#FFFAEB] px-6 border-[#FEDF89] border justify-center mb-4">
+							<View className="h-[20px] flex-row items-center w-[60%] rounded-3xl bg-[#FFFAEB] pl-2 gap-2 pr-6 border-[#FEDF89] border justify-start mb-4">
+								<MaterialIcons name="circle" size={8} color="#F79009" />
 								<MPText
 									weight="medium"
 									className="text-xs text-[#B54708]"
@@ -244,7 +248,7 @@ export default function FundWalletModal({
 										INTERAC EMAIL ADDRESS
 									</MPText>
 									<MPText className="text-sm" weight="medium">
-										{selectedWallet?.email}
+										Payments@mpexchange.ca
 									</MPText>
 								</View>
 
@@ -259,16 +263,47 @@ export default function FundWalletModal({
 								>
 									<CopyIcon color="#767676" />
 								</Pressable>
+								<Pressable
+									className="ml-4"
+									onPress={async () => {
+										await Share.share({
+											message: `Interac email: Payments@mpexchange.ca`,
+										});
+									}}
+								>
+									<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+										<Path
+											d="M16.875 8.75049V16.2505C16.875 16.582 16.7433 16.9 16.5089 17.1344C16.2745 17.3688 15.9565 17.5005 15.625 17.5005H4.375C4.04348 17.5005 3.72554 17.3688 3.49112 17.1344C3.2567 16.9 3.125 16.582 3.125 16.2505V8.75049C3.125 8.41897 3.2567 8.10103 3.49112 7.86661C3.72554 7.63219 4.04348 7.50049 4.375 7.50049H6.25C6.41576 7.50049 6.57473 7.56634 6.69194 7.68355C6.80915 7.80076 6.875 7.95973 6.875 8.12549C6.875 8.29125 6.80915 8.45022 6.69194 8.56743C6.57473 8.68464 6.41576 8.75049 6.25 8.75049H4.375V16.2505H15.625V8.75049H13.75C13.5842 8.75049 13.4253 8.68464 13.3081 8.56743C13.1908 8.45022 13.125 8.29125 13.125 8.12549C13.125 7.95973 13.1908 7.80076 13.3081 7.68355C13.4253 7.56634 13.5842 7.50049 13.75 7.50049H15.625C15.9565 7.50049 16.2745 7.63219 16.5089 7.86661C16.7433 8.10103 16.875 8.41897 16.875 8.75049ZM7.31719 5.44268L9.375 3.38409V10.6255C9.375 10.7913 9.44085 10.9502 9.55806 11.0674C9.67527 11.1846 9.83424 11.2505 10 11.2505C10.1658 11.2505 10.3247 11.1846 10.4419 11.0674C10.5592 10.9502 10.625 10.7913 10.625 10.6255V3.38409L12.6828 5.44268C12.8001 5.55996 12.9591 5.62584 13.125 5.62584C13.2909 5.62584 13.4499 5.55996 13.5672 5.44268C13.6845 5.3254 13.7503 5.16634 13.7503 5.00049C13.7503 4.83464 13.6845 4.67558 13.5672 4.5583L10.4422 1.4333C10.3841 1.37519 10.3152 1.32909 10.2393 1.29764C10.1635 1.26619 10.0821 1.25 10 1.25C9.91787 1.25 9.83654 1.26619 9.76066 1.29764C9.68479 1.32909 9.61586 1.37519 9.55781 1.4333L6.43281 4.5583C6.31554 4.67558 6.24965 4.83464 6.24965 5.00049C6.24965 5.16634 6.31554 5.3254 6.43281 5.44268C6.55009 5.55995 6.70915 5.62584 6.875 5.62584C7.04085 5.62584 7.19991 5.55996 7.31719 5.44268Z"
+											fill="#767676"
+										/>
+									</Svg>
+								</Pressable>
 							</View>
 
+							{/**
+							|--------------------------------------------------
+							| See rate
+							|--------------------------------------------------
+							*/}
 							<MPButton useGradientBg className="w-[194px] self-center mt-6">
-								<Pressable className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center">
+								<Pressable
+									onPress={() => {
+										setShowFundWalletModal(false);
+										setShowCurrencyConverModal(true);
+									}}
+									className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center"
+								>
 									<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 										See rate
 									</MPText>
 								</Pressable>
 							</MPButton>
 
+							{/**
+							|--------------------------------------------------
+							| I have made payment
+							|--------------------------------------------------
+							*/}
 							<MPButton
 								useGradientBg
 								className="w-[194px] self-center mt-6"
@@ -456,7 +491,7 @@ export default function FundWalletModal({
 
 					{selectedWallet?.currency === 'CAD' && (
 						<Pressable className="flex-row items-center justify-center gap-3 mt-6">
-							<MPText weight="semibold" className="text-[#FF6A00]">
+							<MPText weight="semibold" className="text-[#FF6A00] text-sm">
 								How to fund via interac
 							</MPText>
 							<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">

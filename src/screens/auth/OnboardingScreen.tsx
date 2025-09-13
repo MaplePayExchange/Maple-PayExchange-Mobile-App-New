@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { BlurView } from 'expo-blur';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { View, ImageBackground, FlatList, NativeSyntheticEvent, NativeScrollEvent, Dimensions } from 'react-native';
 
@@ -62,6 +62,7 @@ export default function OnboardingScreen() {
     |--------------------------------------------------
     */
 	const navigation = useNavigation<OnboardingScreenProps>();
+	const insets = useSafeAreaInsets();
 
 	/**
     |--------------------------------------------------
@@ -168,7 +169,12 @@ export default function OnboardingScreen() {
 							</View>
 						</SafeAreaView>
 
-						<BlurView intensity={20} tint="systemUltraThinMaterialDark" className="mt-auto h-[268px] z-20">
+						<BlurView
+							intensity={20}
+							tint="systemUltraThinMaterialDark"
+							className="mt-auto h-[318px] z-20"
+							style={{ paddingBottom: insets.bottom }}
+						>
 							<SafeAreaView>
 								<View className="p-6">
 									{/**

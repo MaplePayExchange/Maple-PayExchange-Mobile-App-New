@@ -6,16 +6,19 @@ export enum ROUTE_NAMES {
 	*/
 	LOGIN = 'LoginScreen',
 	SPLASH = 'SplashScreen',
+	KYC_TERMS = 'KYCTermsScreen',
 	KYC_STEPS = 'KycStepsScreen',
 	ONBOARDING = 'OnboardingScreen',
 	CREATE_USER = 'CreateUserScreen',
 	VERIFY_EMAIL = 'VerifyEmailScreen',
+	PRIVACY_POLICY = 'PrivacyPolicyScreen',
 	RESET_PASSWORD = 'ResetPasswordScreen',
 	VERIFY_PHONE = 'VerifyPhoneNumberScreen',
 	FORGOT_PASSWORD = 'ForgotPasswordScreen',
 	BVN_VERIFICATION = 'BVNVerificationScreen',
 	PHONE_VERIFICATION = 'PhoneVerificationScreen',
 	EMAIL_VERIFICATION = 'EmailVerificationScreen',
+	TERMS_AND_CONDITIONS = 'TermsAndConditionsScreen',
 	TAILOR_YOUR_EXPERIENCE = 'TailorYourExperienceScreen',
 
 	/**

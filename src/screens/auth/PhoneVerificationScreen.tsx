@@ -24,6 +24,7 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { clampFontSize } from '@/constants/app.constant';
 import { useRequestOtp } from '@/services/auth.services';
 import { RootStackParamList } from '@/types/route.params';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 const phonePattern = /^(?:(?:\s?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})|(?:\s?\d{3}[\s-]?\d{3}[\s-]?\d{4}))$/;
 
@@ -124,8 +125,8 @@ export default function PhoneVerificationScreen() {
 						<MPText
 							weight="medium"
 							style={{ lineHeight: 15 }}
-							onPress={() => console.log('object')}
 							className="leading-4 text-xs text-[#FF6A00]"
+							onPress={() => navigation.navigate(ROUTE_NAMES.TERMS_AND_CONDITIONS)}
 						>
 							{' '}
 							Terms and Conditions,{' '}
@@ -134,10 +135,19 @@ export default function PhoneVerificationScreen() {
 							<MPText
 								weight="medium"
 								style={{ lineHeight: 15 }}
-								onPress={() => console.log('object')}
 								className="leading-4 text-xs text-[#FF6A00]"
+								onPress={() => navigation.navigate(ROUTE_NAMES.PRIVACY_POLICY)}
 							>
 								Privacy Policy{' '}
+							</MPText>
+							and{' '}
+							<MPText
+								weight="medium"
+								style={{ lineHeight: 15 }}
+								className="leading-4 text-xs text-[#FF6A00]"
+								onPress={() => navigation.navigate(ROUTE_NAMES.KYC_TERMS)}
+							>
+								KYC{' '}
 							</MPText>
 							<MPText
 								weight="medium"

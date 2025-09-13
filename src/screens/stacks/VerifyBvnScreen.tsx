@@ -192,9 +192,16 @@ export default function VerifyBvnScreen() {
 								</MPText>
 							</MPButton>
 						) : (
-							<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
+							<MPButton
+								onPress={() => {
+									setShowSuccessModal(false);
+									navigation.navigate('DashboardScreen');
+								}}
+								useGradientBg
+								className="mt-8"
+							>
 								<MPText weight="semibold" className="text-sm text-white">
-									Cancel
+									Go to dashboard
 								</MPText>
 							</MPButton>
 						)}

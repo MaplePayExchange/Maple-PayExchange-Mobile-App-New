@@ -54,11 +54,7 @@ class Utils {
 	|--------------------------------------------------
 	*/
 	errorHandler = (error: any, message?: string) => {
-		console.log(error, 'main.error');
-		console.log('Failed to login user:', error?.response?.data?.error);
-
-		const errorMessage = error?.response?.data?.error || error.response?.data?.message;
-		console.log(errorMessage, 'error.message');
+		const errorMessage = error?.response?.data?.error || error.response?.data?.message || message;
 
 		/**
 		|--------------------------------------------------
@@ -67,7 +63,8 @@ class Utils {
 		*/
 		Toast.show({
 			theme: 'dark',
-			text2: message,
+			text1: 'Error!',
+			text2: errorMessage,
 			type: 'custom' as any,
 		});
 	};
@@ -79,9 +76,9 @@ class Utils {
 	*/
 	successNotificationHanlder = (title: string, message: string) => {
 		Toast.show({
-			text1: title,
 			text2: message,
 			theme: 'light',
+			text1: 'Success!',
 			type: 'custom' as any,
 		});
 	};

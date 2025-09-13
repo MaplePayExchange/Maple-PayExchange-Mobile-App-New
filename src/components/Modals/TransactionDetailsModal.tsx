@@ -9,7 +9,6 @@ import * as Sharing from 'expo-sharing';
 import ViewShot from 'react-native-view-shot';
 import * as FileSystem from 'expo-file-system/legacy';
 import { View, Modal, Pressable } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  |--------------------------------------------------
@@ -36,7 +35,6 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
 	|--------------------------------------------------
 	*/
 	const viewShotRef = React.useRef<ViewShot>(null);
-	const insets = useSafeAreaInsets();
 
 	/**
 	|--------------------------------------------------
@@ -50,15 +48,12 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
 				return;
 			}
 
-			console.log(viewShotRef.current);
 			/**
 			|--------------------------------------------------
 			| Capture the receipt component as PNG
 			|--------------------------------------------------
 			*/
 			const uri = await viewShotRef?.current?.capture?.();
-
-			console.log(uri, 'uri');
 
 			/**
 			|--------------------------------------------------

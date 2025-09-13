@@ -3,8 +3,6 @@
 | Npm imports
 |--------------------------------------------------
 */
-import * as Linking from 'expo-linking';
-import * as WebBrowser from 'expo-web-browser';
 import { useUserStore } from '@/zustand/userStore';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,13 +13,13 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 | Custom imports
 |--------------------------------------------------
 */
+import utils from '@/lib/utils';
 import axiosInstance from '@/lib/axiosInstance';
 import { User } from '@/interfaces/user.interface';
 import { Wallet } from '@/interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { Currency, TransactionInterface } from '@/interfaces/transaction.interface';
-import utils from '@/lib/utils';
 
 export interface TransactionFilters {
 	page?: number;
@@ -92,6 +90,8 @@ type CurrentStep = 'phone' | 'email' | 'create account' | 'bvn' | 'veriff';
 |--------------------------------------------------
 */
 export const useRequestOtp = (step: CurrentStep) => {
+	const queryClient = useQueryClient();
+
 	/**
 	|--------------------------------------------------
 	| Navigation
@@ -163,6 +163,13 @@ export const useRequestOtp = (step: CurrentStep) => {
 			*/
 			if (step === 'email') navigation.navigate(ROUTE_NAMES.VERIFY_EMAIL);
 			if (step === 'phone') navigation.navigate(ROUTE_NAMES.VERIFY_PHONE);
+
+			/**
+			|--------------------------------------------------
+			| If step is bvn
+			|--------------------------------------------------
+			*/
+			if (step === 'bvn') queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 		},
 
 		/**
@@ -171,7 +178,7 @@ export const useRequestOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
-			utils.errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error processing your request.');
 		},
 	});
 };

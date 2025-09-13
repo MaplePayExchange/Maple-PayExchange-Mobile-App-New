@@ -13,15 +13,18 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
  */
 import LoginScreen from '../auth/LoginScreen';
 import SplashScreen from '../auth/SplashScreen';
+import KYCTermsScreen from '../stacks/KYCTermsScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import CreateUserScreen from '../auth/CreateUserScreen';
 import OnboardingScreen from '../auth/OnboardingScreen';
 import VerifyEmailScreen from '../auth/VerifyEmailScreen';
 import ResetPasswordScreen from '../auth/ResetPasswordScreen';
 import ForgotPasswordScreen from '../auth/ForgotPasswordScreen';
+import PrivacyPolicyScreen from '../stacks/PrivacyPolicyScreen';
 import PhoneVerificationScreen from '../auth/PhoneVerificationScreen';
 import EmailVerificationScreen from '../auth/EmailVerificationScreen';
 import VerifyPhoneNumberScreen from '../auth/VerifyPhoneNumberScreen';
+import TermsAndCondtionsScreen from '../stacks/TermsAndCondtionsScreen';
 import TailorYourExperienceScreen from '../auth/TailorYourExperienceScreen';
 
 /**
@@ -73,13 +76,26 @@ const _ROUTES = [
 		name: ROUTE_NAMES.EMAIL_VERIFICATION,
 		component: EmailVerificationScreen,
 	},
+
+	{
+		name: ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE,
+		component: TailorYourExperienceScreen,
+	},
+	{
+		name: ROUTE_NAMES.TERMS_AND_CONDITIONS,
+		component: TermsAndCondtionsScreen,
+	},
 	{
 		name: ROUTE_NAMES.PHONE_VERIFICATION,
 		component: PhoneVerificationScreen,
 	},
 	{
-		name: ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE,
-		component: TailorYourExperienceScreen,
+		name: ROUTE_NAMES.PRIVACY_POLICY,
+		component: PrivacyPolicyScreen,
+	},
+	{
+		name: ROUTE_NAMES.KYC_TERMS,
+		component: KYCTermsScreen,
 	},
 ];
 

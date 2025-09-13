@@ -106,7 +106,6 @@ export default function OTPInput({
 				<TextInput
 					key={index}
 					value={digit}
-					maxLength={1}
 					keyboardType="numeric"
 					autoFocus={autoFocus && index === 0}
 					onKeyPress={(e) => handleKeyPress(e, index)}

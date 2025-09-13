@@ -31,6 +31,7 @@ import { MONEY_PAD, clampFontSize } from '@/constants/app.constant';
 import FundWalletModal from '@/src/components/Modals/FundWalletModal';
 import BiometricsModal from '@/src/components/Modals/BiometricsModal';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
+import CurrencyConverter from '@/src/components/Modals/CurrencyConverter';
 import WalletDetailsModal from '@/src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@/src/components/Modals/UnverifiedAccountModal';
 import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@/assets/svgs';
@@ -63,6 +64,7 @@ export default function DashboardScreen() {
 	const [showWalletDetails, setShowWalletDetails] = React.useState<boolean>(false);
 	const [showSendFundsModal, setShowSendFundsModal] = React.useState<boolean>(false);
 	const [showFundWalletModal, setShowFundWalletModal] = React.useState<boolean>(false);
+	const [showCurrencyConvertModal, setShowCurrencyConvertModal] = React.useState<boolean>(false);
 
 	/**
 	|--------------------------------------------------
@@ -127,7 +129,6 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'details':
-				setBiometricsModal(true);
 				setShowWalletDetails(true);
 				break;
 
@@ -137,7 +138,6 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'add':
-				console.log('object');
 				setShowFundWalletModal(true);
 				break;
 
@@ -178,6 +178,7 @@ export default function DashboardScreen() {
 		setShowWalletDetails(false);
 		setShowSendFundsModal(false);
 		setShowFundWalletModal(false);
+		// setShowCurrencyConvertModal(false);
 	};
 
 	/**
@@ -445,6 +446,7 @@ export default function DashboardScreen() {
 							onDismiss={handleDismissAllModals}
 							showFundWalletModal={showFundWalletModal}
 							setShowFundWalletModal={setShowFundWalletModal}
+							setShowCurrencyConverModal={setShowCurrencyConvertModal}
 						/>
 
 						{/**
@@ -586,6 +588,13 @@ export default function DashboardScreen() {
 					}}
 					visible={biometricsInfo?.hasPromptedUser ? showBiometricsModal : true}
 				/>
+
+				{/**
+				|--------------------------------------------------
+				| Currecny converter
+				|--------------------------------------------------
+				*/}
+				<CurrencyConverter visible={showCurrencyConvertModal} setVisible={setShowCurrencyConvertModal} />
 			</ScrollView>
 		</ScreenWrapper>
 	);

@@ -45,4 +45,7 @@ export type RootStackParamList = {
 		transactionType: 'SWAP' | 'CAD-to-CAD' | 'NGN-to-NGN';
 	};
 	SupportDetailsScreen: FAQItem[];
+	KYCTermsScreen: undefined;
+	PrivacyPolicyScreen: undefined;
+	TermsAndConditionsScreen: undefined;
 };

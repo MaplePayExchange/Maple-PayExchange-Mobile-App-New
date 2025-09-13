@@ -5,7 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { View } from 'react-native';
+import { TextStyle, View } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -20,20 +20,35 @@ import MPText from './MPText';
 |--------------------------------------------------
 */
 type ListProps = {
+	gap?: string;
 	items: string[];
+	startIndex?: number;
+	boldenText?: boolean;
+	customLabel?: string;
+	textStyle?: TextStyle;
 	textClassName?: string;
 	bulletClassName?: string;
 	type?: 'ordered' | 'unordered';
 };
 
-export default function List({ items, type = 'ordered', bulletClassName, textClassName }: ListProps) {
+export default function List({
+	items,
+	textStyle,
+	boldenText,
+	startIndex,
+	customLabel,
+	textClassName,
+	gap = 'gap-4',
+	bulletClassName,
+	type = 'ordered',
+}: ListProps) {
 	/**
     |--------------------------------------------------
     | Renedered view
     |--------------------------------------------------
     */
 	return (
-		<View className="gap-4">
+		<View className={gap}>
 			{/**
             |--------------------------------------------------
             | Items
@@ -47,9 +62,21 @@ export default function List({ items, type = 'ordered', bulletClassName, textCla
                     |--------------------------------------------------
                     */}
 					{type === 'unordered' ? (
-						<MPText className={clsx('mr-2 text-sm', bulletClassName)}>{'\u2022'}</MPText>
+						<MPText
+							style={[textStyle]}
+							weight={boldenText ? 'bold' : 'medium'}
+							className={clsx('mr-2 text-sm', bulletClassName)}
+						>
+							{customLabel ? customLabel : '\u2022'}
+						</MPText>
 					) : (
-						<MPText className={clsx('mr-2 text-sm', bulletClassName)}>{index + 1}.</MPText>
+						<MPText
+							style={[textStyle]}
+							weight={boldenText ? 'bold' : 'medium'}
+							className={clsx('mr-2 text-sm', bulletClassName)}
+						>
+							{customLabel ? customLabel : (startIndex || 0) + index + 1}.
+						</MPText>
 					)}
 
 					{/**
@@ -57,7 +84,11 @@ export default function List({ items, type = 'ordered', bulletClassName, textCla
                     | Text
                     |--------------------------------------------------
                     */}
-					<MPText weight="medium" className={clsx('flex-1 text-sm', textClassName)}>
+					<MPText
+						style={[textStyle]}
+						weight={boldenText ? 'bold' : 'medium'}
+						className={clsx('flex-1', textClassName)}
+					>
 						{item}
 					</MPText>
 				</View>
