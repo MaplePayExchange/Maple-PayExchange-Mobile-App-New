@@ -293,7 +293,21 @@ export const useCreateUser = () => {
 |--------------------------------------------------
 */
 export const useLogin = () => {
-	return useMutation<any, Error, { email: string; password: string; deviceId: string }>({
+	return useMutation<
+		any,
+		Error,
+		{
+			email: string;
+			password: string;
+			deviceId: string;
+			os: string | undefined;
+			brand: string | undefined;
+			osName: string | undefined;
+			osVersion: string | undefined;
+			deviceName: string | undefined;
+			deviceType: string | undefined;
+		}
+	>({
 		/**
         |--------------------------------------------------
         | Api call
@@ -483,6 +497,57 @@ export const useStartVeriffSession = () => {
 | Bvn verification
 |--------------------------------------------------
 */
+export const useResetTransactionPin = () => {
+	/**
+	|--------------------------------------------------
+	| Query client
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	/**
+	|--------------------------------------------------
+	| Mutation
+	|--------------------------------------------------
+	*/
+	return useMutation<any, Error, { pin: string; password: string }>({
+		/**
+		|--------------------------------------------------
+		| Api call
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			const response = await axiosInstance.post('users/reset-transaction-pin', payload);
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			utils.successNotificationHanlder('PIN!', 'Transaction successfully updated');
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error handler
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			console.log(error.response.data);
+			utils.errorHandler(error, 'Encountered an error resetting transaction pin');
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Bvn verification
+|--------------------------------------------------
+*/
 export const useSetTransactionPin = () => {
 	/**
 	|--------------------------------------------------
@@ -564,7 +629,6 @@ export const useGetUserInformation = () => {
 			|--------------------------------------------------
 			*/
 			useUserStore.setState((state) => ({ userData: { ...state.userData, user: response.data.user } as any }));
-			console.log(response.data, walletResponse.data, transactionResponse.data, 'from auth.service');
 
 			/**
 			|--------------------------------------------------
@@ -614,6 +678,11 @@ export const useGetUserWallets = () => {
 	});
 };
 
+/**
+|--------------------------------------------------
+| Gets the users transactions
+|--------------------------------------------------
+*/
 export const useGetUserTransactions = (filter?: TransactionFilters, isEnabled?: boolean) => {
 	return useInfiniteQuery<TransactionResponse, Error, InfiniteData<TransactionResponse>>({
 		/**
@@ -658,5 +727,54 @@ export const useGetUserTransactions = (filter?: TransactionFilters, isEnabled?: 
 		},
 
 		enabled: isEnabled ?? true,
+	});
+};
+
+/**
+|--------------------------------------------------
+| Changes the users password
+|--------------------------------------------------
+*/
+export const useChangePassword = () => {
+	const navigation = useNavigation();
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	return useMutation<any, Error, { oldPassword: string; newPassword: string }>({
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			const response = await axiosInstance.post('/users/change-password', payload);
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| On success
+		|--------------------------------------------------
+		*/
+		onSuccess: async () => {
+			useUserStore.getState().setIsLoggedIn(false);
+
+			await new Promise((resolve) => setTimeout(resolve, 300));
+			navigation.navigate(...([ROUTE_NAMES.LOGIN, {}] as never));
+			utils.successNotificationHanlder('Change Password!', 'Your password has been changed successfully');
+		},
+
+		/**
+		|--------------------------------------------------
+		| On Error
+		|--------------------------------------------------
+		*/
+		onError: (err: any) => {
+			console.log(err.response.data);
+			utils.errorHandler(err, 'Unable to change your password at the moment!');
+		},
 	});
 };

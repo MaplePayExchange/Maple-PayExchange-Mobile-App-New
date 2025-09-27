@@ -1,5 +1,5 @@
 import { FAQItem } from '@/interfaces/support.interface';
-import { BankAccount, FundSwapTransaction } from '@/interfaces/transaction.interface';
+import { BankAccount, FundSwapTransaction, TransactionInterface } from '@/interfaces/transaction.interface';
 
 export type RootStackParamList = {
 	Home: undefined;
@@ -26,10 +26,10 @@ export type RootStackParamList = {
 	EmailVerificationScreen: undefined;
 	PhoneVerificationScreen: undefined;
 	SetTransactionPinScreen: undefined;
-	SendFundsFeedbackScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
-	ExchangeFundsFeedbackScreen?: FundSwapTransaction;
+	SendFundsFeedbackScreen?: TransactionInterface;
+	ExchangeFundsFeedbackScreen?: TransactionInterface;
 	AmountScreen: {
 		lastName?: string;
 		firstName?: string;

@@ -38,6 +38,14 @@ interface BiometricsData {
 	hasPromptedUser?: boolean;
 }
 
+interface NotificationsSettings {
+	rateAlerts: boolean;
+	loginAlerts: boolean;
+	promotionAlerts: boolean;
+	transactionAlerts: boolean;
+	inAppNotifications: boolean;
+}
+
 /**
 |--------------------------------------------------
 | User interface
@@ -51,6 +59,7 @@ interface UserState {
 	selectedWallet: Wallet | null;
 	userData: LoginResponse | undefined;
 	biometricsInfo: BiometricsData | null;
+	notificationSettings: NotificationsSettings;
 	verificationData: VerificationData | undefined;
 
 	/**
@@ -61,11 +70,12 @@ interface UserState {
 	setName: (name: string) => void;
 	setIsLoggedIn: (status: boolean) => void;
 	setIsRegistered: (value: boolean) => void;
-	setUserData: (data: LoginResponse) => void;
 	setSelectedWallet: (wallet: Wallet) => void;
 	setBiometricsModal: (value: boolean) => void;
+	setUserData: (data: LoginResponse | undefined) => void;
 	setBiometricsInfo: (data: BiometricsData | null) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
+	setNotificationSettings: (data: Partial<NotificationsSettings>) => void;
 }
 
 /**
@@ -89,6 +99,13 @@ export const useUserStore = create<UserState>()(
 			biometricsInfo: null,
 			showBiometricsModal: false,
 			verificationData: undefined,
+			notificationSettings: {
+				rateAlerts: false,
+				loginAlerts: false,
+				promotionAlerts: false,
+				transactionAlerts: false,
+				inAppNotifications: false,
+			},
 
 			/**
 			|--------------------------------------------------
@@ -101,48 +118,51 @@ export const useUserStore = create<UserState>()(
 			setBiometricsInfo: (data) => set({ biometricsInfo: data }),
 			setSelectedWallet: (value) => set({ selectedWallet: value }),
 			setBiometricsModal: (value) => set({ showBiometricsModal: value }),
+
+			/**
+			|--------------------------------------------------
+			| Verification data
+			|--------------------------------------------------
+			*/
 			setVerificationData: (data) =>
-				set((state) => {
-					/**
-					|--------------------------------------------------
-					| If current step
-					|--------------------------------------------------
-					*/
-					if (data?.currentStep && state.verificationData)
-						state.verificationData.currentStep = data.currentStep;
+				set((state) => ({
+					...state,
+					verificationData: state.verificationData
+						? {
+								...state.verificationData,
+								...(data.email !== undefined && { email: data.email }),
+								...(data.sessionId !== undefined && { sessionId: data.sessionId }),
+								...(data.currentStep !== undefined && { currentStep: data.currentStep }),
+								...(data.phoneNumber !== undefined && { phoneNumber: data.phoneNumber }),
+								...(data.verificationType !== undefined && { verificationType: data.verificationType }),
+							}
+						: state.verificationData,
+				})),
 
-					/**
-					|--------------------------------------------------
-					| Verification type
-					|--------------------------------------------------
-					*/
-					if (data.verificationType && state.verificationData)
-						state.verificationData.verificationType = data.verificationType;
-
-					/**
-					|--------------------------------------------------
-					| Phone number
-					|--------------------------------------------------
-					*/
-					if (data.phoneNumber && state.verificationData)
-						state.verificationData.phoneNumber = data.phoneNumber;
-					/**
-					|--------------------------------------------------
-					| Email
-					|--------------------------------------------------
-					*/
-					if (data.email && state.verificationData) state.verificationData.email = data.email;
-
-					/**
-					|--------------------------------------------------
-					| Session id
-					|--------------------------------------------------
-					*/
-					if (data.sessionId && state.verificationData) state.verificationData.sessionId = data.sessionId;
-
-					return state;
-				}),
+			/**
+			|--------------------------------------------------
+			| User data
+			|--------------------------------------------------
+			*/
 			setUserData: (data) => set({ userData: data }),
+
+			/**
+			|--------------------------------------------------
+			| Notification settings
+			|--------------------------------------------------
+			*/
+			setNotificationSettings: (data) =>
+				set((state) => ({
+					...state,
+					notificationSettings: {
+						...state.notificationSettings,
+						...(data.rateAlerts !== undefined && { rateAlerts: data.rateAlerts }),
+						...(data.loginAlerts !== undefined && { loginAlerts: data.loginAlerts }),
+						...(data.promotionAlerts !== undefined && { promotionAlerts: data.promotionAlerts }),
+						...(data.transactionAlerts !== undefined && { transactionAlerts: data.transactionAlerts }),
+						...(data.inAppNotifications !== undefined && { inAppNotifications: data.inAppNotifications }),
+					},
+				})),
 		}),
 
 		/**

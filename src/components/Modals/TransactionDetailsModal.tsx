@@ -115,14 +115,16 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         */}
 						<DataRepresentation
 							label="Transaction date"
-							value={dayjs(transaction?.createdAt).format('DD MMM, YYYY, HH:MM')}
+							value={dayjs(transaction?.createdAt).format('DD MMM, YYYY, hh:mm A')}
 						/>
+
 						{/**
                         |--------------------------------------------------
                         | Transaction type
                         |--------------------------------------------------
                         */}
 						<DataRepresentation label="Transaction type" value={transaction?.type} />
+
 						{/**
                         |--------------------------------------------------
                         | If transaction type is a fundswap
@@ -168,6 +170,7 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
 							label="Transaction ID"
 							value={`${transaction?.reference?.slice(0, 10)}...`}
 						/>
+
 						{/**
                         |--------------------------------------------------
                         | Transaction status

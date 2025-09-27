@@ -17,7 +17,6 @@ import { View, TextInputProps, TextInput, Pressable, Modal, TouchableOpacity, Sc
  */
 import MPText from './MPText';
 import CountriesData from '@/data/country.json';
-import { FLAG_CANADA, FLAG_NIGERIA } from '@/constants/app.constant';
 import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon, SearchIcon } from '@/assets/svgs';
 
 /**
@@ -164,7 +163,7 @@ export default function InputField<T extends FieldValues>({
 								|--------------------------------------------------
 								*/}
 								{error && (
-									<View className="ml-auto">
+									<View className={clsx(type === 'password' ? '' : 'ml-auto')}>
 										<ErrorInfoIcon />
 									</View>
 								)}

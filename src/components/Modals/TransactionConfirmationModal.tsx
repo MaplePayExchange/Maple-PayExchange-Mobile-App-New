@@ -24,17 +24,17 @@ interface Props {
 	beneficiary: string;
 	onConfirm?: () => void;
 	receivedAmount: string;
-	currency: 'CAD' | 'NGN';
+	currencySymbol?: string;
 	transactionType: 'SWAP' | 'SEND';
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function TransactionConfirmationModal({
 	amount,
 	visible,
-	currency,
 	onConfirm,
 	setVisible,
 	beneficiary,
+	currencySymbol,
 	receivedAmount,
 	transactionType,
 }: Props) {
@@ -65,8 +65,8 @@ export default function TransactionConfirmationModal({
                     |--------------------------------------------------
                     */}
 					<View className="bg-[#F7F7F7] rounded-3xl py-5 px-4 gap-6">
-						<DataRepresentation label="Currency" value={currency} />
-						<DataRepresentation label="Amount" value={`${currency === 'CAD' ? '$' : '₦'}${amount}`} />
+						<DataRepresentation label="Currency" value={currencySymbol === '₦' ? 'NGN' : 'CAD'} />
+						<DataRepresentation label="Amount" value={`${currencySymbol}${amount}`} />
 
 						{/**
 						|--------------------------------------------------

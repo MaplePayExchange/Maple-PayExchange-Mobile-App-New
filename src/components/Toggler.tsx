@@ -19,18 +19,22 @@ interface Props {
 	title?: string;
 	checked?: boolean;
 	subtitle?: string;
+	useText?: boolean;
 	disabled?: boolean;
 	className?: string;
 	onChange?: () => void;
+	icon?: React.ReactNode;
 }
 
 export default function Toggler({
+	icon,
 	checked,
 	disabled,
 	onChange,
+	subtitle,
 	className,
+	useText = true,
 	title = 'Title',
-	subtitle = 'Subtitle',
 }: Props) {
 	/**
 	|--------------------------------------------------
@@ -46,10 +50,10 @@ export default function Toggler({
 	*/
 	React.useEffect(() => {
 		Animated.timing(translateX, {
-			toValue: checked ? 20 : 0,
 			duration: 200,
-			easing: Easing.out(Easing.circle),
 			useNativeDriver: true,
+			toValue: checked ? 20 : 0,
+			easing: Easing.out(Easing.circle),
 		}).start();
 	}, [checked]);
 
@@ -68,14 +72,26 @@ export default function Toggler({
 			| Title and subtitle
 			|--------------------------------------------------
 			*/}
-			<View className="items-start">
-				<MPText weight="semibold" className="">
-					{title}
-				</MPText>
-				<MPText style={{ fontSize: 10 }} weight="regular" className="text-[#767676]">
-					{subtitle}
-				</MPText>
-			</View>
+			{useText && (
+				<View className="flex-row gap-4">
+					{/**
+					|--------------------------------------------------
+					| If there is an icon
+					|--------------------------------------------------
+					*/}
+					{icon && icon}
+					<View className="items-start">
+						<MPText weight="semibold" className="">
+							{title}
+						</MPText>
+						{subtitle && (
+							<MPText style={{ fontSize: 10 }} weight="regular" className="text-[#767676]">
+								{subtitle}
+							</MPText>
+						)}
+					</View>
+				</View>
+			)}
 
 			{/**
 			|--------------------------------------------------

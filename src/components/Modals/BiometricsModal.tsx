@@ -30,7 +30,7 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
     |--------------------------------------------------
     */
 	const { authenticate } = useBiometricAuth();
-	const { setBiometricsInfo, biometricsInfo, setBiometricsModal } = useUserStore();
+	const { setBiometricsInfo, biometricsInfo, setBiometricsModal, showBiometricsModal } = useUserStore();
 
 	/**
 	|--------------------------------------------------
@@ -39,9 +39,10 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 	*/
 	const handleBiometrics = async () => {
 		const response = await authenticate();
-		console.log(response, 'response.bio');
+
 		if (response.success) {
-			setBiometricsInfo({ isTurnedOn: !biometricsInfo?.isTurnedOn || false });
+			setBiometricsInfo({ ...biometricsInfo, isTurnedOn: !biometricsInfo?.isTurnedOn || false });
+			setBiometricsModal(false);
 		}
 	};
 
@@ -51,7 +52,7 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
     |--------------------------------------------------
     */
 	return (
-		<Modal transparent visible={visible} animationType="slide">
+		<Modal transparent visible={showBiometricsModal} animationType="slide">
 			<Pressable onPress={() => setVisible()} className="bg-black/10 flex-1">
 				<View className="bg-white rounded-2xl mt-auto w-full min-h-[290px] px-6 pt-4 items-center">
 					{/**
@@ -129,6 +130,11 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 						subtitle="Use fingerprint or face to unlock "
 					/>
 
+					{/**
+					|--------------------------------------------------
+					| Action buttons
+					|--------------------------------------------------
+					*/}
 					<View className="flex-row justify-between mt-8 mb-8">
 						<MPButton onPress={() => setVisible()} className="w-[45%] max-w-[45%]">
 							<MPText className="text-sm text-[#FF6A00]" weight="semibold">

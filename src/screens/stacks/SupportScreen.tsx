@@ -324,7 +324,7 @@ export default function SupportScreen() {
 							| Chat agent
 							|--------------------------------------------------
 							*/}
-							<View className="h-[102px] opacity-40 pointer-events-none w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
+							<View className="h-[102px] !hidden opacity-40 pointer-events-none w-full bg-[#FAFAF9] rounded-[24px] mt-6 p-5 flex-row items-center justify-between">
 								<View className="max-w-[230px] justify-center">
 									{/**
 									|--------------------------------------------------
@@ -364,6 +364,8 @@ export default function SupportScreen() {
 									style={{ width: clampFontSize(40, 40, 100), height: clampFontSize(40, 40, 100) }}
 								/>
 							</View>
+
+							<View className="h-[90px]" />
 						</View>
 					</View>
 				</ScrollView>

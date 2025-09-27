@@ -89,7 +89,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 							{(transaction.type === 'Outgoing' || transaction.type === 'Incoming') && (
 								<DataRepresentation
 									label="Sender details:"
-									value={transaction?.senderAccountName || 'Owner'}
+									value={transaction?.senderAccountName || transaction?.customerName || 'Owner'}
 								/>
 							)}
 
@@ -118,7 +118,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 											transaction?.sourceAmount?.toLocaleString(undefined, {
 												maximumFractionDigits: 2,
 												minimumFractionDigits: 2,
-											}) || '50,000'
+											}) || '0.00'
 										}`}
 									/>
 								)}
@@ -184,12 +184,13 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 							{transaction.type === 'Incoming' && (
 								<DataRepresentation
 									label="Amount received:"
-									value={`${transaction.sourceCurrency === 'CAD' ? '$' : '₦'}${
-										transaction?.amountReceived?.toLocaleString(undefined, {
+									value={`${transaction.sourceCurrency === 'CAD' ? '$' : '₦'}${transaction?.amountReceived?.toLocaleString(
+										undefined,
+										{
 											maximumFractionDigits: 2,
 											minimumFractionDigits: 2,
-										}) || '50,000'
-									}`}
+										}
+									)}`}
 								/>
 							)}
 
@@ -211,7 +212,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 								| Transaction type
 								|--------------------------------------------------
 								*/}
-								<DataRepresentation label="Transaction type:" value={transaction?.type || 'Transfer'} />
+								<DataRepresentation label="Transaction type:" value={transaction?.type || '--'} />
 								{/**
 								|--------------------------------------------------
 								| Transaction date
@@ -221,8 +222,8 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 									label="Transaction date:"
 									value={
 										transaction?.createdAt
-											? dayjs(transaction.createdAt).format('DD MMM YYYY, HH:MMA')
-											: '08 Sept 2025, 4:10 PM'
+											? dayjs(transaction.createdAt).format('DD MMM YYYY, hh:mm AA')
+											: '--'
 									}
 								/>
 								{/**
@@ -242,10 +243,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 							|--------------------------------------------------
 							*/}
 							{(transaction.type === 'Outgoing' || transaction.type === 'Incoming') && (
-								<DataRepresentation
-									label="Narration:"
-									value={transaction?.description || 'Happy birthday'}
-								/>
+								<DataRepresentation label="Narration:" value={transaction?.description || '--'} />
 							)}
 						</View>
 					</Container>

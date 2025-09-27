@@ -5,9 +5,9 @@
 */
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Image, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, TextInput, View } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -22,14 +22,8 @@ import { RootStackParamList } from '@/types/route.params';
 import { useGetBeneficiaries } from '@/services/user.services';
 import { BankAccount } from '@/interfaces/transaction.interface';
 
-type AmountScreenProps = RouteProp<RootStackParamList, 'SendFundsBeneficiaryScreen'>;
 type SendFundsBeneficiaryProps = NativeStackNavigationProp<RootStackParamList, 'SendFundsBeneficiaryScreen'>;
 export default function SendFundsBeneficiaryScreen() {
-	const route = useRoute<AmountScreenProps>();
-	const params = route.params;
-
-	console.log(params, 'params');
-
 	/**
     |--------------------------------------------------
     | Navigation

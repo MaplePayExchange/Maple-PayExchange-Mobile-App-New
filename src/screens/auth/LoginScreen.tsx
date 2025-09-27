@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
+import utils from '@/lib/utils';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -32,6 +33,7 @@ import { useLogin } from '@/services/auth.services';
 import InputField from '@/src/components/InputField';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
+import { useBiometricAuth } from '@/hooks/useBiometrics';
 import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 
@@ -52,6 +54,7 @@ export default function LoginScreen() {
 	|--------------------------------------------------
 	*/
 	const { mutate, isPending } = useLogin();
+	const { authenticate } = useBiometricAuth();
 	const { setBiometricsInfo, biometricsInfo } = useUserStore();
 
 	/**
@@ -72,8 +75,58 @@ export default function LoginScreen() {
 	*/
 	const onSubmit = async (data: any) => {
 		const deviceId = await getDeviceHardwareId();
-		mutate({ password: data.password, email: data.email, deviceId: deviceId as string });
+		const response = await utils.getDeviceInfo();
+		mutate({
+			email: data.email,
+			os: response?.osName,
+			brand: response?.brand,
+			password: data.password,
+			osName: response?.osName,
+			deviceId: deviceId as string,
+			osVersion: response?.osVersion,
+			deviceType: response?.deviceType,
+			deviceName: response?.deviceName,
+		});
 		setBiometricsInfo({ ...biometricsInfo, password: data.password, email: data.email });
+	};
+
+	/**
+	|--------------------------------------------------
+	| Using biometrics
+	|--------------------------------------------------
+	*/
+	const handleUserBiometrics = async () => {
+		/**
+		|--------------------------------------------------
+		| authenticate
+		|--------------------------------------------------
+		*/
+		const auth = await authenticate();
+
+		/**
+		|--------------------------------------------------
+		| If error
+		|--------------------------------------------------
+		*/
+		if (auth.error) {
+			utils.errorHandler(undefined, 'Device authentication failed!');
+			return;
+		}
+
+		const deviceId = await getDeviceHardwareId();
+		const response = await utils.getDeviceInfo();
+
+		mutate({
+			os: response?.osName,
+			brand: response?.brand,
+			osName: response?.osName,
+			deviceId: deviceId as string,
+			osVersion: response?.osVersion,
+			deviceType: response?.deviceType,
+			deviceName: response?.deviceName,
+			email: biometricsInfo?.email as string,
+			password: biometricsInfo?.password as string,
+		});
 	};
 
 	/**
@@ -187,8 +240,8 @@ export default function LoginScreen() {
 							</MPText>
 						</MPText>
 
-						{biometricsInfo?.isTurnedOn && (
-							<Pressable className="self-center mt-10">
+						{biometricsInfo?.isTurnedOn && biometricsInfo.email && biometricsInfo.password && (
+							<Pressable onPress={handleUserBiometrics} className="self-center mt-10">
 								<Svg width="56" height="56" viewBox="0 0 56 56" fill="none">
 									<Rect width="56" height="56" rx="28" fill="#F5F5F5" />
 									<Path

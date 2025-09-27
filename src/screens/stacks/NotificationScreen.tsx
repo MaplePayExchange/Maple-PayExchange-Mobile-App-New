@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import Svg, { Path, Rect } from 'react-native-svg';
+import { Svg, Path, Rect } from 'react-native-svg';
 import { useQueryClient } from '@tanstack/react-query';
 import { View, Pressable, ScrollView, RefreshControl } from 'react-native';
 

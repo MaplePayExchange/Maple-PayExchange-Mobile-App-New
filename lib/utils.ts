@@ -3,6 +3,8 @@
 | Npm imports
 |--------------------------------------------------
 */
+import * as Device from 'expo-device';
+import * as Network from 'expo-network';
 import * as Clipboard from 'expo-clipboard';
 import { Toast } from 'toastify-react-native';
 import { Alert, ToastAndroid, Platform } from 'react-native';
@@ -98,6 +100,71 @@ class Utils {
 		}
 
 		return years;
+	}
+
+	async getDeviceInfo() {
+		try {
+			/**
+			|--------------------------------------------------
+			| Device type mapping
+			|--------------------------------------------------
+			*/
+			const deviceTypeMap: Record<number, string> = {
+				[Device.DeviceType.UNKNOWN]: 'Unknown',
+				[Device.DeviceType.PHONE]: 'Phone',
+				[Device.DeviceType.TABLET]: 'Tablet',
+				[Device.DeviceType.DESKTOP]: 'Desktop',
+				[Device.DeviceType.TV]: 'TV',
+			};
+
+			/**
+			|--------------------------------------------------
+			| Get device details
+			|--------------------------------------------------
+			*/
+			const brand = Device.brand ?? 'Unknown';
+			const osName = Device.osName ?? 'Unknown';
+			const modelName = Device.modelName ?? 'Unknown';
+			const osVersion = Device.osVersion ?? 'Unknown';
+			const deviceName = Device.deviceName ?? 'Unknown';
+			const deviceType = deviceTypeMap[Device.deviceType ?? Device.DeviceType.UNKNOWN];
+
+			const browser = undefined;
+
+			/**
+			|--------------------------------------------------
+			| Network info
+			|--------------------------------------------------
+			*/
+			const ipAddress = await Network.getIpAddressAsync();
+			const networkState = await Network.getNetworkStateAsync();
+
+			const location = {
+				country: undefined,
+				city: undefined,
+			};
+
+			/**
+			|--------------------------------------------------
+			| Returned response
+			|--------------------------------------------------
+			*/
+			return {
+				brand,
+				osName,
+				browser,
+				location,
+				modelName,
+				ipAddress,
+				osVersion,
+				deviceType,
+				deviceName,
+				networkState,
+			};
+		} catch (error) {
+			console.error('Error fetching device info:', error);
+			return null;
+		}
 	}
 }
 

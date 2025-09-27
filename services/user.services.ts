@@ -13,16 +13,16 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient, InfiniteData }
 |--------------------------------------------------
 */
 import utils from '@/lib/utils';
-import axiosInstance from '@/lib/axiosInstance';
-import { ROUTE_NAMES } from '@/constants/routes.conts';
 import {
 	BankAccount,
-	BankTransferRequest,
-	ExchangePayload,
-	FundSwapTransaction,
 	INotification,
+	ExchangePayload,
+	BankTransferRequest,
+	FundSwapTransaction,
 	InteracTransactionRequest,
 } from '@/interfaces/transaction.interface';
+import axiosInstance from '@/lib/axiosInstance';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 
 interface NotificationResponse {
@@ -32,6 +32,50 @@ interface NotificationResponse {
 		limit: number;
 		total: number;
 	};
+}
+
+/**
+|--------------------------------------------------
+| Referral history item
+|--------------------------------------------------
+*/
+export interface IReferralHistoryItem {
+	_id: string;
+	createdAt: Date;
+	updatedAt: Date;
+	referrerId: {
+		email: string;
+		lastName: string;
+		firstName: string;
+	};
+	referralCode: string;
+	referralValue: number;
+	redeemedAt?: Date | null;
+	referredUserId?: string | null;
+	status: 'pending' | 'completed' | 'expired';
+}
+
+interface ReferralHistoryResponse {
+	history: IReferralHistoryItem[];
+	message: string;
+	meta: {
+		page: number;
+		limit: number;
+		total: number;
+	};
+	metrics: {
+		activeUsers: number;
+		totalEarnings: number;
+		noOfReferrals: number;
+	};
+}
+
+interface IUniqueDeviceHistory {
+	osName: string;
+	browser: string;
+	loggedInAt: Date;
+	osVersion: string;
+	deviceName: string;
 }
 
 /**
@@ -65,7 +109,7 @@ export const useVerifyInteracTransfer = (onError?: () => void) => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
-			if (data.success) {
+			if (data.status) {
 				navigation.navigate(ROUTE_NAMES.SEND_FUNDS_FEEDBACK as never);
 				queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 				utils.successNotificationHanlder('Interac!', 'Your transfer has been verified');
@@ -454,6 +498,64 @@ export const useGetBeneficiaries = () => {
 | Gets the users beneficiaries
 |--------------------------------------------------
 */
+export const useGetTransactionLimits = () => {
+	return useQuery<
+		any,
+		Error,
+		{
+			message: string;
+			metrics: {
+				dailyNGN: number;
+				dailyCAD: number;
+				weeklyNGN: number;
+				weeklyCAD: number;
+				monthlyNGN: number;
+				monthlyCAD: number;
+			};
+		}
+	>({
+		queryKey: ['user_transaction_limits'],
+
+		/**
+		|--------------------------------------------------
+		| Query function
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const response = await axiosInstance.get('/users/transaction-limits');
+			console.log(response.data);
+			return response.data;
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Gets the users beneficiaries
+|--------------------------------------------------
+*/
+export const useGetDeviceLoginHistory = () => {
+	return useQuery<any, Error, { message: string; history: IUniqueDeviceHistory[] }>({
+		queryKey: ['user_device_history'],
+
+		/**
+		|--------------------------------------------------
+		| Query function
+		|--------------------------------------------------
+		*/
+		queryFn: async () => {
+			const response = await axiosInstance.get('/users/device-history');
+			console.log(response.data);
+			return response.data;
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Gets the users beneficiaries
+|--------------------------------------------------
+*/
 export const useGetNotifications = (filters?: { limit: number }) => {
 	return useInfiniteQuery<NotificationResponse, Error, InfiniteData<NotificationResponse>>({
 		/**
@@ -479,6 +581,53 @@ export const useGetNotifications = (filters?: { limit: number }) => {
 			const response = await axiosInstance.get('/notifications', {
 				params: { ...filters, page: pageParam },
 			});
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Find next page
+		|--------------------------------------------------
+		*/
+		getNextPageParam: (lastPage) => {
+			const { page, limit, total } = lastPage.meta;
+			const maxPage = Math.ceil(total / limit);
+			return page < maxPage ? page + 1 : undefined;
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Get referral history
+|--------------------------------------------------
+*/
+export const useGetReferralHistory = (filters?: { limit: number }) => {
+	return useInfiniteQuery<ReferralHistoryResponse, Error, InfiniteData<ReferralHistoryResponse>>({
+		/**
+		|--------------------------------------------------
+		| Cache key
+		|--------------------------------------------------
+		*/
+		queryKey: ['user_referral_history', filters],
+
+		/**
+		|--------------------------------------------------
+		| Initial page is always 1
+		|--------------------------------------------------
+		*/
+		initialPageParam: 1,
+
+		/**
+		|--------------------------------------------------
+		| Fetch function
+		|--------------------------------------------------
+		*/
+		queryFn: async ({ pageParam }): Promise<ReferralHistoryResponse> => {
+			const response = await axiosInstance.get('/referrals/history', {
+				params: { ...filters, page: pageParam },
+			});
+
 			return response.data;
 		},
 

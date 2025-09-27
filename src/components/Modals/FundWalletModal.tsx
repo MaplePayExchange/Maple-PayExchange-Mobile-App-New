@@ -5,7 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import Tooltip from '../Tooltip';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { View, Modal, Pressable, Platform, Share } from 'react-native';
 import { Svg, Path, Defs, Stop, LinearGradient } from 'react-native-svg';
@@ -17,13 +17,13 @@ import { Svg, Path, Defs, Stop, LinearGradient } from 'react-native-svg';
  */
 import MPText from '../MPText';
 import utils from '@/lib/utils';
+import Tooltip from '../Tooltip';
 import MPButton from '../MPButton';
 import HeaderWrapper from '../Header';
 import ScreenWrapper from '../Wrapper';
 import { CopyIcon, InfoIcon } from '@/assets/svgs';
 import { Wallet } from '@/interfaces/wallet.interface';
 import { useVerifyInteracTransfer } from '@/services/user.services';
-import { MaterialIcons } from '@expo/vector-icons';
 
 interface Props {
 	onDismiss?: () => void;

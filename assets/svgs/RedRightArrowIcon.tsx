@@ -13,7 +13,7 @@ import { Svg, LinearGradient, Path, Defs, Stop } from 'react-native-svg';
 |--------------------------------------------------
 */
 
-export default function RedRightArrowIcon() {
+export default function RedRightArrowIcon({ color }: { color?: string }) {
 	/**
     |--------------------------------------------------
     | Rendered View
@@ -45,8 +45,8 @@ export default function RedRightArrowIcon() {
 						y2="10.499"
 						gradientUnits="userSpaceOnUse"
 					>
-						<Stop stopColor="#EE0979" />
-						<Stop offset="1" stopColor="#FF6A00" />
+						<Stop stopColor={color || '#EE0979'} />
+						<Stop offset="1" stopColor={color || '#FF6A00'} />
 					</LinearGradient>
 					<LinearGradient
 						id="paint1_linear_170_5886"
@@ -56,8 +56,8 @@ export default function RedRightArrowIcon() {
 						y2="9.99967"
 						gradientUnits="userSpaceOnUse"
 					>
-						<Stop stopColor="#EE0979" />
-						<Stop offset="1" stopColor="#FF6A00" />
+						<Stop stopColor={color || '#EE0979'} />
+						<Stop offset="1" stopColor={color || '#FF6A00'} />
 					</LinearGradient>
 				</Defs>
 			</Svg>

@@ -23,12 +23,14 @@ interface Props {
 	subtitle?: string;
 	onlClick?: () => void;
 	useNavigation?: boolean;
+	rightNavigationItem?: React.ReactNode;
 }
 
 export default function HeaderWrapper({
 	center,
 	subtitle,
 	onlClick,
+	rightNavigationItem,
 	title = 'This is the title',
 	useNavigation: useNavigate = true,
 }: Props) {
@@ -67,6 +69,13 @@ export default function HeaderWrapper({
 						{title}
 					</MPText>
 				</View>
+
+				{/**
+				|--------------------------------------------------
+				| Right icon
+				|--------------------------------------------------
+				*/}
+				{rightNavigationItem && <View className={clsx('ml-auto')}>{rightNavigationItem}</View>}
 			</View>
 
 			{/**

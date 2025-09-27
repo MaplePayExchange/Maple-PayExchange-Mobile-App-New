@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import { View, Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -16,9 +16,14 @@ import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
+import { RootStackParamList } from '@/types/route.params';
 import { clampFontSize, SEND_FUNDS_FEEDBACK } from '@/constants/app.constant';
 
+type FeedbackScreenProps = RouteProp<RootStackParamList, 'SendFundsFeedbackScreen'>;
 export default function SendFundsFeedbackScreen() {
+	const route = useRoute<FeedbackScreenProps>();
+	const params = route.params;
+
 	/**
     |--------------------------------------------------
     |

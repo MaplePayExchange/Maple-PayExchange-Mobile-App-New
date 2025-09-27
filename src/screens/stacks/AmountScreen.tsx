@@ -28,6 +28,7 @@ import DataRepresentation from '@/src/components/DataRepresentation';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
 import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -259,9 +260,9 @@ export default function AmountScreen() {
 		} else {
 			mutateExchange({
 				transactionPin: pin,
-				currency: selectedWallet?.currency as any,
 				amount: Number(amountToSend.replaceAll(',', '')),
-				exchangeCurrency: selectedWallet?.currency === 'NGN' ? 'CAD' : 'NGN',
+				currency: handleCurrencySymbol().sourceSymbol === '₦' ? 'NGN' : 'CAD',
+				exchangeCurrency: handleCurrencySymbol().sourceSymbol === '₦' ? 'CAD' : 'NGN',
 				rate: (selectedWallet?.currency === 'NGN' ? NGNRate?.rate : CADRate?.rate) || 0,
 			});
 		}
@@ -419,289 +420,291 @@ export default function AmountScreen() {
 				</Pressable>
 			</View>
 
-			{/**
-			|--------------------------------------------------
-			| ...
-			|--------------------------------------------------
-			*/}
-			<Container>
-				<MPText weight="semibold" className="text-base text-center">
-					Send to a bank account
-				</MPText>
-				<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
-					Enter amount to send to recipient
-				</MPText>
-
+			<ScrollView>
 				{/**
 				|--------------------------------------------------
-				| Amount to send
+				| ...
 				|--------------------------------------------------
 				*/}
-				<View className="gap-1">
-					<MPText className="text-sm text-[#1A1A1A]" weight="medium">
-						Amount to send
+				<Container>
+					<MPText weight="semibold" className="text-base text-center">
+						Send to a bank account
+					</MPText>
+					<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
+						Enter amount to send to recipient
 					</MPText>
 
 					{/**
 					|--------------------------------------------------
-					| Wallet For sender
+					| Amount to send
 					|--------------------------------------------------
 					*/}
-					<View className="rounded-[16px] bg-[#FFFFFF] p-4 mb-4">
-						<View className="flex-row items-center justify-between w-full">
+					<View className="gap-1">
+						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+							Amount to send
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| Wallet For sender
+						|--------------------------------------------------
+						*/}
+						<View className="rounded-[16px] bg-[#FFFFFF] p-4 mb-4">
+							<View className="flex-row items-center justify-between w-full">
+								{/**
+								|--------------------------------------------------
+								| Wallet balance
+								|--------------------------------------------------
+								*/}
+								<View className="flex-row items-center gap-1">
+									<MPText weight="semibold" className="text-[18px]">
+										{handleCurrencySymbol().sourceSymbol}
+									</MPText>
+
+									{/**
+									|--------------------------------------------------
+									|
+									|--------------------------------------------------
+									*/}
+									<TextInput
+										placeholder="0"
+										value={amountToSend}
+										keyboardType="numeric"
+										onChangeText={handleChange}
+										className="text-[18px] font-semibold w-auto"
+									/>
+								</View>
+
+								{/**
+								|--------------------------------------------------
+								| Select field
+								|--------------------------------------------------
+								*/}
+								<SelectField
+									closeOnModalClick
+									triggerClassName="h-[32px] max-h-[32px]"
+									disabled={params.transactionType !== 'SWAP'}
+									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
+									triggerChildren={
+										<View>
+											<MPText weight="medium" className="text-sm text-black">
+												{sourceDestination.sourceFlag} {sourceDestination.source}
+											</MPText>
+										</View>
+									}
+									contentChildren={renderCurrencyChanger('source', 'sourceFlag')}
+								/>
+							</View>
+
 							{/**
 							|--------------------------------------------------
-							| Wallet balance
+							| Second row
 							|--------------------------------------------------
 							*/}
-							<View className="flex-row items-center gap-1">
-								<MPText weight="semibold" className="text-[18px]">
+							<View className="mt-1 flex-row justify-between items-center">
+								<View className="flex-row items-center gap-1">
+									<WalletIcon />
+									<MPText weight="regular" className="text-[#767676] text-sm">
+										Wallet Bal:
+									</MPText>
+								</View>
+
+								{/**
+								|--------------------------------------------------
+								| Wallet balance
+								|--------------------------------------------------
+								*/}
+								<MPText weight="regular" className="text-[#767676] text-sm">
 									{handleCurrencySymbol().sourceSymbol}
+									{handleGetWalletBalance().toLocaleString(undefined, {
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})}
 								</MPText>
-
-								{/**
-								|--------------------------------------------------
-								|
-								|--------------------------------------------------
-								*/}
-								<TextInput
-									placeholder="0"
-									value={amountToSend}
-									keyboardType="numeric"
-									onChangeText={handleChange}
-									className="text-[18px] font-semibold w-auto"
-								/>
 							</View>
-
-							{/**
-							|--------------------------------------------------
-							| Select field
-							|--------------------------------------------------
-							*/}
-							<SelectField
-								closeOnModalClick
-								triggerClassName="h-[32px] max-h-[32px]"
-								disabled={params.transactionType !== 'SWAP'}
-								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
-								triggerChildren={
-									<View>
-										<MPText weight="medium" className="text-sm text-black">
-											{sourceDestination.sourceFlag} {sourceDestination.source}
-										</MPText>
-									</View>
-								}
-								contentChildren={renderCurrencyChanger('source', 'sourceFlag')}
-							/>
 						</View>
 
 						{/**
 						|--------------------------------------------------
-						| Second row
+						| Insufficient balance warning
 						|--------------------------------------------------
 						*/}
-						<View className="mt-1 flex-row justify-between items-center">
-							<View className="flex-row items-center gap-1">
-								<WalletIcon />
-								<MPText weight="regular" className="text-[#767676] text-sm">
-									Wallet Bal:
-								</MPText>
-							</View>
-
-							{/**
-							|--------------------------------------------------
-							| Wallet balance
-							|--------------------------------------------------
-							*/}
-							<MPText weight="regular" className="text-[#767676] text-sm">
-								{handleCurrencySymbol().sourceSymbol}
-								{handleGetWalletBalance().toLocaleString(undefined, {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})}
-							</MPText>
-						</View>
-					</View>
-
-					{/**
-					|--------------------------------------------------
-					| Insufficient balance warning
-					|--------------------------------------------------
-					*/}
-					{handleGetWalletBalance() < Number(amountToSend ?? 0) && (
-						<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
-							Insufficient funds in your wallet
-						</MPText>
-					)}
-
-					{/**
-					|--------------------------------------------------
-					| If the amount is less than 100 naira
-					|--------------------------------------------------
-					*/}
-					{params.transactionType === 'NGN-to-NGN' && Number(amountToSend) < 100 && (
-						<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
-							You can't send less than 100
-						</MPText>
-					)}
-
-					{/**
-					|--------------------------------------------------
-					| If the amount is less than what is allowed
-					|--------------------------------------------------
-					*/}
-					{params.transactionType === 'SWAP' &&
-						sourceDestination.source === 'NGN' &&
-						Number(amountToSend) < (NGNRate?.rate ?? 0) && (
+						{handleGetWalletBalance() < Number(amountToSend ?? 0) && (
 							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
-								The amount you're trying to exchange is too low
+								Insufficient funds in your wallet
 							</MPText>
 						)}
-
-					{/**
-					|--------------------------------------------------
-					| If the amount is less than what is allowed
-					|--------------------------------------------------
-					*/}
-					{params.transactionType === 'SWAP' &&
-						sourceDestination.source === 'CAD' &&
-						Number(amountToSend) < 1 && (
-							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
-								The amount you're trying to exchange is too low
-							</MPText>
-						)}
-
-					{/**
-					|--------------------------------------------------
-					| Exchange rate
-					|--------------------------------------------------
-					*/}
-					<View className="h-[108px] rounded-2xl bg-[#ECEDEE] w-full p-4 justify-between my-4">
-						<DataRepresentation
-							label="Today's rate"
-							valueClassName="text-[#767676]"
-							value={handleConversionInfo('rate')}
-						/>
-
-						<DataRepresentation label="Amount we'll send" value={handleConversionInfo('conversion')} />
-					</View>
-
-					{/**
-					|--------------------------------------------------
-					| Amount they’ll receive
-					|--------------------------------------------------
-					*/}
-					<MPText className="text-sm text-[#1A1A1A]" weight="medium">
-						Amount they’ll receive
-					</MPText>
-
-					{/**
-					|--------------------------------------------------
-					| Wallet for receiver
-					|--------------------------------------------------
-					*/}
-					<View className="rounded-[16px] bg-[#FFFFFF] p-4">
-						<View className="flex-row items-center justify-between w-full">
-							{/**
-							|--------------------------------------------------
-							| Wallet balance
-							|--------------------------------------------------
-							*/}
-							<View className="flex-row items-center gap-1">
-								<MPText weight="semibold" className="text-[18px]">
-									{handleCurrencySymbol().destinationSymbol}
-								</MPText>
-
-								{/**
-								|--------------------------------------------------
-								|
-								|--------------------------------------------------
-								*/}
-								<TextInput
-									placeholder="0"
-									keyboardType="numeric"
-									onChangeText={handleChange}
-									className={clsx(
-										'text-[18px] font-semibold w-auto',
-										transactionType === 'SWAP' ? '' : 'pointer-events-none'
-									)}
-									value={handleConversionInfo('conversion')
-										.replace('=', '')
-										.replace('$', '')
-										.replace('₦', '')}
-								/>
-							</View>
-
-							{/**
-							|--------------------------------------------------
-							| Select field
-							|--------------------------------------------------
-							*/}
-							<SelectField
-								closeOnModalClick
-								triggerClassName="h-[32px] max-h-[32px]"
-								disabled={params.transactionType !== 'SWAP'}
-								wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
-								triggerChildren={
-									<View>
-										<MPText weight="medium" className="text-sm text-black">
-											{sourceDestination.destinationFlag} {sourceDestination.destination}
-										</MPText>
-									</View>
-								}
-								contentChildren={renderCurrencyChanger('destination', 'destinationFlag')}
-							/>
-						</View>
 
 						{/**
 						|--------------------------------------------------
-						| Second row
+						| If the amount is less than 100 naira
 						|--------------------------------------------------
 						*/}
-						<View
-							className={clsx(
-								'mt-1 flex-row justify-between items-center',
-								transactionType === 'SWAP' ? 'flex' : 'hidden'
+						{params.transactionType === 'NGN-to-NGN' && Number(amountToSend) < 100 && (
+							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								You can't send less than 100
+							</MPText>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| If the amount is less than what is allowed
+						|--------------------------------------------------
+						*/}
+						{params.transactionType === 'SWAP' &&
+							sourceDestination.source === 'NGN' &&
+							Number(amountToSend) < (NGNRate?.rate ?? 0) && (
+								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+									The amount you're trying to exchange is too low
+								</MPText>
 							)}
-						>
-							<View className="flex-row items-center gap-1">
-								<WalletIcon />
-								<MPText weight="regular" className="text-[#767676] text-sm">
-									Wallet Bal:
+
+						{/**
+						|--------------------------------------------------
+						| If the amount is less than what is allowed
+						|--------------------------------------------------
+						*/}
+						{params.transactionType === 'SWAP' &&
+							sourceDestination.source === 'CAD' &&
+							Number(amountToSend) < 1 && (
+								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+									The amount you're trying to exchange is too low
 								</MPText>
+							)}
+
+						{/**
+						|--------------------------------------------------
+						| Exchange rate
+						|--------------------------------------------------
+						*/}
+						<View className="h-[108px] rounded-2xl bg-[#ECEDEE] w-full p-4 justify-between my-4">
+							<DataRepresentation
+								label="Today's rate"
+								valueClassName="text-[#767676]"
+								value={handleConversionInfo('rate')}
+							/>
+
+							<DataRepresentation label="Amount we'll send" value={handleConversionInfo('conversion')} />
+						</View>
+
+						{/**
+						|--------------------------------------------------
+						| Amount they’ll receive
+						|--------------------------------------------------
+						*/}
+						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+							Amount they’ll receive
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| Wallet for receiver
+						|--------------------------------------------------
+						*/}
+						<View className="rounded-[16px] bg-[#FFFFFF] p-4">
+							<View className="flex-row items-center justify-between w-full">
+								{/**
+								|--------------------------------------------------
+								| Wallet balance
+								|--------------------------------------------------
+								*/}
+								<View className="flex-row items-center gap-1">
+									<MPText weight="semibold" className="text-[18px]">
+										{handleCurrencySymbol().destinationSymbol}
+									</MPText>
+
+									{/**
+									|--------------------------------------------------
+									|
+									|--------------------------------------------------
+									*/}
+									<TextInput
+										placeholder="0"
+										keyboardType="numeric"
+										onChangeText={handleChange}
+										className={clsx(
+											'text-[18px] font-semibold w-auto',
+											transactionType === 'SWAP' ? '' : 'pointer-events-none'
+										)}
+										value={handleConversionInfo('conversion')
+											.replace('=', '')
+											.replace('$', '')
+											.replace('₦', '')}
+									/>
+								</View>
+
+								{/**
+								|--------------------------------------------------
+								| Select field
+								|--------------------------------------------------
+								*/}
+								<SelectField
+									closeOnModalClick
+									triggerClassName="h-[32px] max-h-[32px]"
+									disabled={params.transactionType !== 'SWAP'}
+									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
+									triggerChildren={
+										<View>
+											<MPText weight="medium" className="text-sm text-black">
+												{sourceDestination.destinationFlag} {sourceDestination.destination}
+											</MPText>
+										</View>
+									}
+									contentChildren={renderCurrencyChanger('destination', 'destinationFlag')}
+								/>
 							</View>
 
 							{/**
 							|--------------------------------------------------
-							| Wallet balance
+							| Second row
 							|--------------------------------------------------
 							*/}
-							<MPText weight="regular" className="text-[#767676] text-sm">
-								{handleCurrencySymbol().sourceSymbol}
-								{handleGetWalletBalance().toLocaleString(undefined, {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2,
-								})}
-							</MPText>
+							<View
+								className={clsx(
+									'mt-1 flex-row justify-between items-center',
+									transactionType === 'SWAP' ? 'flex' : 'hidden'
+								)}
+							>
+								<View className="flex-row items-center gap-1">
+									<WalletIcon />
+									<MPText weight="regular" className="text-[#767676] text-sm">
+										Wallet Bal:
+									</MPText>
+								</View>
+
+								{/**
+								|--------------------------------------------------
+								| Wallet balance
+								|--------------------------------------------------
+								*/}
+								<MPText weight="regular" className="text-[#767676] text-sm">
+									{handleCurrencySymbol().sourceSymbol}
+									{handleGetWalletBalance().toLocaleString(undefined, {
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 2,
+									})}
+								</MPText>
+							</View>
 						</View>
 					</View>
-				</View>
 
-				{/**
-				|--------------------------------------------------
-				| Continue button
-				|--------------------------------------------------
-				*/}
-				<MPButton
-					disabled={!isValidAmount}
-					useGradientBg={isValidAmount}
-					className="w-[91px] max-w-[91px] mt-6 self-center"
-					onPress={() => setShowTransactionPreviewModal(true)}
-				>
-					<MPText weight="semibold" className="text-sm text-white">
-						Continue
-					</MPText>
-				</MPButton>
-			</Container>
+					{/**
+					|--------------------------------------------------
+					| Continue button
+					|--------------------------------------------------
+					*/}
+					<MPButton
+						disabled={!isValidAmount}
+						useGradientBg={isValidAmount}
+						className="w-[91px] max-w-[91px] mt-6 self-center"
+						onPress={() => setShowTransactionPreviewModal(true)}
+					>
+						<MPText weight="semibold" className="text-sm text-white">
+							Continue
+						</MPText>
+					</MPButton>
+				</Container>
+			</ScrollView>
 
 			{/**
             |--------------------------------------------------
@@ -712,12 +715,12 @@ export default function AmountScreen() {
 				amount={amountToSend}
 				beneficiary={beneficiary}
 				visible={showTransactionPreviewModal}
-				currency={selectedWallet?.currency as any}
 				setVisible={setShowTransactionPreviewModal}
 				onConfirm={() => {
 					setShowTransactionPin(true);
 					setShowTransactionPreviewModal(false);
 				}}
+				currencySymbol={handleCurrencySymbol().sourceSymbol}
 				transactionType={transactionType === 'SWAP' ? 'SWAP' : 'SEND'}
 				receivedAmount={handleConversionInfo('conversion').replace('=', '')}
 			/>

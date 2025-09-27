@@ -62,7 +62,7 @@ export default function SplashScreen() {
 			|--------------------------------------------------
 			*/
 			if (verificationData?.currentStep === 'email') {
-				navigation.navigate(ROUTE_NAMES.CREATE_USER);
+				navigation.navigate(ROUTE_NAMES.LOGIN, {});
 				return;
 			}
 

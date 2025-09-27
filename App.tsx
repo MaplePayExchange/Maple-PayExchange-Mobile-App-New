@@ -13,8 +13,8 @@ import {
 	Manrope_800ExtraBold,
 } from '@expo-google-fonts/manrope';
 import * as Linking from 'expo-linking';
+import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
 import ToastManager from 'toastify-react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
