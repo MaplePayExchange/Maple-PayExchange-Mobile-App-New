@@ -72,7 +72,7 @@ export default function SupportDetailsScreen() {
 							|--------------------------------------------------
 							*/}
 							{data.question.subtext !== null ? (
-								<MPText weight="regular" className="text-sm text-[#484848] mt-4">
+								<MPText weight="medium" className="text-sm text-[#484848] mt-4">
 									{data.question.subtext}
 								</MPText>
 							) : null}
@@ -96,7 +96,7 @@ export default function SupportDetailsScreen() {
 									|--------------------------------------------------
 									*/}
 									{data.solution.subtext && (
-										<MPText weight="regular" className="text-sm mt-1 text-[#484848]">
+										<MPText weight="medium" className="text-sm mt-1 text-[#484848]">
 											{data.solution.subtext}
 										</MPText>
 									)}
@@ -110,15 +110,15 @@ export default function SupportDetailsScreen() {
 										<View className="mt-2">
 											<List
 												type="unordered"
-												textClassName="text-[#484848]"
+												textClassName="text-[#484848] text-sm"
 												items={data.solution['bullet-points'] as string[]}
 											/>
 										</View>
 									)}
 								</React.Fragment>
 							) : (
-								data?.solution?.solutions?.map((_solution) => (
-									<React.Fragment>
+								data?.solution?.solutions?.map((_solution, index) => (
+									<React.Fragment key={`solution-solution-${index}`}>
 										{_solution.header && (
 											<MPText weight="bold" className="text-base mt-4">
 												{_solution.header}
@@ -134,7 +134,7 @@ export default function SupportDetailsScreen() {
 											<View className="mt-2">
 												<List
 													type="unordered"
-													textClassName="text-[#484848]"
+													textClassName="text-[#484848] text-sm"
 													items={_solution['bullet-points'] as string[]}
 												/>
 											</View>

@@ -365,7 +365,7 @@ export default function SupportScreen() {
 								/>
 							</View>
 
-							<View className="h-[90px]" />
+							<View className="h-[120px]" />
 						</View>
 					</View>
 				</ScrollView>

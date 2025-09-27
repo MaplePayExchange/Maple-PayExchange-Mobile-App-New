@@ -28,6 +28,8 @@ import { clampFontSize, MAPLE_LOGO } from '@/constants/app.constant';
 type SplashScreenProps = NativeStackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
 export default function SplashScreen() {
+	let timeout: any;
+
 	/**
 	|--------------------------------------------------
 	| Navigation
@@ -48,14 +50,14 @@ export default function SplashScreen() {
 	| Navigates the user to the login screen
 	|--------------------------------------------------
 	*/
-	React.useEffect(() => {
+	navigation.addListener('focus', () => {
 		console.log(verificationData);
 		/**
 		|--------------------------------------------------
 		| Navigates to the next screen from here
 		|--------------------------------------------------
 		*/
-		const timeout = setTimeout(() => {
+		timeout = setTimeout(() => {
 			/**
 			|--------------------------------------------------
 			| ...
@@ -94,14 +96,16 @@ export default function SplashScreen() {
 			clearTimeout(timeout);
 			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		}
+	});
 
-		/**
-		|--------------------------------------------------
-		| Clean up
-		|--------------------------------------------------
-		*/
-		return () => clearTimeout(timeout);
-	}, []);
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	navigation.addListener('beforeRemove', () => {
+		clearTimeout(timeout);
+	});
 
 	/**
     |--------------------------------------------------

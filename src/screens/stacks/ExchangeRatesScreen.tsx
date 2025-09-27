@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import dayjs from 'dayjs';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Platform } from 'react-native';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 /**
@@ -19,6 +19,7 @@ import Container from '@/src/components/Container';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { useGetRates } from '@/services/user.services';
+import clsx from 'clsx';
 
 dayjs.extend(advancedFormat);
 
@@ -98,7 +99,9 @@ export default function ExchangeRatesScreen() {
 						<View className="flex-row gap-2 px-4 mt-6">
 							<MPText className="text-sm">🇨🇦</MPText>
 							<MPText className="text-sm">CAD</MPText>
-							<RedRightArrowIcon color="#000000" />
+							<View className={clsx(Platform.OS === 'android' ? '-translate-y-[2px]' : '')}>
+								<RedRightArrowIcon color="#000000" />
+							</View>
 							<MPText className="text-sm">🇳🇬</MPText>
 							<MPText className="text-sm">NGN</MPText>
 
@@ -143,7 +146,9 @@ export default function ExchangeRatesScreen() {
 						<View className="flex-row gap-2 px-4 mt-6">
 							<MPText className="text-sm">🇳🇬</MPText>
 							<MPText className="text-sm">NGN</MPText>
-							<RedRightArrowIcon color="#000000" />
+							<View className={clsx(Platform.OS === 'android' ? '-translate-y-[2px]' : '')}>
+								<RedRightArrowIcon color="#000000" />
+							</View>
 							<MPText className="text-sm">🇨🇦</MPText>
 							<MPText className="text-sm">CAD</MPText>
 

@@ -42,7 +42,7 @@ export default function HeaderWrapper({
     |--------------------------------------------------
     */
 	return (
-		<View>
+		<View className='mt-4'>
 			{/**
             |--------------------------------------------------
             | Header

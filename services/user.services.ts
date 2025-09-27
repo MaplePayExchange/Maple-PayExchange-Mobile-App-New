@@ -71,11 +71,18 @@ interface ReferralHistoryResponse {
 }
 
 interface IUniqueDeviceHistory {
+	_id: string;
+	brand: string;
+	userId: string;
 	osName: string;
-	browser: string;
-	loggedInAt: Date;
+	createdAt: Date;
+	updatedAt: Date;
 	osVersion: string;
+	lastLoginAt: Date;
 	deviceName: string;
+	deviceType: string;
+	isCurrent: boolean;
+	__v: number;
 }
 
 /**
@@ -640,6 +647,127 @@ export const useGetReferralHistory = (filters?: { limit: number }) => {
 			const { page, limit, total } = lastPage.meta;
 			const maxPage = Math.ceil(total / limit);
 			return page < maxPage ? page + 1 : undefined;
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Upload profile image
+|--------------------------------------------------
+*/
+export const useUploadProfileImage = (onError?: () => void) => {
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	return useMutation<{ message: string; profileImageUrl: string }, Error, { imageUri: string }>({
+		/**
+		|--------------------------------------------------
+		| mutation
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			const formData = new FormData();
+
+			/**
+			|--------------------------------------------------
+			| Attach file
+			|--------------------------------------------------
+			*/
+			formData.append('profileImage', {
+				type: 'image/jpeg',
+				name: 'profile.jpg',
+				uri: payload.imageUri,
+			} as any);
+
+			/**
+			|--------------------------------------------------
+			| Send request
+			|--------------------------------------------------
+			*/
+			const response = await axiosInstance.post('users/upload-profile', formData, {
+				headers: { 'Content-Type': 'multipart/form-data' },
+			});
+
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data);
+			onError?.();
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+			utils.successNotificationHanlder('Profile!', 'Profile image uploaded successfully');
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			onError?.();
+			console.log(error.response.data);
+			utils.errorHandler(error, 'Error uploading profile image');
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Upload profile image
+|--------------------------------------------------
+*/
+export const useMarkNotificationAsRead = () => {
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	return useMutation<{ message: string }, Error, { id?: string }>({
+		/**
+		|--------------------------------------------------
+		| mutation
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			/**
+			|--------------------------------------------------
+			| Send request
+			|--------------------------------------------------
+			*/
+			const url = '/notifications/mark-as-read';
+			const response = await axiosInstance.post(url, { notificationId: payload.id });
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data);
+			queryClient.invalidateQueries({ queryKey: ['user_notifications'] });
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			console.log(error.response.data);
 		},
 	});
 };

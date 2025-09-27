@@ -122,6 +122,15 @@ export default function ProfileScreen() {
 			| Transaction limit
 			|--------------------------------------------------
 			*/
+			case 'Devices and Sessions':
+				navigation.navigate(ROUTE_NAMES.DEVICES_AND_SESSIONS as never);
+				break;
+
+			/**
+			|--------------------------------------------------
+			| Transaction limit
+			|--------------------------------------------------
+			*/
 			case 'Logout':
 				setIsLoggedIn(false);
 				setUserData(undefined);
@@ -166,7 +175,9 @@ export default function ProfileScreen() {
     */
 	return (
 		<ScreenWrapper usePadding={false} className={clsx(isLoading ? 'opacity-45 pointer-events-none' : '')}>
-			<HeaderWrapper title="Account Settings" center />
+			<View className='px-4'>
+				<HeaderWrapper title="Account Settings" center />
+			</View>
 
 			{/**
 			|--------------------------------------------------
@@ -401,7 +412,10 @@ export default function ProfileScreen() {
 						| Exchange Rate
 						|--------------------------------------------------
 						*/}
-						<Pressable className="flex-row items-center gap-4">
+						<Pressable
+							className="flex-row items-center gap-4"
+							onPress={() => handleNavigation('Devices and Sessions')}
+						>
 							{IconTypes[Object.keys(IconTypes)[11] as keyof typeof IconTypes]}
 							<MPText className="text-sm" weight="semibold">
 								{Object.keys(IconTypes)[11]}

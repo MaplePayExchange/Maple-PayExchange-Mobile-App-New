@@ -72,7 +72,7 @@ export default function ProgressBar({
 			<View className="rounded-full overflow-hidden w-[80%]" style={{ height, backgroundColor }}>
 				<Animated.View
 					className="rounded-full"
-					style={{ width: widthInterpolated, backgroundColor: color, height }}
+					style={{ width: widthInterpolated || 0, backgroundColor: color, height }}
 				/>
 			</View>
 

@@ -74,7 +74,7 @@ export default function ReferAndEarnScreen() {
 			</View>
 
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className="bg-[#f0f0f0] flex-1 p-4">
+				<View className="bg-[#f0f0f0] flex-1 p-4 min-h-[88vh]">
 					{/**
                     |--------------------------------------------------
                     | ...

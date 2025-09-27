@@ -3,11 +3,13 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import dayjs from 'dayjs';
 import * as ImagePicker from 'expo-image-picker';
 import { useRoute } from '@react-navigation/native';
 import { Image, Linking, Pressable, ScrollView, View } from 'react-native';
+import Svg, { ClipPath, Defs, G, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 /**
  |--------------------------------------------------
@@ -21,8 +23,8 @@ import { User } from '@/interfaces/user.interface';
 import Container from '@/src/components/Container';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
+import { useUploadProfileImage } from '@/services/user.services';
 import DataRepresentation from '@/src/components/DataRepresentation';
-import Svg, { ClipPath, Defs, G, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 export default function ProfileSettingsScreen() {
 	/**
@@ -32,8 +34,8 @@ export default function ProfileSettingsScreen() {
     */
 	const route = useRoute();
 	const { user } = route.params as { user: User };
-	const [uploading, setUploading] = React.useState(false);
-	const [imageUri, setImageUri] = React.useState<string | null>(null);
+	const { mutate, isPending } = useUploadProfileImage();
+	const [imageUri, setImageUri] = React.useState<string | null>(user.profileImage || null);
 
 	const handlePickImage = async () => {
 		/**
@@ -75,6 +77,13 @@ export default function ProfileSettingsScreen() {
         */
 		const asset = result.assets[0];
 		setImageUri(asset.uri);
+
+		/**
+		|--------------------------------------------------
+		| ..
+		|--------------------------------------------------
+		*/
+		mutate({ imageUri: asset.uri });
 	};
 
 	/**
@@ -122,7 +131,9 @@ export default function ProfileSettingsScreen() {
     */
 	return (
 		<ScreenWrapper usePadding={false}>
-			<HeaderWrapper title="Account Settings" center />
+			<View className="px-4">
+				<HeaderWrapper title="Account Settings" center />
+			</View>
 
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/**
@@ -130,9 +141,14 @@ export default function ProfileSettingsScreen() {
                 | ...
                 |--------------------------------------------------
                 */}
-				<View className="bg-[#f0f0f0] flex-1 p-4">
+				<View
+					className={clsx(
+						'bg-[#f0f0f0] flex-1 p-4 min-h-[90vh]',
+						isPending ? 'pointer-events-none opacity-55' : ''
+					)}
+				>
 					<View className="size-[118px] relative rounded-full flex-row justify-center items-center bg-[#F7F7F7] self-center mt-6 mb-8">
-						<Pressable onPress={handlePickImage} className="absolute bottom-2 right-2">
+						<Pressable onPress={handlePickImage} className="absolute bottom-2 right-2 z-30">
 							<Svg width="18" height="18" viewBox="0 0 18 18" fill="none">
 								<Rect
 									x="0.0609741"
@@ -273,7 +289,9 @@ export default function ProfileSettingsScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="rounded-lg">
-						<MPText>{user?.mail?.email}</MPText>
+						<MPText className="text-sm" weight="medium">
+							{user?.mail?.email}
+						</MPText>
 					</Container>
 
 					{/**

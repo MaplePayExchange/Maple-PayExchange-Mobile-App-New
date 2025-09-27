@@ -141,7 +141,7 @@ export default function OnboardingScreen() {
 			renderItem={({ item, index }) => {
 				return (
 					<ImageBackground source={item.image} className="flex-1 h-full" style={{ width, flex: 1 }}>
-						<SafeAreaView className="z-20">
+						<SafeAreaView className="z-20 mt-4">
 							{/**
 							|--------------------------------------------------
 							| Indicator
@@ -173,10 +173,10 @@ export default function OnboardingScreen() {
 							intensity={20}
 							tint="systemUltraThinMaterialDark"
 							className="mt-auto h-[318px] z-20"
-							style={{ paddingBottom: insets.bottom }}
+							style={{ paddingBottom: insets.bottom + 6 }}
 						>
-							<SafeAreaView>
-								<View className="p-6">
+							<SafeAreaView edges={{ bottom: 'maximum' }}>
+								<View className="p-6 pb-8">
 									{/**
 									|--------------------------------------------------
 									| Title

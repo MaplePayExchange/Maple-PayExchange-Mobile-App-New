@@ -134,8 +134,11 @@ export default function ExchangeFundsFeedbackScreen() {
                 | ...
                 |--------------------------------------------------
                 */}
-				<MPButton useGradientBg className="self-center mt-3" onPress={handleDownload}>
-					<Pressable className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center">
+				<MPButton useGradientBg className="self-center mt-3">
+					<Pressable
+						onPress={handleDownload}
+						className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center"
+					>
 						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 							Download Receipt
 						</MPText>

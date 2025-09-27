@@ -17,8 +17,9 @@ import { View, Pressable, ScrollView, RefreshControl } from 'react-native';
 import MPText from '@/src/components/MPText';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
-import { useGetNotifications } from '@/services/user.services';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
+import { useGetNotifications, useMarkNotificationAsRead } from '@/services/user.services';
+import clsx from 'clsx';
 
 export default function NotificationScreen() {
 	const queryClient = useQueryClient();
@@ -28,6 +29,7 @@ export default function NotificationScreen() {
     | Api calls
     |--------------------------------------------------
     */
+	const { mutate, isPending: isReading } = useMarkNotificationAsRead();
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isLoading } = useGetNotifications({
 		limit: 20,
 	});
@@ -47,8 +49,8 @@ export default function NotificationScreen() {
             | First row
             |--------------------------------------------------
             */}
-			<View className="">
-				<Pressable className="ml-auto">
+			<View className={clsx('mb-3', notifications.length === 0 ? '!hidden' : '')}>
+				<Pressable className="ml-auto" onPress={() => mutate({})}>
 					<MPText weight="semibold" className="text-xs text-[#FF6A00]">
 						Mark all as read
 					</MPText>
@@ -87,10 +89,11 @@ export default function NotificationScreen() {
 				}}
 			>
 				<View className="gap-6">
-					{(!isLoading || !isPending || !isFetchingNextPage) &&
+					{(!isLoading || !isPending || !isFetchingNextPage || !isReading) &&
 						notifications?.map((notification) => (
 							<Pressable
 								key={(notification as any)?._id}
+								onPress={() => mutate({ id: (notification as any)?._id })}
 								className="flex-row items-start border-[0.5px] border-[#EEEEEE] rounded-2xl p-4"
 							>
 								{/**
@@ -136,7 +139,7 @@ export default function NotificationScreen() {
                     | Loading
                     |--------------------------------------------------
                     */}
-					{(isLoading || isPending || isFetchingNextPage) && (
+					{(isLoading || isPending || isFetchingNextPage || isReading) && (
 						<CustomRefreshControl refreshing={isLoading || isPending || isFetchingNextPage} />
 					)}
 
@@ -145,7 +148,7 @@ export default function NotificationScreen() {
 					| If there are no more notifications
 					|--------------------------------------------------
 					*/}
-					{(!hasNextPage || !isFetchingNextPage || !isLoading || !isPending) && (
+					{(!hasNextPage || !isFetchingNextPage || !isLoading || !isPending || !isReading) && (
 						<MPText weight="medium" className="text-sm self-center text-[#FF6A00]">
 							No more notifications
 						</MPText>
