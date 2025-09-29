@@ -84,6 +84,7 @@ export default function SendNGNScreen() {
     |--------------------------------------------------
     */
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
+	const [showBanksModal, setShowBanksModal] = React.useState<boolean>(false);
 	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
 	const [selectedBank, setSelectedBank] = React.useState<{
 		id: number;
@@ -197,7 +198,7 @@ export default function SendNGNScreen() {
                 | See our rates
                 |--------------------------------------------------
                 */}
-				<Pressable>
+				<Pressable className="!hidden">
 					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 						See our rates
 					</MPText>
@@ -234,21 +235,23 @@ export default function SendNGNScreen() {
                             |--------------------------------------------------
                             */}
 							<SelectField
-								isLoading={isLoading}
 								label="Bank name"
+								isLoading={isLoading}
 								wrapperClassName="mt-4"
 								closeOnModalClick={false}
+								isVisible={showBanksModal}
+								setIsVisible={setShowBanksModal}
 								/**
                                 |--------------------------------------------------
                                 | Trigger
                                 |--------------------------------------------------
                                 */
 								triggerChildren={
-									<View>
+									<Pressable onPress={() => setShowBanksModal(true)}>
 										<MPText weight="medium" className="text-base text-[#484848]">
 											{selectedBank?.name || 'Select bank'}
 										</MPText>
-									</View>
+									</Pressable>
 								}
 								/**
                                 |--------------------------------------------------
@@ -294,8 +297,8 @@ export default function SendNGNScreen() {
                                         |--------------------------------------------------
                                         */}
 										<ScrollView
-											showsVerticalScrollIndicator={false}
 											contentContainerClassName="gap-3"
+											showsVerticalScrollIndicator={false}
 										>
 											{data?.banks
 												?.filter((item) =>
@@ -317,6 +320,8 @@ export default function SendNGNScreen() {
 																id: item.id.toString(),
 																code: item.code.toString(),
 															});
+
+															setShowBanksModal((prevState) => !prevState);
 														}}
 														className={clsx(
 															'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
@@ -397,11 +402,19 @@ export default function SendNGNScreen() {
 							<Checkbox
 								className="mt-5"
 								checked={saveAsBeneficiary}
-								label="Save as beneficiary"
 								onChange={(value) => {
 									setSaveAsBeneficiary(value);
 									setValue('saveAsBeneficiary', value);
 								}}
+								component={
+									<MPText
+										weight="medium"
+										className="text-[#767676] text-xs w-[88%] mt-[2px]"
+										style={{ lineHeight: 15 }}
+									>
+										Save as beneficiary
+									</MPText>
+								}
 							/>
 
 							{/**

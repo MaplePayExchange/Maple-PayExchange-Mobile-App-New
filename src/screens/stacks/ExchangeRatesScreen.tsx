@@ -96,10 +96,10 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="flex-row gap-2 px-4 mt-6">
+						<View className="flex-row gap-2 px-4 mt-6 items-center">
 							<MPText className="text-sm">🇨🇦</MPText>
 							<MPText className="text-sm">CAD</MPText>
-							<View className={clsx(Platform.OS === 'android' ? '-translate-y-[2px]' : '')}>
+							<View>
 								<RedRightArrowIcon color="#000000" />
 							</View>
 							<MPText className="text-sm">🇳🇬</MPText>
@@ -143,22 +143,21 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="flex-row gap-2 px-4 mt-6">
+						<View className="flex-row gap-2 px-4 mt-6 items-center">
 							<MPText className="text-sm">🇳🇬</MPText>
 							<MPText className="text-sm">NGN</MPText>
-							<View className={clsx(Platform.OS === 'android' ? '-translate-y-[2px]' : '')}>
+							<View>
 								<RedRightArrowIcon color="#000000" />
 							</View>
 							<MPText className="text-sm">🇨🇦</MPText>
 							<MPText className="text-sm">CAD</MPText>
 
 							<MPText className="ml-auto text-sm" weight="semibold">
-								1 NGN ={' '}
-								{(1 / Number(CADRate?.rate || 0)).toLocaleString(undefined, {
-									maximumFractionDigits: 5,
-									minimumFractionDigits: 4,
+								{Number(CADRate?.rate || 0).toLocaleString(undefined, {
+									maximumFractionDigits: 2,
+									minimumFractionDigits: 2,
 								})}{' '}
-								CAD
+								NGN = 1 CAD
 							</MPText>
 						</View>
 					</Container>

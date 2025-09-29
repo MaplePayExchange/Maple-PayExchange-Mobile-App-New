@@ -89,7 +89,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 							{(transaction.type === 'Outgoing' || transaction.type === 'Incoming') && (
 								<DataRepresentation
 									label="Sender details:"
-									value={transaction?.senderAccountName || transaction?.customerName || 'Owner'}
+									value={transaction?.senderAccountName || transaction?.customerName || '--'}
 								/>
 							)}
 
@@ -102,7 +102,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 								{transaction.type === 'FundSwap' && (
 									<DataRepresentation
 										label="Withdrawal from:"
-										value={`${transaction?.sourceCurrency} wallet` || 'Owner'}
+										value={`${transaction?.sourceCurrency} wallet` || '--'}
 									/>
 								)}
 
@@ -131,7 +131,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 								{transaction.type === 'FundSwap' && (
 									<DataRepresentation
 										label="Destination wallet:"
-										value={`${transaction?.destinationCurrency} wallet` || 'Owner'}
+										value={`${transaction?.destinationCurrency} wallet` || '--'}
 									/>
 								)}
 
@@ -147,7 +147,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 											transaction?.destinationAmount?.toLocaleString(undefined, {
 												maximumFractionDigits: 2,
 												minimumFractionDigits: 2,
-											}) || '50,000'
+											}) || '0.00'
 										}`}
 									/>
 								)}
@@ -161,7 +161,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 							{transaction.type === 'Outgoing' && (
 								<DataRepresentation
 									label="Recipient details:"
-									value={transaction?.receiverAccountName || 'Reciever'}
+									value={transaction?.receiverAccountName || '--'}
 								/>
 							)}
 							{transaction.type === 'Outgoing' && (
@@ -171,7 +171,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 										transaction?.amountSent?.toLocaleString(undefined, {
 											maximumFractionDigits: 2,
 											minimumFractionDigits: 2,
-										}) || '50,000'
+										}) || '0.00'
 									}`}
 								/>
 							)}
@@ -222,10 +222,11 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 									label="Transaction date:"
 									value={
 										transaction?.createdAt
-											? dayjs(transaction.createdAt).format('DD MMM YYYY, hh:mm AA')
+											? dayjs(transaction.createdAt).format('DD MMM YYYY, hh:mm A')
 											: '--'
 									}
 								/>
+
 								{/**
 								|--------------------------------------------------
 								| Transaction status

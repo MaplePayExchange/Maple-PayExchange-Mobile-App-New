@@ -127,7 +127,7 @@ export default function SendFundsBeneficiaryScreen() {
             |--------------------------------------------------
             */}
 			<ScrollView>
-				<View>
+				<View className='gap-6'>
 					{data?.items?.map((beneficiary) => (
 						<Pressable
 							key={beneficiary?._id}

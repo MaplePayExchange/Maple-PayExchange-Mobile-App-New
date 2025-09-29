@@ -90,4 +90,12 @@ export interface User {
 	pinResetExpires?: Date;
 	pinResetOTP?: string;
 	referrals?: { reference: string; createdAt: Date }[];
+	pushToken?: string;
+	notificationSettings: {
+		rateAlerts: boolean;
+		loginAlerts: boolean;
+		promotionAlerts: boolean;
+		transactionAlerts: boolean;
+		inAppNotifications: boolean;
+	};
 }

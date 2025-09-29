@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "858939704621",
+    "project_id": "maple-803ba",
+    "storage_bucket": "maple-803ba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858939704621:android:ae7ed8ba1368b7ad6d7fa4",
+        "android_client_info": {
+          "package_name": "com.mpexchange.mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLEHKeK2-vcN03Jf3a-mx2I93GtH1EUQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

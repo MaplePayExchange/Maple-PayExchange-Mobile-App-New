@@ -36,6 +36,7 @@ import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
 import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
+import usePushNotifications from '@/src/hooks/useGetPushToken';
 
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 
@@ -54,6 +55,7 @@ export default function LoginScreen() {
 	|--------------------------------------------------
 	*/
 	const { mutate, isPending } = useLogin();
+	const pustToken = usePushNotifications();
 	const { authenticate } = useBiometricAuth();
 	const { setBiometricsInfo, biometricsInfo } = useUserStore();
 
@@ -82,6 +84,7 @@ export default function LoginScreen() {
 			brand: response?.brand,
 			password: data.password,
 			osName: response?.osName,
+			pushToken: pustToken as any,
 			deviceId: deviceId as string,
 			osVersion: response?.osVersion,
 			deviceType: response?.deviceType,
@@ -120,6 +123,7 @@ export default function LoginScreen() {
 			os: response?.osName,
 			brand: response?.brand,
 			osName: response?.osName,
+			pushToken: pustToken as any,
 			deviceId: deviceId as string,
 			osVersion: response?.osVersion,
 			deviceType: response?.deviceType,

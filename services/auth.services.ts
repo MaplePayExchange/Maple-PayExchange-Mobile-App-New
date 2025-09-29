@@ -137,14 +137,11 @@ export const useRequestOtp = (step: CurrentStep) => {
 			| Updating the user store
 			|--------------------------------------------------
 			*/
-			useUserStore.setState((state) => ({
-				verificationData: {
-					...state.verificationData,
-					email: data?.email || data?.record?.email,
-					sessionId: data?.sessionId || data?.record?.sessionId,
-					phoneNumber: data?.phoneNumber || data?.record?.phoneNumber,
-				},
-			}));
+			useUserStore.getState().setVerificationData({
+				email: data?.email || data?.record?.email,
+				sessionId: data?.sessionId || data?.record?.sessionId,
+				phoneNumber: data?.phoneNumber || data?.record?.phoneNumber,
+			});
 
 			if (data.record?.isPhoneVerified === true && step === 'phone') {
 				navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
@@ -209,14 +206,9 @@ export const useVerifyOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
-			useUserStore.setState((state) => ({
-				verificationData: {
-					...state.verificationData,
-					currentStep: step,
-					email: data?.email,
-					sessionId: data?.sessionId,
-				},
-			}));
+			useUserStore
+				.getState()
+				.setVerificationData({ currentStep: step, email: data?.email, sessionId: data?.sessionId });
 
 			if (step === 'email') navigation.navigate(ROUTE_NAMES.CREATE_USER);
 			if (step === 'phone') navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
@@ -300,6 +292,7 @@ export const useLogin = () => {
 			email: string;
 			password: string;
 			deviceId: string;
+			pushToken?: string;
 			os: string | undefined;
 			brand: string | undefined;
 			osName: string | undefined;
@@ -315,6 +308,7 @@ export const useLogin = () => {
         */
 		mutationFn: async (payload) => {
 			console.log(payload);
+			if (payload.pushToken === null) delete payload.pushToken;
 			const response = await axiosInstance.post('/auth/login', payload);
 			return response.data;
 		},
@@ -325,16 +319,15 @@ export const useLogin = () => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
-			useUserStore.setState((state) => ({
-				userData: {
-					user: data?.user,
-					token_type: data?.token_type,
-					access_token: data?.access_token,
-					refresh_token: data?.refresh_token,
-				},
-
-				isLoggedIn: true,
-			}));
+			useUserStore.getState().setUserData({
+				user: data?.user,
+				token_type: data?.token_type,
+				access_token: data?.access_token,
+				refresh_token: data?.refresh_token,
+			});
+			useUserStore.getState().setIsLoggedIn(true);
+			useUserStore.getState().setIsRegistered(true);
+			useUserStore.getState().setCompleteOnboarding(true);
 		},
 
 		/**

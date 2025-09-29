@@ -57,6 +57,7 @@ interface UserState {
 	isRegistered: boolean;
 	showBiometricsModal: boolean;
 	selectedWallet: Wallet | null;
+	hasCompletedOnboarding: boolean;
 	userData: LoginResponse | undefined;
 	biometricsInfo: BiometricsData | null;
 	notificationSettings: NotificationsSettings;
@@ -72,6 +73,7 @@ interface UserState {
 	setIsRegistered: (value: boolean) => void;
 	setSelectedWallet: (wallet: Wallet) => void;
 	setBiometricsModal: (value: boolean) => void;
+	setCompleteOnboarding: (value: boolean) => void;
 	setUserData: (data: LoginResponse | undefined) => void;
 	setBiometricsInfo: (data: BiometricsData | null) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
@@ -99,6 +101,7 @@ export const useUserStore = create<UserState>()(
 			biometricsInfo: null,
 			showBiometricsModal: false,
 			verificationData: undefined,
+			hasCompletedOnboarding: false,
 			notificationSettings: {
 				rateAlerts: false,
 				loginAlerts: false,
@@ -118,6 +121,7 @@ export const useUserStore = create<UserState>()(
 			setBiometricsInfo: (data) => set({ biometricsInfo: data }),
 			setSelectedWallet: (value) => set({ selectedWallet: value }),
 			setBiometricsModal: (value) => set({ showBiometricsModal: value }),
+			setCompleteOnboarding: (value) => set({ hasCompletedOnboarding: value }),
 
 			/**
 			|--------------------------------------------------

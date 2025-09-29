@@ -26,6 +26,7 @@ import { Wallet } from '@/interfaces/wallet.interface';
 import { useVerifyInteracTransfer } from '@/services/user.services';
 
 interface Props {
+	interacEmail: string;
 	onDismiss?: () => void;
 	showFundWalletModal: boolean;
 	selectedWallet: Wallet | null;
@@ -34,6 +35,7 @@ interface Props {
 }
 export default function FundWalletModal({
 	onDismiss,
+	interacEmail,
 	selectedWallet,
 	showFundWalletModal,
 	setShowFundWalletModal,
@@ -197,7 +199,7 @@ export default function FundWalletModal({
 									style={{ lineHeight: 18 }}
 									className="text-sm flex-1 text-[#767676]"
 								>
-									Make sure you are sending money from your verified interac address
+									Make sure you are sending money from your verified interac address ({interacEmail})
 								</MPText>
 							</View>
 

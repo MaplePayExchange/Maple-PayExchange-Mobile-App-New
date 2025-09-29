@@ -16,6 +16,7 @@ import * as Linking from 'expo-linking';
 import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import ToastManager from 'toastify-react-native';
+import * as Notifications from 'expo-notifications';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -31,6 +32,21 @@ import RootNavigation from './src/screens/navigation/RootNavigation';
 const queryClient = new QueryClient();
 
 export default function App() {
+	/**
+	|--------------------------------------------------
+	| Tell Expo how to handle incoming notifications
+	| when the app is foregrounded
+	|--------------------------------------------------
+	*/
+	Notifications.setNotificationHandler({
+		handleNotification: async () =>
+			({
+				shouldShowAlert: true,
+				shouldPlaySound: true,
+				shouldSetBadge: false,
+			}) as any,
+	});
+
 	/**
     |--------------------------------------------------
     | Fonts
@@ -49,16 +65,38 @@ export default function App() {
 	};
 
 	React.useEffect(() => {
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
 		const subscription = Linking.addEventListener('url', ({ url }) => {
 			console.log('App opened with URL:', url);
 		});
 
 		/**
 		|--------------------------------------------------
-		| Clean up
+		| ...
 		|--------------------------------------------------
 		*/
-		return () => subscription.remove();
+		const subscriptionReceived = Notifications.addNotificationReceivedListener((notification) => {
+			console.log('Notification received:', notification);
+		});
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		const subscriptionResponse = Notifications.addNotificationResponseReceivedListener((response) => {
+			console.log('Notification clicked:', response);
+		});
+
+		return () => {
+			subscription.remove();
+			subscriptionReceived.remove();
+			subscriptionResponse.remove();
+		};
 	}, []);
 
 	/**

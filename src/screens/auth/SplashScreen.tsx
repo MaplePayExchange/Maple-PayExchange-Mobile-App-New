@@ -42,7 +42,7 @@ export default function SplashScreen() {
 	| Store
 	|--------------------------------------------------
 	*/
-	const { isRegistered, verificationData } = useUserStore();
+	const { isRegistered, verificationData, hasCompletedOnboarding } = useUserStore();
 	console.log(isRegistered, 'isRegistered');
 
 	/**
@@ -51,7 +51,11 @@ export default function SplashScreen() {
 	|--------------------------------------------------
 	*/
 	navigation.addListener('focus', () => {
-		console.log(verificationData);
+		if (hasCompletedOnboarding) {
+			navigation.navigate(ROUTE_NAMES.LOGIN, {});
+			return;
+		}
+
 		/**
 		|--------------------------------------------------
 		| Navigates to the next screen from here

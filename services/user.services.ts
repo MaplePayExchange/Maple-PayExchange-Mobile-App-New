@@ -24,6 +24,7 @@ import {
 import axiosInstance from '@/lib/axiosInstance';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
+import { useUserStore } from '@/zustand/userStore';
 
 interface NotificationResponse {
 	notifications: INotification[];
@@ -247,7 +248,6 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
-			console.log(payload, ':send.payload');
 			const response = await axiosInstance.post('/wallet/wallet-to-interac', payload);
 
 			/**
@@ -272,9 +272,9 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		|--------------------------------------------------
 		*/
 		onSuccess: (data) => {
-			console.log(data);
 			navigation.navigate(ROUTE_NAMES.SEND_FUNDS_FEEDBACK);
-			queryClient.invalidateQueries({ queryKey: ['user_beneficiaries', 'maple_user_data'] });
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+			queryClient.invalidateQueries({ queryKey: ['user_beneficiaries'] });
 			utils.successNotificationHanlder('Interac!', 'Transaction request completed successfully');
 		},
 
@@ -285,7 +285,6 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		*/
 		onError: (error: any) => {
 			onError?.();
-			console.log(error.response.data);
 			utils.errorHandler(error, 'Error sending CAD!');
 		},
 	});
@@ -354,6 +353,7 @@ export const useSendWalletToBank = (onError: () => void) => {
 			console.log(data);
 			onError?.();
 			navigation.navigate(ROUTE_NAMES.SEND_FUNDS_FEEDBACK);
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 			queryClient.invalidateQueries({ queryKey: ['user_beneficiaries'] });
 			utils.successNotificationHanlder('Fiat!', 'Transaction request completed successfully');
 		},
@@ -495,8 +495,6 @@ export const useGetBeneficiaries = () => {
 			const response = await axiosInstance.get('/beneficiaries');
 			return response.data;
 		},
-
-		staleTime: 100_000_000_000_000,
 	});
 };
 
@@ -759,6 +757,68 @@ export const useMarkNotificationAsRead = () => {
 		onSuccess: (data) => {
 			console.log(data);
 			queryClient.invalidateQueries({ queryKey: ['user_notifications'] });
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			console.log(error.response.data);
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Upload profile image
+|--------------------------------------------------
+*/
+export const useUpdateProfile = () => {
+	/**
+	|--------------------------------------------------
+	| Query client from Tanstack
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	return useMutation<
+		{ message: string; data: any },
+		Error,
+		{
+			rateAlerts: boolean;
+			loginAlerts: boolean;
+			promotionAlerts: boolean;
+			transactionAlerts: boolean;
+			inAppNotifications: boolean;
+		}
+	>({
+		/**
+		|--------------------------------------------------
+		| mutation
+		|--------------------------------------------------
+		*/
+		mutationFn: async (payload) => {
+			/**
+			|--------------------------------------------------
+			| Send request
+			|--------------------------------------------------
+			*/
+			const url = '/users/profile';
+			const response = await axiosInstance.patch(url, payload);
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data);
+			useUserStore.getState().setNotificationSettings(data?.data as any);
+			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 		},
 
 		/**

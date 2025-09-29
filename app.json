@@ -1,88 +1,90 @@
 {
-  "expo": {
-    "name": "Maple",
-    "slug": "maple-mobile-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/maple_logo.png",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mpexchange.mobileapp",
-      "associatedDomains": [
-        "applinks:maple-server-new.vercel.app/"
-      ],
-      "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
-        "NSLocationAlwaysUsageDescription": "This app uses your location to send you notifications based on your location.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
-        "NSFaceIDUsageDescription": "This app uses Face ID and Touch ID to verify the user's identity and protect sensitive data",
-        "NSCameraUsageDescription": "This app uses the camera to scan documents",
-        "ITSAppUsesNonExemptEncryption": false
-      },
-      "appleTeamId": "C277859SL5"
-    },
-    "android": {
-      "permissions": [
-        "CAMERA"
-      ],
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/maple_logo.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.mpexchange.mobileapp",
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "maple-server-new.vercel.app",
-              "pathPrefix": "/auth/callback"
-            }
-          ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
-        }
-      ]
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/maple_logo.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/maple_logo.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
-      "expo-font"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "d2815f1f-8342-4688-a511-14df1e7499e1"
-      }
-    },
-    "splash": {
-      "image": "./assets/images/splash.jpg",
-      "resizeMode": "cover",
-      "backgroundColor": "#FFFFFF"
-    },
-    "owner": "mpexchange"
-  }
+	"expo": {
+		"name": "Maple",
+		"slug": "maple-mobile-app",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/maple_logo.png",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.mpexchange.mobileapp",
+			"associatedDomains": ["applinks:maple-server-new.vercel.app/"],
+			"infoPlist": {
+				"NSLocationWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
+				"NSLocationAlwaysUsageDescription": "This app uses your location to send you notifications based on your location.",
+				"NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
+				"NSFaceIDUsageDescription": "This app uses Face ID and Touch ID to verify the user's identity and protect sensitive data",
+				"NSCameraUsageDescription": "This app uses the camera to scan documents",
+				"ITSAppUsesNonExemptEncryption": false
+			},
+			"appleTeamId": "C277859SL5"
+		},
+		"android": {
+			"permissions": ["CAMERA"],
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/maple_logo.png",
+				"backgroundColor": "#ffffff"
+			},
+			"edgeToEdgeEnabled": true,
+			"package": "com.mpexchange.mobileapp",
+			"googleServicesFile": "./google-services.json",
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": true,
+					"data": [
+						{
+							"scheme": "https",
+							"host": "maple-server-new.vercel.app",
+							"pathPrefix": "/auth/callback"
+						}
+					],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			]
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./assets/images/maple_logo.png"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./assets/images/maple_logo.png",
+					"imageWidth": 200,
+					"resizeMode": "contain",
+					"backgroundColor": "#ffffff"
+				}
+			],
+			"expo-font",
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"extraMavenRepos": ["https://maven.google.com"]
+					}
+				}
+			]
+		],
+		"experiments": {
+			"typedRoutes": true
+		},
+		"extra": {
+			"router": {},
+			"eas": {
+				"projectId": "d2815f1f-8342-4688-a511-14df1e7499e1"
+			}
+		},
+		"splash": {
+			"image": "./assets/images/splash.jpg",
+			"resizeMode": "cover",
+			"backgroundColor": "#FFFFFF"
+		},
+		"owner": "mpexchange"
+	}
 }

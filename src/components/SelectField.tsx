@@ -20,18 +20,22 @@ interface Props {
 	label?: string;
 	disabled?: boolean;
 	isLoading?: boolean;
+	isVisible?: boolean;
 	wrapperClassName?: string;
 	triggerClassName?: string;
 	closeOnModalClick?: boolean;
 	onSelect?: (value: any) => void;
 	triggerChildren?: React.ReactNode;
 	contentChildren?: React.ReactNode;
+	setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SelectField({
 	label,
 	disabled,
+	isVisible,
 	isLoading,
+	setIsVisible,
 	triggerChildren,
 	triggerClassName,
 	contentChildren,
@@ -43,7 +47,16 @@ export default function SelectField({
     | States
     |--------------------------------------------------
     */
-	const [showModal, setShowModal] = React.useState<boolean>(false);
+	const [showModal, setShowModal] = React.useState<boolean>(isVisible || false);
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	React.useEffect(() => {
+		if (isVisible !== undefined) setShowModal(isVisible);
+	}, [isVisible]);
 
 	/**
     |--------------------------------------------------
@@ -71,7 +84,10 @@ export default function SelectField({
             |--------------------------------------------------
             */}
 			<Pressable
-				onPress={() => setShowModal(true)}
+				onPress={() => {
+					if (setIsVisible) setIsVisible(true);
+					else setShowModal(true);
+				}}
 				className={clsx(
 					'bg-[#F7F7F7] rounded-[8px] w-full justify-between items-center flex-row h-[42px] px-4',
 					triggerClassName,
@@ -130,11 +146,14 @@ export default function SelectField({
             | Modal for selection
             |--------------------------------------------------
             */}
-			<Modal transparent visible={showModal} animationType="slide">
+			<Modal transparent visible={isVisible || showModal} animationType="slide">
 				<Pressable
 					className="flex-1 bg-black/10"
 					onPress={() => {
-						if (closeOnModalClick) setShowModal(false);
+						if (closeOnModalClick) {
+							setShowModal(false);
+							setIsVisible?.(false);
+						}
 					}}
 				>
 					<View className="bg-white min-h-[200px] max-h-[80%] rounded-3xl p-5 mt-auto">
@@ -147,6 +166,7 @@ export default function SelectField({
 							className="ml-auto absolute right-4 top-4 z-30"
 							onPress={() => {
 								setShowModal(false);
+								setIsVisible?.(false);
 							}}
 						>
 							<CloseIcon />

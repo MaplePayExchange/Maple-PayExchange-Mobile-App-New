@@ -446,6 +446,7 @@ export default function DashboardScreen() {
 							onDismiss={handleDismissAllModals}
 							showFundWalletModal={showFundWalletModal}
 							setShowFundWalletModal={setShowFundWalletModal}
+							interacEmail={data?.user?.mail?.email as string}
 							setShowCurrencyConverModal={setShowCurrencyConvertModal}
 						/>
 

@@ -11,6 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 | Custom imports
 |--------------------------------------------------
 */
+import LoginScreen from '../../auth/LoginScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import ProfileScreen from '../../stacks/ProfileScreen';
 import ResetPinScreen from '../../stacks/ResetPinScreen';
@@ -19,10 +20,10 @@ import ReferAndEarnScreen from '../../stacks/ReferAndEarnScreen';
 import ExchangeRatesScreen from '../../stacks/ExchangeRatesScreen';
 import ChangePasswordScreen from '../../stacks/ChangePasswordScreen';
 import TransactionLimitScreen from '../../stacks/TransactionLimitScreen';
+import DeviceAndSessionScreen from '../../stacks/DeviceAndSessionScreen';
 import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
 import NotificationsSettingsScreen from '../../stacks/NotificationsSettingsScreen';
 import ReferralTermsAndConditionsScreen from '../../stacks/ReferralTermsAndConditionsScreen';
-import DeviceAndSessionScreen from '../../stacks/DeviceAndSessionScreen';
 
 /**
 |--------------------------------------------------
@@ -38,6 +39,7 @@ const Stack = createStackNavigator();
 */
 const _ROUTES = [
 	{ name: ROUTE_NAMES.PROFILE, component: ProfileScreen },
+	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.RESET_PIN, component: ResetPinScreen },
 	{ name: ROUTE_NAMES.REFER_AND_EARN, component: ReferAndEarnScreen },
 	{ name: ROUTE_NAMES.EXCHANGE_RATE, component: ExchangeRatesScreen },

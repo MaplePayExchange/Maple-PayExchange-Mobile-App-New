@@ -4,7 +4,8 @@
 |--------------------------------------------------
 */
 import clsx from 'clsx';
-import React, { useDebugValue } from 'react';
+import React from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, ScrollView, View } from 'react-native';
 import { Svg, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
@@ -23,7 +24,6 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
 import { useGetUserInformation } from '@/services/auth.services';
-import { MaterialIcons } from '@expo/vector-icons';
 
 export default function ProfileScreen() {
 	/**
@@ -67,7 +67,7 @@ export default function ProfileScreen() {
 			|--------------------------------------------------
 			*/
 			case 'Notifications':
-				navigation.navigate(ROUTE_NAMES.NOTIFICATIONS_SETTINGS as never);
+				navigation.navigate(...([ROUTE_NAMES.NOTIFICATIONS_SETTINGS, data] as never));
 				break;
 
 			/**
@@ -175,7 +175,7 @@ export default function ProfileScreen() {
     */
 	return (
 		<ScreenWrapper usePadding={false} className={clsx(isLoading ? 'opacity-45 pointer-events-none' : '')}>
-			<View className='px-4'>
+			<View className="px-4">
 				<HeaderWrapper title="Account Settings" center />
 			</View>
 

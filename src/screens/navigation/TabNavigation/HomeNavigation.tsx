@@ -11,6 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 | Custom imports
 |--------------------------------------------------
 */
+import LoginScreen from '../../auth/LoginScreen';
 import AmountScreen from '../../stacks/AmountScreen';
 import SendNGNScreen from '../../stacks/SendNGNScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
@@ -39,6 +40,7 @@ const Stack = createStackNavigator();
 */
 const _ROUTES = [
 	{ name: 'DashboardScreen', component: DashboardScreen },
+	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.KYC_STEPS, component: KysStepsScreen },
 	{ name: ROUTE_NAMES.AMOUNT_SCREEN, component: AmountScreen },
 	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },

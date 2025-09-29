@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Svg, Path, Rect } from 'react-native-svg';
@@ -19,7 +20,6 @@ import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
 import { useGetNotifications, useMarkNotificationAsRead } from '@/services/user.services';
-import clsx from 'clsx';
 
 export default function NotificationScreen() {
 	const queryClient = useQueryClient();

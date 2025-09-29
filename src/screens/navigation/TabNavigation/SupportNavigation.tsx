@@ -11,6 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 | Custom imports
 |--------------------------------------------------
 */
+import LoginScreen from '../../auth/LoginScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import SupportScreen from '../../stacks/SupportScreen';
 import SupportDetailsScreen from '../../stacks/SupportDetailsScreen';
@@ -29,6 +30,7 @@ const Stack = createStackNavigator();
 */
 const _ROUTES = [
 	{ name: ROUTE_NAMES.SUPPORT, component: SupportScreen },
+	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.SUPPORT_DETAILS_SCREEN, component: SupportDetailsScreen },
 ];
 

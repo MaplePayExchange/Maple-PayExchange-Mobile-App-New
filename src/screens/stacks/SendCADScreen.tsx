@@ -89,6 +89,7 @@ export default function SendCADScreen() {
     | States
     |--------------------------------------------------
     */
+	const [showModal, setShowModal] = React.useState<boolean>(false);
 	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
 	const [selectedQuestion, setSelectedQuestion] = React.useState<string | null>(null);
 
@@ -152,7 +153,7 @@ export default function SendCADScreen() {
                 | See our rates
                 |--------------------------------------------------
                 */}
-				<Pressable>
+				<Pressable className="!hidden">
 					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 						See our rates
 					</MPText>
@@ -252,8 +253,10 @@ export default function SendCADScreen() {
                             |--------------------------------------------------
                             */}
 							<SelectField
+								isVisible={showModal}
 								wrapperClassName="mt-4"
 								label="Security question"
+								setIsVisible={setShowModal}
 								/**
                                 |--------------------------------------------------
                                 | Trigger
@@ -301,6 +304,7 @@ export default function SendCADScreen() {
 													onPress={() => {
 														setSelectedQuestion(item.text);
 														setValue('securityQuestion', item.text);
+														setShowModal((prevState) => !prevState);
 													}}
 													className={clsx(
 														'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
@@ -347,11 +351,19 @@ export default function SendCADScreen() {
 							<Checkbox
 								className="mt-6"
 								checked={saveAsBeneficiary}
-								label="Save as beneficiary"
 								onChange={(value) => {
 									setSaveAsBeneficiary(value);
 									setValue('saveAsBeneficiary', value);
 								}}
+								component={
+									<MPText
+										weight="medium"
+										className="text-[#767676] text-xs w-[88%] mt-[2px]"
+										style={{ lineHeight: 15 }}
+									>
+										Save as beneficiary
+									</MPText>
+								}
 							/>
 
 							{/**

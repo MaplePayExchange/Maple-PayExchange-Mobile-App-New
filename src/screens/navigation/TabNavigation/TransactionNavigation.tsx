@@ -11,6 +11,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 | Custom imports
 |--------------------------------------------------
 */
+import LoginScreen from '../../auth/LoginScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import TransactionScreen from '../../stacks/TransactionScreen';
 
@@ -26,7 +27,10 @@ const Stack = createStackNavigator();
 | Routes
 |--------------------------------------------------
 */
-const _ROUTES = [{ name: ROUTE_NAMES.TRANSACTIONS_SCREEN, component: TransactionScreen }];
+const _ROUTES = [
+	{ name: ROUTE_NAMES.TRANSACTIONS_SCREEN, component: TransactionScreen },
+	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
+];
 
 export default function TransactionNavigation() {
 	/**

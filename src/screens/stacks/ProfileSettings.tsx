@@ -225,6 +225,8 @@ export default function ProfileSettingsScreen() {
 							label="Date of Birth"
 							value={dayjs(user.birthDate).format('MMM DD, YYYY')}
 						/>
+						<DataRepresentation label="Country" value={user?.country} />
+						<DataRepresentation label="Address" value={user?.street || '- -'} />
 					</Container>
 
 					{/**
