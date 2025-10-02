@@ -127,7 +127,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -177,7 +177,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -227,7 +227,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -320,7 +320,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -370,7 +370,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -420,7 +420,7 @@ export default function TransactionLimitScreen() {
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									{Icons.limitIcon}
+									<View className=''>{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">

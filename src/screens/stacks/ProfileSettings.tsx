@@ -86,6 +86,8 @@ export default function ProfileSettingsScreen() {
 		mutate({ imageUri: asset.uri });
 	};
 
+	console.log(user?.street);
+
 	/**
     |--------------------------------------------------
     | ...

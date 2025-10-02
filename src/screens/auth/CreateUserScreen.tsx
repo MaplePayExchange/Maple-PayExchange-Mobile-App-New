@@ -18,7 +18,6 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Calendar } from 'react-native-calendars';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -34,13 +33,13 @@ import { useUserStore } from '@/zustand/userStore';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import InputField from '@/src/components/InputField';
+import CalendarModal from '@/src/components/Calendar';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useCreateUser } from '@/services/auth.services';
 import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@/assets/svgs';
-import utils from '@/lib/utils';
-import CalendarModal from '@/src/components/Calendar';
+import AutocompleteExample from '@/src/components/PlacesAutoComplete';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -81,10 +80,11 @@ export default function CreateUserScreen() {
 	*/
 	const {
 		control,
+		setValue,
 		handleSubmit,
 		formState: { isValid },
 	} = useForm({
-		defaultValues: { firstName: '', lastName: '', middleName: '', referral: '', password: '' },
+		defaultValues: { firstName: '', lastName: '', middleName: '', referral: '', password: '', address: '' },
 	});
 
 	/**
@@ -102,6 +102,7 @@ export default function CreateUserScreen() {
 
 		let payload: any = {
 			deviceId: deviceId,
+			address: data?.address,
 			password: data?.password,
 			birthDate: birthDate as string,
 			lastName: data?.lastName.trim(),
@@ -173,7 +174,7 @@ export default function CreateUserScreen() {
 								onPress={() => setShowCountriesModal(true)}
 								className="h-[42px] bg-[#1018280D] justify-between rounded-[12px] flex-row items-center px-3"
 							>
-								<MPText className="text-[#767676] text-sm">
+								<MPText className="text-[#767676]" weight="medium">
 									{selectedCountry?.name || 'Choose country of residence'}
 								</MPText>
 
@@ -257,6 +258,29 @@ export default function CreateUserScreen() {
 								</Modal>
 							</TouchableOpacity>
 
+							{/**
+							|--------------------------------------------------
+							| Address
+							|--------------------------------------------------
+							*/}
+							<View className="mt-6">
+								<MPText weight="medium" className="text-sm">
+									Address
+								</MPText>
+
+								{/**
+								|--------------------------------------------------
+								| Address
+								|--------------------------------------------------
+								*/}
+								<AutocompleteExample
+									onSelect={(value) => {
+										console.log(value);
+										setValue('address', value);
+									}}
+								/>
+							</View>
+
 							<View className="gap-6 flex-1 mt-6">
 								{/**
 								|--------------------------------------------------
@@ -331,7 +355,7 @@ export default function CreateUserScreen() {
 										onPress={() => setShowCalendarModal(true)}
 										className="h-[42px] bg-[#1018280D] justify-between rounded-[12px] flex-row items-center px-3"
 									>
-										<MPText className="text-[#484848] text-sm">
+										<MPText className="text-[#484848]" weight="medium">
 											{birthDate?.toString() || ''}
 										</MPText>
 

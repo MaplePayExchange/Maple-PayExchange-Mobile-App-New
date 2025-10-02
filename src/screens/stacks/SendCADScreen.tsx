@@ -356,13 +356,18 @@ export default function SendCADScreen() {
 									setValue('saveAsBeneficiary', value);
 								}}
 								component={
-									<MPText
-										weight="medium"
-										className="text-[#767676] text-xs w-[88%] mt-[2px]"
-										style={{ lineHeight: 15 }}
+									<View
+										style={{ marginTop: 2 }}
+										className={clsx(Platform.OS === 'android' ? '' : 'mt-[2px]')}
 									>
-										Save as beneficiary
-									</MPText>
+										<MPText
+											weight="medium"
+											className="text-[#767676] text-xs w-[88%]"
+											style={{ lineHeight: 15 }}
+										>
+											Save as beneficiary
+										</MPText>
+									</View>
 								}
 							/>
 

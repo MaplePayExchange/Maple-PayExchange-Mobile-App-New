@@ -137,10 +137,10 @@ export default function InputField<T extends FieldValues>({
 									value={value}
 									onBlur={onBlur}
 									onChangeText={onChange}
-									placeholderClassName="text-sm"
 									placeholderTextColor="#767676"
-									className="max-w-[90%] min-w-[40%]"
 									key={showPassword ? 'visible' : 'hidden'}
+									placeholderClassName="text-sm font-manrope-medium"
+									className="max-w-[90%] min-w-[40%] font-manrope-medium"
 									{...rest}
 									style={{ color: 'black' }}
 									secureTextEntry={type === 'password' && !showPassword}

@@ -69,6 +69,13 @@
 						"extraMavenRepos": ["https://maven.google.com"]
 					}
 				}
+			],
+			[
+				"expo-google-places",
+				{
+					"androidApiKey": "AIzaSyDnYw_KNkeLhFI6ogKtyqfCn3v3W4mQmQs",
+					"iosApiKey": "AIzaSyDnYw_KNkeLhFI6ogKtyqfCn3v3W4mQmQs"
+				}
 			]
 		],
 		"experiments": {

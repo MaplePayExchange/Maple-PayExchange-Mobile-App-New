@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { RootStackParamList } from '@/types/route.params';
+import { ScrollView } from 'react-native-gesture-handler';
 import { View, Pressable, TextInput } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
@@ -28,7 +29,6 @@ import DataRepresentation from '@/src/components/DataRepresentation';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
 import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
-import { ScrollView } from 'react-native-gesture-handler';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -542,7 +542,18 @@ export default function AmountScreen() {
 						*/}
 						{params.transactionType === 'NGN-to-NGN' && Number(amountToSend) < 100 && (
 							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
-								You can't send less than 100
+								You can't send less than 100 Naira
+							</MPText>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| If the amount is less than 10 naira
+						|--------------------------------------------------
+						*/}
+						{params.transactionType === 'CAD-to-CAD' && Number(amountToSend) < 10 && (
+							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								You can't send less than 10 CAD
 							</MPText>
 						)}
 

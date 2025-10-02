@@ -230,7 +230,9 @@ export default function DashboardScreen() {
 					| Profile wrapper
 					|--------------------------------------------------
 					*/}
-					<View className="size-10 rounded-full justify-center items-center bg-[#909083] mr-3"></View>
+					<View className="size-10 rounded-full justify-center items-center bg-[#909083] mr-3">
+						<Image source={{ uri: data?.user.profileImage }} className="h-10 w-10 rounded-full" />
+					</View>
 					{/**
 					|--------------------------------------------------
 					| Welcome text

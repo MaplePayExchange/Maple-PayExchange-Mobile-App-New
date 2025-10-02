@@ -78,7 +78,7 @@ export default function ForgotPasswordScreen() {
 				Reset password
 			</MPText>
 			<MPText weight="medium" className="text-[#484848] text-sm leading-5">
-				Enter the email address you registered with. We’ll send you an email with reset instructions.
+				Enter the email address you registered with.
 			</MPText>
 
 			{/**

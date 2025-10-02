@@ -20,6 +20,7 @@ import { Wallet } from '@/interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { Currency, TransactionInterface } from '@/interfaces/transaction.interface';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface TransactionFilters {
 	page?: number;
@@ -69,6 +70,7 @@ interface CreateUser {
 	country: string;
 	deviceId: string;
 	password: string;
+	address?: string;
 	lastName: string;
 	firstName: string;
 	birthDate: string;
@@ -111,6 +113,7 @@ export const useRequestOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		mutationFn: async (payload) => {
+			console.log(payload);
 			const response = await axiosInstance.post('/verifications/request-otp', payload);
 			return response.data;
 		},
@@ -132,16 +135,29 @@ export const useRequestOtp = (step: CurrentStep) => {
 				utils.successNotificationHanlder('Otp!', 'Otp has been sent to your provided contact');
 			}
 
+			console.log(data);
+
 			/**
 			|--------------------------------------------------
 			| Updating the user store
 			|--------------------------------------------------
 			*/
-			useUserStore.getState().setVerificationData({
-				email: data?.email || data?.record?.email,
-				sessionId: data?.sessionId || data?.record?.sessionId,
-				phoneNumber: data?.phoneNumber || data?.record?.phoneNumber,
-			});
+
+			const { email, sessionId, phoneNumber } = {
+				email: data?.email ?? data?.record?.email,
+				sessionId: data?.sessionId ?? data?.record?.sessionId,
+				phoneNumber: data?.phoneNumber ?? data?.record?.phoneNumber,
+			};
+
+			useUserStore.setState((state) => ({
+				...state,
+				verificationData: {
+					...state.verificationData,
+					email,
+					sessionId,
+					phoneNumber,
+				},
+			}));
 
 			if (data.record?.isPhoneVerified === true && step === 'phone') {
 				navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
@@ -175,6 +191,7 @@ export const useRequestOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onError: (error: any) => {
+			console.log(error.response.data);
 			utils.errorHandler(error, 'Encountered an error processing your request.');
 		},
 	});
@@ -206,9 +223,15 @@ export const useVerifyOtp = (step: CurrentStep) => {
         |--------------------------------------------------
         */
 		onSuccess: (data) => {
-			useUserStore
-				.getState()
-				.setVerificationData({ currentStep: step, email: data?.email, sessionId: data?.sessionId });
+			useUserStore.setState((state) => ({
+				...state,
+				verificationData: {
+					...state.verificationData,
+					currentStep: step,
+					email: data?.email,
+					sessionId: data?.sessionId,
+				},
+			}));
 
 			if (step === 'email') navigation.navigate(ROUTE_NAMES.CREATE_USER);
 			if (step === 'phone') navigation.navigate(ROUTE_NAMES.EMAIL_VERIFICATION);
@@ -318,16 +341,18 @@ export const useLogin = () => {
         | If api call is successful
         |--------------------------------------------------
         */
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			useUserStore.getState().setUserData({
 				user: data?.user,
 				token_type: data?.token_type,
 				access_token: data?.access_token,
 				refresh_token: data?.refresh_token,
 			});
-			useUserStore.getState().setIsLoggedIn(true);
 			useUserStore.getState().setIsRegistered(true);
 			useUserStore.getState().setCompleteOnboarding(true);
+
+			await AsyncStorage.setItem('lastBackgroundTime', Date.now().toString());
+			useUserStore.getState().setIsLoggedIn(true);
 		},
 
 		/**

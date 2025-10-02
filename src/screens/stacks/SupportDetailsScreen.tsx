@@ -5,7 +5,7 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { Linking, Pressable, ScrollView, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 /**
@@ -36,6 +36,44 @@ export default function SupportDetailsScreen() {
 	*/
 	const supportData = router.params;
 	const [selectedFeedback, setSelectedFeedback] = React.useState<'yes' | 'no' | null>(null);
+
+	/**
+	|--------------------------------------------------
+	| Handle open whatsApp
+	|--------------------------------------------------
+	*/
+	const handleOpenWhatsApp = () => {
+		/**
+		|--------------------------------------------------
+		| Phone to initiate chat with
+		|--------------------------------------------------
+		*/
+		const phone = '+16475760680';
+
+		/**
+		|--------------------------------------------------
+		| Message to prompt with
+		|--------------------------------------------------
+		*/
+		const message = 'Hello, I need support with my:';
+
+		/**
+		|--------------------------------------------------
+		| WhatsApp url
+		|--------------------------------------------------
+		*/
+		const url = `whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}`;
+
+		Linking.openURL(url).catch(() => {
+			/**
+			|--------------------------------------------------
+			| If WhatsApp is not installed, fall back to web
+			| WhatsApp
+			|--------------------------------------------------
+			*/
+			Linking.openURL(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`);
+		});
+	};
 
 	/**
     |--------------------------------------------------
@@ -192,6 +230,18 @@ export default function SupportDetailsScreen() {
 							</MPText>
 						</MPButton>
 					</View>
+					{/**
+					|--------------------------------------------------
+					| Live agent
+					|--------------------------------------------------
+					*/}
+					{selectedFeedback === 'no' && (
+						<Pressable onPress={handleOpenWhatsApp} className="mt-4">
+							<MPText weight="medium" className="text-sm text-[#EE0979]">
+								Connect to live agent
+							</MPText>
+						</Pressable>
+					)}
 				</View>
 			</ScrollView>
 		</ScreenWrapper>

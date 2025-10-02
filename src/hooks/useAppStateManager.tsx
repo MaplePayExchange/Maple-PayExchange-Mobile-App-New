@@ -6,23 +6,15 @@
 
 import React from 'react';
 import { useUserStore } from '@/zustand/userStore';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppState, AppStateStatus, TouchableWithoutFeedback } from 'react-native';
-
-/**
-|--------------------------------------------------
-| Custom imports
-|--------------------------------------------------
-*/
-import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 /**
 |--------------------------------------------------
 | 1 minute in ms
 |--------------------------------------------------
 */
-const INACTIVITY_LIMIT = 90 * 1000;
+const INACTIVITY_LIMIT = 120 * 1000;
 
 export default function AppStateManager({ children }: { children: React.ReactNode }) {
 	/**
@@ -30,33 +22,8 @@ export default function AppStateManager({ children }: { children: React.ReactNod
     | States
     |--------------------------------------------------
     */
-	const navigation = useNavigation();
 	const inactivityTimer = React.useRef<NodeJS.Timeout | null>(null);
 	const appState = React.useRef<AppStateStatus>(AppState.currentState);
-
-	/**
-    |--------------------------------------------------
-    | Helper: reset inactivity timer
-    |--------------------------------------------------
-    */
-	const resetInactivityTimer = async () => {
-		if (inactivityTimer.current) clearTimeout(inactivityTimer.current);
-
-		/**
-        |--------------------------------------------------
-        | ...
-        |--------------------------------------------------
-        */
-		inactivityTimer.current = setTimeout(async () => {
-			/**
-            |--------------------------------------------------
-            | Logout after idle for 1 minute
-            |--------------------------------------------------
-            */
-			useUserStore.getState().setIsLoggedIn(false);
-			navigation.navigate(...([ROUTE_NAMES.LOGIN, {}] as never));
-		}, INACTIVITY_LIMIT);
-	};
 
 	/**
     |--------------------------------------------------
@@ -64,13 +31,6 @@ export default function AppStateManager({ children }: { children: React.ReactNod
     |--------------------------------------------------
     */
 	React.useEffect(() => {
-		/**
-        |--------------------------------------------------
-        | Start inactivity timer immediately when app loads
-        |--------------------------------------------------
-        */
-		resetInactivityTimer();
-
 		/**
         |--------------------------------------------------
         | Listen for app state changes (background /
@@ -108,7 +68,6 @@ export default function AppStateManager({ children }: { children: React.ReactNod
                         |--------------------------------------------------
                         */
 						useUserStore.getState().setIsLoggedIn(false);
-						navigation.navigate(...([ROUTE_NAMES.LOGIN, {}] as never));
 					}
 				}
 			}
@@ -132,9 +91,5 @@ export default function AppStateManager({ children }: { children: React.ReactNod
     | Rendered Wrapper
     |--------------------------------------------------
     */
-	return (
-		<TouchableWithoutFeedback onPress={resetInactivityTimer} onLongPress={resetInactivityTimer}>
-			{children}
-		</TouchableWithoutFeedback>
-	);
+	return <TouchableWithoutFeedback>{children}</TouchableWithoutFeedback>;
 }
