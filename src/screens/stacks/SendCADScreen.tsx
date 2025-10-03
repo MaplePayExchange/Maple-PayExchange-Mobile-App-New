@@ -168,7 +168,7 @@ export default function SendCADScreen() {
 			<KeyboardAvoidingView
 				className="flex-1"
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 80}
 			>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<ScrollView
@@ -362,7 +362,7 @@ export default function SendCADScreen() {
 									>
 										<MPText
 											weight="medium"
-											className="text-[#767676] text-xs w-[88%]"
+											className="text-[#767676] text-xs"
 											style={{ lineHeight: 15 }}
 										>
 											Save as beneficiary

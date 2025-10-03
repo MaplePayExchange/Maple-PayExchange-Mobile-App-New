@@ -213,7 +213,7 @@ export default function SendNGNScreen() {
 			<KeyboardAvoidingView
 				className="flex-1"
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 80}
 			>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<ScrollView
@@ -409,7 +409,7 @@ export default function SendNGNScreen() {
 								component={
 									<MPText
 										weight="medium"
-										className="text-[#767676] text-xs w-[88%] mt-[2px]"
+										className="text-[#767676] text-xs mt-[2px]"
 										style={{ lineHeight: 15 }}
 									>
 										Save as beneficiary

@@ -30,7 +30,7 @@ export default function ResetPasswordScreen() {
     |--------------------------------------------------
     */
 	const route = useRoute<ResetPasswordScreenProps>();
-	const { email } = route.params;
+	const params = route?.params;
 
 	/**
     |--------------------------------------------------
@@ -66,10 +66,10 @@ export default function ResetPasswordScreen() {
     */
 	const onSubmit = (data: any) => {
 		mutate({
-			email: email,
-			token: data.token,
-			newPassword: data.newPassword,
-			confirmPassword: data.newPassword,
+			token: data?.token,
+			email: params?.email,
+			newPassword: data?.newPassword,
+			confirmPassword: data?.confirmNewPassword,
 		});
 	};
 

@@ -19,11 +19,10 @@ import { useUserStore } from '@/zustand/userStore';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
 
 interface Props {
-	visible: boolean;
 	setVisible: () => void;
 }
 
-export default function BiometricsModal({ visible, setVisible }: Props) {
+export default function BiometricsModal({ setVisible }: Props) {
 	/**
     |--------------------------------------------------
     | States
@@ -41,10 +40,29 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 		const response = await authenticate();
 
 		if (response.success) {
-			setBiometricsInfo({ ...biometricsInfo, isTurnedOn: !biometricsInfo?.isTurnedOn || false });
+			setBiometricsInfo({
+				...biometricsInfo,
+				isTurnedOn: !biometricsInfo?.isTurnedOn || false,
+			});
 			setBiometricsModal(false);
 		}
 	};
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	React.useEffect(() => {
+		const handleBiometricsPrompt = () => {
+			if (biometricsInfo?.hasPromptedUser) setBiometricsModal(false);
+			else setBiometricsModal(true);
+		};
+
+		handleBiometricsPrompt();
+	}, []);
+
+	console.log(biometricsInfo);
 
 	/**
     |--------------------------------------------------
@@ -152,7 +170,7 @@ export default function BiometricsModal({ visible, setVisible }: Props) {
 							className="w-[45%] max-w-[45%]"
 							onPress={() => {
 								setBiometricsModal(false);
-								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true });
+								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true, hasPromptedUser: true });
 							}}
 						>
 							<MPText weight="semibold" className="text-sm text-white">

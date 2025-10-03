@@ -442,6 +442,22 @@ export const useResetPassword = (email: string) => {
 		*/
 		mutationFn: async (payload) => {
 			const response = await axiosInstance.post('/auth/reset-password', payload);
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			useUserStore.setState((state) => ({
+				...state,
+				biometricsInfo: { ...state.biometricsInfo, password: payload.newPassword },
+			}));
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
 			return response.data;
 		},
 
@@ -451,8 +467,7 @@ export const useResetPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onSuccess: (data) => {
-			console.log(data, 'reset password');
-			navigation.navigate(ROUTE_NAMES.LOGIN, { email });
+			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		},
 
 		/**
@@ -461,7 +476,7 @@ export const useResetPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			utils.errorHandler(error, 'Encountered an error sending otp');
+			utils?.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});
 };

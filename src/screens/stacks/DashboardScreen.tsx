@@ -58,7 +58,7 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	const queryClient = useQueryClient();
-	const { data, isPending, isLoading } = useGetUserInformation();
+	const { data, isPending, isLoading, error } = useGetUserInformation();
 	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
 	const [showWalletModal, setShowWalletModal] = React.useState<boolean>(false);
 	const [showWalletDetails, setShowWalletDetails] = React.useState<boolean>(false);
@@ -82,6 +82,8 @@ export default function DashboardScreen() {
 	} = useUserStore();
 	const isVerified = data?.user.isVerified;
 	const isBvnVerified = data?.user?.isBvnVerified;
+
+	console.log(error);
 
 	/**
 	|--------------------------------------------------
@@ -178,7 +180,6 @@ export default function DashboardScreen() {
 		setShowWalletDetails(false);
 		setShowSendFundsModal(false);
 		setShowFundWalletModal(false);
-		// setShowCurrencyConvertModal(false);
 	};
 
 	/**
@@ -589,7 +590,6 @@ export default function DashboardScreen() {
 						setBiometricsModal(!showBiometricsModal);
 						setBiometricsInfo({ ...biometricsInfo, hasPromptedUser: true });
 					}}
-					visible={biometricsInfo?.hasPromptedUser ? showBiometricsModal : true}
 				/>
 
 				{/**

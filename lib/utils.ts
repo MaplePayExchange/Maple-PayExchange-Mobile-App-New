@@ -56,7 +56,7 @@ class Utils {
 	|--------------------------------------------------
 	*/
 	errorHandler = (error: any, message?: string) => {
-		const errorMessage = error?.response?.data?.error || error.response?.data?.message || message;
+		const errorMessage = error?.response?.data?.error || error?.response?.data?.message || message;
 
 		/**
 		|--------------------------------------------------

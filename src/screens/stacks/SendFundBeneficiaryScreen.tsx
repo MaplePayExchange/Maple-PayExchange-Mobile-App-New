@@ -21,6 +21,7 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { RootStackParamList } from '@/types/route.params';
 import { useGetBeneficiaries } from '@/services/user.services';
 import { BankAccount } from '@/interfaces/transaction.interface';
+import CustomRefreshControl from '@/src/components/CustomRefreshControl';
 
 type SendFundsBeneficiaryProps = NativeStackNavigationProp<RootStackParamList, 'SendFundsBeneficiaryScreen'>;
 export default function SendFundsBeneficiaryScreen() {
@@ -37,8 +38,6 @@ export default function SendFundsBeneficiaryScreen() {
     |--------------------------------------------------
     */
 	const { data, isLoading } = useGetBeneficiaries();
-
-	console.log(data);
 
 	/**
     |--------------------------------------------------
@@ -122,12 +121,19 @@ export default function SendFundsBeneficiaryScreen() {
 			</View>
 
 			{/**
+			|--------------------------------------------------
+			| IsPending
+			|--------------------------------------------------
+			*/}
+			{isLoading && <CustomRefreshControl refreshing={isLoading} />}
+
+			{/**
             |--------------------------------------------------
             |
             |--------------------------------------------------
             */}
 			<ScrollView>
-				<View className='gap-6'>
+				<View className="gap-6">
 					{data?.items?.map((beneficiary) => (
 						<Pressable
 							key={beneficiary?._id}

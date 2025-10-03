@@ -483,7 +483,24 @@ export const useVerifyBankAccount = () => {
 |--------------------------------------------------
 */
 export const useGetBeneficiaries = () => {
+	/**
+	|--------------------------------------------------
+	| Query client
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
 	return useQuery<any, Error, { items: BankAccount[] }>({
+		/**
+		|--------------------------------------------------
+		| Query key
+		|--------------------------------------------------
+		*/
 		queryKey: ['user_beneficiaries'],
 
 		/**
@@ -494,6 +511,15 @@ export const useGetBeneficiaries = () => {
 		queryFn: async () => {
 			const response = await axiosInstance.get('/beneficiaries');
 			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		initialData: () => {
+			return queryClient.getQueryData(['user_beneficiaries']);
 		},
 	});
 };

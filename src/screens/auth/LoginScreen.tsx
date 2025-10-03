@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
-import utils from '@/lib/utils';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -25,6 +24,7 @@ import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 | Custom imports
 |--------------------------------------------------
 */
+import utils from '@/lib/utils';
 import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
 import { useUserStore } from '@/zustand/userStore';
@@ -57,7 +57,7 @@ export default function LoginScreen() {
 	const { mutate, isPending } = useLogin();
 	const pustToken = usePushNotifications();
 	const { authenticate } = useBiometricAuth();
-	const { setBiometricsInfo, biometricsInfo } = useUserStore();
+	const { setBiometricsInfo, biometricsInfo, isLoggedIn, userData } = useUserStore();
 
 	/**
 	|--------------------------------------------------
@@ -132,6 +132,17 @@ export default function LoginScreen() {
 			password: biometricsInfo?.password as string,
 		});
 	};
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	navigation.addListener('focus', () => {
+		if (isLoggedIn === false && userData === undefined) {
+			utils.errorHandler(undefined, 'Your session has expired, for security reasons, please sign in again.');
+		}
+	});
 
 	/**
     |--------------------------------------------------

@@ -427,11 +427,35 @@ export default function AmountScreen() {
 				|--------------------------------------------------
 				*/}
 				<Container>
+					{/**
+					|--------------------------------------------------
+					| Main text
+					|--------------------------------------------------
+					*/}
 					<MPText weight="semibold" className="text-base text-center">
-						Send to a bank account
+						{params.transactionType === 'CAD-to-CAD'
+							? 'Send to your interac email'
+							: params.transactionType === 'SWAP' && sourceDestination.source === 'CAD'
+								? 'Send to your NGN wallet'
+								: params.transactionType === 'SWAP' && sourceDestination.source === 'NGN'
+									? 'Send to your CAD wallet'
+									: 'Send to bank account'}
 					</MPText>
+
+					{/**
+					|--------------------------------------------------
+					| Subtext
+					|--------------------------------------------------
+					*/}
 					<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
-						Enter amount to send to recipient
+						Enter amount to{' '}
+						{params.transactionType === 'CAD-to-CAD'
+							? 'send to recipient'
+							: params.transactionType === 'SWAP' && sourceDestination.source === 'CAD'
+								? 'send to your NGN wallet'
+								: params.transactionType === 'SWAP' && sourceDestination.source === 'NGN'
+									? 'send to your CAD wallet'
+									: 'send to recipient'}
 					</MPText>
 
 					{/**

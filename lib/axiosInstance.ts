@@ -10,6 +10,7 @@ import axios from 'axios';
 | Custom imports
 |--------------------------------------------------
 */
+import utils from './utils';
 import { appConfig } from '@/config/app.config';
 import { useUserStore } from '@/zustand/userStore';
 
@@ -63,6 +64,9 @@ axiosInstance.interceptors.response.use(
 		|--------------------------------------------------
 		*/
 		if (error.response && error.response.status === 401) {
+			useUserStore.setState((state) => {
+				return { ...state, isLoggedIn: false, userData: undefined };
+			});
 		}
 
 		/**

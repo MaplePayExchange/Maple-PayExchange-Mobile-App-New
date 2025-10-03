@@ -138,6 +138,33 @@ export default function ProfileScreen() {
 
 			/**
 			|--------------------------------------------------
+			| Transaction limit
+			|--------------------------------------------------
+			*/
+			case 'KYC':
+				navigation.navigate(ROUTE_NAMES.KYC_TERMS as never);
+				break;
+
+			/**
+			|--------------------------------------------------
+			| Transaction limit
+			|--------------------------------------------------
+			*/
+			case 'Privacy Policy':
+				navigation.navigate(ROUTE_NAMES.PRIVACY_POLICY as never);
+				break;
+
+			/**
+			|--------------------------------------------------
+			| Transaction limit
+			|--------------------------------------------------
+			*/
+			case 'Terms and Conditions':
+				navigation.navigate(ROUTE_NAMES.TERMS_AND_CONDITIONS as never);
+				break;
+
+			/**
+			|--------------------------------------------------
 			| ... Default
 			|--------------------------------------------------
 			*/
@@ -353,9 +380,54 @@ export default function ProfileScreen() {
 						</Pressable>
 					</Container>
 
+					<MPText className="mt-4 text-xs">Policies</MPText>
+					<Container className="bg-white mt-4 gap-4">
+						{/**
+						|--------------------------------------------------
+						| Terms
+						|--------------------------------------------------
+						*/}
+						<Pressable
+							className="flex-row items-center gap-4"
+							onPress={() => handleNavigation('Terms and Conditions')}
+						>
+							{IconTypes[Object.keys(IconTypes)[13] as keyof typeof IconTypes]}
+							<MPText className="text-sm" weight="semibold">
+								{Object.keys(IconTypes)[13]}
+							</MPText>
+						</Pressable>
+
+						{/**
+						|--------------------------------------------------
+						| Privacy
+						|--------------------------------------------------
+						*/}
+						<Pressable
+							className="flex-row items-center gap-4"
+							onPress={() => handleNavigation('Privacy Policy')}
+						>
+							{IconTypes[Object.keys(IconTypes)[14] as keyof typeof IconTypes]}
+							<MPText className="text-sm" weight="semibold">
+								{Object.keys(IconTypes)[14]}
+							</MPText>
+						</Pressable>
+
+						{/**
+						|--------------------------------------------------
+						| KYC
+						|--------------------------------------------------
+						*/}
+						<Pressable className="flex-row items-center gap-4" onPress={() => handleNavigation('KYC')}>
+							{IconTypes[Object.keys(IconTypes)[15] as keyof typeof IconTypes]}
+							<MPText className="text-sm" weight="semibold">
+								{Object.keys(IconTypes)[15]}
+							</MPText>
+						</Pressable>
+					</Container>
+
 					{/**
 					|--------------------------------------------------
-					| Finance
+					| Security setting
 					|--------------------------------------------------
 					*/}
 					<MPText className="mt-4 text-xs">Security Settings</MPText>
@@ -783,6 +855,39 @@ const IconTypes = {
 	Logout: (
 		<View className="h-[40px] w-[40px] rounded-lg justify-center items-center bg-[#FCD9D7]">
 			<MaterialIcons name="logout" size={20} color="#B45309" />
+		</View>
+	),
+
+	/**
+	|--------------------------------------------------
+	| T&Cs
+	|--------------------------------------------------
+	*/
+	'Terms and Conditions': (
+		<View className="h-[40px] w-[40px] rounded-lg justify-center items-center bg-[#ECF7FF]">
+			<MaterialIcons name="file-present" size={20} color="#2b2b2a" />
+		</View>
+	),
+
+	/**
+	|--------------------------------------------------
+	| Privacy
+	|--------------------------------------------------
+	*/
+	'Privacy Policy': (
+		<View className="h-[40px] w-[40px] rounded-lg justify-center items-center bg-[#DCFCE7]">
+			<MaterialIcons name="privacy-tip" size={20} color="#58584c" />
+		</View>
+	),
+
+	/**
+	|--------------------------------------------------
+	| KYC
+	|--------------------------------------------------
+	*/
+	KYC: (
+		<View className="h-[40px] w-[40px] rounded-lg justify-center items-center bg-[#F4F0FC]">
+			<MaterialIcons name="diversity-3" size={20} color="#a075f8" />
 		</View>
 	),
 };
