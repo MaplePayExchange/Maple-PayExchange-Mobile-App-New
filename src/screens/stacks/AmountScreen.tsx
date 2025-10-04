@@ -242,6 +242,7 @@ export default function AmountScreen() {
 				lastName: params.lastName as string,
 				email: params.interacEmail as string,
 				firstName: params.firstName as string,
+				description: params?.narration || '--',
 				saveBeneficiary: params.saveAsBeneficiary,
 				amount: Number(amountToSend.replaceAll(',', '')),
 				securityQuestion: params.securityQuestion as string,
@@ -434,7 +435,7 @@ export default function AmountScreen() {
 					*/}
 					<MPText weight="semibold" className="text-base text-center">
 						{params.transactionType === 'CAD-to-CAD'
-							? 'Send to your interac email'
+							? 'Send to an interac email'
 							: params.transactionType === 'SWAP' && sourceDestination.source === 'CAD'
 								? 'Send to your NGN wallet'
 								: params.transactionType === 'SWAP' && sourceDestination.source === 'NGN'

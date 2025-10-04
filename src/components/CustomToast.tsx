@@ -61,8 +61,8 @@ export default function CustomToast({ text1, text2, hide, theme }: CustomToastPr
             |--------------------------------------------------
             */}
 			<View style={{ flex: 1, paddingHorizontal: 6 }}>
-				{text1 && <Text style={{ fontSize: 13, color: '#333', marginTop: 2 }}>{text1}</Text>}
-				{text2 && <Text style={{ fontSize: 13, color: '#333', marginTop: 2 }}>{text2}</Text>}
+				{text1 && <Text style={{ fontSize: 13, color: '#333', marginTop: 2 }}>{JSON.stringify(text1)}</Text>}
+				{text2 && <Text style={{ fontSize: 13, color: '#333', marginTop: 2 }}>{text2.toString()}</Text>}
 			</View>
 
 			{/**

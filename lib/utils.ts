@@ -56,7 +56,21 @@ class Utils {
 	|--------------------------------------------------
 	*/
 	errorHandler = (error: any, message?: string) => {
-		const errorMessage = error?.response?.data?.error || error?.response?.data?.message || message;
+		let errorMessage = error?.response?.data?.error || error?.response?.data?.message || message;
+
+		/**
+		|--------------------------------------------------
+		| Handle array of errors
+		|--------------------------------------------------
+		*/
+		if (Array.isArray(errorMessage)) {
+			errorMessage = errorMessage
+				?.slice(0, 1)
+				.map((err: any) => err?.message || String(err))
+				.join('\n');
+		} else if (typeof errorMessage === 'object') {
+			errorMessage = errorMessage?.message || JSON.stringify(errorMessage);
+		}
 
 		/**
 		|--------------------------------------------------

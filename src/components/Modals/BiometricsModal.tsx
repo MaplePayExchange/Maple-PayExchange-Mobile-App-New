@@ -42,6 +42,7 @@ export default function BiometricsModal({ setVisible }: Props) {
 		if (response.success) {
 			setBiometricsInfo({
 				...biometricsInfo,
+				hasPromptedUser: true,
 				isTurnedOn: !biometricsInfo?.isTurnedOn || false,
 			});
 			setBiometricsModal(false);
@@ -61,8 +62,6 @@ export default function BiometricsModal({ setVisible }: Props) {
 
 		handleBiometricsPrompt();
 	}, []);
-
-	console.log(biometricsInfo);
 
 	/**
     |--------------------------------------------------

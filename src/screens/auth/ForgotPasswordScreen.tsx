@@ -63,7 +63,7 @@ export default function ForgotPasswordScreen() {
     */
 	const onSubmit = (data: any) => {
 		setEmail(data.email);
-		mutate({ email: data.email });
+		mutate({ email: data.email.trim().toLowerCase() });
 	};
 
 	/**

@@ -170,51 +170,51 @@ export default function SendNGNScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
-			<HeaderWrapper useNavigation title="Send Funds" center />
+		<KeyboardAvoidingView
+			style={{ flex: 1 }}
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+		>
+			<ScreenWrapper>
+				<HeaderWrapper useNavigation title="Send Funds" center />
 
-			{/**
-            |--------------------------------------------------
-            | ...
-            |--------------------------------------------------
-            */}
-			<View className="flex-row justify-between items-center mb-10">
 				{/**
-                |--------------------------------------------------
-                | Step 1 of 2
-                |--------------------------------------------------
-                */}
-				<View>
-					<MPText weight="medium" className="text-sm text-[#767676]">
-						Step 1/2
-					</MPText>
-					<MPText weight="semibold" className="text-xs">
-						Enter recipient details
-					</MPText>
+				|--------------------------------------------------
+				| ...
+				|--------------------------------------------------
+				*/}
+				<View className="flex-row justify-between items-center mb-10">
+					{/**
+					|--------------------------------------------------
+					| Step 1 of 2
+					|--------------------------------------------------
+					*/}
+					<View>
+						<MPText weight="medium" className="text-sm text-[#767676]">
+							Step 1/2
+						</MPText>
+						<MPText weight="semibold" className="text-xs">
+							Enter recipient details
+						</MPText>
+					</View>
+
+					{/**
+					|--------------------------------------------------
+					| See our rates
+					|--------------------------------------------------
+					*/}
+					<Pressable className="!hidden">
+						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+							See our rates
+						</MPText>
+					</Pressable>
 				</View>
 
 				{/**
-                |--------------------------------------------------
-                | See our rates
-                |--------------------------------------------------
-                */}
-				<Pressable className="!hidden">
-					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
-						See our rates
-					</MPText>
-				</Pressable>
-			</View>
-
-			{/**
-            |--------------------------------------------------
-            | Form
-            |--------------------------------------------------
-            */}
-			<KeyboardAvoidingView
-				className="flex-1"
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 80}
-			>
+				|--------------------------------------------------
+				| Form
+				|--------------------------------------------------
+				*/}
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<ScrollView
 						keyboardShouldPersistTaps="handled"
@@ -435,7 +435,7 @@ export default function SendNGNScreen() {
 						</View>
 					</ScrollView>
 				</TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
-		</ScreenWrapper>
+			</ScreenWrapper>
+		</KeyboardAvoidingView>
 	);
 }

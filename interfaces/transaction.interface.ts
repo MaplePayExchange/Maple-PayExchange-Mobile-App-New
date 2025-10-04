@@ -105,10 +105,14 @@ export interface BankAccount {
 	bankName?: string;
 	bankCode?: string;
 	nickname?: string;
+	fullName?: string;
 	mapleEmail?: string;
 	accountName?: string;
-	accountNumber?: string;
+	description?: string;
 	interacEmail?: string;
+	accountNumber?: string;
+	securityQuestion?: string;
+	securityQuestionAnswer?: string;
 	type: 'Bank' | 'MapleEmail' | 'Interac';
 }
 

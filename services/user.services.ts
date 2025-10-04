@@ -259,7 +259,10 @@ export const useSendFundsToInterac = (onError: () => void) => {
 				await axiosInstance.post('/beneficiaries/create-beneficiary', {
 					type: 'Interac',
 					interacEmail: payload.email,
+					description: payload?.description,
+					securityQuestion: payload.securityQuestion,
 					fullName: `${payload.firstName} ${payload.lastName}`,
+					securityQuestionAnswer: payload.securityQuestionAnswer,
 				});
 			}
 

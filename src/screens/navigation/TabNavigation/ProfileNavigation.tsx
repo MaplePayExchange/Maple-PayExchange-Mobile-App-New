@@ -14,6 +14,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import LoginScreen from '../../auth/LoginScreen';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import ProfileScreen from '../../stacks/ProfileScreen';
+import SendCADScreen from '../../stacks/SendCADScreen';
+import SendNGNScreen from '../../stacks/SendNGNScreen';
 import ResetPinScreen from '../../stacks/ResetPinScreen';
 import KYCTermsScreen from '../../stacks/KYCTermsScreen';
 import ProfileSettingsScreen from '../../stacks/ProfileSettings';
@@ -45,6 +47,8 @@ const _ROUTES = [
 	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.RESET_PIN, component: ResetPinScreen },
 	{ name: ROUTE_NAMES.KYC_TERMS, component: KYCTermsScreen },
+	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },
+	{ name: ROUTE_NAMES.SEND_NGN_FUNDS, component: SendNGNScreen },
 	{ name: ROUTE_NAMES.REFER_AND_EARN, component: ReferAndEarnScreen },
 	{ name: ROUTE_NAMES.EXCHANGE_RATE, component: ExchangeRatesScreen },
 	{ name: ROUTE_NAMES.PRIVACY_POLICY, component: PrivacyPolicyScreen },

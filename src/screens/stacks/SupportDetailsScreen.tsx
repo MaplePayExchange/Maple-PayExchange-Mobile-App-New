@@ -35,7 +35,17 @@ export default function SupportDetailsScreen() {
 	|--------------------------------------------------
 	*/
 	const supportData = router.params;
+	const scrollViewRef = React.useRef<ScrollView>(null);
 	const [selectedFeedback, setSelectedFeedback] = React.useState<'yes' | 'no' | null>(null);
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	const handleScrollToBottom = () => {
+		scrollViewRef.current?.scrollToEnd({ animated: true });
+	};
 
 	/**
 	|--------------------------------------------------
@@ -89,7 +99,7 @@ export default function SupportDetailsScreen() {
 			| Content
 			|--------------------------------------------------
 			*/}
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
 				<View className="gap-4">
 					{supportData.map((data, index) => (
 						<View key={`${data.tag}${index}`}>
@@ -220,7 +230,11 @@ export default function SupportDetailsScreen() {
 						*/}
 						<MPButton
 							useGradientBg={selectedFeedback === 'no'}
-							onPress={() => setSelectedFeedback('no')}
+							onPress={async () => {
+								setSelectedFeedback('no');
+								await new Promise((resolve) => setTimeout(resolve, 300));
+								handleScrollToBottom();
+							}}
 							className={clsx(
 								'size-[42px] max-w-[42px] max-h-[42px] rounded-full border border-[#D0D5DD]'
 							)}

@@ -5,6 +5,7 @@
 */
 import { useUserStore } from '@/zustand/userStore';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -20,7 +21,6 @@ import { Wallet } from '@/interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
 import { Currency, TransactionInterface } from '@/interfaces/transaction.interface';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface TransactionFilters {
 	page?: number;
@@ -333,6 +333,16 @@ export const useLogin = () => {
 			console.log(payload);
 			if (payload.pushToken === null) delete payload.pushToken;
 			const response = await axiosInstance.post('/auth/login', payload);
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			useUserStore.setState((state) => ({
+				...state,
+				biometricsInfo: { ...state.biometricsInfo, password: payload.password, email: payload.email },
+			}));
 			return response.data;
 		},
 
@@ -476,6 +486,7 @@ export const useResetPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
+			console.log(error?.response?.data);
 			utils?.errorHandler(error, 'Encountered an error sending otp');
 		},
 	});

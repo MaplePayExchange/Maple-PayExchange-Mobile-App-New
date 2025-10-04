@@ -66,10 +66,10 @@ export default function ResetPasswordScreen() {
     */
 	const onSubmit = (data: any) => {
 		mutate({
-			token: data?.token,
-			email: params?.email,
-			newPassword: data?.newPassword,
-			confirmPassword: data?.confirmNewPassword,
+			token: data?.token.trim(),
+			newPassword: data?.newPassword.trim(),
+			email: params?.email.trim().toLowerCase(),
+			confirmPassword: data?.confirmNewPassword.trim(),
 		});
 	};
 

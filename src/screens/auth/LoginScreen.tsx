@@ -35,8 +35,8 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
 import { RootStackParamList } from '@/types/route.params';
-import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 import usePushNotifications from '@/src/hooks/useGetPushToken';
+import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 
@@ -79,16 +79,16 @@ export default function LoginScreen() {
 		const deviceId = await getDeviceHardwareId();
 		const response = await utils.getDeviceInfo();
 		mutate({
-			email: data.email,
 			os: response?.osName,
 			brand: response?.brand,
-			password: data.password,
 			osName: response?.osName,
 			pushToken: pustToken as any,
 			deviceId: deviceId as string,
+			password: data.password.trim(),
 			osVersion: response?.osVersion,
 			deviceType: response?.deviceType,
 			deviceName: response?.deviceName,
+			email: data.email.trim().toLowerCase(),
 		});
 		setBiometricsInfo({ ...biometricsInfo, password: data.password, email: data.email });
 	};
@@ -128,8 +128,8 @@ export default function LoginScreen() {
 			osVersion: response?.osVersion,
 			deviceType: response?.deviceType,
 			deviceName: response?.deviceName,
-			email: biometricsInfo?.email as string,
-			password: biometricsInfo?.password as string,
+			password: biometricsInfo?.password?.trim() as string,
+			email: biometricsInfo?.email?.trim().toLowerCase() as string,
 		});
 	};
 

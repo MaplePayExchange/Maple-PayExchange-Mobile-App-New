@@ -1,5 +1,5 @@
 import { FAQItem } from '@/interfaces/support.interface';
-import { BankAccount, FundSwapTransaction, TransactionInterface } from '@/interfaces/transaction.interface';
+import { BankAccount, TransactionInterface } from '@/interfaces/transaction.interface';
 
 export type RootStackParamList = {
 	Home: undefined;

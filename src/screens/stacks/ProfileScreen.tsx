@@ -380,7 +380,7 @@ export default function ProfileScreen() {
 						</Pressable>
 					</Container>
 
-					<MPText className="mt-4 text-xs">Policies</MPText>
+					<MPText className="mt-4 text-xs">Legal</MPText>
 					<Container className="bg-white mt-4 gap-4">
 						{/**
 						|--------------------------------------------------

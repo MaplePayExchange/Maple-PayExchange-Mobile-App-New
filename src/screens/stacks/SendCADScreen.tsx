@@ -15,8 +15,8 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -36,8 +36,12 @@ import { useGetSecurityQuestions } from '@/services/user.services';
 
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 
+type SendCADProps = RouteProp<RootStackParamList, 'SendCADScreen'>;
 type SendCADScreenProps = NativeStackNavigationProp<RootStackParamList, 'SendCADScreen'>;
 export default function SendCADScreen() {
+	const route = useRoute<SendCADProps>();
+	const params = route.params;
+
 	/**
 	|--------------------------------------------------
 	| Navigation
@@ -65,13 +69,13 @@ export default function SendCADScreen() {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			lastName: '',
-			narration: '',
-			firstName: '',
-			interacEmail: '',
-			securityAnswer: '',
-			securityQuestion: '',
 			saveAsBeneficiary: false,
+			narration: params?.description || '',
+			interacEmail: params?.interacEmail || '',
+			lastName: params?.fullName?.split(' ')[1] || '',
+			securityQuestion: params?.securityQuestion || '',
+			firstName: params?.fullName?.split(' ')[0] || '',
+			securityAnswer: params?.securityQuestionAnswer || '',
 		},
 	});
 
@@ -120,56 +124,62 @@ export default function SendCADScreen() {
 	};
 
 	/**
+	|--------------------------------------------------
+	| On focus
+	|--------------------------------------------------
+	*/
+	navigation.addListener('focus', () => {
+		if (params?.securityQuestion) {
+			setSelectedQuestion(params.securityQuestion);
+		}
+	});
+
+	/**
     |--------------------------------------------------
     | Rendered View
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
-			<HeaderWrapper useNavigation title="Send Funds" center />
+		<KeyboardAvoidingView
+			style={{ flex: 1 }}
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+		>
+			<ScreenWrapper>
+				<HeaderWrapper useNavigation title="Send Funds" center />
 
-			{/**
-            |--------------------------------------------------
-            | ...
-            |--------------------------------------------------
-            */}
-			<View className="flex-row justify-between items-center mb-10">
 				{/**
-                |--------------------------------------------------
-                | Step 1 of 2
-                |--------------------------------------------------
-                */}
-				<View>
-					<MPText weight="medium" className="text-sm text-[#767676]">
-						Step 1/2
-					</MPText>
-					<MPText weight="semibold" className="text-xs">
-						Enter recipient details
-					</MPText>
+				|--------------------------------------------------
+				| ...
+				|--------------------------------------------------
+				*/}
+				<View className="flex-row justify-between items-center mb-10">
+					{/**
+					|--------------------------------------------------
+					| Step 1 of 2
+					|--------------------------------------------------
+					*/}
+					<View>
+						<MPText weight="medium" className="text-sm text-[#767676]">
+							Step 1/2
+						</MPText>
+						<MPText weight="semibold" className="text-xs">
+							Enter recipient details
+						</MPText>
+					</View>
+
+					{/**
+					|--------------------------------------------------
+					| See our rates
+					|--------------------------------------------------
+					*/}
+					<Pressable className="!hidden">
+						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+							See our rates
+						</MPText>
+					</Pressable>
 				</View>
 
-				{/**
-                |--------------------------------------------------
-                | See our rates
-                |--------------------------------------------------
-                */}
-				<Pressable className="!hidden">
-					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
-						See our rates
-					</MPText>
-				</Pressable>
-			</View>
-
-			{/**
-            |--------------------------------------------------
-            | Form
-            |--------------------------------------------------
-            */}
-			<KeyboardAvoidingView
-				className="flex-1"
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 80}
-			>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<ScrollView
 						keyboardShouldPersistTaps="handled"
@@ -389,7 +399,7 @@ export default function SendCADScreen() {
 						</View>
 					</ScrollView>
 				</TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
-		</ScreenWrapper>
+			</ScreenWrapper>
+		</KeyboardAvoidingView>
 	);
 }

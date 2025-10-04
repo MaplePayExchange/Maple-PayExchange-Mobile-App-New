@@ -22,15 +22,15 @@ import { RootStackParamList } from '@/types/route.params';
 import { useGetBeneficiaries } from '@/services/user.services';
 import { BankAccount } from '@/interfaces/transaction.interface';
 import CustomRefreshControl from '@/src/components/CustomRefreshControl';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 
-type SendFundsBeneficiaryProps = NativeStackNavigationProp<RootStackParamList, 'SendFundsBeneficiaryScreen'>;
 export default function SendFundsBeneficiaryScreen() {
 	/**
     |--------------------------------------------------
     | Navigation
     |--------------------------------------------------
     */
-	const navigation = useNavigation<SendFundsBeneficiaryProps>();
+	const navigation = useNavigation();
 
 	/**
     |--------------------------------------------------
@@ -52,8 +52,10 @@ export default function SendFundsBeneficiaryScreen() {
     |--------------------------------------------------
     */
 	const handleSelectBeneficiary = (beneficiary: BankAccount) => {
-		if (beneficiary.type === 'Bank') navigation.navigate('SendNGNScreen', beneficiary);
-		if (beneficiary.type === 'Interac') navigation.navigate('SendCADScreen', beneficiary);
+		console.log(beneficiary);
+		if (beneficiary.type === 'Bank') navigation.navigate(...([ROUTE_NAMES.SEND_NGN_FUNDS, beneficiary] as never));
+		if (beneficiary.type === 'Interac')
+			navigation.navigate(...([ROUTE_NAMES.SEND_CAD_FUNDS, beneficiary] as never));
 	};
 
 	/**
