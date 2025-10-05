@@ -363,6 +363,7 @@ export const useLogin = () => {
 
 			await AsyncStorage.setItem('lastBackgroundTime', Date.now().toString());
 			useUserStore.getState().setIsLoggedIn(true);
+			useUserStore.setState((state) => ({ ...state, isSessionExpired: false }));
 		},
 
 		/**
@@ -477,6 +478,7 @@ export const useResetPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onSuccess: (data) => {
+			utils.successNotificationHanlder('Password Reset!', 'Password successfully reset, please log in');
 			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		},
 

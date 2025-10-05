@@ -38,7 +38,7 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 	|--------------------------------------------------
 	*/
 	return (
-		<View className="justify-center items-center min-h-[20px]">
+		<View className="justify-center items-center min-h-[20px] w-max">
 			<MPText
 				weight="semibold"
 				style={{ fontSize: 12 }}
@@ -46,22 +46,6 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 			>
 				{children}
 			</MPText>
-
-			{/**
-			|--------------------------------------------------
-			| Bottom bar
-			|--------------------------------------------------
-			*/}
-			{/* {focused && (
-				<View className="h-[4px] w-[50px] bg-[#EE0979] rounded-t-[6px] overflow-hidden">
-					<LinearGradient
-						end={{ x: 1, y: 0 }}
-						start={{ x: 0, y: 0 }}
-						colors={['#EE0979', '#FF6A00']}
-						style={[{ width: '100%', height: '100%' }]}
-					/>
-				</View>
-			)} */}
 		</View>
 	);
 };
@@ -94,7 +78,7 @@ export default function TabNavigation() {
 						paddingTop: 2,
 						zIndex: 99999,
 						borderWidth: 0.2,
-						paddingInline: 24,
+						paddingInline: 12,
 						borderRadius: 9999,
 						alignSelf: 'center',
 						alignItems: 'center',

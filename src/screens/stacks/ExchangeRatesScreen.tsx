@@ -5,7 +5,8 @@
 */
 import React from 'react';
 import dayjs from 'dayjs';
-import { View, ScrollView, Platform } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 
 /**
@@ -19,19 +20,33 @@ import Container from '@/src/components/Container';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { useGetRates } from '@/services/user.services';
-import clsx from 'clsx';
 
 dayjs.extend(advancedFormat);
 
 export default function ExchangeRatesScreen() {
+	const queryClient = useQueryClient();
 	/**
     |--------------------------------------------------
     | Api
     |--------------------------------------------------
     */
 	const { data: rates, isLoading } = useGetRates();
-	const NGNRate = rates?.items?.find((rate) => rate.exchange === 'NGN-TO-CAD');
-	const CADRate = rates?.items?.find((rate) => rate.exchange === 'CAD-TO-NGN');
+	const userData = queryClient.getQueryData(['maple_user_data']) as any;
+
+	console.log(userData?.user, 'user.data.rates');
+	console.log(rates);
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	const NGNRate = rates?.items?.find(
+		(rate) => rate.exchange === 'NGN-TO-CAD' && rate.userType === userData?.user?.userCategory
+	);
+	const CADRate = rates?.items?.find(
+		(rate) => rate.exchange === 'CAD-TO-NGN' && rate.userType === userData?.user?.userCategory
+	);
 
 	/**
     |--------------------------------------------------
@@ -153,7 +168,7 @@ export default function ExchangeRatesScreen() {
 							<MPText className="text-sm">CAD</MPText>
 
 							<MPText className="ml-auto text-sm" weight="semibold">
-								{Number(CADRate?.rate || 0).toLocaleString(undefined, {
+								{Number(NGNRate?.rate || 0).toLocaleString(undefined, {
 									maximumFractionDigits: 2,
 									minimumFractionDigits: 2,
 								})}{' '}

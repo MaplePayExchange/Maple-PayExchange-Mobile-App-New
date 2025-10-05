@@ -58,6 +58,7 @@ export default function InputField<T extends FieldValues>({
     | Component states
     |--------------------------------------------------
     */
+	const inputRef = React.useRef<TextInput>(null);
 	const [visible, setVisible] = React.useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
 	const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -100,8 +101,9 @@ export default function InputField<T extends FieldValues>({
 								</MPText>
 							)}
 
-							<View
+							<Pressable
 								style={{ flexDirection: 'row' }}
+								onPress={() => inputRef?.current?.focus()}
 								className={clsx(
 									'rounded-[12px] px-4 text-base bg-[#1018280D] min-h-[42px] items-center',
 									wrapperClassName
@@ -135,6 +137,7 @@ export default function InputField<T extends FieldValues>({
 								)}
 								<TextInput
 									value={value}
+									ref={inputRef}
 									onBlur={onBlur}
 									onChangeText={onChange}
 									placeholderTextColor="#767676"
@@ -204,7 +207,7 @@ export default function InputField<T extends FieldValues>({
 										</Svg>
 									</View>
 								)}
-							</View>
+							</Pressable>
 
 							{/**
                             |--------------------------------------------------

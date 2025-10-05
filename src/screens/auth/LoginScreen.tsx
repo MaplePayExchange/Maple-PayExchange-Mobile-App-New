@@ -15,7 +15,7 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
@@ -41,7 +41,11 @@ import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 
 type LoginScreenProps = NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
+type LoginProps = RouteProp<RootStackParamList, 'LoginScreen'>;
 export default function LoginScreen() {
+	const route = useRoute<LoginProps>();
+	const params = route.params;
+
 	/**
 	|--------------------------------------------------
 	| Navigation
@@ -57,7 +61,7 @@ export default function LoginScreen() {
 	const { mutate, isPending } = useLogin();
 	const pustToken = usePushNotifications();
 	const { authenticate } = useBiometricAuth();
-	const { setBiometricsInfo, biometricsInfo, isLoggedIn, userData } = useUserStore();
+	const { isRegistered, biometricsInfo, isLoggedIn, userData, isSessionExpired } = useUserStore();
 
 	/**
 	|--------------------------------------------------
@@ -90,7 +94,6 @@ export default function LoginScreen() {
 			deviceName: response?.deviceName,
 			email: data.email.trim().toLowerCase(),
 		});
-		setBiometricsInfo({ ...biometricsInfo, password: data.password, email: data.email });
 	};
 
 	/**
@@ -139,7 +142,7 @@ export default function LoginScreen() {
 	|--------------------------------------------------
 	*/
 	navigation.addListener('focus', () => {
-		if (isLoggedIn === false && userData === undefined) {
+		if (isLoggedIn === false && userData === undefined && isRegistered === true && isSessionExpired === true) {
 			utils.errorHandler(undefined, 'Your session has expired, for security reasons, please sign in again.');
 		}
 	});

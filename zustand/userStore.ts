@@ -55,6 +55,7 @@ interface UserState {
 	name: string;
 	isLoggedIn: boolean;
 	isRegistered: boolean;
+	isSessionExpired: boolean;
 	showBiometricsModal: boolean;
 	selectedWallet: Wallet | null;
 	hasCompletedOnboarding: boolean;
@@ -99,6 +100,7 @@ export const useUserStore = create<UserState>()(
 			userData: undefined,
 			selectedWallet: null,
 			biometricsInfo: null,
+			isSessionExpired: false,
 			showBiometricsModal: false,
 			verificationData: undefined,
 			hasCompletedOnboarding: false,

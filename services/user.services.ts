@@ -199,7 +199,19 @@ export const useGetBanksList = () => {
 |--------------------------------------------------
 */
 export const useGetRates = () => {
-	return useQuery<any, Error, { items: { rate: number; exchange: string; createdDate: Date; updatedDate: Date }[] }>({
+	return useQuery<
+		any,
+		Error,
+		{
+			items: {
+				rate: number;
+				exchange: string;
+				createdDate: Date;
+				updatedDate: Date;
+				userType: 'regular' | 'vip';
+			}[];
+		}
+	>({
 		/**
 		|--------------------------------------------------
 		| Key

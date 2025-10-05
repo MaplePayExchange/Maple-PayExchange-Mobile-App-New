@@ -45,8 +45,12 @@ export default function AmountScreen() {
 	|--------------------------------------------------
 	*/
 	const { data: rates } = useGetRates();
-	const NGNRate = rates?.items?.find((rate) => rate.exchange === 'NGN-TO-CAD');
-	const CADRate = rates?.items?.find((rate) => rate.exchange === 'CAD-TO-NGN');
+	const NGNRate = rates?.items?.find(
+		(rate) => rate.exchange === 'NGN-TO-CAD' && rate.userType === userData?.user?.category
+	);
+	const CADRate = rates?.items?.find(
+		(rate) => rate.exchange === 'CAD-TO-NGN' && rate.userType === userData?.user?.category
+	);
 	const { mutate: mutateExchange, isPending: isPendingExchange } = useExchangeCurrency(() =>
 		setShowTransactionPin(false)
 	);
@@ -153,7 +157,7 @@ export default function AmountScreen() {
 				rawAmount >= (NGNRate?.rate ?? 1150)) ||
 			(transactionType === 'CAD-to-CAD' && rawAmount >= 10) ||
 			(transactionType !== 'SWAP' && transactionType !== 'CAD-to-CAD' && rawAmount > 100)) &&
-		handleGetWalletBalance() > rawAmount;
+		handleGetWalletBalance() >= rawAmount;
 
 	/**
 	|--------------------------------------------------

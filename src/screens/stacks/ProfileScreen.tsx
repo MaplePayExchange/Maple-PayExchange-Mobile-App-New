@@ -134,6 +134,7 @@ export default function ProfileScreen() {
 			case 'Logout':
 				setIsLoggedIn(false);
 				setUserData(undefined);
+				navigation.navigate(...([ROUTE_NAMES.LOGIN, { from: ROUTE_NAMES.SPLASH }] as never));
 				break;
 
 			/**

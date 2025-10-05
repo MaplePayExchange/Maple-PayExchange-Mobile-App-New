@@ -52,6 +52,7 @@ export default function SplashScreen() {
 	*/
 	navigation.addListener('focus', () => {
 		if (hasCompletedOnboarding) {
+			useUserStore.setState((state) => ({ ...state, isSessionExpired: false }));
 			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 			return;
 		}
@@ -68,6 +69,7 @@ export default function SplashScreen() {
 			|--------------------------------------------------
 			*/
 			if (verificationData?.currentStep === 'email') {
+				useUserStore.setState((state) => ({ ...state, isSessionExpired: false }));
 				navigation.navigate(ROUTE_NAMES.LOGIN, {});
 				return;
 			}
@@ -98,6 +100,7 @@ export default function SplashScreen() {
 		*/
 		if (isRegistered) {
 			clearTimeout(timeout);
+			useUserStore.setState((state) => ({ ...state, isSessionExpired: false }));
 			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		}
 	});

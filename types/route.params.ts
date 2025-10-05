@@ -18,7 +18,6 @@ export type RootStackParamList = {
 	};
 	TransactionsScreen: undefined;
 	NotificationScreen?: undefined;
-	LoginScreen: { email?: string };
 	ForgotPasswordScreen: undefined;
 	BVNVerificationScreen: undefined;
 	KycStepsScreen: { email?: string };
@@ -28,6 +27,7 @@ export type RootStackParamList = {
 	SetTransactionPinScreen: undefined;
 	ResetPasswordScreen: { email: string };
 	TailorYourExperienceScreen: undefined;
+	LoginScreen: { email?: string; from?: string };
 	SendFundsFeedbackScreen?: TransactionInterface;
 	ExchangeFundsFeedbackScreen?: TransactionInterface;
 	AmountScreen: {
