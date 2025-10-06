@@ -6,6 +6,7 @@
 import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { WebView } from 'react-native-webview';
+import { useQueryClient } from '@tanstack/react-query';
 import { View, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { PermissionStatus, useCameraPermissions } from 'expo-camera';
@@ -27,6 +28,13 @@ type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycSte
 export default function KysStepsScreen() {
 	const route = useRoute();
 	const params = route.params as any;
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	const queryClient = useQueryClient();
 
 	/**
 	|--------------------------------------------------
@@ -210,6 +218,9 @@ export default function KysStepsScreen() {
 							if (event.url.startsWith(redirectUrl)) {
 								setShowBrowser(false);
 								navigation.navigate('DashboardScreen');
+								setTimeout(() => {
+									queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+								}, 1500);
 							}
 						}}
 						mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"
