@@ -65,7 +65,7 @@ axiosInstance.interceptors.response.use(
 		*/
 		if (error.response && error.response.status === 401) {
 			useUserStore.setState((state) => {
-				return { ...state, isLoggedIn: false, userData: undefined, isSessionExpired: true };
+				return { ...state, isLoggedIn: false, userData: undefined, isSessionExpired: true, isRegistered: true };
 			});
 		}
 

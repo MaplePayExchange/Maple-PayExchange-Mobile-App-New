@@ -7,10 +7,10 @@ import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { WebView } from 'react-native-webview';
 import { useQueryClient } from '@tanstack/react-query';
-import { View, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { PermissionStatus, useCameraPermissions } from 'expo-camera';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { View, Image, ScrollView, Linking, Alert, Platform } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -53,17 +53,56 @@ export default function KysStepsScreen() {
 	const [showBrowser, setShowBrowser] = React.useState<boolean>(false);
 	const redirectUrl = 'https://maple-server-new.vercel.app/auth/callback';
 
-	/**
-	|--------------------------------------------------
-	| State to determine when the browser shows up
-	|--------------------------------------------------
-	*/
 	React.useEffect(() => {
-		if (data?.veriffUrl) setShowBrowser(true);
-		if (status?.status !== PermissionStatus.GRANTED) {
-			requestPermission();
-		}
-	}, [data, status]);
+		(async () => {
+			try {
+				/**
+				|--------------------------------------------------
+				| If there’s a veriffUrl, show the browser once
+				|--------------------------------------------------
+				*/
+				if (data?.veriffUrl) setShowBrowser(true);
+				await new Promise((resolve) => setTimeout(resolve, 600));
+
+				/**
+				|--------------------------------------------------
+				| Don’t spam permission requests — only ask if not
+				| yet granted
+				|--------------------------------------------------
+				*/
+				if (status?.status === PermissionStatus.UNDETERMINED) {
+					const { status: newStatus } = await requestPermission();
+
+					/**
+					|--------------------------------------------------
+					| Handle after user response
+					|--------------------------------------------------
+					*/
+					if (newStatus !== PermissionStatus.GRANTED) {
+						Alert.alert(
+							'Camera Permission Needed',
+							'You’ll need to enable camera access in Settings to continue.',
+							[
+								{
+									text: 'Open Settings',
+									onPress: () => {
+										if (Platform.OS === 'ios') {
+											Linking.openURL('app-settings:');
+										} else {
+											Linking.openSettings();
+										}
+									},
+								},
+								{ text: 'Cancel', style: 'cancel' },
+							]
+						);
+					}
+				}
+			} catch (err) {
+				console.error('Error requesting camera permission:', err);
+			}
+		})();
+	}, [data?.veriffUrl, status]);
 
 	/**
     |--------------------------------------------------
@@ -204,23 +243,31 @@ export default function KysStepsScreen() {
 			{showBrowser && (
 				<View style={{ flex: 1 }}>
 					<WebView
-						useWebView2
+						cacheEnabled={false}
 						javaScriptEnabled={true}
 						domStorageEnabled={true}
+						cacheMode="LOAD_NO_CACHE"
 						startInLoadingState={true}
 						source={{ uri: data?.veriffUrl }}
+						allowsInlineMediaPlayback
+						mediaPlaybackRequiresUserAction={false}
+						originWhitelist={['*']}
+						mixedContentMode="always"
+						onPermissionRequest={(event: any) => {
+							console.log(event);
+							if (Platform.OS === 'android') {
+								event.grant();
+							}
+						}}
 						onNavigationStateChange={(event) => {
 							/**
-							|--------------------------------------------------
-							| Detect redirect
-							|--------------------------------------------------
-							*/
+							 |--------------------------------------------------
+							 | Detect redirect
+							 |--------------------------------------------------
+							 */
 							if (event.url.startsWith(redirectUrl)) {
 								setShowBrowser(false);
 								navigation.navigate('DashboardScreen');
-								setTimeout(() => {
-									queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
-								}, 1500);
 							}
 						}}
 						mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"

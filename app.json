@@ -1,6 +1,7 @@
 {
 	"expo": {
 		"name": "Maple",
+		"scheme": "maple",
 		"slug": "maple-mobile-app",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -10,7 +11,6 @@
 		"ios": {
 			"supportsTablet": true,
 			"bundleIdentifier": "com.mpexchange.mobileapp",
-			"associatedDomains": ["applinks:maple-server-new.vercel.app/"],
 			"infoPlist": {
 				"NSLocationWhenInUseUsageDescription": "This app uses your location to send you notifications based on your location.",
 				"NSLocationAlwaysUsageDescription": "This app uses your location to send you notifications based on your location.",
@@ -23,6 +23,9 @@
 		},
 		"android": {
 			"permissions": ["CAMERA"],
+			"webView": {
+				"implementation": "chromium"
+			},
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/maple_logo.png",
 				"backgroundColor": "#ffffff"
@@ -30,20 +33,7 @@
 			"edgeToEdgeEnabled": true,
 			"package": "com.mpexchange.mobileapp",
 			"googleServicesFile": "./google-services.json",
-			"intentFilters": [
-				{
-					"action": "VIEW",
-					"autoVerify": true,
-					"data": [
-						{
-							"scheme": "https",
-							"host": "maple-server-new.vercel.app",
-							"pathPrefix": "/auth/callback"
-						}
-					],
-					"category": ["BROWSABLE", "DEFAULT"]
-				}
-			]
+			"intentFilters": []
 		},
 		"web": {
 			"bundler": "metro",

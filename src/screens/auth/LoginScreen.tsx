@@ -142,7 +142,7 @@ export default function LoginScreen() {
 	|--------------------------------------------------
 	*/
 	navigation.addListener('focus', () => {
-		if (isLoggedIn === false && userData === undefined && isRegistered === true && isSessionExpired === true) {
+		if (isSessionExpired === true && isRegistered === true && !userData && !isLoggedIn) {
 			utils.errorHandler(undefined, 'Your session has expired, for security reasons, please sign in again.');
 		}
 	});
