@@ -83,6 +83,7 @@ export default function SendNGNScreen() {
     | States
     |--------------------------------------------------
     */
+	const searchInputRef = React.useRef<TextInput>(null);
 	const [searchQuery, setSearchQuery] = React.useState<string>('');
 	const [showBanksModal, setShowBanksModal] = React.useState<boolean>(false);
 	const [saveAsBeneficiary, setSaveAsBeneficiary] = React.useState<boolean>(false);
@@ -274,10 +275,14 @@ export default function SendNGNScreen() {
                                         | Content
                                         |--------------------------------------------------
                                         */}
-										<View className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5">
+										<Pressable
+											onPress={() => searchInputRef.current?.focus()}
+											className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5"
+										>
 											<TextInput
 												className="text-sm"
 												value={searchQuery}
+												ref={searchInputRef}
 												placeholder="Search"
 												placeholderTextColor="#484848"
 												onChangeText={(value) => setSearchQuery(value)}
@@ -288,8 +293,10 @@ export default function SendNGNScreen() {
                                             | Search icon
                                             |--------------------------------------------------
                                             */}
-											<SearchIcon />
-										</View>
+											<View className="pointer-events-none">
+												<SearchIcon />
+											</View>
+										</Pressable>
 
 										{/**
                                         |--------------------------------------------------

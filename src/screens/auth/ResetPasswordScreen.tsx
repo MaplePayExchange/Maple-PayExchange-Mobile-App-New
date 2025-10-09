@@ -57,7 +57,7 @@ export default function ResetPasswordScreen() {
 		},
 	});
 
-	const newPassword = watch('newPassword');
+	const isMatchPassword = watch('newPassword').length > 7 && watch('confirmNewPassword').length > 7;
 
 	/**
     |--------------------------------------------------
@@ -172,7 +172,8 @@ export default function ResetPasswordScreen() {
 										value: 8,
 										message: 'Password must be atleast 8 characters',
 									},
-									validate: (value: string) => value === newPassword || 'Passwords do not match',
+									validate: (value: string, formValues: Record<string, string>) =>
+										value === formValues.newPassword || 'Passwords do not match',
 								}}
 							/>
 						</View>
@@ -185,13 +186,13 @@ export default function ResetPasswordScreen() {
 						<MPButton
 							className="mt-auto"
 							isLoading={isPending}
-							useGradientBg={isValid}
+							useGradientBg={isMatchPassword}
 							onPress={handleSubmit(onSubmit)}
-							disabled={!isValid || isPending}
+							disabled={!isMatchPassword || isPending}
 						>
 							<MPText
 								weight="semibold"
-								className={clsx(isValid ? 'text-white' : 'text-[#D1D1D1] text-sm')}
+								className={clsx(isMatchPassword ? 'text-white' : 'text-[#D1D1D1] text-sm')}
 							>
 								Save password
 							</MPText>

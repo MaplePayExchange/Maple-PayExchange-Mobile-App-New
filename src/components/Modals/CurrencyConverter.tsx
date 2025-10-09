@@ -124,7 +124,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 		|--------------------------------------------------
 		*/
 		if (transactionType === 'SWAP' && infoType === 'rate') {
-			info = `${sourceDestination.source === 'NGN' ? `${NGNRate?.rate} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate} NGN`}`;
+			info = `${sourceDestination.source === 'NGN' ? `${NGNRate?.rate.toLocaleString()} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate.toLocaleString()} NGN`}`;
 		}
 
 		/**

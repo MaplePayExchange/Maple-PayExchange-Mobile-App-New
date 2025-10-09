@@ -23,6 +23,7 @@ import ScreenWrapper from '@/src/components/Wrapper';
 import { RootStackParamList } from '@/types/route.params';
 import { useStartVeriffSession } from '@/services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@/constants/app.constant';
+import { useCameraPermission } from '@/src/hooks/useCameraPermission';
 
 type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycStepsScreen'>;
 export default function KysStepsScreen() {
@@ -48,10 +49,16 @@ export default function KysStepsScreen() {
 	| States
 	|--------------------------------------------------
 	*/
-	const [status, requestPermission] = useCameraPermissions();
 	const { mutate, isPending, data } = useStartVeriffSession();
 	const [showBrowser, setShowBrowser] = React.useState<boolean>(false);
 	const redirectUrl = 'https://maple-server-new.vercel.app/auth/callback';
+
+	/**
+	|--------------------------------------------------
+	| Permissions
+	|--------------------------------------------------
+	*/
+	const ensureCameraAccess = useCameraPermission();
 
 	React.useEffect(() => {
 		(async () => {
@@ -61,48 +68,22 @@ export default function KysStepsScreen() {
 				| If there’s a veriffUrl, show the browser once
 				|--------------------------------------------------
 				*/
-				if (data?.veriffUrl) setShowBrowser(true);
+				const allowed = await ensureCameraAccess();
 				await new Promise((resolve) => setTimeout(resolve, 600));
 
 				/**
 				|--------------------------------------------------
-				| Don’t spam permission requests — only ask if not
-				| yet granted
+				| ...
 				|--------------------------------------------------
 				*/
-				if (status?.status === PermissionStatus.UNDETERMINED) {
-					const { status: newStatus } = await requestPermission();
-
-					/**
-					|--------------------------------------------------
-					| Handle after user response
-					|--------------------------------------------------
-					*/
-					if (newStatus !== PermissionStatus.GRANTED) {
-						Alert.alert(
-							'Camera Permission Needed',
-							'You’ll need to enable camera access in Settings to continue.',
-							[
-								{
-									text: 'Open Settings',
-									onPress: () => {
-										if (Platform.OS === 'ios') {
-											Linking.openURL('app-settings:');
-										} else {
-											Linking.openSettings();
-										}
-									},
-								},
-								{ text: 'Cancel', style: 'cancel' },
-							]
-						);
-					}
+				if (allowed && data?.veriffUrl) {
+					setShowBrowser(true);
 				}
 			} catch (err) {
 				console.error('Error requesting camera permission:', err);
 			}
 		})();
-	}, [data?.veriffUrl, status]);
+	}, [data?.veriffUrl]);
 
 	/**
     |--------------------------------------------------

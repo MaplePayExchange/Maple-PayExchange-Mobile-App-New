@@ -492,7 +492,7 @@ export default function FundWalletModal({
 					</View>
 
 					{selectedWallet?.currency === 'CAD' && (
-						<Pressable className="flex-row items-center justify-center gap-3 mt-6">
+						<Pressable className="flex-row items-center justify-center gap-3 mt-6 !hidden">
 							<MPText weight="semibold" className="text-[#FF6A00] text-sm">
 								How to fund via interac
 							</MPText>

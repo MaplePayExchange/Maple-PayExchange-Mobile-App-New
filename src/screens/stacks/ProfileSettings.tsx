@@ -225,7 +225,7 @@ export default function ProfileSettingsScreen() {
 						<DataRepresentation label="Email" value={user?.mail?.email} />
 						<DataRepresentation
 							label="Date of Birth"
-							value={dayjs(user.birthDate).format('MMM DD, YYYY')}
+							value={dayjs(user.birthDate?.slice(0, 10)).format('MMM DD, YYYY')}
 						/>
 						<DataRepresentation label="Country" value={user?.country} />
 						<DataRepresentation label="Address" value={user?.street || '- -'} />

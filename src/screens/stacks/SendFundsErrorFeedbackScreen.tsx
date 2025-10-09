@@ -16,7 +16,7 @@ import MPText from '@/src/components/MPText';
 import MPButton from '@/src/components/MPButton';
 import HeaderWrapper from '@/src/components/Header';
 import ScreenWrapper from '@/src/components/Wrapper';
-import { clampFontSize, ERROR_BADGE, MONEY_PAD } from '@/constants/app.constant';
+import { clampFontSize, ERROR_BADGE } from '@/constants/app.constant';
 
 export default function SendFundsErrorFeedbackScreen() {
 	/**
@@ -55,8 +55,7 @@ export default function SendFundsErrorFeedbackScreen() {
 					Wallet funding failed
 				</MPText>
 				<MPText weight="medium" className="text-[#767676] text-sm text-center">
-					The name on the source account does not match your registration details. Third- party deposits are
-					not accepted
+					Please try again
 				</MPText>
 
 				{/**

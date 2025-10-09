@@ -422,7 +422,7 @@ export const useForgotPassword = (email: string) => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			utils.errorHandler(error, 'Encountered an error sending otp');
+			utils.errorHandler(error, 'Encountered an error sending OTP');
 		},
 	});
 };
@@ -489,7 +489,7 @@ export const useResetPassword = (email: string) => {
 		*/
 		onError: (error: any) => {
 			console.log(error?.response?.data);
-			utils?.errorHandler(error, 'Encountered an error sending otp');
+			utils?.errorHandler(error, 'Encountered an error sending OTP');
 		},
 	});
 };

@@ -22,9 +22,9 @@ import {
 	InteracTransactionRequest,
 } from '@/interfaces/transaction.interface';
 import axiosInstance from '@/lib/axiosInstance';
+import { useUserStore } from '@/zustand/userStore';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { RootStackParamList } from '@/types/route.params';
-import { useUserStore } from '@/zustand/userStore';
 
 interface NotificationResponse {
 	notifications: INotification[];

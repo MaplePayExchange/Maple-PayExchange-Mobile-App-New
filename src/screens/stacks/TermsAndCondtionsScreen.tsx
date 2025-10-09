@@ -24,7 +24,7 @@ export default function TermsAndCondtionsScreen() {
     */
 	return (
 		<ScreenWrapper useBottomInset>
-			<HeaderWrapper title="Terms &amp; Conditions" center />
+			<HeaderWrapper title="Terms & Conditions" center />
 
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View className="">
@@ -60,7 +60,7 @@ export default function TermsAndCondtionsScreen() {
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
 							By accessing or using the services provided by Maple PayExchange Inc. (“MPE Inc.”), you
-							(“Customer”, “you”, “your”) agree to be bound by these Terms &amp; Conditions. If you do not
+							(“Customer”, “you”, “your”) agree to be bound by these Terms & Conditions. If you do not
 							agree with these terms, you must not use our services.
 						</MPText>
 					</View>
@@ -86,7 +86,7 @@ export default function TermsAndCondtionsScreen() {
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
 							By accessing or using the services provided by Maple PayExchange Inc. (“MPE Inc.”), you
-							(“Customer”, “you”, “your”) agree to be bound by these Terms &amp; Conditions. If you do not
+							(“Customer”, “you”, “your”) agree to be bound by these Terms & Conditions. If you do not
 							agree with these terms, you must not use our services.
 						</MPText>
 					</View>
@@ -121,7 +121,7 @@ export default function TermsAndCondtionsScreen() {
 							items={[
 								'Be at least 18 years old.',
 								'Provide valid and verifiable identification documents.',
-								'Comply with all applicable laws and these Terms &amp; Conditions.',
+								'Comply with all applicable laws and these Terms & Conditions.',
 							]}
 						/>
 					</View>
@@ -175,7 +175,7 @@ export default function TermsAndCondtionsScreen() {
 							boldenText
 							type="ordered"
 							startIndex={4}
-							items={['Exchange Rates &amp; Fees']}
+							items={['Exchange Rates & Fees']}
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
@@ -467,7 +467,7 @@ export default function TermsAndCondtionsScreen() {
 							type="unordered"
 							textClassName="text-sm"
 							items={[
-								'You violate these Terms &amp; Conditions.',
+								'You violate these Terms & Conditions.',
 								'You provide false or misleading information.',
 								'Required by law or regulatory authority.',
 							]}
@@ -494,7 +494,7 @@ export default function TermsAndCondtionsScreen() {
 						/>
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
-							We may amend these Terms &amp; Conditions at any time. Updates will be posted on our website
+							We may amend these Terms and Conditions at any time. Updates will be posted on our website
 							and will take effect immediately upon posting.
 						</MPText>
 					</View>
@@ -519,8 +519,8 @@ export default function TermsAndCondtionsScreen() {
 						/>
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
-							These Terms &amp; Conditions shall be governed by and interpreted in accordance with the
-							laws of the Province of Ontario and the federal laws of Canada.
+							These Terms & Conditions shall be governed by and interpreted in accordance with the laws of
+							the Province of Ontario and the federal laws of Canada.
 						</MPText>
 					</View>
 
@@ -579,8 +579,8 @@ export default function TermsAndCondtionsScreen() {
 						/>
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
-							By ticking the content box and using our services, you agree to these Terms &amp;
-							Conditions, without the need for a physical signature.
+							By ticking the content box and using our services, you agree to these Terms & Conditions,
+							without the need for a physical signature.
 						</MPText>
 					</View>
 
@@ -596,7 +596,7 @@ export default function TermsAndCondtionsScreen() {
 						<View className="my-1" />
 						<MPText weight="medium" className="text-sm">
 							By using our services, you acknowledge that you have read, understood, and agree to be bound
-							by these Terms &amp; Conditions.
+							by these Terms & Conditions.
 						</MPText>
 					</View>
 				</View>

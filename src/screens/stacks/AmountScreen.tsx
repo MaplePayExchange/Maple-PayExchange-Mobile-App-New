@@ -29,6 +29,7 @@ import DataRepresentation from '@/src/components/DataRepresentation';
 import ConfirmTransactionModal from '@/src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@/src/components/Modals/TransactionConfirmationModal';
 import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@/services/user.services';
+import { ROUTE_NAMES } from '@/constants/routes.conts';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -46,10 +47,10 @@ export default function AmountScreen() {
 	*/
 	const { data: rates } = useGetRates();
 	const NGNRate = rates?.items?.find(
-		(rate) => rate.exchange === 'NGN-TO-CAD' && rate.userType === userData?.user?.category
+		(rate) => rate.exchange === 'NGN-TO-CAD' && rate.userType === userData?.user?.userCategory
 	);
 	const CADRate = rates?.items?.find(
-		(rate) => rate.exchange === 'CAD-TO-NGN' && rate.userType === userData?.user?.category
+		(rate) => rate.exchange === 'CAD-TO-NGN' && rate.userType === userData?.user?.userCategory
 	);
 	const { mutate: mutateExchange, isPending: isPendingExchange } = useExchangeCurrency(() =>
 		setShowTransactionPin(false)
@@ -268,7 +269,7 @@ export default function AmountScreen() {
 				amount: Number(amountToSend.replaceAll(',', '')),
 				currency: handleCurrencySymbol().sourceSymbol === '₦' ? 'NGN' : 'CAD',
 				exchangeCurrency: handleCurrencySymbol().sourceSymbol === '₦' ? 'CAD' : 'NGN',
-				rate: (selectedWallet?.currency === 'NGN' ? NGNRate?.rate : CADRate?.rate) || 0,
+				rate: (sourceDestination.source === 'NGN' ? NGNRate?.rate : CADRate?.rate) || 0,
 			});
 		}
 	};
@@ -296,7 +297,7 @@ export default function AmountScreen() {
 		|--------------------------------------------------
 		*/
 		if (transactionType === 'SWAP' && infoType === 'rate') {
-			info = `${selectedWallet?.currency === 'NGN' ? `${NGNRate?.rate} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate} NGN`}`;
+			info = `${sourceDestination.source === 'NGN' ? `${NGNRate?.rate.toLocaleString()} NGN = ${1} CAD` : `${1} CAD = ${CADRate?.rate.toLocaleString()} NGN`}`;
 		}
 
 		/**
@@ -406,7 +407,7 @@ export default function AmountScreen() {
 				*/}
 				<View>
 					<MPText weight="medium" className="text-sm text-[#767676]">
-						Step 2/2
+						Step {transactionType === 'SWAP' ? '1/2' : '2/2'}
 					</MPText>
 					<MPText weight="semibold" className="text-xs">
 						Enter details
@@ -418,7 +419,7 @@ export default function AmountScreen() {
 				| See our rates
 				|--------------------------------------------------
 				*/}
-				<Pressable>
+				<Pressable onPress={() => navigation.navigate(ROUTE_NAMES.EXCHANGE_RATE as never)}>
 					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
 						See our rates
 					</MPText>
