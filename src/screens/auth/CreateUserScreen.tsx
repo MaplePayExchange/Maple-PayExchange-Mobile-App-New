@@ -38,8 +38,8 @@ import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useCreateUser } from '@/services/auth.services';
 import { RootStackParamList } from '@/types/route.params';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
-import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@/assets/svgs';
 import AutocompleteExample from '@/src/components/PlacesAutoComplete';
+import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@/assets/svgs';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -84,7 +84,15 @@ export default function CreateUserScreen() {
 		handleSubmit,
 		formState: { isValid },
 	} = useForm({
-		defaultValues: { firstName: '', lastName: '', middleName: '', referral: '', password: '', address: '' },
+		defaultValues: {
+			address: '',
+			lastName: '',
+			referral: '',
+			password: '',
+			firstName: '',
+			middleName: '',
+			maidenLastName: '',
+		},
 	});
 
 	/**
@@ -117,6 +125,7 @@ export default function CreateUserScreen() {
 
 		if (data.referral !== '') payload.referral = data.referral;
 		if (data.middleName !== '') payload.middleName = data.middleName;
+		if (data.maidenLastName !== '') payload.maidenLastName = data.maidenLastName;
 
 		/**
 		|--------------------------------------------------
@@ -340,6 +349,30 @@ export default function CreateUserScreen() {
 										},
 									}}
 								/>
+
+								{/**
+								|--------------------------------------------------
+								| Last name
+								|--------------------------------------------------
+								*/}
+								<View>
+									<InputField
+										type="text"
+										control={control}
+										name="maidenLastName"
+										label="Maiden last name (optional)"
+										placeholder="Enter your maiden last name"
+										rules={{
+											minLength: {
+												value: 3,
+												message: 'Must be at least 3 characters',
+											},
+										}}
+									/>
+									<MPText className="text-sm mt-1">
+										(Please fill this field if BVN is registered in your maiden name)
+									</MPText>
+								</View>
 
 								{/**
 								|--------------------------------------------------

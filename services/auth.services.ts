@@ -79,6 +79,7 @@ interface CreateUser {
 	occupation?: string;
 	referralCode?: string;
 	usagePurpose?: string;
+	maidenLastName?: string;
 	primarySourceOfFunds?: string;
 	isPolliticallyExposed?: boolean;
 	countryUserMostlySendsMoneyTo?: string;
@@ -268,7 +269,6 @@ export const useCreateUser = () => {
         |--------------------------------------------------
         */
 		mutationFn: async (payload) => {
-			console.log(payload);
 			const response = await axiosInstance.post('/users/create', payload);
 			return response.data;
 		},
