@@ -143,6 +143,7 @@ export const MAPLE_LOGO = require(`${_IMAGE_PATH}/maple_logo.png`);
 export const SUCCESS_BADGE = require(`${_IMAGE_PATH}/success.png`);
 export const PENDING_BADGE = require(`${_IMAGE_PATH}/pending.png`);
 export const SEND_FUNDS = require(`${_IMAGE_PATH}/send_funds.png`);
+export const VERSION_IMAGE = require(`${_IMAGE_PATH}/version.png`);
 export const FLAG_CANADA = require(`${_IMAGE_PATH}/flag_canada.png`);
 export const BENEFICIARY = require(`${_IMAGE_PATH}/beneficiary.png`);
 export const FLAG_NIGERIA = require(`${_IMAGE_PATH}/flag_nigeria.png`);

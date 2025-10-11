@@ -7,7 +7,27 @@ import * as Device from 'expo-device';
 import * as Network from 'expo-network';
 import * as Clipboard from 'expo-clipboard';
 import { Toast } from 'toastify-react-native';
+//@ts-ignore
+import VersionCheck from 'react-native-version-check-expo';
 import { Alert, ToastAndroid, Platform } from 'react-native';
+
+/**
+|--------------------------------------------------
+| Custom imports
+|--------------------------------------------------
+*/
+import axiosInstance from './axiosInstance';
+
+export interface Versioning {
+	iosVersion: string;
+	iosUpdateUrl: string;
+	androidVersion: string;
+	androidUpdateUrl: string;
+	minSupportedIosVersion?: string;
+	minSupportedAndroidVersion?: string;
+	iosUpdateType: 'OPTIONAL' | 'MANDATORY';
+	androidUpdateType: 'OPTIONAL' | 'MANDATORY';
+}
 
 /**
 |--------------------------------------------------
@@ -116,6 +136,11 @@ class Utils {
 		return years;
 	}
 
+	/**
+	|--------------------------------------------------
+	| Gets device information
+	|--------------------------------------------------
+	*/
 	async getDeviceInfo() {
 		try {
 			/**
@@ -179,6 +204,85 @@ class Utils {
 			console.error('Error fetching device info:', error);
 			return null;
 		}
+	}
+
+	/**
+	|--------------------------------------------------
+	| Version check information
+	|--------------------------------------------------
+	*/
+	async checkAppStoreUpdate() {
+		let updateResponse: {
+			version: string;
+			updateType: string;
+			iosUpdateUrl: string;
+			updateRequired: boolean;
+			androidUpdateUrl: string;
+		} = {
+			version: '',
+			iosUpdateUrl: '',
+			androidUpdateUrl: '',
+			updateType: 'OPTIONAL',
+			updateRequired: false,
+		};
+
+		try {
+			/**
+			|--------------------------------------------------
+			| Checks the latest version
+			|--------------------------------------------------
+			*/
+			const response = await axiosInstance.get('/versions');
+			const versions = response.data as Versioning;
+
+			let latestVersion: string = '';
+
+			/**
+			|--------------------------------------------------
+			| Update response for either ios or android
+			|--------------------------------------------------
+			*/
+			if (Platform.OS === 'ios') {
+				latestVersion = versions.iosVersion;
+				updateResponse = {
+					...updateResponse,
+					version: versions.iosVersion,
+					updateType: versions.iosUpdateType,
+					iosUpdateUrl: versions.iosUpdateUrl,
+				};
+			} else {
+				latestVersion = versions.androidVersion;
+				updateResponse = {
+					...updateResponse,
+					version: versions.androidVersion,
+					updateType: versions.androidUpdateType,
+					androidUpdateUrl: versions.androidUpdateUrl,
+				};
+			}
+
+			/**
+			|--------------------------------------------------
+			| Gets the current version
+			|--------------------------------------------------
+			*/
+			const currentVersion = VersionCheck.getCurrentVersion();
+
+			/**
+			|--------------------------------------------------
+			| Checks if an update is needed
+			|--------------------------------------------------
+			*/
+			if (VersionCheck.needUpdate({ currentVersion, latestVersion })['_j']['_j']['isNeeded']) {
+				updateResponse = {
+					...updateResponse,
+					updateRequired: true,
+				};
+			}
+		} catch (err) {
+			console.log('Version check failed:', err);
+		}
+
+		return updateResponse;
 	}
 }
 

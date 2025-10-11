@@ -5,18 +5,23 @@
 */
 import {
 	View,
+	Modal,
 	Keyboard,
 	Platform,
 	Pressable,
 	ScrollView,
+	SafeAreaView,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
+	Image,
+	Linking,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 /**
@@ -34,6 +39,7 @@ import InputField from '@/src/components/InputField';
 import ScreenWrapper from '@/src/components/Wrapper';
 import { ROUTE_NAMES } from '@/constants/routes.conts';
 import { useBiometricAuth } from '@/hooks/useBiometrics';
+import { VERSION_IMAGE } from '@/constants/app.constant';
 import { RootStackParamList } from '@/types/route.params';
 import usePushNotifications from '@/src/hooks/useGetPushToken';
 import { getDeviceHardwareId } from '@/hooks/getDeviceHardwareId';
@@ -44,7 +50,6 @@ type LoginScreenProps = NativeStackNavigationProp<RootStackParamList, 'LoginScre
 type LoginProps = RouteProp<RootStackParamList, 'LoginScreen'>;
 export default function LoginScreen() {
 	const route = useRoute<LoginProps>();
-	const params = route.params;
 
 	/**
 	|--------------------------------------------------
@@ -61,6 +66,13 @@ export default function LoginScreen() {
 	const { mutate, isPending } = useLogin();
 	const pustToken = usePushNotifications();
 	const { authenticate } = useBiometricAuth();
+	const [versionResponse, setVersionResponse] = React.useState<{
+		version: string;
+		updateType: string;
+		iosUpdateUrl: string;
+		updateRequired: boolean;
+		androidUpdateUrl: string;
+	} | null>(null);
 	const { isRegistered, biometricsInfo, isLoggedIn, userData, isSessionExpired } = useUserStore();
 
 	/**
@@ -141,7 +153,15 @@ export default function LoginScreen() {
 	| ...
 	|--------------------------------------------------
 	*/
-	navigation.addListener('focus', () => {
+	navigation.addListener('focus', async () => {
+		const response = await utils.checkAppStoreUpdate();
+		setVersionResponse(response);
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
 		if (isSessionExpired === true && isRegistered === true && !userData && !isLoggedIn) {
 			utils.errorHandler(undefined, 'Your session has expired, for security reasons, please sign in again.');
 		}
@@ -305,6 +325,88 @@ export default function LoginScreen() {
 					</ScrollView>
 				</TouchableWithoutFeedback>
 			</KeyboardAvoidingView>
+
+			{/**
+			|--------------------------------------------------
+			| Modal for updating application
+			|--------------------------------------------------
+			*/}
+			<Modal visible={versionResponse?.updateRequired || false} animationType="slide">
+				<View className="flex-1 bg-white p-4 relative mb-48">
+					<SafeAreaView>
+						{/**
+						|--------------------------------------------------
+						| Close icon
+						|--------------------------------------------------
+						*/}
+						{versionResponse?.updateType === 'OPTIONAL' && (
+							<Pressable
+								onPress={() => setVersionResponse(null)}
+								className="size-8 bg-slate-50 rounded-full justify-center items-center"
+							>
+								<MaterialIcons name="close" size={14} color="#000000" />
+							</Pressable>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| Badge
+						|--------------------------------------------------
+						*/}
+						<Image
+							width={179}
+							height={201}
+							source={VERSION_IMAGE}
+							className="h-[201px] w-[179px] mt-[50%] self-center"
+						/>
+
+						{/**
+						|--------------------------------------------------
+						| Update text
+						|--------------------------------------------------
+						*/}
+						<View className="mt-[25%] items-center gap-2 max-w-[320px] mx-auto">
+							<MPText weight="semibold" className="text-[18px] text-black">
+								New update is available
+							</MPText>
+
+							<MPText className="text-[#707070] text-sm text-center" weight="medium">
+								A new version of MPExchange is available. Please update to get the latest version
+							</MPText>
+						</View>
+
+						{/**
+						|--------------------------------------------------
+						| Update button
+						|--------------------------------------------------
+						*/}
+						<MPButton
+							onPress={() => {
+								Linking.openURL(
+									Platform.OS === 'android'
+										? versionResponse?.androidUpdateUrl || 'https://play.google.com/store/apps'
+										: versionResponse?.iosUpdateUrl || 'https://www.apple.com/store'
+								);
+							}}
+							useGradientBg
+							className="max-w-[200px] mx-auto mt-8"
+						>
+							<MPText weight="semibold" className="text-sm text-white">
+								Update now
+							</MPText>
+						</MPButton>
+
+						{/**
+						|--------------------------------------------------
+						| Version
+						|--------------------------------------------------
+						*/}
+						<MPText weight="regular" className="text-[#707070] text-center text-xs mt-2">
+							Version {versionResponse?.version}
+						</MPText>
+					</SafeAreaView>
+				</View>
+			</Modal>
 		</ScreenWrapper>
 	);
 }
