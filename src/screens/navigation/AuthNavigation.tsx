@@ -41,16 +41,16 @@ const Stack = createStackNavigator();
 */
 const _ROUTES = [
 	{
+		name: ROUTE_NAMES.CREATE_USER,
+		component: CreateUserScreen,
+	},
+	{
 		name: ROUTE_NAMES.SPLASH,
 		component: SplashScreen,
 	},
 	{
 		name: ROUTE_NAMES.LOGIN,
 		component: LoginScreen,
-	},
-	{
-		name: ROUTE_NAMES.CREATE_USER,
-		component: CreateUserScreen,
 	},
 	{
 		name: ROUTE_NAMES.ONBOARDING,

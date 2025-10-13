@@ -48,7 +48,52 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 
 		try {
 			const results = await ExpoGooglePlaces.fetchPredictionsWithSession(search, {});
-			setPredictions(results);
+			/**
+			|--------------------------------------------------
+			| For each prediction, fetch place details
+			|--------------------------------------------------
+			*/
+			const detailedSearch = await Promise.all(
+				results.map(async (pred) => {
+					try {
+						/**
+						|--------------------------------------------------
+						| Fetches the details of the place
+						|--------------------------------------------------
+						*/
+						const placeDetails = await ExpoGooglePlaces.fetchPlaceWithSession(pred.placeID, [
+							'addressComponents',
+						]);
+
+						/**
+						|--------------------------------------------------
+						| Finds the postal information
+						|--------------------------------------------------
+						*/
+						const postalComponent = placeDetails.addressComponents?.find((component) =>
+							component.types.includes('postal_code')
+						);
+						/**
+						|--------------------------------------------------
+						| Gets the postal code
+						|--------------------------------------------------
+						*/
+						const postalCode = postalComponent?.name;
+
+						/**
+						|--------------------------------------------------
+						| Returns the postal code
+						|--------------------------------------------------
+						*/
+						return { ...pred, postalCode };
+					} catch (err) {
+						console.warn('Could not fetch details for', pred.placeID, err);
+						return pred;
+					}
+				})
+			);
+
+			setPredictions(detailedSearch);
 		} catch (error) {
 			console.log(`[GooglePlacesAutocomplete] Error fetching predictions`, error);
 		}
@@ -59,8 +104,8 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 	| Handle selection
 	|--------------------------------------------------
 	*/
-	const handleSelectPrediction = (prediction: ExpoGooglePlaces.AutocompletePrediction) => {
-		onSelect?.(prediction.fullText);
+	const handleSelectPrediction = async (prediction: ExpoGooglePlaces.AutocompletePrediction) => {
+		onSelect?.(prediction.fullText + ', ' + (prediction as any)?.postalCode);
 
 		/**
 		|--------------------------------------------------
@@ -90,9 +135,10 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 				*/}
 				<TextInput
 					value={query}
+					numberOfLines={1}
 					placeholder="Search an address"
 					onChangeText={fetchPredictions}
-					className="h-11 rounded-lg bg-[#1018280D] px-3 text-base leading-5 overflow-auto"
+					className="h-11 rounded-lg bg-[#1018280D] line-clamp-1 over px-3 text-base leading-5 overflow-y-hidden text-nowrap whitespace-nowrap"
 				/>
 
 				{/**
@@ -109,7 +155,10 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 							<TouchableOpacity
 								key={prediction.placeID}
 								className="px-4 py-1 border-b border-gray-200"
-								onPress={() => handleSelectPrediction(prediction)}
+								onPress={() => {
+									console.log(prediction);
+									handleSelectPrediction(prediction);
+								}}
 							>
 								{/**
 								|--------------------------------------------------
