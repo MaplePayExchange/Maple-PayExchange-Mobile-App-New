@@ -8,7 +8,16 @@ import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
-import { View, TextInputProps, TextInput, Pressable, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import {
+	View,
+	TextInputProps,
+	TextInput,
+	Pressable,
+	Modal,
+	TouchableOpacity,
+	ScrollView,
+	Keyboard,
+} from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -139,8 +148,11 @@ export default function InputField<T extends FieldValues>({
 									value={value}
 									ref={inputRef}
 									onBlur={onBlur}
+									returnKeyType="done"
 									onChangeText={onChange}
+									submitBehavior="blurAndSubmit"
 									placeholderTextColor="#767676"
+									onSubmitEditing={Keyboard.dismiss}
 									key={showPassword ? 'visible' : 'hidden'}
 									placeholderClassName="text-sm font-manrope-medium"
 									className="max-w-[90%] min-w-[40%] font-manrope-medium"

@@ -284,6 +284,8 @@ export default function SendNGNScreen() {
 												value={searchQuery}
 												ref={searchInputRef}
 												placeholder="Search"
+												returnKeyType="done"
+												submitBehavior="blurAndSubmit"
 												placeholderTextColor="#484848"
 												onChangeText={(value) => setSearchQuery(value)}
 											/>

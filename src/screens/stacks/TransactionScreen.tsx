@@ -129,6 +129,8 @@ export default function TransactionsScreen() {
 					<TextInput
 						className="h-full"
 						value={searchQuery}
+						returnKeyType="done"
+						submitBehavior="blurAndSubmit"
 						placeholderTextColor="#BABABA"
 						placeholder="Amount, outgoing, incoming, swap"
 						onChangeText={(value) => setSearchQuery(value)}

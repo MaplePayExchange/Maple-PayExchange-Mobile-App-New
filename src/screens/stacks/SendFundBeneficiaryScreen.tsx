@@ -108,7 +108,9 @@ export default function SendFundsBeneficiaryScreen() {
 				<TextInput
 					className="text-sm"
 					value={searchQuery}
+					returnKeyType="done"
 					style={{ fontSize: 14 }}
+					submitBehavior="blurAndSubmit"
 					placeholderTextColor="#484848"
 					onChangeText={(value) => setSearchQuery(value)}
 					placeholder="Search by name, email or account no"

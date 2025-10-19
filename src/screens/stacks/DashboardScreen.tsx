@@ -8,9 +8,8 @@ import { Entypo } from '@expo/vector-icons';
 import { Svg, Path } from 'react-native-svg';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
-import { RefreshControl } from 'react-native-gesture-handler';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Pressable, View, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
+import { Pressable, RefreshControl, View, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
 
 /**
  |--------------------------------------------------

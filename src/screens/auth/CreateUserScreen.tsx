@@ -229,6 +229,8 @@ export default function CreateUserScreen() {
 												className="text-sm"
 												value={searchQuery}
 												placeholder="Search"
+												returnKeyType="done"
+												submitBehavior="blurAndSubmit"
 												placeholderTextColor="#484848"
 												onChangeText={(value) => setSearchQuery(value)}
 											/>

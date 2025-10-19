@@ -43,7 +43,6 @@ export default function SplashScreen() {
 	|--------------------------------------------------
 	*/
 	const { isRegistered, verificationData, hasCompletedOnboarding } = useUserStore();
-	console.log(isRegistered, 'isRegistered');
 
 	/**
 	|--------------------------------------------------

@@ -7,8 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { RootStackParamList } from '@/types/route.params';
-import { ScrollView } from 'react-native-gesture-handler';
-import { View, Pressable, TextInput } from 'react-native';
+import { View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
@@ -498,10 +497,12 @@ export default function AmountScreen() {
 									*/}
 									<TextInput
 										placeholder="0"
+										returnKeyType="done"
 										value={amountToSend}
 										keyboardType="numeric"
 										onChangeText={handleChange}
-										className="text-[18px] font-semibold w-auto"
+										submitBehavior="blurAndSubmit"
+										className="text-[18px] font-semibold min-w-[100px]"
 									/>
 								</View>
 
@@ -594,7 +595,7 @@ export default function AmountScreen() {
 						*/}
 						{params.transactionType === 'SWAP' &&
 							sourceDestination.source === 'NGN' &&
-							Number(amountToSend) < (NGNRate?.rate ?? 0) && (
+							Number(amountToSend) < (NGNRate?.rate ?? 0) * 5 && (
 								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
 									The amount you're trying to exchange is too low
 								</MPText>
@@ -607,7 +608,7 @@ export default function AmountScreen() {
 						*/}
 						{params.transactionType === 'SWAP' &&
 							sourceDestination.source === 'CAD' &&
-							Number(amountToSend) < 1 && (
+							Number(amountToSend) < 10 && (
 								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
 									The amount you're trying to exchange is too low
 								</MPText>
@@ -661,8 +662,11 @@ export default function AmountScreen() {
 									*/}
 									<TextInput
 										placeholder="0"
+										returnKeyType="done"
 										keyboardType="numeric"
 										onChangeText={handleChange}
+										submitBehavior="blurAndSubmit"
+										onSubmitEditing={Keyboard.dismiss}
 										className={clsx(
 											'text-[18px] font-semibold w-auto',
 											transactionType === 'SWAP' ? '' : 'pointer-events-none'

@@ -136,6 +136,8 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 				<TextInput
 					value={query}
 					numberOfLines={1}
+					returnKeyType="done"
+					submitBehavior="blurAndSubmit"
 					placeholder="Search an address"
 					onChangeText={fetchPredictions}
 					className="h-11 rounded-lg bg-[#1018280D] line-clamp-1 over px-3 text-base leading-5 overflow-y-hidden text-nowrap whitespace-nowrap"

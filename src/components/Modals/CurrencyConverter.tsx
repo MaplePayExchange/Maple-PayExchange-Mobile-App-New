@@ -333,7 +333,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 										value={amountToSend}
 										keyboardType="numeric"
 										onChangeText={handleChange}
-										className="text-[18px] font-semibold w-auto"
+										className="text-[18px] font-semibold w-auto min-w-[100px]"
 									/>
 								</View>
 
