@@ -1,0 +1,68 @@
+[
+	{
+		"tag": "security_safety",
+		"name": "Recognizing suspicious activity",
+		"question": {
+			"header": "Recognizing suspicious activity",
+			"subtext": "If you notice unusual activity (unknown logins, unexpected withdrawals):"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": ["Change your password immediately.", "Contact support to review your account."]
+		}
+	},
+	{
+		"tag": "security_safety",
+		"name": "What to do if I suspect fraud",
+		"question": {
+			"header": "What to do if I suspect fraud",
+			"subtext": null
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Freeze your wallet immediately in the app.",
+				"Contact support to report the issue.",
+				"We’ll investigate and assist you with recovery."
+			]
+		}
+	},
+	{
+		"tag": "security_safety",
+		"name": "How we protect your data",
+		"question": {
+			"header": "How we protect your data",
+			"subtext": "Your data is protected using encryption, secure servers, and compliance with global privacy laws. You can read more about this through our Privacy Policy",
+			"link-match": "Privacy Policy"
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Freeze your wallet immediately in the app.",
+				"Contact support to report the issue.",
+				"We’ll investigate and assist you with recovery."
+			]
+		}
+	},
+	{
+		"tag": "security_safety",
+		"name": "How to report an unauthorized transaction",
+		"question": {
+			"header": "How to report an unauthorized transaction",
+			"subtext": null
+		},
+		"solution": {
+			"type": "single",
+			"header": null,
+			"bullet-points": [
+				"Go to Transaction History.",
+				"Copy the transaction ID.",
+				"Tap Report Issue.",
+				"Our team will review and follow up."
+			]
+		}
+	}
+]
