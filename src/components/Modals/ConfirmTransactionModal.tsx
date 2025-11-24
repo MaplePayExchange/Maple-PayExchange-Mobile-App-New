@@ -40,11 +40,11 @@ export default function ConfirmTransactionModal({ onComplete, visible, setVisibl
                 |
                 |--------------------------------------------------
                 */}
-				<View className="items-center mt-8 mb-10">
-					<MPText weight="medium" className="text-[#1A1A1A] text-[18px]">
+				<View className="mb-10 mt-8 items-center">
+					<MPText weight="medium" className="text-[18px] text-[#1A1A1A]">
 						Enter Transaction PIN
 					</MPText>
-					<MPText weight="medium" className="text-[#767676] text-sm">
+					<MPText weight="medium" className="text-[15px] text-[#767676]">
 						This is your unique 4digit number
 					</MPText>
 				</View>

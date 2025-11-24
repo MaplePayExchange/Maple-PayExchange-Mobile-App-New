@@ -15,7 +15,7 @@ import { Image, TouchableOpacity, View } from 'react-native';
 import MPText from './MPText';
 import TransactionDetailsModal from './Modals/TransactionDetailsModal';
 import { TransactionInterface } from '@interfaces/transaction.interface';
-import { clampFontSize, EXCHANGE, INCOMING, OUTGOING } from '@constants/app.constant';
+import { clampFontSize, EXCHANGE, fontSizes, INCOMING, OUTGOING } from '@constants/app.constant';
 
 interface Props {
 	onClick?: () => void;
@@ -81,7 +81,7 @@ export default function Transaction({ onClick, transaction }: Props) {
 				setShowTransactionDetailsModal(true);
 			}}
 			activeOpacity={0.8}
-			className="flex-row gap-4 items-start"
+			className="flex-row items-start gap-4"
 		>
 			{/**
             |--------------------------------------------------
@@ -100,14 +100,14 @@ export default function Transaction({ onClick, transaction }: Props) {
             |--------------------------------------------------
             */}
 			<View className="items-start">
-				<MPText weight="medium" className="text-sm mb-1">
+				<MPText fontSize="FONT14" weight="medium" className="mb-1">
 					{type === 'fund_exchange'
 						? 'Fund exchange'
 						: type === 'incoming_transaction'
 							? 'Incoming Transaction'
 							: 'Outgoing Transaction'}
 				</MPText>
-				<MPText style={{ fontSize: 12 }} className="text-xs text-[#767676]">
+				<MPText fontSize="FONT12" className="text-[#767676]">
 					{details}
 				</MPText>
 			</View>
@@ -117,12 +117,12 @@ export default function Transaction({ onClick, transaction }: Props) {
             | ...
             |--------------------------------------------------
             */}
-			<View className="items-end ml-auto">
-				<MPText weight="semibold" className="text-sm mb-1">
+			<View className="ml-auto items-end">
+				<MPText fontSize="FONT14" weight="semibold" className="mb-1 text-[15px]">
 					{currencyType === 'CAD' ? '$' : '₦'}{' '}
 					{amount.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
 				</MPText>
-				<MPText style={{ fontSize: 12 }} className="text-xs text-[#767676]">
+				<MPText fontSize="FONT12" className="text-[#767676]">
 					{transactionDate}
 				</MPText>
 			</View>

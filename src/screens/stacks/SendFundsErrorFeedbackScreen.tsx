@@ -40,7 +40,7 @@ export default function SendFundsErrorFeedbackScreen() {
             | ...
             |--------------------------------------------------
             */}
-			<View className="justify-center items-center flex-1">
+			<View className="flex-1 items-center justify-center">
 				<Image
 					source={ERROR_BADGE}
 					style={{ width: clampFontSize(173, 100, 200), height: clampFontSize(171, 100, 200) }}
@@ -51,10 +51,10 @@ export default function SendFundsErrorFeedbackScreen() {
                 | ...
                 |--------------------------------------------------
                 */}
-				<MPText weight="semibold" className="text-[18px] mt-5">
+				<MPText weight="semibold" className="mt-5 text-[18px]">
 					Wallet funding failed
 				</MPText>
-				<MPText weight="medium" className="text-[#767676] text-sm text-center">
+				<MPText weight="medium" className="text-center text-[15px] text-[#767676]">
 					Please try again
 				</MPText>
 
@@ -64,7 +64,7 @@ export default function SendFundsErrorFeedbackScreen() {
                 |--------------------------------------------------
                 */}
 				<MPButton useGradientBg className="mt-6" onPress={() => navigation.goBack()}>
-					<MPText className="text-sm text-white" weight="semibold">
+					<MPText className="text-[15px] text-white" weight="semibold">
 						Try again
 					</MPText>
 				</MPButton>

@@ -74,7 +74,7 @@ export default function ReferAndEarnScreen() {
 			</View>
 
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className="bg-[#f0f0f0] flex-1 p-4 min-h-[88vh]">
+				<View className="min-h-[88vh] flex-1 bg-[#f0f0f0] p-4">
 					{/**
                     |--------------------------------------------------
                     | ...
@@ -85,7 +85,7 @@ export default function ReferAndEarnScreen() {
 							Refer a friend and earn
 						</MPText>
 
-						<MPText className="text-sm mt-2">
+						<MPText className="mt-2 text-[15px]">
 							Share your referral code and get $10 when your invitee signs up, verifies KYC, and completes
 							a transaction of $100 or more
 						</MPText>
@@ -95,12 +95,12 @@ export default function ReferAndEarnScreen() {
                         | Referal code
                         |--------------------------------------------------
                         */}
-						<View className="mt-9 flex-row justify-between items-center">
-							<MPText weight="medium" className="text-sm text-[#767676]">
+						<View className="mt-9 flex-row items-center justify-between">
+							<MPText weight="medium" className="text-[15px] text-[#767676]">
 								Referral code
 							</MPText>
 
-							<View className="border flex-row gap-2 items-center px-2 justify-center border-dashed border-[#EE0979] h-[46px] rounded-lg">
+							<View className="h-[46px] flex-row items-center justify-center gap-2 rounded-lg border border-dashed border-[#EE0979] px-2">
 								<MPText weight="medium" className="text-[#EE0979]">
 									{params?.referralCode}
 								</MPText>
@@ -174,9 +174,9 @@ export default function ReferAndEarnScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="mt-5">
-						<View className="border border-[#EEEEEE] rounded-[10px] p-5">
+						<View className="rounded-[10px] border border-[#EEEEEE] p-5">
 							<MPText>Total earnings</MPText>
-							<MPText weight="extra-bold" className="!text-2xl mt-1">
+							<MPText weight="extra-bold" className="mt-1 !text-2xl">
 								$
 								{history?.metrics?.totalEarnings?.toLocaleString(undefined, {
 									maximumFractionDigits: 2,
@@ -190,10 +190,10 @@ export default function ReferAndEarnScreen() {
                         |
                         |--------------------------------------------------
                         */}
-						<View className="flex-row gap-6 justify-between mt-5">
-							<View className="border border-[#EEEEEE] rounded-[10px] p-5 w-[48%]">
+						<View className="mt-5 flex-row justify-between gap-6">
+							<View className="w-[48%] rounded-[10px] border border-[#EEEEEE] p-5">
 								<MPText>No. of referrals</MPText>
-								<MPText weight="extra-bold" className="!text-2xl mt-1">
+								<MPText weight="extra-bold" className="mt-1 !text-2xl">
 									{history?.metrics?.noOfReferrals}
 								</MPText>
 							</View>
@@ -203,9 +203,9 @@ export default function ReferAndEarnScreen() {
                             | ...
                             |--------------------------------------------------
                             */}
-							<View className="border border-[#EEEEEE] rounded-[10px] p-5 w-[48%]">
+							<View className="w-[48%] rounded-[10px] border border-[#EEEEEE] p-5">
 								<MPText>Active users</MPText>
-								<MPText weight="extra-bold" className="!text-2xl mt-1">
+								<MPText weight="extra-bold" className="mt-1 !text-2xl">
 									{history?.metrics?.activeUsers}
 								</MPText>
 							</View>
@@ -217,18 +217,18 @@ export default function ReferAndEarnScreen() {
                         |--------------------------------------------------
                         */}
 						<View className="mt-5">
-							<MPText weight="semibold" className="text-base mb-4">
+							<MPText weight="semibold" className="mb-4 text-base">
 								Referral History
 							</MPText>
 
-							<View className="border-t border-[#EEEEEE] min-h-[200px]">
+							<View className="min-h-[200px] border-t border-[#EEEEEE]">
 								{/**
                                 |--------------------------------------------------
                                 | Empty history
                                 |--------------------------------------------------
                                 */}
 								{!isLoading && history?.history.length === 0 && (
-									<View className="justify-center items-center min-h-[200px]">
+									<View className="min-h-[200px] items-center justify-center">
 										<Svg width="33" height="32" viewBox="0 0 33 32" fill="none">
 											<G clip-path="url(#clip0_618_5371)">
 												<Path
@@ -247,7 +247,7 @@ export default function ReferAndEarnScreen() {
 												</ClipPath>
 											</Defs>
 										</Svg>
-										<MPText className="text-sm text-[#484848]" weight="medium">
+										<MPText className="text-[15px] text-[#484848]" weight="medium">
 											You have no referral yet
 										</MPText>
 									</View>
@@ -261,7 +261,7 @@ export default function ReferAndEarnScreen() {
 								{!isLoading &&
 									history?.history.length === 0 &&
 									history?.history.map((referral) => (
-										<View key={referral?._id} className="flex-row items-center gap-4 h-[72px]">
+										<View key={referral?._id} className="h-[72px] flex-row items-center gap-4">
 											<Svg width="40" height="40" viewBox="0 0 40 40" fill="none">
 												<Rect width="40" height="40" rx="8" fill="#FFF0F7" />
 												<G clip-path="url(#clip0_911_12174)">
@@ -288,10 +288,10 @@ export default function ReferAndEarnScreen() {
                                             |--------------------------------------------------
                                             */}
 											<View>
-												<MPText className="text-[#1A1A1A] text-sm">
+												<MPText className="text-[15px] text-[#1A1A1A]">
 													{referral?.referrerId?.firstName} {referral?.referrerId?.lastName}
 												</MPText>
-												<MPText className="text-xs text-[#767676]" weight="medium">
+												<MPText className="text-[13px] text-[#767676]" weight="medium">
 													{dayjs(referral?.createdAt).format('DD MMM, YYYY')}
 												</MPText>
 											</View>
@@ -304,7 +304,7 @@ export default function ReferAndEarnScreen() {
 											<View className="ml-auto">
 												<MPText
 													weight="semibold"
-													className="text-[#1A1A1A] text-sm text-right mb-1"
+													className="mb-1 text-right text-[15px] text-[#1A1A1A]"
 												>
 													$
 													{referral?.referralValue.toLocaleString(undefined, {
@@ -314,7 +314,7 @@ export default function ReferAndEarnScreen() {
 												</MPText>
 												<View
 													className={clsx(
-														'rounded-lg px-2 h-[16px] justify-center items-center',
+														'h-[16px] items-center justify-center rounded-lg px-2',
 														referral.status === 'pending' ? 'bg-[#FFEFC4]' : 'bg-[#DEFFEA]'
 													)}
 												>
@@ -322,7 +322,7 @@ export default function ReferAndEarnScreen() {
 														weight="medium"
 														style={{ lineHeight: 10 }}
 														className={clsx(
-															'text-[8px] text-right',
+															'text-right text-[8px]',
 															referral.status === 'pending'
 																? 'text-[#A98B15]'
 																: 'text-[#15803D]'

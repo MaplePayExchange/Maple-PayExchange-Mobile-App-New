@@ -38,10 +38,10 @@ export default function KYCTermsScreen() {
 					|
 					|--------------------------------------------------
 					*/}
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 						Effective Date: [January 25, 2019]
 					</MPText>
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 						Last Updated: [June 1, 2025]
 					</MPText>
 
@@ -63,7 +63,7 @@ export default function KYCTermsScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							The purpose of this KYC Policy is to ensure that Maple PayExchange Inc. (“MPE Inc.”, “we”,
 							“our”, “us”) complies with Financial Transactions and Reports Analysis Centre of Canada
 							(FINTRAC) requirements, Proceeds of Crime (Money Laundering) and Terrorist Financing Act
@@ -74,7 +74,8 @@ export default function KYCTermsScreen() {
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Verify the identity of customers and beneficial owners.',
 								'Mitigate risks of money laundering, terrorist financing, and fraudulent activities.',
@@ -102,14 +103,15 @@ export default function KYCTermsScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							This policy applies to:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'All customers (individuals and entities) using our money exchange services.',
 								'All MPE Inc. employees, agents, and partners involved in onboarding, transactions, and customer support.',
@@ -136,14 +138,15 @@ export default function KYCTermsScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							This KYC policy is designed to comply with:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Proceeds of Crime (Money Laundering) and Terrorist Financing Act (PCMLTFA) and related regulations in Canada.',
 								'Financial Transactions and Reports Analysis Centre of Canada (FINTRAC) requirements.',
@@ -171,7 +174,7 @@ export default function KYCTermsScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Identification requirements and verification methods for individuals and businesses are
 							outlined to ensure proper KYC compliance for MPE Inc. customers.
 						</MPText>
@@ -185,14 +188,15 @@ export default function KYCTermsScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="semibold" className="text-sm">
+						<MPText weight="semibold" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							For Individuals:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Full legal name',
 								'Date of birth',
@@ -203,14 +207,15 @@ export default function KYCTermsScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="semibold" className="text-sm">
+						<MPText weight="semibold" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							For Businesses/Entities:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Legal name and business registration documents',
 								'Address of principal place of business',
@@ -232,7 +237,8 @@ export default function KYCTermsScreen() {
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Documentary verification: Authentic government-issued ID for individuals; business incorporation documents for entities.',
 								'Non-documentary verification: Phone verification, email confirmation, third-party database checks (credit bureau or government databases).',
@@ -374,7 +380,7 @@ export default function KYCTermsScreen() {
 							</View>
 						</ScrollView>
 
-						<MPText className="text-sm mt-4">
+						<MPText className="mt-4 text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Enhanced Due Diligence (EDD) applies to PEPs, high-risk countries, and large or unusual
 							transactions.
 						</MPText>
@@ -402,7 +408,8 @@ export default function KYCTermsScreen() {
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Transactions structured just under reporting thresholds.',
 								'Customer reluctant to provide ID or gives false/inconsistent information.',
@@ -411,10 +418,10 @@ export default function KYCTermsScreen() {
 								'Use of third parties or multiple accounts without clear reason.',
 							]}
 						/>
-						<MPText className="text-lg mt-6" weight="extra-bold">
+						<MPText className="mt-6 text-lg" weight="extra-bold">
 							Acknowledgment
 						</MPText>
-						<MPText className="text-sm mt-2">
+						<MPText className="mt-2 text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							All MPE Inc. staff and agents must confirm they have read, understood, and will comply with
 							this KYC Policy.
 						</MPText>

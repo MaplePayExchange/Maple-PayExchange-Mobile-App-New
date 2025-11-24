@@ -71,7 +71,7 @@ export default function ChangePasswordScreen() {
 				| ...
 				|--------------------------------------------------
 				*/}
-				<View className="bg-[#f0f0f0] flex-1">
+				<View className="flex-1 bg-[#f0f0f0]">
 					{/**
 					|--------------------------------------------------
 					| ...
@@ -81,7 +81,7 @@ export default function ChangePasswordScreen() {
 						<MPText className="" weight="semibold">
 							Change Password
 						</MPText>
-						<MPText className="text-[#767676] text-xs">Input a new password here</MPText>
+						<MPText className="text-[13px] text-[#767676]">Input a new password here</MPText>
 					</View>
 
 					{/**
@@ -134,7 +134,7 @@ export default function ChangePasswordScreen() {
 							<List
 								gap=""
 								type="unordered"
-								textClassName="text-xs text-[#767676]"
+								textClassName="text-[13px] text-[#767676]"
 								items={[
 									'Min 8 characters',
 									'At least 1 uppercase',
@@ -170,11 +170,11 @@ export default function ChangePasswordScreen() {
 								disabled={!isMatchPassword}
 								useGradientBg={isMatchPassword}
 								onPress={handleSubmit(onSubmit)}
-								className="max-w-[152px] mx-auto mt-6"
+								className="mx-auto mt-6 max-w-[152px]"
 							>
 								<MPText
 									weight="semibold"
-									className={clsx('text-sm', isMatchPassword ? 'text-white' : 'text-gray-400')}
+									className={clsx('text-[15px]', isMatchPassword ? 'text-white' : 'text-gray-400')}
 								>
 									Change password
 								</MPText>

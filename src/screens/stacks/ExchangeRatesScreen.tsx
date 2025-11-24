@@ -65,12 +65,12 @@ export default function ExchangeRatesScreen() {
             |--------------------------------------------------
             */}
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className="bg-[#f0f0f0] min-h-[75vh] flex-1 p-4">
+				<View className="min-h-[75vh] flex-1 bg-[#f0f0f0] p-4">
 					<MPText className="text-base" weight="semibold">
 						Exchange Rates
 					</MPText>
-					<MPText className="text-sm text-[#767676]" weight="medium">
-						Rates will refresh after every 30 seconds
+					<MPText className="text-[15px] text-[#767676]" weight="medium">
+						Rates will refresh once there is an update.
 					</MPText>
 
 					{/**
@@ -79,7 +79,7 @@ export default function ExchangeRatesScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="mt-3">
-						<MPText className="text-sm text-[#484848]">
+						<MPText className="text-[15px] text-[#484848]">
 							As at {dayjs(NGNRate?.updatedDate).format('dddd Do MMMM YYYY, hh:mm A')}
 						</MPText>
 
@@ -88,7 +88,7 @@ export default function ExchangeRatesScreen() {
                         | CAD
                         |--------------------------------------------------
                         */}
-						<MPText weight="medium" className="text-[#767676] text-sm mt-4">
+						<MPText weight="medium" className="mt-4 text-[15px] text-[#767676]">
 							Canada
 						</MPText>
 
@@ -97,11 +97,11 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="mt-4 px-4 flex-row gap-2">
-							<MPText weight="medium" className="text-[#1A1A1A] text-sm">
+						<View className="mt-4 flex-row gap-2 px-4">
+							<MPText weight="medium" className="text-[15px] text-[#1A1A1A]">
 								🇨🇦
 							</MPText>
-							<MPText weight="medium" className="text-[#1A1A1A] text-sm">
+							<MPText weight="medium" className="text-[15px] text-[#1A1A1A]">
 								Canadian Dollar
 							</MPText>
 						</View>
@@ -111,16 +111,16 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="flex-row gap-2 px-4 mt-6 items-center">
-							<MPText className="text-sm">🇨🇦</MPText>
-							<MPText className="text-sm">CAD</MPText>
+						<View className="mt-6 flex-row items-center gap-2 px-4">
+							<MPText className="text-[15px]">🇨🇦</MPText>
+							<MPText className="text-[15px]">CAD</MPText>
 							<View>
 								<RedRightArrowIcon color="#000000" />
 							</View>
-							<MPText className="text-sm">🇳🇬</MPText>
-							<MPText className="text-sm">NGN</MPText>
+							<MPText className="text-[15px]">🇳🇬</MPText>
+							<MPText className="text-[15px]">NGN</MPText>
 
-							<MPText className="ml-auto text-sm" weight="semibold">
+							<MPText className="ml-auto text-[15px]" weight="semibold">
 								1 CAD ={' '}
 								{CADRate?.rate.toLocaleString(undefined, {
 									maximumFractionDigits: 2,
@@ -135,7 +135,7 @@ export default function ExchangeRatesScreen() {
                         | NGN
                         |--------------------------------------------------
                         */}
-						<MPText weight="medium" className="text-[#767676] text-sm mt-6">
+						<MPText weight="medium" className="mt-6 text-[15px] text-[#767676]">
 							Nigeria
 						</MPText>
 
@@ -144,11 +144,11 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="mt-4 px-4 flex-row gap-2">
-							<MPText weight="medium" className="text-[#1A1A1A] text-sm">
+						<View className="mt-4 flex-row gap-2 px-4">
+							<MPText weight="medium" className="text-[15px] text-[#1A1A1A]">
 								🇳🇬
 							</MPText>
-							<MPText weight="medium" className="text-[#1A1A1A] text-sm">
+							<MPText weight="medium" className="text-[15px] text-[#1A1A1A]">
 								Nigerian Naira
 							</MPText>
 						</View>
@@ -158,16 +158,16 @@ export default function ExchangeRatesScreen() {
                         | ...
                         |--------------------------------------------------
                         */}
-						<View className="flex-row gap-2 px-4 mt-6 items-center">
-							<MPText className="text-sm">🇳🇬</MPText>
-							<MPText className="text-sm">NGN</MPText>
+						<View className="mt-6 flex-row items-center gap-2 px-4">
+							<MPText className="text-[15px]">🇳🇬</MPText>
+							<MPText className="text-[15px]">NGN</MPText>
 							<View>
 								<RedRightArrowIcon color="#000000" />
 							</View>
-							<MPText className="text-sm">🇨🇦</MPText>
-							<MPText className="text-sm">CAD</MPText>
+							<MPText className="text-[15px]">🇨🇦</MPText>
+							<MPText className="text-[15px]">CAD</MPText>
 
-							<MPText className="ml-auto text-sm" weight="semibold">
+							<MPText className="ml-auto text-[15px]" weight="semibold">
 								{Number(NGNRate?.rate || 0).toLocaleString(undefined, {
 									maximumFractionDigits: 2,
 									minimumFractionDigits: 2,

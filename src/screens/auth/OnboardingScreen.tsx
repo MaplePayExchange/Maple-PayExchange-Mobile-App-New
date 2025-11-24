@@ -142,7 +142,7 @@ export default function OnboardingScreen() {
 			renderItem={({ item, index }) => {
 				return (
 					<ImageBackground source={item.image} className="h-full flex-1" style={{ width, flex: 1 }}>
-						<SafeAreaView className="z-20 mt-4">
+						<SafeAreaView className="z-30 mt-4">
 							{/**
 							|--------------------------------------------------
 							| Indicator
@@ -170,7 +170,7 @@ export default function OnboardingScreen() {
 							</View>
 						</SafeAreaView>
 
-						<View className="absolute bottom-[-60px] z-20 mt-auto min-h-[318px]">
+						<View className="absolute bottom-[-60px] z-40 mt-auto max-h-[318px] min-h-[318px] overflow-hidden">
 							<RNBlurView
 								blurType="dark"
 								blurAmount={20}
@@ -201,7 +201,7 @@ export default function OnboardingScreen() {
 										<MPText
 											weight="semibold"
 											style={{ lineHeight: 20, fontSize: 14 }}
-											className="text-sm leading-6 text-white"
+											className="text-[15px] leading-6 text-white"
 										>
 											{item.subtitle}
 										</MPText>
@@ -216,7 +216,7 @@ export default function OnboardingScreen() {
 											className="mt-6"
 											onPress={() => navigation.navigate(ROUTE_NAMES.PHONE_VERIFICATION)}
 										>
-											<MPText weight="semibold" className="text-sm text-white">
+											<MPText weight="semibold" className="text-[15px] text-white">
 												Create an account
 											</MPText>
 										</MPButton>
@@ -227,7 +227,11 @@ export default function OnboardingScreen() {
 										|--------------------------------------------------
 										*/}
 										<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}>
-											<MPText weight="semibold" className="text-sm text-[#f84f21]">
+											<MPText
+												weight="semibold"
+												style={{ lineHeight: 21, fontSize: 15 }}
+												className="w-max text-[15px] text-[#f84f21]"
+											>
 												Login
 											</MPText>
 										</MPButton>
@@ -241,7 +245,7 @@ export default function OnboardingScreen() {
 						| Overlay
 						|--------------------------------------------------
 						*/}
-						<View className="absolute z-10 h-full w-full flex-1 bg-black/30" />
+						<View className="absolute z-20 h-full w-full flex-1 bg-black/30" />
 					</ImageBackground>
 				);
 			}}

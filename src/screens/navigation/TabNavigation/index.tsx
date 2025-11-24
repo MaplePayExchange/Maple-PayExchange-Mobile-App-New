@@ -37,11 +37,11 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 	|--------------------------------------------------
 	*/
 	return (
-		<View className="justify-center items-center min-h-[20px] w-max">
+		<View className="min-h-[20px] w-max items-center justify-center">
 			<MPText
 				weight="semibold"
 				style={{ fontSize: 12 }}
-				className={clsx('text-sm', focused ? 'text-[#FF6A00]' : 'text-[#A3A3A3]')}
+				className={clsx('text-[15px]', focused ? 'text-[#FF6A00]' : 'text-[#A3A3A3]')}
 			>
 				{children}
 			</MPText>

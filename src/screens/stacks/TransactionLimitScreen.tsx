@@ -57,7 +57,7 @@ export default function TransactionLimitScreen() {
             |--------------------------------------------------
             */}
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className="bg-[#f0f0f0] min-h-screen flex-1 p-4">
+				<View className="min-h-screen flex-1 bg-[#f0f0f0] p-4">
 					{/**
                     |--------------------------------------------------
                     | ...
@@ -82,8 +82,8 @@ export default function TransactionLimitScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="mt-4">
-						<View className="flex-row justify-between items-center">
-							<MPText className="text-sm" weight="semibold">
+						<View className="flex-row items-center justify-between">
+							<MPText className="text-[15px]" weight="semibold">
 								CAD
 							</MPText>
 
@@ -105,7 +105,7 @@ export default function TransactionLimitScreen() {
                         |--------------------------------------------------
                         */}
 						<View className={clsx('mt-2', showDropDown.cad ? '' : '!hidden')}>
-							<MPText weight="medium" className="text-sm text-[#767676]">
+							<MPText weight="medium" className="text-[15px] text-[#767676]">
 								Please be aware that your send limit is the maximum amount of money you can send using
 								interac e-Transfer based on a 24 hours, 7 days and a 30 days time period.
 							</MPText>
@@ -121,13 +121,13 @@ export default function TransactionLimitScreen() {
                                 | Daily
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 mt-3 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 mt-3 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -137,7 +137,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: $
 											{(
 												Number(transactionLimits?.dailyLimit['CAD'] || 0) -
@@ -171,13 +171,13 @@ export default function TransactionLimitScreen() {
                                 | Weekly
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -187,7 +187,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: $
 											{(
 												Number(transactionLimits?.weeklyLimit['CAD'] || 0) -
@@ -221,13 +221,13 @@ export default function TransactionLimitScreen() {
                                 | Weekly
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -237,7 +237,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: $
 											{(
 												Number(transactionLimits?.monthlyLimit['CAD'] || 0) -
@@ -275,8 +275,8 @@ export default function TransactionLimitScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="mt-5">
-						<View className="flex-row justify-between items-center">
-							<MPText className="text-sm" weight="semibold">
+						<View className="flex-row items-center justify-between">
+							<MPText className="text-[15px]" weight="semibold">
 								NGN
 							</MPText>
 
@@ -298,7 +298,7 @@ export default function TransactionLimitScreen() {
                         |--------------------------------------------------
                         */}
 						<View className={clsx('mt-2', showDropDown.ngn ? '' : '!hidden')}>
-							<MPText weight="medium" className="text-sm text-[#767676]">
+							<MPText weight="medium" className="text-[15px] text-[#767676]">
 								Please be aware that your send limit is the maximum amount of money you can send based
 								on a 24 hours, 7 days and a 30 days time period.
 							</MPText>
@@ -314,13 +314,13 @@ export default function TransactionLimitScreen() {
                                 | Daily
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 mt-3 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 mt-3 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -330,7 +330,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: ₦
 											{(
 												Number(transactionLimits?.dailyLimit['NGN'] || 0) -
@@ -364,13 +364,13 @@ export default function TransactionLimitScreen() {
                                 | Weekly
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -380,7 +380,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: ₦
 											{(
 												Number(transactionLimits?.weeklyLimit['NGN'] || 0) -
@@ -414,13 +414,13 @@ export default function TransactionLimitScreen() {
                                 | Monthly
                                 |--------------------------------------------------
                                 */}
-								<View className="border-[0.5px] gap-4 my-1 rounded-2xl border-[#EEEEEE] p-4 flex-row items-center">
+								<View className="my-1 flex-row items-center gap-4 rounded-2xl border-[0.5px] border-[#EEEEEE] p-4">
 									{/**
                                     |--------------------------------------------------
                                     | Icon
                                     |--------------------------------------------------
                                     */}
-									<View className=''>{Icons.limitIcon}</View>
+									<View className="">{Icons.limitIcon}</View>
 
 									<View className="">
 										<MPText weight="semibold">
@@ -430,7 +430,7 @@ export default function TransactionLimitScreen() {
 												minimumFractionDigits: 2,
 											})}
 										</MPText>
-										<MPText weight="medium" className="text-xs text-[#767676]">
+										<MPText weight="medium" className="text-[13px] text-[#767676]">
 											Available: ₦
 											{(
 												Number(transactionLimits?.monthlyLimit['NGN'] || 0) -

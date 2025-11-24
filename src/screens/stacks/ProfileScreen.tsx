@@ -218,7 +218,7 @@ export default function ProfileScreen() {
 				|--------------------------------------------------
 				*/}
 				<View className="flex-1 bg-[#f0f0f0] p-4">
-					<MPText className="text-xs">Account Settings</MPText>
+					<MPText className="text-[13px]">Account Settings</MPText>
 
 					{/**
 					|--------------------------------------------------
@@ -236,7 +236,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Profile Settings')}
 						>
 							{IconTypes[Object.keys(IconTypes)[0] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[0]}
 							</MPText>
 						</Pressable>
@@ -248,7 +248,7 @@ export default function ProfileScreen() {
 						*/}
 						<Pressable className="flex-row items-center gap-4">
 							{IconTypes[Object.keys(IconTypes)[1] as keyof typeof IconTypes]}
-							<MPText className="mr-auto text-sm" weight="semibold">
+							<MPText className="mr-auto text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[1]}
 							</MPText>
 
@@ -294,7 +294,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Notifications')}
 						>
 							{IconTypes[Object.keys(IconTypes)[2] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[2]}
 							</MPText>
 						</Pressable>
@@ -309,7 +309,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Refer & Earn')}
 						>
 							{IconTypes[Object.keys(IconTypes)[3] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[3]}
 							</MPText>
 						</Pressable>
@@ -321,7 +321,7 @@ export default function ProfileScreen() {
 						*/}
 						<Pressable className="flex-row items-center gap-4">
 							{IconTypes[Object.keys(IconTypes)[4] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[4]}
 							</MPText>
 						</Pressable>
@@ -332,7 +332,7 @@ export default function ProfileScreen() {
 					| Finance
 					|--------------------------------------------------
 					*/}
-					<MPText className="mt-4 text-xs">Finance Settings</MPText>
+					<MPText className="mt-4 text-[13px]">Finance Settings</MPText>
 					<Container className="mt-4 gap-4 bg-white">
 						{/**
 						|--------------------------------------------------
@@ -344,7 +344,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Exchange Rate')}
 						>
 							{IconTypes[Object.keys(IconTypes)[5] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[5]}
 							</MPText>
 						</Pressable>
@@ -359,7 +359,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Saved Beneficiaries')}
 						>
 							{IconTypes[Object.keys(IconTypes)[6] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[6]}
 							</MPText>
 						</Pressable>
@@ -374,13 +374,13 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Transaction Limit')}
 						>
 							{IconTypes[Object.keys(IconTypes)[7] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[7]}
 							</MPText>
 						</Pressable>
 					</Container>
 
-					<MPText className="mt-4 text-xs">Legal</MPText>
+					<MPText className="mt-4 text-[13px]">Legal</MPText>
 					<Container className="mt-4 gap-4 bg-white">
 						{/**
 						|--------------------------------------------------
@@ -392,7 +392,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Terms and Conditions')}
 						>
 							{IconTypes[Object.keys(IconTypes)[13] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[13]}
 							</MPText>
 						</Pressable>
@@ -407,7 +407,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Privacy Policy')}
 						>
 							{IconTypes[Object.keys(IconTypes)[14] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[14]}
 							</MPText>
 						</Pressable>
@@ -419,7 +419,7 @@ export default function ProfileScreen() {
 						*/}
 						<Pressable className="flex-row items-center gap-4" onPress={() => handleNavigation('KYC')}>
 							{IconTypes[Object.keys(IconTypes)[15] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[15]}
 							</MPText>
 						</Pressable>
@@ -430,7 +430,7 @@ export default function ProfileScreen() {
 					| Security setting
 					|--------------------------------------------------
 					*/}
-					<MPText className="mt-4 text-xs">Security Settings</MPText>
+					<MPText className="mt-4 text-[13px]">Security Settings</MPText>
 					<Container className="mt-4 gap-4 bg-white">
 						{/**
 						|--------------------------------------------------
@@ -442,7 +442,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Change Password')}
 						>
 							{IconTypes[Object.keys(IconTypes)[8] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[8]}
 							</MPText>
 						</Pressable>
@@ -457,7 +457,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Reset your PIN')}
 						>
 							{IconTypes[Object.keys(IconTypes)[9] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[9]}
 							</MPText>
 						</Pressable>
@@ -489,7 +489,7 @@ export default function ProfileScreen() {
 							onPress={() => handleNavigation('Devices and Sessions')}
 						>
 							{IconTypes[Object.keys(IconTypes)[11] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[11]}
 							</MPText>
 						</Pressable>
@@ -501,7 +501,7 @@ export default function ProfileScreen() {
 						*/}
 						<Pressable className="flex-row items-center gap-4" onPress={() => handleNavigation('Logout')}>
 							{IconTypes[Object.keys(IconTypes)[12] as keyof typeof IconTypes]}
-							<MPText className="text-sm" weight="semibold">
+							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[12]}
 							</MPText>
 						</Pressable>
@@ -512,7 +512,7 @@ export default function ProfileScreen() {
 					| ...
 					|--------------------------------------------------
 					*/}
-					<MPText className="my-4 text-sm">v1.0.0</MPText>
+					<MPText className="my-4 text-[15px]">v1.0.0</MPText>
 				</View>
 			</ScrollView>
 		</ScreenWrapper>

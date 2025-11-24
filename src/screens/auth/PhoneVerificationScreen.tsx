@@ -21,8 +21,8 @@ import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import InputField from '@src/components/InputField';
 import ScreenWrapper from '@src/components/Wrapper';
-import { clampFontSize } from '@constants/app.constant';
 import { useRequestOtp } from '@services/auth.services';
+//@ts-ignore
 import { RootStackParamList } from '@types/route.params';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 
@@ -79,6 +79,8 @@ export default function PhoneVerificationScreen() {
 			*/}
 			<HeaderWrapper
 				useNavigation={false}
+				titleFontSize="FONT24"
+				subTitleFontSize="FONT14"
 				title="Create Your Account"
 				subtitle="Let’s get started. Enter your phone number to set up your account"
 			/>
@@ -118,43 +120,56 @@ export default function PhoneVerificationScreen() {
 				className="mt-6"
 				checked={terms.terms}
 				component={
-					<View className="flex-row flex-1 items-center w-[88%] flex-wrap">
-						<MPText weight="medium" style={{ lineHeight: 15 }} className="text-[#767676] leading-4 text-xs">
-							By checking this box, you agree to the
-						</MPText>
+					<View className="w-[88%] flex-1 flex-row flex-wrap items-center gap-1">
 						<MPText
 							weight="medium"
-							style={{ lineHeight: 15 }}
-							className="leading-4 text-xs text-[#FF6A00]"
-							onPress={() => navigation.navigate(ROUTE_NAMES.TERMS_AND_CONDITIONS)}
+							fontSize="FONT12"
+							style={{ lineHeight: 18 }}
+							className="text-[13px] leading-4 text-[#767676]"
 						>
-							{' '}
-							Terms and Conditions,{' '}
-						</MPText>
-						<MPText weight="medium" style={{ lineHeight: 15 }} className="text-[#767676] leading-4 text-xs">
+							By checking this box, you agree to the{' '}
 							<MPText
 								weight="medium"
-								style={{ lineHeight: 15 }}
-								className="leading-4 text-xs text-[#FF6A00]"
-								onPress={() => navigation.navigate(ROUTE_NAMES.PRIVACY_POLICY)}
+								fontSize="FONT12"
+								style={{ lineHeight: 18 }}
+								className="text-[13px] leading-4 text-[#FF6A00]"
+								onPress={() => navigation.navigate(ROUTE_NAMES.TERMS_AND_CONDITIONS)}
 							>
-								Privacy Policy{' '}
-							</MPText>
-							and{' '}
-							<MPText
-								weight="medium"
-								style={{ lineHeight: 15 }}
-								className="leading-4 text-xs text-[#FF6A00]"
-								onPress={() => navigation.navigate(ROUTE_NAMES.KYC_TERMS)}
-							>
-								KYC{' '}
-							</MPText>
-							<MPText
-								weight="medium"
-								style={{ lineHeight: 15 }}
-								className="text-[#767676] leading-4 text-xs"
-							>
-								including verification of your identity with your mobile provider/third party.
+								Terms and Conditions,{' '}
+								<MPText
+									weight="medium"
+									fontSize="FONT12"
+									style={{ lineHeight: 18 }}
+									className="text-justify text-[13px] leading-6 text-[#767676]"
+								>
+									<MPText
+										weight="medium"
+										fontSize="FONT12"
+										style={{ lineHeight: 18 }}
+										className="text-[13px] leading-4 text-[#FF6A00]"
+										onPress={() => navigation.navigate(ROUTE_NAMES.PRIVACY_POLICY)}
+									>
+										Privacy Policy{' '}
+									</MPText>
+									and{' '}
+									<MPText
+										weight="medium"
+										fontSize="FONT12"
+										style={{ lineHeight: 18 }}
+										className="text-[13px] leading-4 text-[#FF6A00]"
+										onPress={() => navigation.navigate(ROUTE_NAMES.KYC_TERMS)}
+									>
+										KYC{' '}
+									</MPText>
+									<MPText
+										weight="medium"
+										fontSize="FONT12"
+										style={{ lineHeight: 18 }}
+										className="text-[13px] leading-4 text-[#767676]"
+									>
+										including verification of your identity with your mobile provider/third party.
+									</MPText>
+								</MPText>
 							</MPText>
 						</MPText>
 					</View>
@@ -188,7 +203,9 @@ export default function PhoneVerificationScreen() {
 			>
 				<MPText
 					weight="semibold"
-					className={clsx(terms.terms && terms.policy ? 'text-sm text-white' : 'text-[#D1D1D1] text-sm')}
+					className={clsx(
+						terms.terms && terms.policy ? 'text-[15px] text-white' : 'text-[15px] text-[#D1D1D1]'
+					)}
 				>
 					Continue
 				</MPText>
@@ -199,11 +216,14 @@ export default function PhoneVerificationScreen() {
 			| Already have an account
 			|--------------------------------------------------
 			*/}
-			<MPText className="text-sm text-center mt-4">
-				<MPText className="text-[#484848] text-sm">Already have an account? </MPText>
+			<MPText className="mt-4 text-center text-[15px]">
+				<MPText fontSize="FONT14" className="text-[15px] text-[#484848]">
+					Already have an account?{' '}
+				</MPText>
 				<MPText
+					fontSize="FONT14"
 					weight="semibold"
-					className="text-[#FF6A00] text-sm"
+					className="text-[15px] text-[#FF6A00]"
 					onPress={() => navigation.navigate('LoginScreen', {})}
 				>
 					Log in

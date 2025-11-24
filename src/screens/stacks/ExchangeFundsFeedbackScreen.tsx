@@ -125,7 +125,7 @@ export default function ExchangeFundsFeedbackScreen() {
 				<MPText weight="semibold" className="mt-4 text-[18px]">
 					Exchange successful!
 				</MPText>
-				<MPText weight="medium" className="text-sm text-[#767676]">
+				<MPText weight="medium" className="text-[15px] text-[#767676]">
 					Your wallet has been funded
 				</MPText>
 
@@ -139,7 +139,7 @@ export default function ExchangeFundsFeedbackScreen() {
 					className="mt-6"
 					onPress={() => navigation.navigate('DashboardScreen' as never)}
 				>
-					<MPText className="text-sm text-white" weight="semibold">
+					<MPText className="text-[15px] text-white" weight="semibold">
 						Back to wallet{' '}
 					</MPText>
 				</MPButton>
@@ -154,7 +154,7 @@ export default function ExchangeFundsFeedbackScreen() {
 						onPress={handleDownload}
 						className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white"
 					>
-						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+						<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 							Download Receipt
 						</MPText>
 					</Pressable>

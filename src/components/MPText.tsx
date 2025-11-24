@@ -3,16 +3,18 @@
 | Npm imports
 |--------------------------------------------------
 */
+import { fontSizes } from '@constants/app.constant';
 import React from 'react';
 import { Platform, Text, TextProps } from 'react-native';
 
 interface Props extends TextProps {
 	className?: string;
 	children: React.ReactNode;
+	fontSize?: keyof typeof fontSizes;
 	weight?: 'regular' | 'bold' | 'medium' | 'semibold' | 'extra-bold';
 }
 
-export default function MPText({ children, weight = 'regular', className, ...props }: Props) {
+export default function MPText({ children, weight = 'regular', className, fontSize, ...props }: Props) {
 	/**
     |--------------------------------------------------
     | Font setup
@@ -56,8 +58,8 @@ export default function MPText({ children, weight = 'regular', className, ...pro
 	return (
 		<Text
 			{...props}
+			style={[{ lineHeight: 20, fontSize: fontSizes[fontSize || 'FONT14'] }, props.style]}
 			className={`text-base leading-9 ${Platform.OS === 'ios' ? iosFontFamily : fontFamily} ${className}`}
-			style={[{ lineHeight: 20 }, props.style]}
 		>
 			{children}
 		</Text>

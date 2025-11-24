@@ -22,6 +22,7 @@ import MPButton from '../MPButton';
 import { CloseIcon } from '@assets/svgs';
 import DataRepresentation from '../DataRepresentation';
 import { TransactionInterface } from '@interfaces/transaction.interface';
+import utils from '@lib/utils';
 
 interface Props {
 	showModal: boolean;
@@ -111,7 +112,7 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                     | Title
                     |--------------------------------------------------
                     */}
-					<MPText weight="bold" className="text-center text-xl">
+					<MPText fontSize="FONT18" weight="bold" className="text-center text-xl">
 						Transaction details
 					</MPText>
 
@@ -201,7 +202,7 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
 										weight="medium"
 										style={{ fontSize: 8, lineHeight: 10 }}
 										className={clsx(
-											'text-xs',
+											'text-[13px]',
 											transaction?.status === 'pending'
 												? 'text-[#C59F07]'
 												: transaction?.status === 'failed'
@@ -242,12 +243,14 @@ export default function TransactionDetailsModal({ showModal, setShowModal, trans
                         | Need help? Contact support
                         |--------------------------------------------------
                         */}
-						<MPText weight="medium" className="text-center text-sm">
-							Need help?{' '}
-							<MPText weight="semibold" className="text-sm text-[#FF6A00]">
-								Contact support
+						<Pressable onPress={() => utils.handleOpenWhatsApp()}>
+							<MPText weight="medium" className="text-center text-[15px]">
+								Need help?{' '}
+								<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
+									Contact support
+								</MPText>
 							</MPText>
-						</MPText>
+						</Pressable>
 					</View>
 				</View>
 			</View>

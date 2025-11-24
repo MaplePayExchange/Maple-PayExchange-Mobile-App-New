@@ -70,14 +70,14 @@ export default function BiometricsModal({ setVisible }: Props) {
     */
 	return (
 		<Modal transparent visible={showBiometricsModal} animationType="slide">
-			<Pressable onPress={() => setVisible()} className="bg-black/10 flex-1">
-				<View className="bg-white rounded-2xl mt-auto w-full min-h-[290px] px-6 pt-4 items-center">
+			<Pressable onPress={() => setVisible()} className="flex-1 bg-black/10">
+				<View className="mt-auto min-h-[290px] w-full items-center rounded-2xl bg-white px-6 pt-4">
 					{/**
                     |--------------------------------------------------
                     | Drawer
                     |--------------------------------------------------
                     */}
-					<Pressable className="bg-[#F5F5F5] w-[46px] h-[7px] mb-4 rounded-full" />
+					<Pressable className="mb-4 h-[7px] w-[46px] rounded-full bg-[#F5F5F5]" />
 
 					<View>
 						<Svg width="56" height="56" viewBox="0 0 56 56" fill="none">
@@ -130,7 +130,7 @@ export default function BiometricsModal({ setVisible }: Props) {
 					<MPText weight="bold" style={{ fontSize: 18 }} className="mt-5">
 						Enable biometrics
 					</MPText>
-					<MPText weight="regular" className="text-[#767676] text-center text-sm mt-1">
+					<MPText weight="regular" className="mt-1 text-center text-[15px] text-[#767676]">
 						You can enable face ID/ touch ID to gain access to your account easily.
 					</MPText>
 
@@ -152,9 +152,9 @@ export default function BiometricsModal({ setVisible }: Props) {
 					| Action buttons
 					|--------------------------------------------------
 					*/}
-					<View className="flex-row justify-between mt-8 mb-8">
+					<View className="mb-8 mt-8 flex-row justify-between">
 						<MPButton onPress={() => setVisible()} className="w-[45%] max-w-[45%]">
-							<MPText className="text-sm text-[#FF6A00]" weight="semibold">
+							<MPText className="text-[15px] text-[#FF6A00]" weight="semibold">
 								Cancel
 							</MPText>
 						</MPButton>
@@ -172,7 +172,7 @@ export default function BiometricsModal({ setVisible }: Props) {
 								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true, hasPromptedUser: true });
 							}}
 						>
-							<MPText weight="semibold" className="text-sm text-white">
+							<MPText weight="semibold" className="text-[15px] text-white">
 								Remind me later
 							</MPText>
 						</MPButton>

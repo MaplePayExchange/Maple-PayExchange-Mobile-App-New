@@ -73,8 +73,8 @@ export default function NotificationsSettingsScreen() {
             |--------------------------------------------------
             */}
 			<ScrollView showsVerticalScrollIndicator={false}>
-				<View className="bg-[#f0f0f0] min-h-screen flex-1 p-4">
-					<MPText className="text-xs mb-3">In-app notifications</MPText>
+				<View className="min-h-screen flex-1 bg-[#f0f0f0] p-4">
+					<MPText className="mb-3 text-[13px]">In-app notifications</MPText>
 
 					{/**
                     |--------------------------------------------------
@@ -94,7 +94,7 @@ export default function NotificationsSettingsScreen() {
 						/>
 					</Container>
 
-					<MPText className="text-xs mb-3">Push notifications</MPText>
+					<MPText className="mb-3 text-[13px]">Push notifications</MPText>
 					<View className={clsx('gap-4', isPending ? 'pointer-events-none opacity-65' : '')}>
 						{/**
                         |--------------------------------------------------

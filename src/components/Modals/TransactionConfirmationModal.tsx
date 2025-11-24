@@ -55,7 +55,7 @@ export default function TransactionConfirmationModal({
                 |--------------------------------------------------
                 */}
 				<View className="mt-[20px]">
-					<View className="h-[88px] w-[88px] translate-y-[20px] z-20 border-[10px] border-white bg-[#0E314C] self-center rounded-full justify-center items-center">
+					<View className="z-20 h-[88px] w-[88px] translate-y-[20px] items-center justify-center self-center rounded-full border-[10px] border-white bg-[#0E314C]">
 						<SendPreviewIcon />
 					</View>
 
@@ -64,7 +64,7 @@ export default function TransactionConfirmationModal({
                     | Content
                     |--------------------------------------------------
                     */}
-					<View className="bg-[#F7F7F7] rounded-3xl py-5 px-4 gap-6">
+					<View className="gap-6 rounded-3xl bg-[#F7F7F7] px-4 py-5">
 						<DataRepresentation label="Currency" value={currencySymbol === '₦' ? 'NGN' : 'CAD'} />
 						<DataRepresentation label="Amount" value={`${currencySymbol}${amount}`} />
 
@@ -84,8 +84,8 @@ export default function TransactionConfirmationModal({
                         | Confirm transaction button
                         |--------------------------------------------------
                         */}
-						<MPButton onPress={onConfirm} useGradientBg className="w-[167px] h-[40px] self-center">
-							<MPText weight="semibold" className="text-sm text-white">
+						<MPButton onPress={onConfirm} useGradientBg className="h-[40px] w-[167px] self-center">
+							<MPText weight="semibold" className="text-[15px] text-white">
 								Confirm transaction
 							</MPText>
 						</MPButton>

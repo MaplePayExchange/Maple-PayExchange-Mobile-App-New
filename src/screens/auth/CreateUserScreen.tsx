@@ -41,6 +41,7 @@ import { RootStackParamList } from '@types/route.params';
 import { getDeviceHardwareId } from '@hooks/getDeviceHardwareId';
 import AutocompleteExample from '@src/components/PlacesAutoComplete';
 import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@assets/svgs';
+import { fontSizes } from '@constants/app.constant';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -150,6 +151,8 @@ export default function CreateUserScreen() {
 			|--------------------------------------------------
 			*/}
 			<HeaderWrapper
+				titleFontSize="FONT24"
+				subTitleFontSize="FONT14"
 				title="Create Your Account"
 				onlClick={() => navigation.navigate('OnboardingScreen')}
 				subtitle="Ensure you enter your legal names as shown on your government-issued identity document"
@@ -177,7 +180,7 @@ export default function CreateUserScreen() {
 							| Country of residence
 							|--------------------------------------------------
 							*/}
-							<MPText weight="medium" className="text-sm">
+							<MPText weight="medium" className="text-[15px]" fontSize="FONT14">
 								Country of residence
 							</MPText>
 							<TouchableOpacity
@@ -207,7 +210,7 @@ export default function CreateUserScreen() {
 											className="mb-4 items-center justify-between"
 											style={{ flexDirection: 'row' }}
 										>
-											<MPText weight="semibold" className="text-base">
+											<MPText fontSize="FONT16" weight="semibold" className="text-base">
 												Country of residence
 											</MPText>
 
@@ -228,12 +231,13 @@ export default function CreateUserScreen() {
 										*/}
 										<View className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
 											<TextInput
-												className="text-sm"
 												value={searchQuery}
 												placeholder="Search"
 												returnKeyType="done"
+												className="text-[15px]"
 												submitBehavior="blurAndSubmit"
 												placeholderTextColor="#484848"
+												style={{ fontSize: fontSizes['FONT14'] }}
 												onChangeText={(value) => setSearchQuery(value)}
 											/>
 
@@ -263,7 +267,9 @@ export default function CreateUserScreen() {
 													className="flex-row items-center gap-3 border-b border-b-[#EEEEEE] py-2"
 												>
 													<MPText>{country.flag}</MPText>
-													<MPText className="text-sm text-[#1A1A1A]">{country.name}</MPText>
+													<MPText fontSize="FONT14" className="text-[15px]  text-[#1A1A1A]">
+														{country.name}
+													</MPText>
 												</Pressable>
 											))}
 										</ScrollView>
@@ -277,7 +283,7 @@ export default function CreateUserScreen() {
 							|--------------------------------------------------
 							*/}
 							<View className="mt-6">
-								<MPText weight="medium" className="text-sm">
+								<MPText weight="medium" className="text-[15px]" fontSize="FONT14">
 									Address
 								</MPText>
 
@@ -373,7 +379,7 @@ export default function CreateUserScreen() {
 											},
 										}}
 									/>
-									<MPText className="mt-1 text-sm">
+									<MPText className="mt-1 text-[15px]" fontSize="FONT14">
 										(Please fill this field if BVN is registered in your maiden name)
 									</MPText>
 								</View>
@@ -384,7 +390,7 @@ export default function CreateUserScreen() {
 								|--------------------------------------------------
 								*/}
 								<View>
-									<MPText weight="medium" className="mb-2 text-sm">
+									<MPText weight="medium" className="mb-2 text-[15px]" fontSize="FONT14">
 										Birthday
 									</MPText>
 									<TouchableOpacity
@@ -446,29 +452,29 @@ export default function CreateUserScreen() {
 								<View className="-translate-y-2">
 									<MPText
 										weight="medium"
-										style={{ fontSize: 12 }}
-										className={clsx('text-xs leading-6 text-[#767676]')}
+										style={{ fontSize: fontSizes['FONT12'] }}
+										className={clsx('text-[13px] leading-6 text-[#767676]')}
 									>
 										Min 8 characters
 									</MPText>
 									<MPText
 										weight="medium"
-										style={{ fontSize: 12 }}
-										className={clsx('text-xs leading-6 text-[#767676]')}
+										style={{ fontSize: fontSizes['FONT12'] }}
+										className={clsx('text-[13px] leading-6 text-[#767676]')}
 									>
 										At least 1 uppercase
 									</MPText>
 									<MPText
 										weight="medium"
-										style={{ fontSize: 12 }}
-										className={clsx('text-xs leading-6 text-[#767676]')}
+										style={{ fontSize: fontSizes['FONT12'] }}
+										className={clsx('text-[13px] leading-6 text-[#767676]')}
 									>
 										At least 1 special character (e.g &%$#*)
 									</MPText>
 									<MPText
 										weight="medium"
-										style={{ fontSize: 12 }}
-										className={clsx('text-xs leading-6 text-[#767676]')}
+										style={{ fontSize: fontSizes['FONT12'] }}
+										className={clsx('text-[13px] leading-6 text-[#767676]')}
 									>
 										At least 1 number
 									</MPText>
@@ -523,7 +529,8 @@ export default function CreateUserScreen() {
 							>
 								<MPText
 									weight="semibold"
-									className={clsx(isValid ? 'text-white' : 'text-sm text-[#D1D1D1]')}
+									fontSize="FONT14"
+									className={clsx(isValid ? 'text-white' : 'text-[15px]text-[#D1D1D1]')}
 								>
 									Continue
 								</MPText>
@@ -534,7 +541,7 @@ export default function CreateUserScreen() {
 							| Already have an account
 							|--------------------------------------------------
 							*/}
-							<MPText className="mt-6 text-center text-sm">
+							<MPText className="mt-6 text-center text-[15px]" fontSize="FONT14">
 								<MPText className="text-[#484848]">Already have an account? </MPText>
 								<MPText
 									onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}

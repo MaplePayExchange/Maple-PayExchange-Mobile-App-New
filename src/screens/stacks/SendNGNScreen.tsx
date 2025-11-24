@@ -184,17 +184,17 @@ export default function SendNGNScreen() {
 				| ...
 				|--------------------------------------------------
 				*/}
-				<View className="flex-row justify-between items-center mb-10">
+				<View className="mb-10 flex-row items-center justify-between">
 					{/**
 					|--------------------------------------------------
 					| Step 1 of 2
 					|--------------------------------------------------
 					*/}
 					<View>
-						<MPText weight="medium" className="text-sm text-[#767676]">
+						<MPText weight="medium" className="text-[15px] text-[#767676]">
 							Step 1/2
 						</MPText>
-						<MPText weight="semibold" className="text-xs">
+						<MPText weight="semibold" className="text-[13px]">
 							Enter recipient details
 						</MPText>
 					</View>
@@ -205,7 +205,7 @@ export default function SendNGNScreen() {
 					|--------------------------------------------------
 					*/}
 					<Pressable className="!hidden">
-						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+						<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 							See our rates
 						</MPText>
 					</Pressable>
@@ -223,10 +223,10 @@ export default function SendNGNScreen() {
 						contentContainerStyle={{ flexGrow: 1 }}
 					>
 						<View className="w-full rounded-3xl border border-[#EEEEEE] p-5">
-							<MPText weight="semibold" className="text-base text-center">
+							<MPText weight="semibold" className="text-center text-base">
 								Recipient’s details
 							</MPText>
-							<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
+							<MPText weight="medium" className="mb-6 text-center text-[15px] text-[#767676]">
 								Enter recipient’s information
 							</MPText>
 
@@ -260,13 +260,13 @@ export default function SendNGNScreen() {
                                 |--------------------------------------------------
                                 */
 								contentChildren={
-									<View className="gap-3 pb-6 min-h-[400px]">
+									<View className="min-h-[400px] gap-3 pb-6">
 										{/**
                                         |--------------------------------------------------
                                         | Title
                                         |--------------------------------------------------
                                         */}
-										<MPText weight="semibold" className="text-sm text-center mb-5">
+										<MPText weight="semibold" className="mb-5 text-center text-[15px]">
 											Banks
 										</MPText>
 
@@ -277,10 +277,10 @@ export default function SendNGNScreen() {
                                         */}
 										<Pressable
 											onPress={() => searchInputRef.current?.focus()}
-											className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5"
+											className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5"
 										>
 											<TextInput
-												className="text-sm"
+												className="text-[15px]"
 												value={searchQuery}
 												ref={searchInputRef}
 												placeholder="Search"
@@ -333,13 +333,13 @@ export default function SendNGNScreen() {
 															setShowBanksModal((prevState) => !prevState);
 														}}
 														className={clsx(
-															'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
+															'h-[35px] flex-row items-center rounded-[8px] border px-4 text-[15px]',
 															item._id.toLowerCase() === selectedBank?._id
 																? 'border-[#FF6A00]'
 																: 'border-[#EEEEEE]'
 														)}
 													>
-														<MPText weight="medium" className="text-sm">
+														<MPText weight="medium" className="text-[15px]">
 															{item.name}
 														</MPText>
 													</Pressable>
@@ -418,7 +418,7 @@ export default function SendNGNScreen() {
 								component={
 									<MPText
 										weight="medium"
-										className="text-[#767676] text-xs mt-[2px]"
+										className="mt-[2px] text-[13px] text-[#767676]"
 										style={{ lineHeight: 15 }}
 									>
 										Save as beneficiary
@@ -437,7 +437,7 @@ export default function SendNGNScreen() {
 								disabled={!isValid || selectedBank === null}
 								useGradientBg={isValid && selectedBank !== null}
 							>
-								<MPText weight="semibold" className="text-sm text-white">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									Continue
 								</MPText>
 							</MPButton>

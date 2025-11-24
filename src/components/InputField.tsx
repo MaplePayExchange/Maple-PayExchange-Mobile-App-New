@@ -105,7 +105,7 @@ export default function InputField<T extends FieldValues>({
                             |--------------------------------------------------
                             */}
 							{label && (
-								<MPText weight="medium" className="text-sm mb-1.5">
+								<MPText weight="medium" className="mb-1.5 text-[15px]">
 									{label}
 								</MPText>
 							)}
@@ -114,7 +114,7 @@ export default function InputField<T extends FieldValues>({
 								style={{ flexDirection: 'row' }}
 								onPress={() => inputRef?.current?.focus()}
 								className={clsx(
-									'rounded-[12px] px-4 text-base bg-[#1018280D] min-h-[42px] items-center',
+									'min-h-[42px] items-center rounded-[12px] bg-[#1018280D] px-4 text-base',
 									wrapperClassName
 								)}
 							>
@@ -126,10 +126,10 @@ export default function InputField<T extends FieldValues>({
 								{type === 'phone' && (
 									<Pressable
 										style={{ flexDirection: 'row' }}
-										className="items-center w-[50px]"
+										className="w-[50px] items-center"
 										onPress={() => setVisible(!visible)}
 									>
-										<MPText weight="medium" className="text-sm text-[#333333]">
+										<MPText weight="medium" className="text-[15px] text-[#333333]">
 											{phoneInput?.flag}
 										</MPText>
 										<CarretDownIcon />
@@ -154,8 +154,8 @@ export default function InputField<T extends FieldValues>({
 									placeholderTextColor="#767676"
 									onSubmitEditing={Keyboard.dismiss}
 									key={showPassword ? 'visible' : 'hidden'}
-									placeholderClassName="text-sm font-manrope-medium"
-									className="max-w-[90%] min-w-[40%] font-manrope-medium"
+									placeholderClassName="text-[15px] font-manrope-medium"
+									className="min-w-[40%] max-w-[90%] font-manrope-medium"
 									{...rest}
 									style={{ color: 'black' }}
 									secureTextEntry={type === 'password' && !showPassword}
@@ -227,7 +227,7 @@ export default function InputField<T extends FieldValues>({
                             |--------------------------------------------------
                             */}
 							{error && (
-								<MPText weight="medium" className="text-xs text-[#D92D20]">
+								<MPText fontSize="FONT12" weight="medium" className="text-[13px] text-[#D92D20]">
 									{error.message || 'Invalid input'}
 								</MPText>
 							)}
@@ -242,9 +242,9 @@ export default function InputField<T extends FieldValues>({
             |--------------------------------------------------
             */}
 			<Modal animationType="slide" transparent visible={visible}>
-				<View className="w-full bg-white mt-auto h-[70%] rounded-t-3xl p-6">
-					<View className="items-center justify-between mb-4" style={{ flexDirection: 'row' }}>
-						<MPText weight="semibold" className="text-base">
+				<View className="mt-auto h-[70%] w-full rounded-t-3xl bg-white p-6">
+					<View className="mb-4 items-center justify-between" style={{ flexDirection: 'row' }}>
+						<MPText fontSize="FONT16" weight="semibold" className="text-base">
 							Country code
 						</MPText>
 
@@ -263,9 +263,9 @@ export default function InputField<T extends FieldValues>({
 					| Content
 					|--------------------------------------------------
 					*/}
-					<View className="h-[42px] mb-3 bg-[#1018280D] justify-between rounded-[24px] flex-row items-center px-5">
+					<View className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
 						<TextInput
-							className="text-sm"
+							className="text-[15px]"
 							value={searchQuery}
 							placeholder="Search"
 							placeholderTextColor="#484848"
@@ -292,7 +292,7 @@ export default function InputField<T extends FieldValues>({
 							<TouchableOpacity
 								key={_code.code}
 								activeOpacity={0.8}
-								className="items-center gap-3 mb-4"
+								className="mb-4 items-center gap-3"
 								style={{ flexDirection: 'row' }}
 								onPress={() => {
 									setPhoneInput(_code);

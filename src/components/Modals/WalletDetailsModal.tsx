@@ -38,7 +38,7 @@ export default function WalletDetailsModal({
 	return (
 		<Modal transparent visible={showWalletDetails} animationType="slide" onDismiss={onDismiss}>
 			<Pressable onPress={() => setShowWalletDetails(false)} className="flex-1 bg-black/10">
-				<View className="rounded-3xl bg-white mt-auto p-4 min-h-[306px]">
+				<View className="mt-auto min-h-[306px] rounded-3xl bg-white p-4">
 					{/**
                     |--------------------------------------------------
                     | Close icon
@@ -56,7 +56,7 @@ export default function WalletDetailsModal({
 					<MPText weight="bold" className="" style={{ fontSize: 18 }}>
 						{selectedWallet?.currency} Account Details
 					</MPText>
-					<MPText weight="medium" className="text-sm text-[#767676]">
+					<MPText weight="medium" className="text-[15px] text-[#767676]">
 						Here are your {selectedWallet?.currency} account details.
 					</MPText>
 
@@ -66,12 +66,12 @@ export default function WalletDetailsModal({
                         | Account holder
                         |--------------------------------------------------
                         */}
-						<View className="flex-row justify-between items-center">
+						<View className="flex-row items-center justify-between">
 							<View>
-								<MPText weight="medium" className="text-sm text-[#767676]">
+								<MPText weight="medium" className="text-[15px] text-[#767676]">
 									Account holder
 								</MPText>
-								<MPText weight="medium" className="text-sm">
+								<MPText weight="medium" className="text-[15px]">
 									{selectedWallet?.currency === 'CAD'
 										? accountName
 										: selectedWallet?.accountInformation?.accountName}
@@ -102,12 +102,12 @@ export default function WalletDetailsModal({
                         |--------------------------------------------------
                         */}
 						{selectedWallet?.currency === 'CAD' && (
-							<View className="flex-row justify-between items-center">
+							<View className="flex-row items-center justify-between">
 								<View>
-									<MPText weight="medium" className="text-sm text-[#767676]">
+									<MPText weight="medium" className="text-[15px] text-[#767676]">
 										Interac E-Transfer
 									</MPText>
-									<MPText weight="medium" className="text-sm">
+									<MPText weight="medium" className="text-[15px]">
 										{selectedWallet.email}
 									</MPText>
 								</View>
@@ -135,12 +135,12 @@ export default function WalletDetailsModal({
                                 | Account number
                                 |--------------------------------------------------
                                 */}
-								<View className="flex-row justify-between items-center">
+								<View className="flex-row items-center justify-between">
 									<View>
-										<MPText weight="medium" className="text-sm text-[#767676]">
+										<MPText weight="medium" className="text-[15px] text-[#767676]">
 											Account Number
 										</MPText>
-										<MPText weight="medium" className="text-sm">
+										<MPText weight="medium" className="text-[15px]">
 											{selectedWallet.accountInformation?.accountNumber}
 										</MPText>
 									</View>
@@ -166,12 +166,12 @@ export default function WalletDetailsModal({
                                 | Bank name
                                 |--------------------------------------------------
                                 */}
-								<View className="flex-row justify-between items-center">
+								<View className="flex-row items-center justify-between">
 									<View>
-										<MPText weight="medium" className="text-sm text-[#767676]">
+										<MPText weight="medium" className="text-[15px] text-[#767676]">
 											Bank Name
 										</MPText>
-										<MPText weight="medium" className="text-sm">
+										<MPText weight="medium" className="text-[15px]">
 											{selectedWallet?.accountInformation?.bankName}
 										</MPText>
 									</View>

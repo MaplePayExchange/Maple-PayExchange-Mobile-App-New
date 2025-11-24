@@ -134,11 +134,11 @@ export default function ProfileSettingsScreen() {
                 */}
 				<View
 					className={clsx(
-						'bg-[#f0f0f0] flex-1 p-4 min-h-[90vh]',
+						'min-h-[90vh] flex-1 bg-[#f0f0f0] p-4',
 						isPending ? 'pointer-events-none opacity-55' : ''
 					)}
 				>
-					<View className="size-[118px] relative rounded-full flex-row justify-center items-center bg-[#F7F7F7] self-center mt-6 mb-8">
+					<View className="relative mb-8 mt-6 size-[118px] flex-row items-center justify-center self-center rounded-full bg-[#F7F7F7]">
 						{/**
 						|--------------------------------------------------
 						| Image picker
@@ -201,7 +201,7 @@ export default function ProfileSettingsScreen() {
 					| Product details
 					|--------------------------------------------------
 					*/}
-					<MPText className="text-sm">Personal Details</MPText>
+					<MPText className="text-[15px]">Personal Details</MPText>
 
 					{/**
 					|--------------------------------------------------
@@ -226,8 +226,8 @@ export default function ProfileSettingsScreen() {
                     | Interac
                     |--------------------------------------------------
                     */}
-					<View className="flex-row items-center gap-2 my-4">
-						<MPText className="text-sm">Interac E-Transfer Tag</MPText>
+					<View className="my-4 flex-row items-center gap-2">
+						<MPText className="text-[15px]">Interac E-Transfer Tag</MPText>
 						<Pressable onPress={() => utils.copyToClipboard(user?.mail?.email || '')}>
 							<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 								<G clipPath="url(#clip0_290_3884)">
@@ -283,7 +283,7 @@ export default function ProfileSettingsScreen() {
 					|--------------------------------------------------
 					*/}
 					<Container className="rounded-lg">
-						<MPText className="text-sm" weight="medium">
+						<MPText className="text-[15px]" weight="medium">
 							{user?.mail?.email}
 						</MPText>
 					</Container>
@@ -293,11 +293,11 @@ export default function ProfileSettingsScreen() {
 					| ...
 					|--------------------------------------------------
 					*/}
-					<Container className="!bg-[#9F0651] items-center mt-5">
+					<Container className="mt-5 items-center !bg-[#9F0651]">
 						<MPText
 							weight="medium"
 							style={{ lineHeight: 15 }}
-							className="text-center text-white text-xs max-w-[302px]"
+							className="max-w-[302px] text-center text-[13px] text-white"
 						>
 							You are unable to edit this profile because your account has already been verified. If you
 							need to edit, please reach out to support
@@ -310,9 +310,9 @@ export default function ProfileSettingsScreen() {
 						*/}
 						<MPButton
 							onPress={handleOpenWhatsApp}
-							className="bg-white rounded-full mt-4 max-w-[122px] h-[32px]"
+							className="mt-4 h-[32px] max-w-[142px] rounded-full bg-white"
 						>
-							<MPText weight="medium" className="text-sm">
+							<MPText weight="medium" className="text-[15px]">
 								Contact support
 							</MPText>
 						</MPButton>

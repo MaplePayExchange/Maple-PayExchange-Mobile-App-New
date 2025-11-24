@@ -56,7 +56,7 @@ export default function ResetPinScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper center title="Reset PIN" />
+			<HeaderWrapper center title="Reset PIN" titleFontSize="FONT24" />
 
 			{/**
             |--------------------------------------------------
@@ -113,9 +113,13 @@ export default function ResetPinScreen() {
 					useGradientBg={isValid}
 					onPress={handleSubmit(onSubmit)}
 					disabled={!isValid || isPending}
-					className="mt-10 max-w-[150px] mx-auto"
+					className="mx-auto mt-10 max-w-[150px]"
 				>
-					<MPText weight="semibold" className={clsx(isValid ? 'text-white' : 'text-[#D1D1D1] text-sm')}>
+					<MPText
+						fontSize="FONT14"
+						weight="semibold"
+						className={clsx(isValid ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
+					>
 						Reset PIN
 					</MPText>
 				</MPButton>

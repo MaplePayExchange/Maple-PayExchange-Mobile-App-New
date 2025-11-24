@@ -29,8 +29,8 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 		<ScreenWrapper>
 			<ScrollView showsHorizontalScrollIndicator={false}>
 				<View>
-					<View className="h-[64px] w-full flex-row justify-between items-center bg-[#EE0979] px-5">
-						<MPText weight="semibold" className="text-white text-lg">
+					<View className="h-[64px] w-full flex-row items-center justify-between bg-[#EE0979] px-5">
+						<MPText weight="semibold" className="text-lg text-white">
 							Transaction receipt
 						</MPText>
 
@@ -47,7 +47,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 					| Title
 					|--------------------------------------------------
 					*/}
-					<MPText weight="medium" className="text-sm text-[#484848] mt-8 self-center mb-2">
+					<MPText weight="medium" className="mb-2 mt-8 self-center text-[15px] text-[#484848]">
 						{transaction.type === 'Incoming'
 							? 'Deposit'
 							: transaction.type === 'Outgoing'
@@ -61,7 +61,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 					| Amount
 					|--------------------------------------------------
 					*/}
-					<MPText weight="semibold" className="text-[32px] self-center mb-8" style={{ lineHeight: 40 }}>
+					<MPText weight="semibold" className="mb-8 self-center text-[32px]" style={{ lineHeight: 40 }}>
 						{transaction.sourceCurrency === 'NGN' ? '₦' : '$'}{' '}
 						{(transaction.type === 'Incoming'
 							? transaction?.amountReceived
@@ -257,7 +257,7 @@ export default function Receipt({ transaction }: { transaction: TransactionInter
 					<MPText
 						weight="medium"
 						style={{ lineHeight: 14 }}
-						className="text-center text-xs max-w-[60%] self-center mt-12"
+						className="mt-12 max-w-[60%] self-center text-center text-[13px]"
 					>
 						For complaints regarding this transaction, contact our support team.
 					</MPText>

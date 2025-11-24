@@ -8,7 +8,7 @@ import DeviceInfo from 'react-native-device-info';
 import NetInfo from '@react-native-community/netinfo';
 import VersionCheck from 'react-native-version-check';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { Alert, ToastAndroid, Platform } from 'react-native';
+import { Alert, ToastAndroid, Platform, Linking } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -259,6 +259,44 @@ class Utils {
 		*/
 		return updateResponse;
 	}
+
+	/**
+	|--------------------------------------------------
+	| Handle open whatsApp
+	|--------------------------------------------------
+	*/
+	handleOpenWhatsApp = (number?: string, msg?: string) => {
+		/**
+		|--------------------------------------------------
+		| Phone to initiate chat with
+		|--------------------------------------------------
+		*/
+		const phone = number || '+16475760680';
+
+		/**
+		|--------------------------------------------------
+		| Message to prompt with
+		|--------------------------------------------------
+		*/
+		const message = msg || 'Hello, I need support with my:';
+
+		/**
+		|--------------------------------------------------
+		| WhatsApp url
+		|--------------------------------------------------
+		*/
+		const url = `whatsapp://send?phone=${phone}&text=${encodeURIComponent(message)}`;
+
+		Linking.openURL(url).catch(() => {
+			/**
+			|--------------------------------------------------
+			| If WhatsApp is not installed, fall back to web
+			| WhatsApp
+			|--------------------------------------------------
+			*/
+			Linking.openURL(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`);
+		});
+	};
 }
 
 export default new Utils();

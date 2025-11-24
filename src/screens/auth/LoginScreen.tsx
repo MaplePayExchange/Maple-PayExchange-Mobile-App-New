@@ -239,7 +239,7 @@ export default function LoginScreen() {
 							/>
 						</View>
 						<Pressable onPress={() => navigation.navigate('ForgotPasswordScreen')} className="mt-2">
-							<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+							<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 								Forgot password?
 							</MPText>
 						</Pressable>
@@ -258,7 +258,7 @@ export default function LoginScreen() {
 						>
 							<MPText
 								weight="semibold"
-								className={clsx(isValid ? 'text-white' : 'text-sm text-[#D1D1D1]')}
+								className={clsx(isValid ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
 							>
 								Continue
 							</MPText>
@@ -269,13 +269,13 @@ export default function LoginScreen() {
 						| Already have an account
 						|--------------------------------------------------
 						*/}
-						<MPText className="mt-4 text-center text-sm">
-							<MPText weight="semibold" className="text-sm text-[#484848]">
+						<MPText className="mt-4 text-center text-[15px]">
+							<MPText weight="semibold" className="text-[15px] text-[#484848]">
 								Are you a new user?{' '}
 							</MPText>
 							<MPText
 								weight="semibold"
-								className="text-sm text-[#FF6A00]"
+								className="text-[15px] text-[#FF6A00]"
 								onPress={() => navigation.navigate(ROUTE_NAMES.PHONE_VERIFICATION)}
 							>
 								{' '}
@@ -380,7 +380,7 @@ export default function LoginScreen() {
 								New update is available
 							</MPText>
 
-							<MPText className="text-center text-sm text-[#707070]" weight="medium">
+							<MPText className="text-center text-[15px] text-[#707070]" weight="medium">
 								A new version of MPExchange is available. Please update to get the latest version
 							</MPText>
 						</View>
@@ -401,7 +401,7 @@ export default function LoginScreen() {
 							useGradientBg
 							className="mx-auto mt-8 max-w-[200px]"
 						>
-							<MPText weight="semibold" className="text-sm text-white">
+							<MPText weight="semibold" className="text-[15px] text-white">
 								Update now
 							</MPText>
 						</MPButton>
@@ -411,7 +411,7 @@ export default function LoginScreen() {
 						| Version
 						|--------------------------------------------------
 						*/}
-						<MPText weight="regular" className="mt-2 text-center text-xs text-[#707070]">
+						<MPText weight="regular" className="mt-2 text-center text-[13px] text-[#707070]">
 							Version {versionResponse?.version}
 						</MPText>
 					</SafeAreaView>

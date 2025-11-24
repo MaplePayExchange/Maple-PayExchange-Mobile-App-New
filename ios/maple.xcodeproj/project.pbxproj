@@ -32,6 +32,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = maple/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = maple/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1BBCC2442EAFFF6A00FB6029 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1BC891262ED1AFFA0004259C /* maple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = maple.entitlements; path = maple/maple.entitlements; sourceTree = "<group>"; };
 		1DB258BCF51744F0B31F86AE /* Manrope_500Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope_500Medium.ttf; path = ../assets/fonts/Manrope_500Medium.ttf; sourceTree = "<group>"; };
 		33A658E2E247CEFBCC7D476D /* Pods-maple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maple.release.xcconfig"; path = "Target Support Files/Pods-maple/Pods-maple.release.xcconfig"; sourceTree = "<group>"; };
 		63655F9AB53E4D84B4E5579B /* Manrope-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Manrope-ExtraLight.ttf"; path = "../assets/fonts/Manrope-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 		13B07FAE1A68108700A75B9A /* maple */ = {
 			isa = PBXGroup;
 			children = (
+				1BC891262ED1AFFA0004259C /* maple.entitlements */,
 				1BBCC2442EAFFF6A00FB6029 /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
@@ -317,7 +319,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = maple/maple.entitlements;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = C277859SL5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = maple/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = maple;
@@ -346,7 +350,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = maple/maple.entitlements;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = C277859SL5;
 				INFOPLIST_FILE = maple/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = maple;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;

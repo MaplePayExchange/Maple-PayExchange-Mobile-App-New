@@ -44,7 +44,7 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
     |--------------------------------------------------
     */
 	return (
-		<View className="w-full relative bg-white mt-auto h-[480px] rounded-t-3xl">
+		<View className="relative mt-auto h-[480px] w-full rounded-t-3xl bg-white">
 			{/**
             |--------------------------------------------------
             | Calendar
@@ -114,7 +114,7 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
             */}
 			<Pressable
 				onPress={() => setShowYearPopup(true)}
-				className="bg-transparent absolute h-[30px] w-[100px] top-4 right-[34%]"
+				className="absolute right-[34%] top-4 h-[30px] w-[100px] bg-transparent"
 			/>
 
 			{/**
@@ -123,9 +123,9 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
             |--------------------------------------------------
             */}
 			{showYearPopup && (
-				<View className="absolute bg-white w-[95%] z-30 self-center overflow-hidden max-h-[400px] top-12 border border-slate-100 rounded-3xl p-5">
+				<View className="absolute top-12 z-30 max-h-[400px] w-[95%] self-center overflow-hidden rounded-3xl border border-slate-100 bg-white p-5">
 					<ScrollView showsVerticalScrollIndicator={false}>
-						<View className="flex-row flex-wrap gap-5 justify-between">
+						<View className="flex-row flex-wrap justify-between gap-5">
 							{utils.generateYears().map((year) => (
 								<Pressable
 									key={year}
@@ -135,7 +135,7 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
 										setSelectedDate(`${year}-${new Date().getMonth() + 1}-${new Date().getDate()}`);
 									}}
 									className={clsx(
-										'rounded-md py-1 px-2 w-[50px] border',
+										'w-[50px] rounded-md border px-2 py-1',
 										selectedYear === year ? 'border-[#FF6A00]' : 'border-slate-300'
 									)}
 								>
@@ -152,9 +152,9 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
             | Action buttons
             |--------------------------------------------------
             */}
-			<View className="flex-row gap-4 mt-4 border-t border-t-[#EAECF0] p-6 flex-1">
-				<MPButton onPress={onClose} className="max-w-[48%] rounded-[12px] h-[40px] border border-[#D0D5DD]">
-					<MPText weight="semibold" className="text-sm">
+			<View className="mt-4 flex-1 flex-row gap-4 border-t border-t-[#EAECF0] p-6">
+				<MPButton onPress={onClose} className="h-[40px] max-w-[48%] rounded-[12px] border border-[#D0D5DD]">
+					<MPText weight="semibold" className="text-[15px]">
 						Cancel
 					</MPText>
 				</MPButton>
@@ -170,9 +170,9 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
 						onApply?.(dateType === 'dot' ? selectedDate : range);
 						onClose();
 					}}
-					className="max-w-[48%] h-[40px] rounded-[12px]"
+					className="h-[40px] max-w-[48%] rounded-[12px]"
 				>
-					<MPText weight="bold" className="text-white text-sm">
+					<MPText weight="bold" className="text-[15px] text-white">
 						Apply
 					</MPText>
 				</MPButton>

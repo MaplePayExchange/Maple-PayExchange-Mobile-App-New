@@ -194,12 +194,12 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 				{predictions.length > 0 && (
 					<ScrollView
 						keyboardShouldPersistTaps="handled"
-						className="mt-2 rounded-lg bg-white shadow-md max-h-52"
+						className="mt-2 max-h-52 rounded-lg bg-white shadow-md"
 					>
 						{predictions.map((prediction) => (
 							<TouchableOpacity
 								key={prediction.place_id}
-								className="px-4 py-1 border-b border-gray-200"
+								className="border-b border-gray-200 px-4 py-1"
 								onPress={() => handleSelectPrediction(prediction)}
 							>
 								{/**
@@ -207,7 +207,7 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 								| Primary text
 								|--------------------------------------------------
 								*/}
-								<MPText weight="medium" className="text-sm text-gray-800">
+								<MPText weight="medium" className="text-[15px] text-gray-800">
 									{prediction.structured_formatting.main_text}
 								</MPText>
 
@@ -217,7 +217,7 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 								|--------------------------------------------------
 								*/}
 								{prediction.structured_formatting.secondary_text ? (
-									<MPText weight="medium" className="text-xs text-gray-500 mt-0.5">
+									<MPText weight="medium" className="mt-0.5 text-[13px] text-gray-500">
 										{prediction.structured_formatting.secondary_text}
 									</MPText>
 								) : null}

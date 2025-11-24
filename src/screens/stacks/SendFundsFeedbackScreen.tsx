@@ -45,7 +45,7 @@ export default function SendFundsFeedbackScreen() {
             | ...
             |--------------------------------------------------
             */}
-			<View className="justify-center items-center flex-1">
+			<View className="flex-1 items-center justify-center">
 				<Image
 					source={SEND_FUNDS_FEEDBACK}
 					style={{ width: clampFontSize(173, 100, 200), height: clampFontSize(171, 100, 200) }}
@@ -56,10 +56,10 @@ export default function SendFundsFeedbackScreen() {
                 | ...
                 |--------------------------------------------------
                 */}
-				<MPText weight="semibold" className="text-[18px] mt-4">
+				<MPText weight="semibold" className="mt-4 text-[18px]">
 					Wallet funding complete
 				</MPText>
-				<MPText weight="medium" className="text-[#767676] text-sm">
+				<MPText weight="medium" className="text-[15px] text-[#767676]">
 					Your wallet funding request was successful
 				</MPText>
 
@@ -73,7 +73,7 @@ export default function SendFundsFeedbackScreen() {
 					className="mt-6"
 					onPress={() => navigation.navigate('DashboardScreen' as never)}
 				>
-					<MPText className="text-sm text-white" weight="semibold">
+					<MPText className="text-[15px] text-white" weight="semibold">
 						Send funds
 					</MPText>
 				</MPButton>
@@ -85,11 +85,11 @@ export default function SendFundsFeedbackScreen() {
                 */}
 				<MPButton
 					useGradientBg
-					className="self-center mt-3"
+					className="mt-3 self-center"
 					onPress={() => navigation.navigate('DashboardScreen' as never)}
 				>
-					<Pressable className="bg-white w-[99%] h-[93%] rounded-[40px] justify-center items-center">
-						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+					<Pressable className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white">
+						<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 							Exchange funds
 						</MPText>
 					</Pressable>

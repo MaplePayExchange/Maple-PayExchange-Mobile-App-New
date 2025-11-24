@@ -64,7 +64,7 @@ export default function SelectField({
     |--------------------------------------------------
     */
 	return (
-		<View className={clsx('gap-1 w-full', wrapperClassName)}>
+		<View className={clsx('w-full gap-1', wrapperClassName)}>
 			{/**
             |--------------------------------------------------
             | If label
@@ -72,7 +72,7 @@ export default function SelectField({
             */}
 			{label && (
 				<View>
-					<MPText weight="medium" className="text-sm text-[#1A1A1A]">
+					<MPText weight="medium" className="text-[15px] text-[#1A1A1A]">
 						{label}
 					</MPText>
 				</View>
@@ -89,7 +89,7 @@ export default function SelectField({
 					else setShowModal(true);
 				}}
 				className={clsx(
-					'bg-[#F7F7F7] rounded-[8px] w-full justify-between items-center flex-row h-[42px] px-4',
+					'h-[42px] w-full flex-row items-center justify-between rounded-[8px] bg-[#F7F7F7] px-4',
 					triggerClassName,
 					disabled && 'pointer-events-none'
 				)}
@@ -106,7 +106,7 @@ export default function SelectField({
                 | Carret Arrow
                 |--------------------------------------------------
                 */}
-				<Pressable className="ml-auto pointer-events-none">
+				<Pressable className="pointer-events-none ml-auto">
 					{isLoading ? (
 						<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 							<G clipPath="url(#clip0_5_1384)">
@@ -156,14 +156,14 @@ export default function SelectField({
 						}
 					}}
 				>
-					<View className="bg-white min-h-[200px] max-h-[80%] rounded-3xl p-5 mt-auto">
+					<View className="mt-auto max-h-[80%] min-h-[200px] rounded-3xl bg-white p-5">
 						{/**
 						|--------------------------------------------------
 						| Carret Arrow
 						|--------------------------------------------------
 						*/}
 						<Pressable
-							className="ml-auto absolute right-4 top-4 z-30"
+							className="absolute right-4 top-4 z-30 ml-auto"
 							onPress={() => {
 								setShowModal(false);
 								setIsVisible?.(false);

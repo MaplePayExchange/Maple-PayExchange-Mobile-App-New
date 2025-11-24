@@ -31,10 +31,10 @@ export default function ReferralTermsAndConditionsScreen() {
 					<MPText weight="bold" className="text-lg">
 						Referral Program Terms & Conditions
 					</MPText>
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-[15px]">
 						Last Updated: August 1, 2025
 					</MPText>
-					<MPText className="text-sm text-[#484848] mt-2" weight="medium">
+					<MPText className="mt-2 text-[15px] text-[#484848]" weight="medium">
 						These terms apply to the Maple PayExchange Inc (“MPE Inc.”) Referral Program (“Program”). By
 						participating, you agree to these rules in addition to our Terms & Conditions and Privacy Policy
 					</MPText>
@@ -64,7 +64,7 @@ export default function ReferralTermsAndConditionsScreen() {
 								'Referrals must be new users who have never registered with MPE Inc.',
 								'Program available where permitted by law.',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 
@@ -100,7 +100,7 @@ export default function ReferralTermsAndConditionsScreen() {
 								'The qualifying single transfer of $100 must be an international transfer or exchange',
 								'User-to-user transfers as a first transaction by the invitee will be invalid',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 
@@ -129,7 +129,7 @@ export default function ReferralTermsAndConditionsScreen() {
 								'Referral bonuses are a one-time payment made in CAD and credited to your MPE Inc. account within 5 business days of the qualifying transfer.',
 								'Rewards are non-transferable and not redeemable for cash outside the app balance.',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 
@@ -159,7 +159,7 @@ export default function ReferralTermsAndConditionsScreen() {
 								'No referrals through paid ads, spam, or misleading statements.',
 								'MPE Inc. reserves the right to reject referrals suspected of abuse or fraud.',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 
@@ -188,7 +188,7 @@ export default function ReferralTermsAndConditionsScreen() {
 								'MPE Inc. may modify, suspend, or end the Program at any time without prior notice.',
 								'Any referrals made before termination will be honored if they meet the qualifying conditions.',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 
@@ -217,9 +217,9 @@ export default function ReferralTermsAndConditionsScreen() {
 								'All referrals and rewards are subject to Know Your Customer (KYC) and Anti-Money Laundering (AML) checks.',
 								'MPE Inc. may delay, withhold, or cancel rewards if:',
 							]}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
-						<View className="pl-4 mt-1">
+						<View className="mt-1 pl-4">
 							<List
 								type="unordered"
 								items={[
@@ -227,13 +227,13 @@ export default function ReferralTermsAndConditionsScreen() {
 									'Multiple accounts are linked to the same individual or device',
 									'The transaction appears structured to artificially meet the $100 threshold.',
 								]}
-								textClassName="text-sm text-[#484848]"
+								textClassName="text-[15px] text-[#484848]"
 							/>
 						</View>
 						<List
 							type="unordered"
 							items={['MPE Inc. decision on suspected abuse or eligibility is final.']}
-							textClassName="text-sm text-[#484848]"
+							textClassName="text-[15px] text-[#484848]"
 						/>
 					</View>
 				</View>

@@ -18,6 +18,7 @@ import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import { SUCCESS_BADGE } from '@constants/app.constant';
+//@ts-ignore
 import { RootStackParamList } from '@types/route.params';
 import CustomKeyboard from '@src/components/CustomKeyboard';
 import { useSetTransactionPin } from '@services/auth.services';
@@ -57,18 +58,22 @@ export default function SetTransactionPinScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper title="Set Transaction Pin" />
+			<HeaderWrapper title="Set Transaction Pin" titleFontSize="FONT24" />
 
 			{/**
             |--------------------------------------------------
             | Sub text
             |--------------------------------------------------
             */}
-			<View className="items-center mt-6 mb-8">
-				<MPText weight="semibold" className="text-base text-center" style={{ fontSize: 18 }}>
+			<View className="mb-8 mt-6 items-center">
+				<MPText fontSize="FONT16" weight="semibold" className="text-center text-base" style={{ fontSize: 18 }}>
 					Create PIN
 				</MPText>
-				<MPText weight="medium" className="text-[#484848] text-center max-w-[280px] text-sm leading-5 mt-2">
+				<MPText
+					weight="medium"
+					fontSize="FONT14"
+					className="mt-2 max-w-[280px] text-center text-[15px] leading-5 text-[#484848]"
+				>
 					This PIN will serve as confirmation for transactions on MaplePay.
 				</MPText>
 			</View>
@@ -92,7 +97,7 @@ export default function SetTransactionPinScreen() {
             |--------------------------------------------------
             */}
 			<Modal visible={showSuccessModal} animationType="slide">
-				<View className="flex-1 justify-center items-center">
+				<View className="flex-1 items-center justify-center">
 					<Image source={SUCCESS_BADGE} />
 
 					{/**
@@ -100,10 +105,10 @@ export default function SetTransactionPinScreen() {
                     | Title and subtitle
                     |--------------------------------------------------
                     */}
-					<MPText weight="semibold" className="text-xl mt-8">
+					<MPText fontSize="FONT18" weight="semibold" className="mt-8 text-xl">
 						You’re all set!
 					</MPText>
-					<MPText weight="medium" className="text-sm">
+					<MPText fontSize="FONT14" weight="medium" className="text-[15px]">
 						You have successfully set up your pin.
 					</MPText>
 
@@ -114,13 +119,13 @@ export default function SetTransactionPinScreen() {
                     */}
 					<MPButton
 						useGradientBg
-						className="max-w-[142px] mt-6"
+						className="mt-6 max-w-[142px]"
 						onPress={() => {
 							setShowSuccessModal(false);
 							navigation.navigate('DashboardScreen');
 						}}
 					>
-						<MPText className="text-white text-sm" weight="semibold">
+						<MPText fontSize="FONT14" className="text-[15px] text-white" weight="semibold">
 							Go to dashboard
 						</MPText>
 					</MPButton>

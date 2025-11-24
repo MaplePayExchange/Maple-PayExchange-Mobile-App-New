@@ -254,9 +254,9 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 				<Pressable
 					key={wallet?._id}
 					onPress={() => handleChangeWallet(wallet, type)}
-					className="h-[46px] w-full rounded-[10px] bg-[#F7F7F7] justify-center px-6"
+					className="h-[46px] w-full justify-center rounded-[10px] bg-[#F7F7F7] px-6"
 				>
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-[15px]">
 						{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
 					</MPText>
 				</Pressable>
@@ -278,7 +278,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                 |--------------------------------------------------
                 */}
 				<View
-					className="bg-white p-6 mt-auto rounded-2xl min-h-[200px] w-full"
+					className="mt-auto min-h-[200px] w-full rounded-2xl bg-white p-6"
 					style={{ paddingBottom: insets.bottom }}
 				>
 					{/**
@@ -286,8 +286,8 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                     | Header
                     |--------------------------------------------------
                     */}
-					<View className="flex-row justify-between items-center mb-4">
-						<MPText weight="semibold" className="text-sm">
+					<View className="mb-4 flex-row items-center justify-between">
+						<MPText weight="semibold" className="text-[15px]">
 							Currency converter
 						</MPText>
 
@@ -302,7 +302,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                     |--------------------------------------------------
                     */}
 					<Container>
-						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+						<MPText className="text-[15px] text-[#1A1A1A]" weight="medium">
 							Amount to send
 						</MPText>
 
@@ -311,8 +311,8 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                         | Wallet For sender
                         |--------------------------------------------------
                         */}
-						<View className="rounded-[16px] bg-[#FFFFFF] p-4 mb-4">
-							<View className="flex-row items-center justify-between w-full">
+						<View className="mb-4 rounded-[16px] bg-[#FFFFFF] p-4">
+							<View className="w-full flex-row items-center justify-between">
 								{/**
                                 |--------------------------------------------------
                                 | Wallet balance
@@ -333,7 +333,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 										value={amountToSend}
 										keyboardType="numeric"
 										onChangeText={handleChange}
-										className="text-[18px] font-semibold w-auto min-w-[100px]"
+										className="w-auto min-w-[100px] text-[18px] font-semibold"
 									/>
 								</View>
 
@@ -349,7 +349,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 									triggerChildren={
 										<View>
-											<MPText weight="medium" className="text-sm text-black">
+											<MPText weight="medium" className="text-[15px] text-black">
 												{sourceDestination.sourceFlag} {sourceDestination.source}
 											</MPText>
 										</View>
@@ -363,10 +363,10 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                             | Second row
                             |--------------------------------------------------
                             */}
-							<View className="mt-1 flex-row justify-between items-center">
+							<View className="mt-1 flex-row items-center justify-between">
 								<View className="flex-row items-center gap-1">
 									<WalletIcon />
-									<MPText weight="regular" className="text-[#767676] text-sm">
+									<MPText weight="regular" className="text-[15px] text-[#767676]">
 										Wallet Bal:
 									</MPText>
 								</View>
@@ -376,7 +376,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                                 | Wallet balance
                                 |--------------------------------------------------
                                 */}
-								<MPText weight="regular" className="text-[#767676] text-sm">
+								<MPText weight="regular" className="text-[15px] text-[#767676]">
 									{handleCurrencySymbol().sourceSymbol}
 									{handleGetWalletBalance().toLocaleString(undefined, {
 										minimumFractionDigits: 2,
@@ -391,7 +391,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                         | Exchange rate
                         |--------------------------------------------------
                         */}
-						<View className="min-h-[50px] rounded-2xl bg-[#ECEDEE] w-full p-4 justify-between my-4">
+						<View className="my-4 min-h-[50px] w-full justify-between rounded-2xl bg-[#ECEDEE] p-4">
 							<DataRepresentation
 								label="Today's rate"
 								valueClassName="text-[#767676]"
@@ -404,7 +404,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                         | Amount they’ll receive
                         |--------------------------------------------------
                         */}
-						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+						<MPText className="text-[15px] text-[#1A1A1A]" weight="medium">
 							Amount they’ll receive
 						</MPText>
 
@@ -414,7 +414,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                         |--------------------------------------------------
                         */}
 						<View className="rounded-[16px] bg-[#FFFFFF] p-4">
-							<View className="flex-row items-center justify-between w-full">
+							<View className="w-full flex-row items-center justify-between">
 								{/**
                                 |--------------------------------------------------
                                 | Wallet balance
@@ -435,7 +435,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 										keyboardType="numeric"
 										onChangeText={handleChange}
 										className={clsx(
-											'text-[18px] font-semibold w-auto',
+											'w-auto text-[18px] font-semibold',
 											transactionType === 'SWAP' ? '' : 'pointer-events-none'
 										)}
 										value={handleConversionInfo('conversion')
@@ -457,7 +457,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
 									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 									triggerChildren={
 										<View>
-											<MPText weight="medium" className="text-sm text-black">
+											<MPText weight="medium" className="text-[15px] text-black">
 												{sourceDestination.destinationFlag} {sourceDestination.destination}
 											</MPText>
 										</View>
@@ -473,13 +473,13 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                             */}
 							<View
 								className={clsx(
-									'mt-1 flex-row justify-between items-center',
+									'mt-1 flex-row items-center justify-between',
 									transactionType === 'SWAP' ? 'flex' : 'hidden'
 								)}
 							>
 								<View className="flex-row items-center gap-1">
 									<WalletIcon />
-									<MPText weight="regular" className="text-[#767676] text-sm">
+									<MPText weight="regular" className="text-[15px] text-[#767676]">
 										Wallet Bal:
 									</MPText>
 								</View>
@@ -489,7 +489,7 @@ export default function CurrencyConverter({ visible, setVisible }: Props) {
                                 | Wallet balance
                                 |--------------------------------------------------
                                 */}
-								<MPText weight="regular" className="text-[#767676] text-sm">
+								<MPText weight="regular" className="text-[15px] text-[#767676]">
 									{handleCurrencySymbol().sourceSymbol}
 									{handleGetWalletBalance().toLocaleString(undefined, {
 										minimumFractionDigits: 2,

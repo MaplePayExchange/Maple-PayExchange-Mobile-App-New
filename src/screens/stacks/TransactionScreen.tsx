@@ -118,8 +118,8 @@ export default function TransactionsScreen() {
 		<ScreenWrapper>
 			<HeaderWrapper useNavigation={false} title="Recent transactions" center />
 
-			<View className="flex-row gap-4 justify-between items-center">
-				<View className="h-[42px] w-[85%] border-[0.5px] border-[#EEEEEE] gap-2 rounded-xl flex-row items-center px-5">
+			<View className="flex-row items-center justify-between gap-4">
+				<View className="h-[42px] w-[85%] flex-row items-center gap-2 rounded-xl border-[0.5px] border-[#EEEEEE] px-5">
 					{/**
 					|--------------------------------------------------
 					| Search icon
@@ -139,7 +139,7 @@ export default function TransactionsScreen() {
 
 				<Pressable
 					onPress={() => setShowFilter(true)}
-					className="size-11 bg-[#FAFAF9] rounded-xl justify-center items-center"
+					className="size-11 items-center justify-center rounded-xl bg-[#FAFAF9]"
 				>
 					<Svg width="18" height="14" viewBox="0 0 18 14" fill="none">
 						<Path
@@ -200,7 +200,7 @@ export default function TransactionsScreen() {
 						|--------------------------------------------------
 						*/}
 						{!hasNextPage && (
-							<MPText weight="medium" className="text-sm self-center text-[#FF6A00]">
+							<MPText weight="medium" className="self-center text-[15px] text-[#FF6A00]">
 								No more transactions
 							</MPText>
 						)}
@@ -213,7 +213,7 @@ export default function TransactionsScreen() {
 				|--------------------------------------------------
 				*/}
 				{(isLoading || isPending) && (
-					<View className="flex-1 justify-center items-center w-full mt-[50%]">
+					<View className="mt-[50%] w-full flex-1 items-center justify-center">
 						<CustomRefreshControl refreshing={isPending || isLoading} />
 					</View>
 				)}
@@ -233,7 +233,7 @@ export default function TransactionsScreen() {
 					*/}
 					<View
 						className={clsx(
-							'bg-white p-4 rounded-2xl w-full mt-auto pt-8',
+							'mt-auto w-full rounded-2xl bg-white p-4 pt-8',
 							showCalendarModal ? 'h-[487px]' : 'h-[387px]'
 						)}
 					>
@@ -253,7 +253,7 @@ export default function TransactionsScreen() {
 								|--------------------------------------------------
 								*/}
 								<View className="w-full px-2">
-									<MPText className="text-sm" weight="semibold">
+									<MPText className="text-[15px]" weight="semibold">
 										Filter by
 									</MPText>
 
@@ -262,7 +262,7 @@ export default function TransactionsScreen() {
 									| Filter
 									|--------------------------------------------------
 									*/}
-									<View className="flex-row justify-between mt-3">
+									<View className="mt-3 flex-row justify-between">
 										{/**
 										|--------------------------------------------------
 										| CAD
@@ -271,14 +271,14 @@ export default function TransactionsScreen() {
 										<Pressable
 											onPress={() => handleFilters('currency', 'CAD')}
 											className={clsx(
-												'h-[42px] w-[45%] flex-row rounded-xl border-[0.5px] justify-center items-center gap-2',
+												'h-[42px] w-[45%] flex-row items-center justify-center gap-2 rounded-xl border-[0.5px]',
 												filters?.currency === 'CAD' ? 'border-[#F58D88]' : 'border-[#F7F7F7]'
 											)}
 										>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												🇨🇦
 											</MPText>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												Canadian Dollar
 											</MPText>
 										</Pressable>
@@ -291,14 +291,14 @@ export default function TransactionsScreen() {
 										<Pressable
 											onPress={() => handleFilters('currency', 'NGN')}
 											className={clsx(
-												'h-[42px] w-[45%] flex-row rounded-xl border-[0.5px] justify-center items-center gap-2',
+												'h-[42px] w-[45%] flex-row items-center justify-center gap-2 rounded-xl border-[0.5px]',
 												filters?.currency === 'NGN' ? 'border-[#F58D88]' : 'border-[#F7F7F7]'
 											)}
 										>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												🇳🇬
 											</MPText>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												Nigerian Naira
 											</MPText>
 										</Pressable>
@@ -310,8 +310,8 @@ export default function TransactionsScreen() {
 								| Sort by
 								|--------------------------------------------------
 								*/}
-								<View className="w-full px-2 mt-5">
-									<MPText className="text-sm" weight="semibold">
+								<View className="mt-5 w-full px-2">
+									<MPText className="text-[15px]" weight="semibold">
 										Sort by
 									</MPText>
 
@@ -320,7 +320,7 @@ export default function TransactionsScreen() {
 									| Sort
 									|--------------------------------------------------
 									*/}
-									<View className="flex-row justify-between mt-3">
+									<View className="mt-3 flex-row justify-between">
 										{/**
 										|--------------------------------------------------
 										| CAD
@@ -329,11 +329,11 @@ export default function TransactionsScreen() {
 										<Pressable
 											onPress={() => handleFilters('type', 'Incoming')}
 											className={clsx(
-												'h-[42px] w-[45%] flex-row rounded-xl border-[0.5px] justify-center items-center gap-2',
+												'h-[42px] w-[45%] flex-row items-center justify-center gap-2 rounded-xl border-[0.5px]',
 												filters?.type === 'Incoming' ? 'border-[#F58D88]' : 'border-[#F7F7F7]'
 											)}
 										>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												Incoming Trans.
 											</MPText>
 										</Pressable>
@@ -346,11 +346,11 @@ export default function TransactionsScreen() {
 										<Pressable
 											onPress={() => handleFilters('type', 'Outgoing')}
 											className={clsx(
-												'h-[42px] w-[45%] flex-row rounded-xl border-[0.5px] justify-center items-center gap-2',
+												'h-[42px] w-[45%] flex-row items-center justify-center gap-2 rounded-xl border-[0.5px]',
 												filters?.type === 'Outgoing' ? 'border-[#F58D88]' : 'border-[#F7F7F7]'
 											)}
 										>
-											<MPText weight="medium" className="text-xs">
+											<MPText weight="medium" className="text-[13px]">
 												Outgoing Trans.
 											</MPText>
 										</Pressable>
@@ -362,19 +362,19 @@ export default function TransactionsScreen() {
 								| Date
 								|--------------------------------------------------
 								*/}
-								<View className="w-full px-2 mt-5">
-									<MPText className="text-sm" weight="semibold">
+								<View className="mt-5 w-full px-2">
+									<MPText className="text-[15px]" weight="semibold">
 										Filter by date range
 									</MPText>
 
 									<Pressable
 										onPress={() => setShowCalendarModal(true)}
 										className={clsx(
-											'h-[42px] w-full mt-3 flex-row rounded-xl border-[0.5px] justify-center items-center gap-2',
+											'mt-3 h-[42px] w-full flex-row items-center justify-center gap-2 rounded-xl border-[0.5px]',
 											'border-[#F7F7F7]'
 										)}
 									>
-										<MPText weight="medium" className="text-xs">
+										<MPText weight="medium" className="text-[13px]">
 											{range.end === null
 												? 'Select date range'
 												: `${dayjs(range.start).format('DD MMM, YYYY')} - ${dayjs(range.end).format('DD MMM, YYYY')}`}
@@ -395,7 +395,7 @@ export default function TransactionsScreen() {
 								|--------------------------------------------------
 								*/}
 								<MPButton onPress={handleApplyFilter} useGradientBg className="mt-4">
-									<MPText weight="semibold" className="text-white text-sm">
+									<MPText weight="semibold" className="text-[15px] text-white">
 										Apply filter
 									</MPText>
 								</MPButton>

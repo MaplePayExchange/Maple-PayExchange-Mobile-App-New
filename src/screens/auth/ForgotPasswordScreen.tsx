@@ -77,7 +77,7 @@ export default function ForgotPasswordScreen() {
 			<MPText weight="semibold" className="text-base">
 				Reset password
 			</MPText>
-			<MPText weight="medium" className="text-[#484848] text-sm leading-5">
+			<MPText weight="medium" className="text-[15px] leading-5 text-[#484848]">
 				Enter the email address you registered with.
 			</MPText>
 
@@ -87,7 +87,7 @@ export default function ForgotPasswordScreen() {
             |--------------------------------------------------
             */}
 			<KeyboardAvoidingView
-				className="flex-1 mt-8"
+				className="mt-8 flex-1"
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 				keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
 			>
@@ -133,7 +133,7 @@ export default function ForgotPasswordScreen() {
 						>
 							<MPText
 								weight="semibold"
-								className={clsx(isValid ? 'text-white' : 'text-[#D1D1D1] text-sm')}
+								className={clsx(isValid ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
 							>
 								Reset password
 							</MPText>
@@ -144,13 +144,13 @@ export default function ForgotPasswordScreen() {
                         | Already have an account
                         |--------------------------------------------------
                         */}
-						<MPText className="text-sm text-center mt-4">
-							<MPText weight="medium" className="text-[#484848] text-sm">
+						<MPText className="mt-4 text-center text-[15px]">
+							<MPText weight="medium" className="text-[15px] text-[#484848]">
 								Remembered your password?{' '}
 							</MPText>
 							<MPText
 								weight="semibold"
-								className="text-[#FF6A00] text-sm"
+								className="text-[15px] text-[#FF6A00]"
 								onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}
 							>
 								Login

@@ -65,7 +65,7 @@ export default function List({
 						<MPText
 							style={[textStyle]}
 							weight={boldenText ? 'bold' : 'medium'}
-							className={clsx('mr-2 text-sm', bulletClassName)}
+							className={clsx('mr-2 text-[15px]', bulletClassName)}
 						>
 							{customLabel ? customLabel : '\u2022'}
 						</MPText>
@@ -73,7 +73,7 @@ export default function List({
 						<MPText
 							style={[textStyle]}
 							weight={boldenText ? 'bold' : 'medium'}
-							className={clsx('mr-2 text-sm', bulletClassName)}
+							className={clsx('mr-2 text-[15px]', bulletClassName)}
 						>
 							{customLabel ? customLabel : (startIndex || 0) + index + 1}.
 						</MPText>

@@ -42,7 +42,12 @@ export default function Checkbox({ checked, className, component, onChange, labe
             |--------------------------------------------------
             */}
 			{label && (
-				<MPText weight="medium" className="text-[#767676] text-xs w-[88%]" style={{ lineHeight: 15 }}>
+				<MPText
+					weight="medium"
+					fontSize="FONT12"
+					className="w-[88%] text-[13px] text-[#767676]"
+					style={{ lineHeight: 18 }}
+				>
 					{label}
 				</MPText>
 			)}

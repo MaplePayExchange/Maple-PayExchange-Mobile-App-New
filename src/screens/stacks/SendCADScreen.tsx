@@ -153,17 +153,17 @@ export default function SendCADScreen() {
 				| ...
 				|--------------------------------------------------
 				*/}
-				<View className="flex-row justify-between items-center mb-10">
+				<View className="mb-10 flex-row items-center justify-between">
 					{/**
 					|--------------------------------------------------
 					| Step 1 of 2
 					|--------------------------------------------------
 					*/}
 					<View>
-						<MPText weight="medium" className="text-sm text-[#767676]">
+						<MPText weight="medium" className="text-[15px] text-[#767676]">
 							Step 1/2
 						</MPText>
-						<MPText weight="semibold" className="text-xs">
+						<MPText weight="semibold" className="text-[13px]">
 							Enter recipient details
 						</MPText>
 					</View>
@@ -174,7 +174,7 @@ export default function SendCADScreen() {
 					|--------------------------------------------------
 					*/}
 					<Pressable className="!hidden">
-						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+						<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 							See our rates
 						</MPText>
 					</Pressable>
@@ -187,10 +187,10 @@ export default function SendCADScreen() {
 						contentContainerStyle={{ flexGrow: 1 }}
 					>
 						<View className="w-full rounded-3xl border border-[#EEEEEE] p-5">
-							<MPText weight="semibold" className="text-base text-center">
+							<MPText weight="semibold" className="text-center text-base">
 								Recipient’s details
 							</MPText>
-							<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
+							<MPText weight="medium" className="mb-6 text-center text-[15px] text-[#767676]">
 								Enter recipient’s information
 							</MPText>
 
@@ -295,7 +295,7 @@ export default function SendCADScreen() {
 										| Title
 										|--------------------------------------------------
 										*/}
-										<MPText weight="semibold" className="text-sm text-center mb-5">
+										<MPText weight="semibold" className="mb-5 text-center text-[15px]">
 											Security Questions
 										</MPText>
 
@@ -317,7 +317,7 @@ export default function SendCADScreen() {
 														setShowModal((prevState) => !prevState);
 													}}
 													className={clsx(
-														'flex-row px-4 h-[35px] items-center text-sm rounded-[8px] border',
+														'h-[35px] flex-row items-center rounded-[8px] border px-4 text-[15px]',
 														item.text.toLowerCase() === selectedQuestion?.toLowerCase()
 															? 'border-[#FF6A00]'
 															: 'border-[#EEEEEE]'
@@ -325,7 +325,7 @@ export default function SendCADScreen() {
 												>
 													<MPText
 														weight="medium"
-														className="text-sm"
+														className="text-[15px]"
 														style={{ fontSize: 12 }}
 													>
 														{item.text}
@@ -372,7 +372,7 @@ export default function SendCADScreen() {
 									>
 										<MPText
 											weight="medium"
-											className="text-[#767676] text-xs"
+											className="text-[13px] text-[#767676]"
 											style={{ lineHeight: 15 }}
 										>
 											Save as beneficiary
@@ -392,7 +392,7 @@ export default function SendCADScreen() {
 								disabled={!isValid || !isValidSecurityAnswer || !isValidSecurityQuestion}
 								useGradientBg={isValid && isValidSecurityAnswer && isValidSecurityQuestion}
 							>
-								<MPText weight="semibold" className="text-sm text-white">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									Continue
 								</MPText>
 							</MPButton>

@@ -47,7 +47,7 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 			subtitle: 'Send funds to new recipient',
 			onClickNewReceipient: () => navigation.navigate(ROUTE_NAMES.SEND_CAD_FUNDS as never),
 			onClickBeneficiary: () =>
-				navigation.navigate(...([ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, { currency: 'CAD' }] as never)),
+				navigation.navigate(...([ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, { currency: 'CAD' }] as any)),
 		},
 
 		/**
@@ -60,7 +60,7 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 			subtitle: 'Send funds to new recipient',
 			onClickNewReceipient: () => navigation.navigate(ROUTE_NAMES.SEND_NGN_FUNDS as never),
 			onClickBeneficiary: () =>
-				navigation.navigate(...([ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, { currency: 'NGN' }] as never)),
+				navigation.navigate(...([ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, { currency: 'NGN' }] as any)),
 		},
 	};
 
@@ -72,7 +72,7 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 	return (
 		<Modal transparent visible={visible} animationType="slide" onDismiss={onDismiss}>
 			<Pressable onPress={() => setVisible(false)} className="flex-1 bg-black/10">
-				<View className="bg-white rounded-3xl p-5 py-[38px] gap-4 min-h-[202px] mt-auto">
+				<View className="mt-auto min-h-[202px] gap-4 rounded-3xl bg-white p-5 py-[38px]">
 					{/**
                     |--------------------------------------------------
                     | Sending to new beneficiary
@@ -83,7 +83,7 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 							details?.[type]?.onClickNewReceipient();
 							setVisible(false);
 						}}
-						className="h-[66px] gap-4 flex-row items-center w-full rounded-3xl border border-[#EEEEEE] py-3 px-4"
+						className="h-[66px] w-full flex-row items-center gap-4 rounded-3xl border border-[#EEEEEE] px-4 py-3"
 					>
 						<Image source={SEND_FUNDS} style={{ height: fontSizes.FONT40, width: fontSizes.FONT40 }} />
 
@@ -93,12 +93,12 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
                         |--------------------------------------------------
                         */}
 						<View className="gap-1">
-							<MPText weight="medium" className="text-sm">
+							<MPText weight="medium" className="text-[15px]">
 								{details?.[type]?.title}
 							</MPText>
 							<MPText
 								weight="medium"
-								className="text-xs text-[#767676]"
+								className="text-[13px] text-[#767676]"
 								style={{ lineHeight: 14, fontSize: 12 }}
 							>
 								{details?.[type]?.subtitle}
@@ -116,7 +116,7 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
 							details?.[type]?.onClickBeneficiary();
 							setVisible(false);
 						}}
-						className="h-[66px] gap-4 flex-row items-center w-full rounded-3xl border border-[#EEEEEE] py-3 px-4"
+						className="h-[66px] w-full flex-row items-center gap-4 rounded-3xl border border-[#EEEEEE] px-4 py-3"
 					>
 						<Image source={BENEFICIARY} style={{ height: fontSizes.FONT40, width: fontSizes.FONT40 }} />
 						{/**
@@ -125,12 +125,12 @@ export default function SendFundsModal({ visible, setVisible, type, onDismiss }:
                         |--------------------------------------------------
                         */}
 						<View className="gap-1">
-							<MPText weight="medium" className="text-sm">
+							<MPText weight="medium" className="text-[15px]">
 								Send funds to beneficiary
 							</MPText>
 							<MPText
 								weight="medium"
-								className="text-xs text-[#767676]"
+								className="text-[13px] text-[#767676]"
 								style={{ lineHeight: 14, fontSize: 12 }}
 							>
 								Send funds to saved beneficiary

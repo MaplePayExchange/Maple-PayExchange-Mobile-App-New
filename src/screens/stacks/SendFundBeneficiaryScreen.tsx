@@ -76,10 +76,10 @@ export default function SendFundsBeneficiaryScreen() {
                 |--------------------------------------------------
                 */}
 				<View>
-					<MPText style={{ fontSize: 12 }} weight="medium" className="text-sm text-[#767676]">
+					<MPText style={{ fontSize: 12 }} weight="medium" className="text-[15px] text-[#767676]">
 						Step 1/2
 					</MPText>
-					<MPText style={{ fontSize: 12 }} weight="semibold" className="text-xs">
+					<MPText style={{ fontSize: 12 }} weight="semibold" className="text-[13px]">
 						Choose beneficiary
 					</MPText>
 				</View>
@@ -90,7 +90,7 @@ export default function SendFundsBeneficiaryScreen() {
                 |--------------------------------------------------
                 */}
 				<Pressable onPress={() => navigation.navigate(ROUTE_NAMES.EXCHANGE_RATE)}>
-					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+					<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 						See our rates
 					</MPText>
 				</Pressable>
@@ -103,7 +103,7 @@ export default function SendFundsBeneficiaryScreen() {
             */}
 			<View className="mb-[34px] h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
 				<TextInput
-					className="text-sm"
+					className="text-[15px]"
 					value={searchQuery}
 					returnKeyType="done"
 					style={{ fontSize: 14 }}

@@ -85,7 +85,7 @@ export default function Toggler({
 							{title}
 						</MPText>
 						{subtitle && (
-							<MPText style={{ fontSize: 10 }} weight="regular" className="text-[#767676]">
+							<MPText style={{ fontSize: 11 }} weight="regular" className="text-[#767676]">
 								{subtitle}
 							</MPText>
 						)}

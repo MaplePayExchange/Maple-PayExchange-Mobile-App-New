@@ -5,8 +5,9 @@
 */
 import clsx from 'clsx';
 import React from 'react';
-import { Linking, Pressable, ScrollView, View } from 'react-native';
+//@ts-ignore
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { Linking, Pressable, ScrollView, View } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -18,6 +19,7 @@ import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
+//@ts-ignore
 import { RootStackParamList } from '@types/route.params';
 
 type SupportDetailsScreenProps = RouteProp<RootStackParamList, 'SupportDetailsScreen'>;
@@ -101,7 +103,7 @@ export default function SupportDetailsScreen() {
 			*/}
 			<ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
 				<View className="gap-4">
-					{supportData.map((data, index) => (
+					{supportData.map((data: any, index: number) => (
 						<View key={`${data.tag}${index}`}>
 							{/**
 							|--------------------------------------------------
@@ -109,7 +111,7 @@ export default function SupportDetailsScreen() {
 							|--------------------------------------------------
 							*/}
 							{data.question.header !== null ? (
-								<MPText weight="extra-bold" className="text-lg">
+								<MPText fontSize="FONT18" weight="bold" className="">
 									{data.question.header}
 								</MPText>
 							) : null}
@@ -120,7 +122,7 @@ export default function SupportDetailsScreen() {
 							|--------------------------------------------------
 							*/}
 							{data.question.subtext !== null ? (
-								<MPText weight="medium" className="text-sm text-[#484848] mt-4">
+								<MPText weight="medium" className="mt-4 text-[15px] text-[#484848]">
 									{data.question.subtext}
 								</MPText>
 							) : null}
@@ -133,7 +135,7 @@ export default function SupportDetailsScreen() {
 							{data.solution.type === 'single' && data.solution ? (
 								<React.Fragment>
 									{data.solution.header !== null && (
-										<MPText weight="bold" className="text-base mt-4">
+										<MPText fontSize="FONT16" weight="bold" className="mt-4 text-base">
 											{data.solution.header}
 										</MPText>
 									)}
@@ -144,7 +146,7 @@ export default function SupportDetailsScreen() {
 									|--------------------------------------------------
 									*/}
 									{data.solution.subtext && (
-										<MPText weight="medium" className="text-sm mt-1 text-[#484848]">
+										<MPText weight="medium" className="mt-1 text-[15px] text-[#484848]">
 											{data.solution.subtext}
 										</MPText>
 									)}
@@ -158,17 +160,17 @@ export default function SupportDetailsScreen() {
 										<View className="mt-2">
 											<List
 												type="unordered"
-												textClassName="text-[#484848] text-sm"
+												textClassName="text-[#484848] text-[15px]"
 												items={data.solution['bullet-points'] as string[]}
 											/>
 										</View>
 									)}
 								</React.Fragment>
 							) : (
-								data?.solution?.solutions?.map((_solution, index) => (
+								data?.solution?.solutions?.map((_solution: any, index: number) => (
 									<React.Fragment key={`solution-solution-${index}`}>
 										{_solution.header && (
-											<MPText weight="bold" className="text-base mt-4">
+											<MPText fontSize="FONT16" weight="bold" className="mt-4 text-base">
 												{_solution.header}
 											</MPText>
 										)}
@@ -182,7 +184,7 @@ export default function SupportDetailsScreen() {
 											<View className="mt-2">
 												<List
 													type="unordered"
-													textClassName="text-[#484848] text-sm"
+													textClassName="text-[#484848] text-[15px]"
 													items={_solution['bullet-points'] as string[]}
 												/>
 											</View>
@@ -199,8 +201,8 @@ export default function SupportDetailsScreen() {
 				| Feedback on help
 				|--------------------------------------------------
 				*/}
-				<View className="border-[#EEEEEE] border-t items-center mt-8 p-4">
-					<MPText weight="medium" className="text-sm text-[#484848]">
+				<View className="mt-8 items-center border-t border-[#EEEEEE] p-4">
+					<MPText weight="medium" className="text-[15px] text-[#484848]">
 						Did this resolve your enquiry?
 					</MPText>
 
@@ -209,12 +211,12 @@ export default function SupportDetailsScreen() {
 					| Yes and no
 					|--------------------------------------------------
 					*/}
-					<View className="flex-row justify-center gap-6 mt-4">
+					<View className="mt-4 flex-row justify-center gap-6">
 						<MPButton
 							useGradientBg={selectedFeedback === 'yes'}
 							onPress={() => setSelectedFeedback('yes')}
 							className={clsx(
-								'size-[42px] max-w-[42px] max-h-[42px] rounded-full border border-[#D0D5DD]',
+								'size-[42px] max-h-[42px] max-w-[42px] rounded-full border border-[#D0D5DD]',
 								selectedFeedback === 'yes' ? 'text-white' : 'text-black'
 							)}
 						>
@@ -236,7 +238,7 @@ export default function SupportDetailsScreen() {
 								handleScrollToBottom();
 							}}
 							className={clsx(
-								'size-[42px] max-w-[42px] max-h-[42px] rounded-full border border-[#D0D5DD]'
+								'size-[42px] max-h-[42px] max-w-[42px] rounded-full border border-[#D0D5DD]'
 							)}
 						>
 							<MPText className={clsx(selectedFeedback === 'no' ? 'text-white' : 'text-black')}>
@@ -251,7 +253,7 @@ export default function SupportDetailsScreen() {
 					*/}
 					{selectedFeedback === 'no' && (
 						<Pressable onPress={handleOpenWhatsApp} className="mt-4">
-							<MPText weight="medium" className="text-sm text-[#EE0979]">
+							<MPText weight="medium" className="text-[15px] text-[#EE0979]">
 								Connect to live agent
 							</MPText>
 						</Pressable>

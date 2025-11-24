@@ -6,8 +6,10 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+//@ts-ignore
 import { RootStackParamList } from '@types/route.params';
 import { View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
+//@ts-ignore
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
@@ -24,11 +26,11 @@ import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import SelectField from '@src/components/SelectField';
 import { Wallet } from '@interfaces/wallet.interface';
+import { ROUTE_NAMES } from '@constants/routes.conts';
 import DataRepresentation from '@src/components/DataRepresentation';
 import ConfirmTransactionModal from '@src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@src/components/Modals/TransactionConfirmationModal';
 import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@services/user.services';
-import { ROUTE_NAMES } from '@constants/routes.conts';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -129,7 +131,8 @@ export default function AmountScreen() {
 		|--------------------------------------------------
 		*/
 		if (sourceDestination.source === 'NGN') {
-			balance = (userData?.wallets.find((wallet: any) => wallet.currency === 'NGN') as Wallet).walletBalance ?? 0;
+			balance =
+				(userData?.wallets.find((wallet: any) => wallet.currency === 'NGN') as Wallet)?.walletBalance ?? 0;
 		}
 
 		/**
@@ -138,7 +141,8 @@ export default function AmountScreen() {
 		|--------------------------------------------------
 		*/
 		if (sourceDestination.source === 'CAD') {
-			balance = (userData?.wallets.find((wallet: any) => wallet.currency === 'CAD') as Wallet).walletBalance ?? 0;
+			balance =
+				(userData?.wallets.find((wallet: any) => wallet.currency === 'CAD') as Wallet)?.walletBalance ?? 0;
 		}
 
 		return balance;
@@ -374,9 +378,9 @@ export default function AmountScreen() {
 				<Pressable
 					key={wallet?._id}
 					onPress={() => handleChangeWallet(wallet, type)}
-					className="h-[46px] w-full rounded-[10px] bg-[#F7F7F7] justify-center px-6"
+					className="h-[46px] w-full justify-center rounded-[10px] bg-[#F7F7F7] px-6"
 				>
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-[15px]">
 						{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
 					</MPText>
 				</Pressable>
@@ -398,17 +402,17 @@ export default function AmountScreen() {
 			| Content
 			|--------------------------------------------------
 			*/}
-			<View className="flex-row justify-between items-center mb-10">
+			<View className="mb-10 flex-row items-center justify-between">
 				{/**
 				|--------------------------------------------------
 				| Step 1 of 2
 				|--------------------------------------------------
 				*/}
 				<View>
-					<MPText weight="medium" className="text-sm text-[#767676]">
+					<MPText weight="medium" className="text-[15px] text-[#767676]">
 						Step {transactionType === 'SWAP' ? '1/2' : '2/2'}
 					</MPText>
-					<MPText weight="semibold" className="text-xs">
+					<MPText weight="semibold" className="text-[13px]">
 						Enter details
 					</MPText>
 				</View>
@@ -419,7 +423,7 @@ export default function AmountScreen() {
 				|--------------------------------------------------
 				*/}
 				<Pressable onPress={() => navigation.navigate(ROUTE_NAMES.EXCHANGE_RATE as never)}>
-					<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+					<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 						See our rates
 					</MPText>
 				</Pressable>
@@ -437,7 +441,7 @@ export default function AmountScreen() {
 					| Main text
 					|--------------------------------------------------
 					*/}
-					<MPText weight="semibold" className="text-base text-center">
+					<MPText weight="semibold" className="text-center text-base">
 						{params.transactionType === 'CAD-to-CAD'
 							? 'Send to an interac email'
 							: params.transactionType === 'SWAP' && sourceDestination.source === 'CAD'
@@ -452,7 +456,7 @@ export default function AmountScreen() {
 					| Subtext
 					|--------------------------------------------------
 					*/}
-					<MPText weight="medium" className="text-[#767676] text-center text-sm mb-6">
+					<MPText weight="medium" className="mb-6 text-center text-[15px] text-[#767676]">
 						Enter amount to{' '}
 						{params.transactionType === 'CAD-to-CAD'
 							? 'send to recipient'
@@ -469,7 +473,7 @@ export default function AmountScreen() {
 					|--------------------------------------------------
 					*/}
 					<View className="gap-1">
-						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+						<MPText className="text-[15px] text-[#1A1A1A]" weight="medium">
 							Amount to send
 						</MPText>
 
@@ -478,8 +482,8 @@ export default function AmountScreen() {
 						| Wallet For sender
 						|--------------------------------------------------
 						*/}
-						<View className="rounded-[16px] bg-[#FFFFFF] p-4 mb-4">
-							<View className="flex-row items-center justify-between w-full">
+						<View className="mb-4 rounded-[16px] bg-[#FFFFFF] p-4">
+							<View className="w-full flex-row items-center justify-between">
 								{/**
 								|--------------------------------------------------
 								| Wallet balance
@@ -502,7 +506,7 @@ export default function AmountScreen() {
 										keyboardType="numeric"
 										onChangeText={handleChange}
 										submitBehavior="blurAndSubmit"
-										className="text-[18px] font-semibold min-w-[100px]"
+										className="min-w-[100px] text-[18px] font-semibold"
 									/>
 								</View>
 
@@ -518,7 +522,7 @@ export default function AmountScreen() {
 									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 									triggerChildren={
 										<View>
-											<MPText weight="medium" className="text-sm text-black">
+											<MPText weight="medium" className="text-[15px] text-black">
 												{sourceDestination.sourceFlag} {sourceDestination.source}
 											</MPText>
 										</View>
@@ -532,10 +536,10 @@ export default function AmountScreen() {
 							| Second row
 							|--------------------------------------------------
 							*/}
-							<View className="mt-1 flex-row justify-between items-center">
+							<View className="mt-1 flex-row items-center justify-between">
 								<View className="flex-row items-center gap-1">
 									<WalletIcon />
-									<MPText weight="regular" className="text-[#767676] text-sm">
+									<MPText weight="regular" className="text-[15px] text-[#767676]">
 										Wallet Bal:
 									</MPText>
 								</View>
@@ -545,7 +549,7 @@ export default function AmountScreen() {
 								| Wallet balance
 								|--------------------------------------------------
 								*/}
-								<MPText weight="regular" className="text-[#767676] text-sm">
+								<MPText weight="regular" className="text-[15px] text-[#767676]">
 									{handleCurrencySymbol().sourceSymbol}
 									{handleGetWalletBalance().toLocaleString(undefined, {
 										minimumFractionDigits: 2,
@@ -561,7 +565,7 @@ export default function AmountScreen() {
 						|--------------------------------------------------
 						*/}
 						{handleGetWalletBalance() < Number(amountToSend ?? 0) && (
-							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+							<MPText weight="semibold" className="-translate-y-3 text-[13px] text-[#D92D20]">
 								Insufficient funds in your wallet
 							</MPText>
 						)}
@@ -572,7 +576,7 @@ export default function AmountScreen() {
 						|--------------------------------------------------
 						*/}
 						{params.transactionType === 'NGN-to-NGN' && Number(amountToSend) < 100 && (
-							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+							<MPText weight="semibold" className="-translate-y-3 text-[13px] text-[#D92D20]">
 								You can't send less than 100 Naira
 							</MPText>
 						)}
@@ -583,7 +587,7 @@ export default function AmountScreen() {
 						|--------------------------------------------------
 						*/}
 						{params.transactionType === 'CAD-to-CAD' && Number(amountToSend) < 10 && (
-							<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+							<MPText weight="semibold" className="-translate-y-3 text-[13px] text-[#D92D20]">
 								You can't send less than 10 CAD
 							</MPText>
 						)}
@@ -596,7 +600,7 @@ export default function AmountScreen() {
 						{params.transactionType === 'SWAP' &&
 							sourceDestination.source === 'NGN' &&
 							Number(amountToSend) < (NGNRate?.rate ?? 0) * 5 && (
-								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								<MPText weight="semibold" className="-translate-y-3 text-[13px] text-[#D92D20]">
 									The amount you're trying to exchange is too low
 								</MPText>
 							)}
@@ -609,7 +613,7 @@ export default function AmountScreen() {
 						{params.transactionType === 'SWAP' &&
 							sourceDestination.source === 'CAD' &&
 							Number(amountToSend) < 10 && (
-								<MPText weight="semibold" className="text-[#D92D20] text-xs -translate-y-3">
+								<MPText weight="semibold" className="-translate-y-3 text-[13px] text-[#D92D20]">
 									The amount you're trying to exchange is too low
 								</MPText>
 							)}
@@ -619,7 +623,7 @@ export default function AmountScreen() {
 						| Exchange rate
 						|--------------------------------------------------
 						*/}
-						<View className="h-[108px] rounded-2xl bg-[#ECEDEE] w-full p-4 justify-between my-4">
+						<View className="my-4 h-[108px] w-full justify-between rounded-2xl bg-[#ECEDEE] p-4">
 							<DataRepresentation
 								label="Today's rate"
 								valueClassName="text-[#767676]"
@@ -634,7 +638,7 @@ export default function AmountScreen() {
 						| Amount they’ll receive
 						|--------------------------------------------------
 						*/}
-						<MPText className="text-sm text-[#1A1A1A]" weight="medium">
+						<MPText className="text-[15px] text-[#1A1A1A]" weight="medium">
 							Amount they’ll receive
 						</MPText>
 
@@ -644,7 +648,7 @@ export default function AmountScreen() {
 						|--------------------------------------------------
 						*/}
 						<View className="rounded-[16px] bg-[#FFFFFF] p-4">
-							<View className="flex-row items-center justify-between w-full">
+							<View className="w-full flex-row items-center justify-between">
 								{/**
 								|--------------------------------------------------
 								| Wallet balance
@@ -668,7 +672,7 @@ export default function AmountScreen() {
 										submitBehavior="blurAndSubmit"
 										onSubmitEditing={Keyboard.dismiss}
 										className={clsx(
-											'text-[18px] font-semibold w-auto',
+											'w-auto text-[18px] font-semibold',
 											transactionType === 'SWAP' ? '' : 'pointer-events-none'
 										)}
 										value={handleConversionInfo('conversion')
@@ -690,7 +694,7 @@ export default function AmountScreen() {
 									wrapperClassName="w-[96px] h-[32px] max-h-[32px] max-w-[96px]"
 									triggerChildren={
 										<View>
-											<MPText weight="medium" className="text-sm text-black">
+											<MPText weight="medium" className="text-[15px] text-black">
 												{sourceDestination.destinationFlag} {sourceDestination.destination}
 											</MPText>
 										</View>
@@ -706,13 +710,13 @@ export default function AmountScreen() {
 							*/}
 							<View
 								className={clsx(
-									'mt-1 flex-row justify-between items-center',
+									'mt-1 flex-row items-center justify-between',
 									transactionType === 'SWAP' ? 'flex' : 'hidden'
 								)}
 							>
 								<View className="flex-row items-center gap-1">
 									<WalletIcon />
-									<MPText weight="regular" className="text-[#767676] text-sm">
+									<MPText weight="regular" className="text-[15px] text-[#767676]">
 										Wallet Bal:
 									</MPText>
 								</View>
@@ -722,7 +726,7 @@ export default function AmountScreen() {
 								| Wallet balance
 								|--------------------------------------------------
 								*/}
-								<MPText weight="regular" className="text-[#767676] text-sm">
+								<MPText weight="regular" className="text-[15px] text-[#767676]">
 									{handleCurrencySymbol().sourceSymbol}
 									{handleGetWalletBalance().toLocaleString(undefined, {
 										minimumFractionDigits: 2,
@@ -741,10 +745,10 @@ export default function AmountScreen() {
 					<MPButton
 						disabled={!isValidAmount}
 						useGradientBg={isValidAmount}
-						className="w-[91px] max-w-[91px] mt-6 self-center"
+						className="mt-6 w-[91px] max-w-[91px] self-center"
 						onPress={() => setShowTransactionPreviewModal(true)}
 					>
-						<MPText weight="semibold" className="text-sm text-white">
+						<MPText weight="semibold" className="text-[15px] text-white">
 							Continue
 						</MPText>
 					</MPButton>

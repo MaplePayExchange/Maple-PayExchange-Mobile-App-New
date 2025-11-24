@@ -50,7 +50,7 @@ export default function NotificationScreen() {
             */}
 			<View className={clsx('mb-3', notifications.length === 0 ? '!hidden' : '')}>
 				<Pressable className="ml-auto" onPress={() => mutate({})}>
-					<MPText weight="semibold" className="text-xs text-[#FF6A00]">
+					<MPText weight="semibold" className="text-[13px] text-[#FF6A00]">
 						Mark all as read
 					</MPText>
 				</Pressable>
@@ -109,7 +109,7 @@ export default function NotificationScreen() {
                                 */}
 								<View className="ml-4 flex-1">
 									<View className="mb-1 flex-row items-center gap-2">
-										<MPText weight="semibold" className="text-sm">
+										<MPText weight="semibold" className="text-[15px]">
 											{notification?.metadata?.reason}
 										</MPText>
 
@@ -130,7 +130,7 @@ export default function NotificationScreen() {
 									<MPText
 										weight="medium"
 										style={{ lineHeight: 15 }}
-										className="flex-1 text-xs text-[#484848]"
+										className="flex-1 text-[13px] text-[#484848]"
 									>
 										{notification.message}
 									</MPText>
@@ -153,7 +153,7 @@ export default function NotificationScreen() {
 					|--------------------------------------------------
 					*/}
 					{(!hasNextPage || !isFetchingNextPage || !isLoading || !isPending || !isReading) && (
-						<MPText weight="medium" className="self-center text-sm text-[#FF6A00]">
+						<MPText weight="medium" className="self-center text-[15px] text-[#FF6A00]">
 							No more notifications
 						</MPText>
 					)}

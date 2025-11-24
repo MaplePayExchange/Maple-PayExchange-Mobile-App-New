@@ -23,13 +23,17 @@ interface Props {
 	subtitle?: string;
 	onlClick?: () => void;
 	useNavigation?: boolean;
+	titleFontSize?: keyof typeof fontSizes;
 	rightNavigationItem?: React.ReactNode;
+	subTitleFontSize?: keyof typeof fontSizes;
 }
 
 export default function HeaderWrapper({
 	center,
 	subtitle,
 	onlClick,
+	titleFontSize,
+	subTitleFontSize,
 	rightNavigationItem,
 	title = 'This is the title',
 	useNavigation: useNavigate = true,
@@ -42,7 +46,7 @@ export default function HeaderWrapper({
     |--------------------------------------------------
     */
 	return (
-		<View className='mt-4'>
+		<View className="mt-4">
 			{/**
             |--------------------------------------------------
             | Header
@@ -60,11 +64,11 @@ export default function HeaderWrapper({
 					</Pressable>
 				)}
 
-				<View className={clsx(center && '-translate-x-[50%] left-1/2 absolute')}>
+				<View className={clsx(center && 'absolute left-1/2 -translate-x-[50%]')}>
 					<MPText
 						weight="semibold"
 						className={clsx('text-[#1A1A1A]')}
-						style={{ lineHeight: 26, fontSize: fontSizes.FONT16 }}
+						style={{ lineHeight: 26, fontSize: fontSizes[titleFontSize || 'FONT16'] }}
 					>
 						{title}
 					</MPText>
@@ -83,7 +87,7 @@ export default function HeaderWrapper({
             | Subtitle
             |--------------------------------------------------
             */}
-			<MPText weight="medium" className="mt-1 text-[#767676] leading-6 text-sm">
+			<MPText fontSize={subTitleFontSize} weight="medium" className="mt-2 leading-6 text-[#767676]">
 				{subtitle}
 			</MPText>
 		</View>

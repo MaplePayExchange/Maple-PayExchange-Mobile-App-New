@@ -94,7 +94,7 @@ export default function KysStepsScreen() {
 			{!showBrowser && (
 				<ScrollView showsVerticalScrollIndicator={false}>
 					<View className="">
-						<View className="items-center mt-6">
+						<View className="mt-6 items-center">
 							<Image
 								width={195}
 								height={197}
@@ -111,7 +111,7 @@ export default function KysStepsScreen() {
 						<MPText
 							weight="semibold"
 							style={{ fontSize: 24, lineHeight: 32 }}
-							className="text-[24px] text-[#1A1A1A] mt-8"
+							className="mt-8 text-[24px] text-[#1A1A1A]"
 						>
 							Almost there!
 						</MPText>
@@ -128,7 +128,7 @@ export default function KysStepsScreen() {
 						| Subtext
 						|--------------------------------------------------
 						*/}
-						<MPText weight="medium" className="text-sm leading-5 mt-4 text-[#767676]">
+						<MPText weight="medium" className="mt-4 text-[15px] leading-5 text-[#767676]">
 							This is a legal requirement, and verification protects you from fraud and identity theft.
 						</MPText>
 
@@ -137,7 +137,7 @@ export default function KysStepsScreen() {
 						| Next steps
 						|--------------------------------------------------
 						*/}
-						<MPText weight="medium" className="text-sm leading-5 mt-10 text-[#767676]">
+						<MPText weight="medium" className="mt-10 text-[15px] leading-5 text-[#767676]">
 							The next step will require you to take a picture of your government issued ID and your face
 							(liveness test). Examples of ID include:
 						</MPText>
@@ -147,15 +147,15 @@ export default function KysStepsScreen() {
 						| Identities
 						|--------------------------------------------------
 						*/}
-						<View className="mt-1 mb-12">
+						<View className="mb-12 mt-1">
 							{/**
 							|--------------------------------------------------
 							| Passport
 							|--------------------------------------------------
 							*/}
-							<View className="flex-row gap-1 items-center">
+							<View className="flex-row items-center gap-1">
 								<Entypo name="dot-single" size={16} color="black" />
-								<MPText className="text-sm leading-5 text-[#767676]">International passport</MPText>
+								<MPText className="text-[15px] leading-5 text-[#767676]">International passport</MPText>
 							</View>
 
 							{/**
@@ -163,9 +163,9 @@ export default function KysStepsScreen() {
 							| Drivers license
 							|--------------------------------------------------
 							*/}
-							<View className="flex-row gap-1 items-center">
+							<View className="flex-row items-center gap-1">
 								<Entypo name="dot-single" size={16} color="black" />
-								<MPText className="text-sm leading-5 text-[#767676]">Driver’s license</MPText>
+								<MPText className="text-[15px] leading-5 text-[#767676]">Driver’s license</MPText>
 							</View>
 
 							{/**
@@ -173,9 +173,9 @@ export default function KysStepsScreen() {
 							| PR card
 							|--------------------------------------------------
 							*/}
-							<View className="flex-row gap-1 items-center">
+							<View className="flex-row items-center gap-1">
 								<Entypo name="dot-single" size={16} color="black" />
-								<MPText className="text-sm leading-5 text-[#767676]">PR card</MPText>
+								<MPText className="text-[15px] leading-5 text-[#767676]">PR card</MPText>
 							</View>
 						</View>
 
@@ -195,7 +195,7 @@ export default function KysStepsScreen() {
 								isLoading={isPending}
 								onPress={() => mutate({ email: params?.email as any })}
 							>
-								<MPText weight="semibold" className="text-white text-sm">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									Start
 								</MPText>
 							</MPButton>
@@ -206,7 +206,7 @@ export default function KysStepsScreen() {
 							|--------------------------------------------------
 							*/}
 							<MPButton onPress={() => navigation.goBack()}>
-								<MPText weight="semibold" className="text-[#EE0979] text-sm">
+								<MPText weight="semibold" className="text-[15px] text-[#EE0979]">
 									I’ll do this later
 								</MPText>
 							</MPButton>

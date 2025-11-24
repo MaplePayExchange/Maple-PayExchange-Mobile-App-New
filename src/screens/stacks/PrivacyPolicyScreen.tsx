@@ -33,10 +33,10 @@ export default function PrivacyPolicyScreen() {
 					|
 					|--------------------------------------------------
 					*/}
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 						Effective Date: [January 25, 2019]
 					</MPText>
-					<MPText weight="medium" className="text-sm">
+					<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 						Last Updated: [June 1, 2025]
 					</MPText>
 
@@ -58,14 +58,14 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Maple PayExchange Inc. (“MPE Inc.”, “we”, “our”, “us”) respects your privacy and is
 							committed to protecting your privacy and safeguarding your personal data. This Privacy
 							Policy explains how we collect, use, store, disclose, and protect your information when you
 							use our mobile application, website, and related services (collectively, the “Services”).
 						</MPText>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We operate in Canada, Nigeria, and serve users globally. This policy is designed to comply
 							with:
 						</MPText>
@@ -73,7 +73,8 @@ export default function PrivacyPolicyScreen() {
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Canada’s PIPEDA and FINTRAC Anti-Money Laundering (AML), Know Your Customer (KYC) requirements',
 								'Nigeria Data Protection Regulation / Nigeria Data Protection Act',
@@ -82,13 +83,13 @@ export default function PrivacyPolicyScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							By creating an account and selecting “I agree to the terms and conditions of this service,”
 							you consent to the collection, use, processing and disclosure of your personal data as
 							described in this Privacy Policy, to the extent permitted by applicable laws.
 						</MPText>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							If you do not agree, you will not be able to create a profile or use our Services.
 						</MPText>
 					</View>
@@ -112,7 +113,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							MPE Inc. is the controller of your personal data for purposes of applicable privacy laws,
 							including the Personal Information Protection and Electronic Documents Act (PIPEDA) in
 							Canada, the Nigeria Data Protection Regulation / Nigeria Data Protection Act, the General
@@ -143,7 +144,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We collect and process personal data only where it is lawful and necessary for delivering
 							our Services, business, legal purposes, meeting regulatory obligations, and improving user
 							experience.
@@ -154,15 +155,16 @@ export default function PrivacyPolicyScreen() {
 							gap="gap-2"
 							customLabel="A."
 							type="unordered"
-							bulletClassName="text-sm"
+							bulletClassName="text-[15px] text-justify"
 							items={['Information you provide']}
-							textStyle={{ fontWeight: '700', fontSize: 16 }}
+							textStyle={{ fontWeight: '700', fontSize: 16, lineHeight: 21 }}
 						/>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Identification details: Full name, address, date of birth, occupation (required by law under FINTRAC rules).',
 								'Verification documents: Government-issued ID, proof of address, and other KYC/AML documentation.',
@@ -172,42 +174,44 @@ export default function PrivacyPolicyScreen() {
 								'Communications: Messages, support requests, chat transcripts, correspondence.',
 							]}
 						/>
-						<View className="mt-3 mb-1" />
+						<View className="mb-1 mt-3" />
 						<List
 							boldenText
 							gap="gap-2"
 							customLabel="B."
 							type="unordered"
-							bulletClassName="text-sm"
+							bulletClassName="text-[15px] text-justify"
 							items={['Information collected automatically']}
-							textStyle={{ fontWeight: '700', fontSize: 16 }}
+							textStyle={{ fontWeight: '700', fontSize: 16, lineHeight: 21 }}
 						/>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Device type, operating system, IP address, browser type, app usage statistics.',
 								'Crash reports, performance data, and analytics events.',
 								'Location data (only if you grant permission).',
 							]}
 						/>
-						<View className="mt-3 mb-1" />
+						<View className="mb-1 mt-3" />
 						<List
 							boldenText
 							gap="gap-2"
 							customLabel="C."
 							type="unordered"
-							bulletClassName="text-sm"
+							bulletClassName="text-[15px] text-justify"
 							items={['Information from third parties']}
-							textStyle={{ fontWeight: '700', fontSize: 16 }}
+							textStyle={{ fontWeight: '700', fontSize: 16, lineHeight: 21 }}
 						/>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Apaylo & FINCRA: Payment processing and transaction confirmations',
 								'Veriff: KYC and biometric verification status, watchlist screening results.',
@@ -236,13 +240,14 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We process personal data under one or more of the following legal bases:
 						</MPText>
 						<View className="my-1" />
 						<List
 							startIndex={0}
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							type="ordered"
 							items={[
 								'Consent – where you actively agree to processing (e.g., marketing communications).',
@@ -272,14 +277,15 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We use your personal data to:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Verify your identity, comply with KYC/AML obligations and counter-terrorism financing laws.',
 								'Process payments and facilitate transactions.',
@@ -312,14 +318,15 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We share your personal data only as necessary and permitted by law:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Regulatory authorities – FINTRAC (Canada), Nigerian Data Protection Commission, or other regulators when legally required.',
 								'Service providers – including Apaylo (payments), FINCRA (cross-border payments), Veriff (KYC/biometric verification), AWS(hosting), IT support, and customer service providers, all bound by confidentiality agreements.',
@@ -329,7 +336,7 @@ export default function PrivacyPolicyScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We do not sell your personal data.
 						</MPText>
 					</View>
@@ -353,7 +360,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Your personal data may be stored or processed in Canada, the United States, Europe or
 							Nigeria. Where data is transferred outside your jurisdiction, we use appropriate safeguards
 							(e.g., Standard Contractual Clauses under GDPR) to ensure your data remains protected.
@@ -379,14 +386,15 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We retain your personal data:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'KYC/AML records: Retained 7 years from account closure, per legal requirements.',
 								'Transactional data: Retained 7 years.',
@@ -415,14 +423,15 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							You may have the right to:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Access and obtain a copy of your personal data.',
 								'Correct or update your data.',
@@ -434,7 +443,7 @@ export default function PrivacyPolicyScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Requests can be made to: privacy@mpexchange.ca
 						</MPText>
 					</View>
@@ -458,7 +467,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We implement technical, administrative, and physical safeguards to protect your personal
 							data, including:
 						</MPText>
@@ -466,7 +475,8 @@ export default function PrivacyPolicyScreen() {
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Encryption in transit (TLS) and at rest.',
 								'Role-based access controls and authentication measures.',
@@ -474,7 +484,7 @@ export default function PrivacyPolicyScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							No system is fully secure. If you suspect a security issue, contact us immediately at
 							security@mpexchange.ca
 						</MPText>
@@ -499,14 +509,15 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We use cookies and third -party SDKs for:
 						</MPText>
 						<View className="my-1" />
 						<List
 							gap="gap-2"
 							type="unordered"
-							textClassName="text-sm"
+							textClassName="text-[15px] text-justify"
+							textStyle={{ lineHeight: 21 }}
 							items={[
 								'Core app functionality',
 								'Fraud prevention',
@@ -514,7 +525,7 @@ export default function PrivacyPolicyScreen() {
 							]}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							You can control certain tracking through device settings
 						</MPText>
 					</View>
@@ -538,7 +549,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Our Services are not intended for individuals under 18. We do not knowingly collect personal
 							data from minors. If you believe we have done so, contact us to request deletion.
 						</MPText>
@@ -563,7 +574,7 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							We may update this Privacy Policy periodically. The “Last Updated” date will change
 							accordingly. Significant changes will be communicated in-app and/or via email.
 						</MPText>
@@ -588,11 +599,11 @@ export default function PrivacyPolicyScreen() {
 							textStyle={{ fontWeight: '700', fontSize: 16 }}
 						/>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Questions or concerns about this Privacy Policy can be sent to:
 						</MPText>
 						<View className="my-1" />
-						<MPText weight="medium" className="text-sm">
+						<MPText weight="medium" className="text-justify text-[15px]" style={{ lineHeight: 21 }}>
 							Email: privacy@mpexchange.ca
 						</MPText>
 					</View>

@@ -20,6 +20,7 @@ import OTPInput from '@src/components/OtpInput';
 import { useUserStore } from '@zustand/userStore';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
+//@ts-ignore
 import { RootStackParamList } from '@types/route.params';
 import { clampFontSize, LOADER } from '@constants/app.constant';
 import { useRequestOtp, useVerifyOtp } from '@services/auth.services';
@@ -92,13 +93,13 @@ export default function VerifyEmailScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper useNavigation title="Verify Your Email" />
+			<HeaderWrapper useNavigation titleFontSize="FONT24" title="Verify Your Email" />
 			{/**
 			|--------------------------------------------------
 			| Subtext
 			|--------------------------------------------------
 			*/}
-			<MPText weight="semibold" className="text-[16px] leading-6">
+			<MPText fontSize="FONT16" weight="semibold" className="text-[16px] leading-6">
 				Enter confirmation code
 			</MPText>
 
@@ -108,10 +109,15 @@ export default function VerifyEmailScreen() {
 			|--------------------------------------------------
 			*/}
 			<MPText className="text-[#767676]">
-				<MPText weight="medium" className="text-sm leading-6">
+				<MPText fontSize="FONT14" weight="medium" className="text-[15px] leading-6">
 					We sent a 6-digit code to {verificationData?.email}.{' '}
 				</MPText>
-				<MPText onPress={() => navigation.goBack()} weight="medium" className="text-sm text-[#FF6A00]">
+				<MPText
+					weight="medium"
+					fontSize="FONT14"
+					onPress={() => navigation.goBack()}
+					className="text-[15px] text-[#FF6A00]"
+				>
 					Change
 				</MPText>
 			</MPText>
@@ -135,12 +141,13 @@ export default function VerifyEmailScreen() {
 			|--------------------------------------------------
 			*/}
 			<MPText className={clsx('text-[#767676]', countDown > 0 && 'pointer-events-none')}>
-				<MPText weight="medium" className="text-sm leading-6">
+				<MPText fontSize="FONT14" weight="medium" className="text-[15px] leading-6">
 					I didn’t get code.{' '}
 				</MPText>
 				<MPText
 					weight="medium"
-					className="text-sm text-[#FF6A00]"
+					fontSize="FONT14"
+					className="text-[15px] text-[#FF6A00]"
 					onPress={() => {
 						mutateRequestOtp({
 							verificationType: 'email',
@@ -159,7 +166,7 @@ export default function VerifyEmailScreen() {
 			|--------------------------------------------------
 			*/}
 			<Modal transparent visible={isPending}>
-				<View className="h-full flex-1 w-full items-center justify-center bg-black/20">
+				<View className="h-full w-full flex-1 items-center justify-center bg-black/20">
 					<Animated.View style={animatedStyle}>
 						<Image
 							source={LOADER}

@@ -100,12 +100,12 @@ export default function VerifyBvnScreen() {
             | Header
             |--------------------------------------------------
             */}
-			<HeaderWrapper title="Verify Account" />
+			<HeaderWrapper title="Verify Account" titleFontSize="FONT24" />
 
-			<MPText weight="semibold" className="text-base" style={{ fontSize: 18 }}>
+			<MPText weight="semibold" className="text-base" fontSize="FONT18">
 				Add BVN Number
 			</MPText>
-			<MPText weight="medium" className="mt-2 text-sm leading-5 text-[#484848]">
+			<MPText fontSize="FONT14" weight="medium" className="mt-2 text-[15px] leading-5 text-[#484848]">
 				We use your BVN to automatically create a NGN MaplePay account for you
 			</MPText>
 
@@ -148,7 +148,7 @@ export default function VerifyBvnScreen() {
 			|--------------------------------------------------
 			*/}
 			<MPButton isLoading={isPending} useGradientBg className="mt-8" onPress={handleSubmit(onSubmit)}>
-				<MPText weight="semibold" className="text-sm text-white">
+				<MPText weight="semibold" className="text-[15px] text-white">
 					Submit
 				</MPText>
 			</MPButton>
@@ -176,11 +176,11 @@ export default function VerifyBvnScreen() {
 							BVN Verification Complete
 						</MPText>
 						{typeof user.transactionPin !== 'string' ? (
-							<MPText className="max-w-[290px] text-center text-sm text-[#484848]">
+							<MPText className="max-w-[290px] text-center text-[15px] text-[#484848]">
 								You bvn has been verified! Let’s secure your account before you proceed.
 							</MPText>
 						) : (
-							<MPText className="max-w-[290px] text-center text-sm text-[#484848]">
+							<MPText className="max-w-[290px] text-center text-[15px] text-[#484848]">
 								Your BVN has been verified!.
 							</MPText>
 						)}
@@ -192,7 +192,7 @@ export default function VerifyBvnScreen() {
 						*/}
 						{typeof user.transactionPin !== 'string' ? (
 							<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
-								<MPText weight="semibold" className="text-sm text-white">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									Create transaction pin
 								</MPText>
 							</MPButton>
@@ -205,7 +205,7 @@ export default function VerifyBvnScreen() {
 								useGradientBg
 								className="mt-8"
 							>
-								<MPText weight="semibold" className="text-sm text-white">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									Go to dashboard
 								</MPText>
 							</MPButton>

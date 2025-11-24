@@ -86,7 +86,7 @@ export default function ResetPasswordScreen() {
 			<MPText weight="semibold" className="text-base">
 				Reset password
 			</MPText>
-			<MPText weight="medium" className="text-sm leading-5 text-[#484848]">
+			<MPText weight="medium" className="text-[15px] leading-5 text-[#484848]">
 				Reset password to login to your account
 			</MPText>
 
@@ -194,7 +194,7 @@ export default function ResetPasswordScreen() {
 						>
 							<MPText
 								weight="semibold"
-								className={clsx(isMatchPassword ? 'text-white' : 'text-sm text-[#D1D1D1]')}
+								className={clsx(isMatchPassword ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
 							>
 								Save password
 							</MPText>

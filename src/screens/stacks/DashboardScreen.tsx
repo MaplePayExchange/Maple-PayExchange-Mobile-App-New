@@ -238,9 +238,9 @@ export default function DashboardScreen() {
 					| Welcome text
 					|--------------------------------------------------
 					*/}
-					<MPText className="flex-1 text-xl text-[#A4A6AA]">
+					<MPText fontSize="FONT18" className="flex-1 text-xl text-[#A4A6AA]">
 						Hello,{' '}
-						<MPText weight="semibold" className="text-xl text-[#1A1A1A]">
+						<MPText fontSize="FONT18" weight="semibold" className="text-xl text-[#1A1A1A]">
 							{data?.user?.firstName || ''} {data?.user?.lastName || ''}
 						</MPText>
 					</MPText>
@@ -280,7 +280,7 @@ export default function DashboardScreen() {
 					{!isVerified && !isLoading && (
 						<View className="items-center justify-center">
 							<PadlockIcon />
-							<MPText style={{ fontSize: 12 }} className="mt-2 text-xs text-white" weight="semibold">
+							<MPText style={{ fontSize: 12 }} className="mt-2 text-[13px] text-white" weight="semibold">
 								Wallet Locked
 							</MPText>
 							<MPText
@@ -303,8 +303,8 @@ export default function DashboardScreen() {
 							onPress={() => setShowWalletModal(true)}
 							className="h-[20px] w-[68px] flex-row items-center justify-center gap-1 self-center rounded-[8px] bg-[#F7F7F7]"
 						>
-							<MPText className="text-sm">{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}</MPText>
-							<MPText style={{ fontSize: 10 }} className="text-xs" weight="bold">
+							<MPText className="text-[15px]">{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}</MPText>
+							<MPText style={{ fontSize: 10 }} className="text-[13px]" weight="bold">
 								{selectedWallet?.currency}
 							</MPText>
 
@@ -327,7 +327,7 @@ export default function DashboardScreen() {
 									className="flex-1 justify-center bg-black/10 p-6"
 								>
 									<View className="min-h-[186px] rounded-3xl bg-white p-4">
-										<MPText weight="semibold" className="text-center text-sm">
+										<MPText weight="semibold" className="text-center text-[15px]">
 											MY WALLETS
 										</MPText>
 
@@ -346,7 +346,7 @@ export default function DashboardScreen() {
 													}}
 													className="h-[46px] w-full justify-center rounded-[10px] bg-[#F7F7F7] px-6"
 												>
-													<MPText weight="medium" className="text-sm">
+													<MPText weight="medium" className="text-[15px]">
 														{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
 													</MPText>
 												</Pressable>
@@ -360,7 +360,7 @@ export default function DashboardScreen() {
 										*/}
 										<MPButton useGradientBg className="mt-6 !hidden w-[128px] self-center">
 											<Pressable className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white">
-												<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+												<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 													Add new wallet
 												</MPText>
 											</Pressable>
@@ -377,7 +377,7 @@ export default function DashboardScreen() {
 					|--------------------------------------------------
 					*/}
 					{isVerified && (
-						<MPText weight="semibold" className="mb-1 mt-4 self-center text-xs text-white">
+						<MPText weight="semibold" className="mb-1 mt-4 self-center text-[13px] text-white">
 							Wallet Balance
 						</MPText>
 					)}
@@ -426,7 +426,7 @@ export default function DashboardScreen() {
 								| Label
 								|--------------------------------------------------
 								*/}
-								<MPText style={{ fontSize: 12 }} weight="medium" className="text-xs text-white">
+								<MPText style={{ fontSize: 12 }} weight="medium" className="text-[13px] text-white">
 									{action.label}
 								</MPText>
 							</View>
@@ -489,7 +489,7 @@ export default function DashboardScreen() {
 							|--------------------------------------------------
 							*/}
 							<View className="flex-row items-center gap-2">
-								<MPText weight="medium" className="text-sm leading-6 text-black">
+								<MPText weight="medium" className="text-[15px] leading-6 text-black">
 									Account Verification
 								</MPText>
 								<Pressable onPress={() => setShowBvnModal(true)}>
@@ -505,7 +505,7 @@ export default function DashboardScreen() {
 							<MPText
 								weight="regular"
 								style={{ lineHeight: 20, fontSize: 12 }}
-								className="mt-1 text-wrap text-xs leading-5 text-[#484848]"
+								className="mt-1 text-wrap text-[13px] leading-5 text-[#484848]"
 							>
 								Verify your identity to create your wallet(s) and start exchanging money.
 							</MPText>
@@ -529,7 +529,7 @@ export default function DashboardScreen() {
 				|--------------------------------------------------
 				*/}
 				<View className="mt-6 flex-row justify-between p-4">
-					<MPText className="text-sm" weight="semibold">
+					<MPText fontSize="FONT14" className="text-[15px]" weight="semibold">
 						Recent Transactions
 					</MPText>
 
@@ -539,7 +539,7 @@ export default function DashboardScreen() {
 					|--------------------------------------------------
 					*/}
 					<Pressable onPress={() => handleInitiateAction('see_more_transactions')}>
-						<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+						<MPText fontSize="FONT14" weight="semibold" className="text-[15px] text-[#FF6A00]">
 							See more
 						</MPText>
 					</Pressable>
@@ -552,7 +552,7 @@ export default function DashboardScreen() {
 				*/}
 				{data?.transactions.length === 0 && (
 					<View className="h-[158px] items-center justify-center">
-						<MPText weight="medium" className="text-sm text-[#767676]">
+						<MPText fontSize="FONT14" weight="medium" className="text-[15px] text-[#767676]">
 							No transactions yet
 						</MPText>
 					</View>

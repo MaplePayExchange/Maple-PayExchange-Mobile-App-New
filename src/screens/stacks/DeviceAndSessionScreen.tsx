@@ -52,7 +52,7 @@ export default function DeviceAndSessionScreen() {
                 | ...
                 |--------------------------------------------------
                 */}
-				<View className="bg-[#f0f0f0] flex-1 p-4 h-[75vh]">
+				<View className="h-[75vh] flex-1 bg-[#f0f0f0] p-4">
 					<Container>
 						<MPText className="text-base" weight="semibold">
 							Devices and Sessions
@@ -66,10 +66,10 @@ export default function DeviceAndSessionScreen() {
 						<View className="mt-6 gap-6">
 							{data?.history.map((device) => (
 								<View key={(device as any)?._id} className="">
-									<MPText className="text-sm" weight="medium">
+									<MPText className="text-[15px]" weight="medium">
 										{device.deviceName} {device.isCurrent && '(Current device)'}
 									</MPText>
-									<MPText className="text-sm text-[#767676]" weight="medium">
+									<MPText className="text-[15px] text-[#767676]" weight="medium">
 										As at {dayjs(device.lastLoginAt).format('dddd Do MMMM YYYY, hh:mm A')}
 									</MPText>
 								</View>

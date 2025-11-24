@@ -87,8 +87,8 @@ export default function FundWalletModal({
 								</Svg>
 								<MPText
 									weight="medium"
-									className="text-xs text-[#B54708]"
-									style={{ lineHeight: 14, fontSize: 12 }}
+									className="text-[13px] text-[#B54708]"
+									style={{ lineHeight: 15, fontSize: 13 }}
 								>
 									No third-party deposits.{' '}
 								</MPText>
@@ -135,7 +135,7 @@ export default function FundWalletModal({
                             | Instructions
                             |--------------------------------------------------
                             */}
-							<MPText weight="medium" className="text-sm text-[#767676]">
+							<MPText weight="medium" style={{lineHeight:21}} className="text-[15px] text-[#767676]">
 								Follow the instructions below to fund your Maple CAD wallet, payment details can be
 								shared across apps:
 							</MPText>
@@ -165,8 +165,8 @@ export default function FundWalletModal({
                                 */}
 								<MPText
 									weight="medium"
-									style={{ lineHeight: 18 }}
-									className="flex-1 text-sm text-[#767676]"
+									style={{ lineHeight: 21 }}
+									className="flex-1 text-[15px] text-[#767676]"
 								>
 									Log into your banking app and send money to{' '}
 									<MPText weight="semibold" className="text-black">
@@ -200,8 +200,8 @@ export default function FundWalletModal({
                                 */}
 								<MPText
 									weight="medium"
-									style={{ lineHeight: 18 }}
-									className="flex-1 text-sm text-[#767676]"
+									style={{ lineHeight: 21 }}
+									className="flex-1 text-[15px] text-[#767676]"
 								>
 									Make sure you are sending money from your verified interac address ({interacEmail})
 								</MPText>
@@ -232,8 +232,8 @@ export default function FundWalletModal({
                                 */}
 								<MPText
 									weight="medium"
-									style={{ lineHeight: 18 }}
-									className="flex-1 text-sm text-[#767676]"
+									style={{ lineHeight: 21 }}
+									className="flex-1 text-[15px] text-[#767676]"
 								>
 									It takes an average of 10-20 minutes for the funds to appear in your wallet
 								</MPText>
@@ -249,11 +249,11 @@ export default function FundWalletModal({
 									<MPText
 										weight="regular"
 										style={{ fontSize: 12 }}
-										className="text-xs text-[#767676]"
+										className="text-[13px] text-[#767676]"
 									>
 										INTERAC EMAIL ADDRESS
 									</MPText>
-									<MPText className="text-sm" weight="medium">
+									<MPText className="text-[15px]" weight="medium">
 										Payments@mpexchange.ca
 									</MPText>
 								</View>
@@ -299,7 +299,7 @@ export default function FundWalletModal({
 									}}
 									className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white"
 								>
-									<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+									<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 										See rate
 									</MPText>
 								</Pressable>
@@ -315,7 +315,7 @@ export default function FundWalletModal({
 								className="mt-6 w-[194px] self-center"
 								onPress={() => mutate({ startDate: new Date(new Date().setDate(17)).toISOString() })}
 							>
-								<MPText weight="semibold" className="text-sm text-white">
+								<MPText weight="semibold" className="text-[15px] text-white">
 									{isPending ? 'Verifying...' : 'I have made the payment'}
 								</MPText>
 							</MPButton>
@@ -358,7 +358,7 @@ export default function FundWalletModal({
                             | Instructions
                             |--------------------------------------------------
                             */}
-							<MPText weight="medium" className="mt-1 text-sm text-[#767676]">
+							<MPText weight="medium" className="mt-1 text-[15px] text-[#767676]">
 								Transfer money from your bank to the following account:
 							</MPText>
 
@@ -378,11 +378,11 @@ export default function FundWalletModal({
 										<MPText
 											weight="medium"
 											style={{ fontSize: 12 }}
-											className="text-sm text-[#767676]"
+											className="text-[15px] text-[#767676]"
 										>
 											BANK NAME
 										</MPText>
-										<MPText weight="medium" className="text-sm">
+										<MPText weight="medium" className="text-[15px]">
 											{selectedWallet?.accountInformation?.bankName}
 										</MPText>
 									</View>
@@ -416,11 +416,11 @@ export default function FundWalletModal({
 										<MPText
 											weight="medium"
 											style={{ fontSize: 12 }}
-											className="text-sm text-[#767676]"
+											className="text-[15px] text-[#767676]"
 										>
 											ACCOUNT NUMBER
 										</MPText>
-										<MPText weight="medium" className="text-sm">
+										<MPText weight="medium" className="text-[15px]">
 											{selectedWallet?.accountInformation?.accountNumber}
 										</MPText>
 									</View>
@@ -456,11 +456,11 @@ export default function FundWalletModal({
 										<MPText
 											weight="medium"
 											style={{ fontSize: 12 }}
-											className="text-sm text-[#767676]"
+											className="text-[15px] text-[#767676]"
 										>
 											ACCOUNT HOLDER
 										</MPText>
-										<MPText weight="medium" className="text-sm">
+										<MPText weight="medium" className="text-[15px]">
 											{selectedWallet?.accountInformation?.accountName}
 										</MPText>
 									</View>
@@ -487,7 +487,7 @@ export default function FundWalletModal({
 										setShowFundWalletModal(false);
 									}}
 								>
-									<MPText weight="semibold" className="text-sm text-[#FFFFFF]">
+									<MPText weight="semibold" className="text-[15px] text-[#FFFFFF]">
 										{isPending ? 'Verifying...' : 'I have made the payment'}
 									</MPText>
 								</MPButton>
@@ -497,7 +497,7 @@ export default function FundWalletModal({
 
 					{selectedWallet?.currency === 'CAD' && (
 						<Pressable className="mt-6 !hidden flex-row items-center justify-center gap-3">
-							<MPText weight="semibold" className="text-sm text-[#FF6A00]">
+							<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 								How to fund via interac
 							</MPText>
 							<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
