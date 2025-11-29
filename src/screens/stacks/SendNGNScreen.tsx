@@ -33,7 +33,7 @@ import ScreenWrapper from '@src/components/Wrapper';
 import InputField from '@src/components/InputField';
 import SelectField from '@src/components/SelectField';
 import { ROUTE_NAMES } from '@constants/routes.conts';
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useGetBanksList, useVerifyBankAccount } from '@services/user.services';
 
 type SendNGNProps = RouteProp<RootStackParamList, 'SendNGNScreen'>;

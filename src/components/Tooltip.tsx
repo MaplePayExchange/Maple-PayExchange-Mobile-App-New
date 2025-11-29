@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import clsx from 'clsx';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -12,7 +13,6 @@ import { View } from 'react-native';
  |--------------------------------------------------
  */
 import MPText from './MPText';
-import clsx from 'clsx';
 
 export default function Tooltip({
 	text,
@@ -29,11 +29,11 @@ export default function Tooltip({
 	return (
 		<View
 			className={clsx(
-				'absolute z-50 p-2 rounded-md bg-[#0E314C] w-[201px] isolate top-6',
+				'absolute top-6 isolate z-50 w-[201px] rounded-md bg-[#0E314C] p-2',
 				position === 'right' ? 'right-0' : position === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2'
 			)}
 		>
-			<MPText className="text-white flex-1" weight="regular">
+			<MPText className="flex-1 text-white" weight="regular">
 				{text}
 			</MPText>
 		</View>

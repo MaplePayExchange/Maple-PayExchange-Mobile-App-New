@@ -21,7 +21,7 @@ import { useUserStore } from '@zustand/userStore';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { clampFontSize, LOADER } from '@constants/app.constant';
 import { useRequestOtp, useVerifyOtp } from '@services/auth.services';
 

@@ -20,7 +20,7 @@ import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { ONBOARDING_ONE, ONBOARDING_THREE, ONBOARDING_TWO } from '@constants/app.constant';
 
 const { width } = Dimensions.get('window');

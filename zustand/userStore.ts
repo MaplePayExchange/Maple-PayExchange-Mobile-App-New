@@ -60,7 +60,9 @@ interface UserState {
 	selectedWallet: Wallet | null;
 	hasCompletedOnboarding: boolean;
 	userData: LoginResponse | undefined;
+	autoLogout: 'auto' | 'manual' | null;
 	biometricsInfo: BiometricsData | null;
+	tailorYourExperienceSkipCount?: number;
 	notificationSettings: NotificationsSettings;
 	verificationData: VerificationData | undefined;
 
@@ -76,7 +78,9 @@ interface UserState {
 	setBiometricsModal: (value: boolean) => void;
 	setCompleteOnboarding: (value: boolean) => void;
 	setUserData: (data: LoginResponse | undefined) => void;
+	setAutoLogout: (value: 'auto' | 'manual' | null) => void;
 	setBiometricsInfo: (data: BiometricsData | null) => void;
+	setTailorYourExperienceSkipCount: (data: number) => void;
 	setVerificationData: (data: Partial<VerificationData>) => void;
 	setNotificationSettings: (data: Partial<NotificationsSettings>) => void;
 }
@@ -95,6 +99,7 @@ export const useUserStore = create<UserState>()(
 	persist(
 		(set) => ({
 			name: '',
+			autoLogout: null,
 			isLoggedIn: false,
 			isRegistered: false,
 			userData: undefined,
@@ -103,6 +108,7 @@ export const useUserStore = create<UserState>()(
 			isSessionExpired: false,
 			showBiometricsModal: false,
 			verificationData: undefined,
+			tailorYourExperienceSkipCount: 0,
 			hasCompletedOnboarding: false,
 			notificationSettings: {
 				rateAlerts: false,
@@ -118,12 +124,14 @@ export const useUserStore = create<UserState>()(
 			|--------------------------------------------------
 			*/
 			setName: (name) => set({ name }),
+			setAutoLogout: (value) => set({ autoLogout: value }),
 			setIsLoggedIn: (status) => set({ isLoggedIn: status }),
 			setIsRegistered: (value) => set({ isRegistered: value }),
 			setBiometricsInfo: (data) => set({ biometricsInfo: data }),
 			setSelectedWallet: (value) => set({ selectedWallet: value }),
 			setBiometricsModal: (value) => set({ showBiometricsModal: value }),
 			setCompleteOnboarding: (value) => set({ hasCompletedOnboarding: value }),
+			setTailorYourExperienceSkipCount: (value) => set({ tailorYourExperienceSkipCount: value }),
 
 			/**
 			|--------------------------------------------------

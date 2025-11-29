@@ -81,7 +81,7 @@ export default function AutocompleteExample({ onSelect }: { onSelect?: (value: s
 			const response = await fetch(
 				`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
 					search
-				)}&components=country:ng&key=${apiKey}`
+				)}&key=${apiKey}`
 			);
 
 			/**

@@ -17,7 +17,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
  */
 import ScreenWrapper from '@src/components/Wrapper';
 import { ROUTE_NAMES } from '@constants/routes.conts';
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { clampFontSize, MAPLE_LOGO } from '@constants/app.constant';
 
 /**
@@ -120,7 +120,7 @@ export default function SplashScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<View className="flex-1 h-full items-center justify-center">
+			<View className="h-full flex-1 items-center justify-center">
 				<Animated.View entering={FadeInRight.duration(100).springify()}>
 					<Image
 						source={MAPLE_LOGO}

@@ -37,10 +37,11 @@ export default function AppStateManager({ children }: { children: React.ReactNod
         |--------------------------------------------------
         */
 		const checkInactivity = async () => {
-			const lastTime = await AsyncStorage.getItem('lastBackgroundTime');
+			const lastTime = await AsyncStorage?.getItem('lastBackgroundTime');
 			if (lastTime) {
 				const elapsed = Date.now() - parseInt(lastTime, 10);
 				if (elapsed > INACTIVITY_LIMIT) {
+					useUserStore.getState().setAutoLogout('auto');
 					useUserStore.getState().setIsLoggedIn(false);
 				}
 			}
@@ -58,12 +59,12 @@ export default function AppStateManager({ children }: { children: React.ReactNod
         | ...
         |--------------------------------------------------
         */
-		const subscription = AppState.addEventListener('change', async (nextAppState) => {
-			if (appState.current.match(/active/) && nextAppState.match(/inactive|background/)) {
-				await AsyncStorage.setItem('lastBackgroundTime', Date.now().toString());
+		const subscription = AppState?.addEventListener('change', async (nextAppState) => {
+			if (appState.current?.match(/active/) && nextAppState?.match(/inactive|background/)) {
+				await AsyncStorage?.setItem('lastBackgroundTime', Date.now().toString());
 			}
 
-			if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+			if (appState.current?.match(/inactive|background/) && nextAppState === 'active') {
 				await checkInactivity();
 			}
 

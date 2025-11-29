@@ -4,7 +4,7 @@
 |--------------------------------------------------
 */
 import React from 'react';
-import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 /**
  |--------------------------------------------------
@@ -25,7 +25,6 @@ import PhoneVerificationScreen from '../auth/PhoneVerificationScreen';
 import EmailVerificationScreen from '../auth/EmailVerificationScreen';
 import VerifyPhoneNumberScreen from '../auth/VerifyPhoneNumberScreen';
 import TermsAndCondtionsScreen from '../stacks/TermsAndCondtionsScreen';
-import TailorYourExperienceScreen from '../auth/TailorYourExperienceScreen';
 
 /**
 |--------------------------------------------------
@@ -76,11 +75,6 @@ const _ROUTES = [
 		name: ROUTE_NAMES.EMAIL_VERIFICATION,
 		component: EmailVerificationScreen,
 	},
-
-	{
-		name: ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE,
-		component: TailorYourExperienceScreen,
-	},
 	{
 		name: ROUTE_NAMES.TERMS_AND_CONDITIONS,
 		component: TermsAndCondtionsScreen,
@@ -106,14 +100,7 @@ export default function AuthNavigation() {
     |--------------------------------------------------
     */
 	return (
-		<Stack.Navigator
-			screenOptions={{
-				headerShown: false,
-				gestureEnabled: true,
-				...TransitionPresets.SlideFromRightIOS,
-				gestureDirection: 'horizontal',
-			}}
-		>
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			{/**
             |--------------------------------------------------
             | Mapping through the routes

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
 //@ts-ignore
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -443,7 +443,7 @@ export default function AmountScreen() {
 					*/}
 					<MPText weight="semibold" className="text-center text-base">
 						{params.transactionType === 'CAD-to-CAD'
-							? 'Send to an interac email'
+							? 'Send to an Interac Email'
 							: params.transactionType === 'SWAP' && sourceDestination.source === 'CAD'
 								? 'Send to your NGN wallet'
 								: params.transactionType === 'SWAP' && sourceDestination.source === 'NGN'

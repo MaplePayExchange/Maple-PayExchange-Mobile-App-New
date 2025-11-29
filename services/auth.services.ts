@@ -19,7 +19,7 @@ import { User } from '@interfaces/user.interface';
 import { Wallet } from '@interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { Currency, TransactionInterface } from '@interfaces/transaction.interface';
 import { useUserStore } from '@zustand/userStore';
 

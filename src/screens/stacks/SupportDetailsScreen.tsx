@@ -20,7 +20,7 @@ import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 
 type SupportDetailsScreenProps = RouteProp<RootStackParamList, 'SupportDetailsScreen'>;
 export default function SupportDetailsScreen() {

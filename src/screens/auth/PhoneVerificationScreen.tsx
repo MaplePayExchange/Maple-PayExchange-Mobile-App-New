@@ -23,7 +23,7 @@ import InputField from '@src/components/InputField';
 import ScreenWrapper from '@src/components/Wrapper';
 import { useRequestOtp } from '@services/auth.services';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 
 const phonePattern = /^(?:(?:\s?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})|(?:\s?\d{3}[\s-]?\d{3}[\s-]?\d{4}))$/;

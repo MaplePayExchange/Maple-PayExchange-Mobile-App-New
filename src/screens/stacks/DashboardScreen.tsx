@@ -23,7 +23,7 @@ import { Wallet } from '@interfaces/wallet.interface';
 import Transaction from '@src/components/Transaction';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useGetUserInformation } from '@services/auth.services';
 import SendFundsModal from '@src/components/Modals/SendFundsModal';
 import { MONEY_PAD, clampFontSize } from '@constants/app.constant';
@@ -79,10 +79,15 @@ export default function DashboardScreen() {
 		setBiometricsModal,
 		showBiometricsModal,
 	} = useUserStore();
-	const isVerified = data?.user.isVerified;
+	const isVerified = data?.user?.isVerified;
 	const isBvnVerified = data?.user?.isBvnVerified;
 
-	console.log(error);
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	const isProfileComplete = isVerified && isBvnVerified && typeof userData?.user?.transactionPin === 'string';
 
 	/**
 	|--------------------------------------------------
@@ -95,7 +100,7 @@ export default function DashboardScreen() {
 		| Checking if the user has been verified
 		|--------------------------------------------------
 		*/
-		if (!isVerified || !isBvnVerified || typeof userData?.user?.transactionPin !== 'string') {
+		if (!isProfileComplete) {
 			setShowBvnModal(true);
 			return;
 		}
@@ -190,6 +195,23 @@ export default function DashboardScreen() {
 		const walletToShow =
 			data?.wallets.find((wallet) => wallet.currency === selectedWallet?.currency) || data?.wallets?.[0];
 		setSelectedWallet(walletToShow as Wallet);
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		if (
+			(data?.transactions?.length || 0) > 0 &&
+			!userData?.user?.occupation &&
+			!userData?.user?.isPolliticallyExposed &&
+			!userData?.user?.primarySourceOfFunds &&
+			!userData?.user?.usagePurpose &&
+			!userData?.user?.countryUserMostlySendsMoneyTo &&
+			!userData?.user?.annualSalaryRange
+		) {
+			navigation.navigate(ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE);
+		}
 	}, [data]);
 
 	/**
@@ -277,7 +299,7 @@ export default function DashboardScreen() {
 					| If bvn has not been verified, wallet is locked
 					|--------------------------------------------------
 					*/}
-					{!isVerified && !isLoading && (
+					{!isProfileComplete && !isLoading && (
 						<View className="items-center justify-center">
 							<PadlockIcon />
 							<MPText style={{ fontSize: 12 }} className="mt-2 text-[13px] text-white" weight="semibold">
@@ -298,7 +320,7 @@ export default function DashboardScreen() {
 					| Wallet is unlocked
 					|--------------------------------------------------
 					*/}
-					{isVerified && !isLoading && (
+					{isProfileComplete && !isLoading && (
 						<Pressable
 							onPress={() => setShowWalletModal(true)}
 							className="h-[20px] w-[68px] flex-row items-center justify-center gap-1 self-center rounded-[8px] bg-[#F7F7F7]"
@@ -376,7 +398,7 @@ export default function DashboardScreen() {
 					| Wallet Balance
 					|--------------------------------------------------
 					*/}
-					{isVerified && (
+					{isProfileComplete && (
 						<MPText weight="semibold" className="mb-1 mt-4 self-center text-[13px] text-white">
 							Wallet Balance
 						</MPText>
@@ -387,7 +409,7 @@ export default function DashboardScreen() {
 					| Balance
 					|--------------------------------------------------
 					*/}
-					{isVerified && (
+					{isProfileComplete && (
 						<MPText
 							weight="semibold"
 							style={{ fontSize: 24, lineHeight: 30 }}
@@ -477,7 +499,7 @@ export default function DashboardScreen() {
 				| If account has not been verified
 				|--------------------------------------------------
 				*/}
-				{!isVerified && (
+				{!isProfileComplete && (
 					<Pressable
 						onPress={() => setShowBvnModal(true)}
 						className="mt-6 h-[102px] w-full flex-row items-center justify-between rounded-[24px] bg-[#FAFAF9] p-5"

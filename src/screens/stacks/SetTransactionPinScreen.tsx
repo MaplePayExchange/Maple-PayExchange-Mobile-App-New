@@ -19,7 +19,7 @@ import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import { SUCCESS_BADGE } from '@constants/app.constant';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import CustomKeyboard from '@src/components/CustomKeyboard';
 import { useSetTransactionPin } from '@services/auth.services';
 

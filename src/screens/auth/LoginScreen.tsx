@@ -41,7 +41,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import { useBiometricAuth } from '@hooks/useBiometrics';
 import { VERSION_IMAGE } from '@constants/app.constant';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { getDeviceHardwareId } from '@hooks/getDeviceHardwareId';
 import usePushNotification from '@src/hooks/useGetPushNotification';
 
@@ -75,7 +75,7 @@ export default function LoginScreen() {
 		updateRequired: boolean;
 		androidUpdateUrl: string;
 	} | null>(null);
-	const { isRegistered, biometricsInfo, isLoggedIn, userData, isSessionExpired } = useUserStore();
+	const { biometricsInfo, autoLogout, setAutoLogout } = useUserStore();
 
 	/**
 	|--------------------------------------------------
@@ -157,8 +157,8 @@ export default function LoginScreen() {
 	*/
 	navigation.addListener('focus', async () => {
 		const token = await getPushToken();
-		console.log(token, 'token');
 		setPushToken(token);
+
 		const response = await utils.checkAppStoreUpdate();
 		setVersionResponse(response);
 
@@ -167,8 +167,10 @@ export default function LoginScreen() {
 		| ...
 		|--------------------------------------------------
 		*/
-		if (isSessionExpired === true && isRegistered === true && !userData && !isLoggedIn) {
+		if (autoLogout === 'auto') {
 			utils.errorHandler(undefined, 'Your session has expired, for security reasons, please sign in again.');
+			await new Promise((resolve) => setTimeout(resolve, 100));
+			setAutoLogout(null);
 		}
 	});
 

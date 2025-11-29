@@ -26,7 +26,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import { useRequestOtp } from '@services/auth.services';
 import { SUCCESS_BADGE } from '@constants/app.constant';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 
 type VerifyBvnScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 

@@ -5,9 +5,9 @@
 */
 import React from 'react';
 import { View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
 
 /**
  |--------------------------------------------------
@@ -41,14 +41,14 @@ export default function RootNavigation() {
 	return (
 		<SafeAreaProvider>
 			<NavigationContainer>
-				<Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS }}>
+				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					{isLoggedIn ? (
 						<Stack.Screen
-							layout={({ children }) => {
-								return <View className="flex-1 bg-white">{children}</View>;
-							}}
 							name="TabNavigation"
 							component={TabNavigation}
+							layout={({ children }: { children: any }) => {
+								return <View className="flex-1 bg-white">{children}</View>;
+							}}
 						/>
 					) : (
 						<Stack.Screen name="AuthNavigation" component={AuthNavigation} />

@@ -79,7 +79,7 @@ export default function ExchangeRatesScreen() {
                     |--------------------------------------------------
                     */}
 					<Container className="mt-3">
-						<MPText className="text-[15px] text-[#484848]">
+						<MPText className="text-[15px] text-[#484848] !hidden">
 							As at {dayjs(NGNRate?.updatedDate).format('dddd Do MMMM YYYY, hh:mm A')}
 						</MPText>
 

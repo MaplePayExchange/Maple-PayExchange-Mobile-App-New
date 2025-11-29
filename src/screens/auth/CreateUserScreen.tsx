@@ -33,15 +33,15 @@ import { useUserStore } from '@zustand/userStore';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import InputField from '@src/components/InputField';
+import { fontSizes } from '@constants/app.constant';
 import CalendarModal from '@src/components/Calendar';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 import { useCreateUser } from '@services/auth.services';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { getDeviceHardwareId } from '@hooks/getDeviceHardwareId';
 import AutocompleteExample from '@src/components/PlacesAutoComplete';
 import { CalendarIcon, CarretDownIcon, CloseIcon, SearchIcon } from '@assets/svgs';
-import { fontSizes } from '@constants/app.constant';
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
@@ -144,7 +144,7 @@ export default function CreateUserScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper useBottomInset>
+		<ScreenWrapper useBottomInset={false}>
 			{/**
 			|--------------------------------------------------
 			| Header

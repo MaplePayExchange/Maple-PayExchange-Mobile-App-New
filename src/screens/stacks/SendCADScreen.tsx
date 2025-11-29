@@ -15,8 +15,8 @@ import {
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -31,16 +31,15 @@ import ScreenWrapper from '@src/components/Wrapper';
 import InputField from '@src/components/InputField';
 import SelectField from '@src/components/SelectField';
 import { ROUTE_NAMES } from '@constants/routes.conts';
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useGetSecurityQuestions } from '@services/user.services';
 
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 
-type SendCADProps = RouteProp<RootStackParamList, 'SendCADScreen'>;
 type SendCADScreenProps = NativeStackNavigationProp<RootStackParamList, 'SendCADScreen'>;
 export default function SendCADScreen() {
-	const route = useRoute<SendCADProps>();
-	const params = route.params;
+	const route = useRoute<{ name: string }>();
+	const params = route.params as RootStackParamList['SendCADScreen'];
 
 	/**
 	|--------------------------------------------------
@@ -54,27 +53,21 @@ export default function SendCADScreen() {
 	| Api
 	|--------------------------------------------------
 	*/
-	const { data, isLoading } = useGetSecurityQuestions();
+	const { data } = useGetSecurityQuestions();
 
 	/**
     |--------------------------------------------------
     | Form handler
     |--------------------------------------------------
     */
-	const {
-		watch,
-		control,
-		setValue,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
+	const { watch, control, setValue, handleSubmit } = useForm({
 		defaultValues: {
 			saveAsBeneficiary: false,
 			narration: params?.description || '',
-			interacEmail: params?.interacEmail || '',
-			lastName: params?.fullName?.split(' ')[1] || '',
+			interacEmail: params?.interacEmail?.trim() || '',
+			lastName: params?.nickname?.split(' ')[1] || '',
 			securityQuestion: params?.securityQuestion || '',
-			firstName: params?.fullName?.split(' ')[0] || '',
+			firstName: params?.nickname?.split(' ')[0] || '',
 			securityAnswer: params?.securityQuestionAnswer || '',
 		},
 	});
@@ -313,7 +306,7 @@ export default function SendCADScreen() {
 													key={item._id}
 													onPress={() => {
 														setSelectedQuestion(item.text);
-														setValue('securityQuestion', item.text);
+														setValue('securityQuestion', item.text as never);
 														setShowModal((prevState) => !prevState);
 													}}
 													className={clsx(
@@ -363,7 +356,7 @@ export default function SendCADScreen() {
 								checked={saveAsBeneficiary}
 								onChange={(value) => {
 									setSaveAsBeneficiary(value);
-									setValue('saveAsBeneficiary', value);
+									setValue('saveAsBeneficiary', value as never);
 								}}
 								component={
 									<View

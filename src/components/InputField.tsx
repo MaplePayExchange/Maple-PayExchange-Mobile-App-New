@@ -3,21 +3,21 @@
 | Npm imports
 |--------------------------------------------------
 */
+import {
+	View,
+	Modal,
+	Keyboard,
+	TextInput,
+	Pressable,
+	ScrollView,
+	TextInputProps,
+	TouchableOpacity,
+} from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
 import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } from 'react-native-svg';
-import {
-	View,
-	TextInputProps,
-	TextInput,
-	Pressable,
-	Modal,
-	TouchableOpacity,
-	ScrollView,
-	Keyboard,
-} from 'react-native';
 
 /**
  |--------------------------------------------------

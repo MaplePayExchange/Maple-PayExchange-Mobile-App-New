@@ -25,7 +25,7 @@ import axiosInstance from '@lib/axiosInstance';
 import { useUserStore } from '@zustand/userStore';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 
 interface NotificationResponse {
 	notifications: INotification[];
@@ -817,7 +817,8 @@ export const useMarkNotificationAsRead = () => {
 | Upload profile image
 |--------------------------------------------------
 */
-export const useUpdateProfile = () => {
+export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
+	const navigation = useNavigation();
 	/**
 	|--------------------------------------------------
 	| Query client from Tanstack
@@ -829,11 +830,18 @@ export const useUpdateProfile = () => {
 		{ message: string; data: any },
 		Error,
 		{
-			rateAlerts: boolean;
-			loginAlerts: boolean;
-			promotionAlerts: boolean;
-			transactionAlerts: boolean;
-			inAppNotifications: boolean;
+			rateAlerts?: boolean;
+			loginAlerts?: boolean;
+			promotionAlerts?: boolean;
+			transactionAlerts?: boolean;
+			inAppNotifications?: boolean;
+
+			occupation?: string;
+			usagePurpose?: string;
+			annualSalaryRange?: string;
+			primarySourceOfFunds?: string;
+			isPolliticallyExposed?: boolean;
+			countryUserMostlySendsMoneyTo?: string;
 		}
 	>({
 		/**
@@ -858,8 +866,18 @@ export const useUpdateProfile = () => {
 		|--------------------------------------------------
 		*/
 		onSuccess: (data) => {
-			console.log(data);
-			useUserStore.getState().setNotificationSettings(data?.data as any);
+			if (updateType === 'setTailorYourExperience') {
+				navigation.goBack();
+				useUserStore.getState().setTailorYourExperienceSkipCount(0);
+			} else {
+				useUserStore.getState().setNotificationSettings(data?.data as any);
+			}
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
 			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 		},
 
@@ -869,7 +887,55 @@ export const useUpdateProfile = () => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			console.log(error.response.data);
+			console.log(error?.response?.data);
+		},
+	});
+};
+
+/**
+|--------------------------------------------------
+| Upload profile image
+|--------------------------------------------------
+*/
+export const useCreateBeneficiary = () => {
+	return useMutation<{ message: string; data: any }, Error, {}>({
+		/**
+		|--------------------------------------------------
+		| mutation
+		|--------------------------------------------------
+		*/
+		mutationFn: async () => {
+			const payload = {
+				type: 'Interac',
+				interacEmail: 'ayodeji.bakare994@gmail.com',
+				description: 'This is a test transaction',
+				securityQuestion: 'The antagonist in legend of the seeker',
+				fullName: `Pannis Rahl`,
+				securityQuestionAnswer: 'Lord Rahl',
+			};
+
+			console.log(payload);
+			const response = await axiosInstance.post('/beneficiaries/create-beneficiary', payload);
+
+			return response.data;
+		},
+
+		/**
+		|--------------------------------------------------
+		| Success
+		|--------------------------------------------------
+		*/
+		onSuccess: (data) => {
+			console.log(data);
+		},
+
+		/**
+		|--------------------------------------------------
+		| Error
+		|--------------------------------------------------
+		*/
+		onError: (error: any) => {
+			console.log(error?.response?.data);
 		},
 	});
 };

@@ -28,10 +28,12 @@ export interface User {
 	};
 
 	middleName?: string;
-	occupation: string;
+	occupation?: string;
 	usagePurpose: string;
-	primarySourceOfFunds: string;
-	isPolliticallyExposed: boolean;
+	annualSalaryRange?: string;
+	primarySourceOfFunds?: string;
+	isPolliticallyExposed?: boolean;
+	countryUserMostlySendsMoneyTo?: string;
 
 	veriffSessionToken?: {
 		sessionToken: string;

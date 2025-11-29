@@ -41,14 +41,7 @@ export default function SupportNavigation() {
     |--------------------------------------------------
     */
 	return (
-		<Stack.Navigator
-			screenOptions={{
-				headerShown: false,
-				gestureEnabled: true,
-				...TransitionPresets.SlideFromRightIOS,
-				gestureDirection: 'horizontal',
-			}}
-		>
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			{/**
             |--------------------------------------------------
             | Mapping through the routes

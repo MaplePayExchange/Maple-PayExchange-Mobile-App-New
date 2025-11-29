@@ -21,7 +21,7 @@ import HeaderWrapper from '@src/components/Header';
 import InputField from '@src/components/InputField';
 import ScreenWrapper from '@src/components/Wrapper';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useResetPassword } from '@services/auth.services';
 
 type ResetPasswordScreenProps = RouteProp<RootStackParamList, 'ResetPasswordScreen'>;

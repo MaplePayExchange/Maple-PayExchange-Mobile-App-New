@@ -19,7 +19,7 @@ import { View, Image, ScrollView, Linking, Alert, Platform } from 'react-native'
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import ScreenWrapper from '@src/components/Wrapper';
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useStartVeriffSession } from '@services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@constants/app.constant';
 import { useCameraPermission } from '@src/hooks/useCameraPermission';

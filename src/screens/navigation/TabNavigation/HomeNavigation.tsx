@@ -23,6 +23,7 @@ import NotificationScreen from '../../stacks/NotificationScreen';
 import ExchangeRatesScreen from '../../stacks/ExchangeRatesScreen';
 import SetTransactionPinScreen from '../../stacks/SetTransactionPinScreen';
 import SendFundsFeedbackScreen from '../../stacks/SendFundsFeedbackScreen';
+import TailorYourExperienceScreen from '../../stacks/TailorYourExperience';
 import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
 import ExchangeFundsFeedbackScreen from '../../stacks/ExchangeFundsFeedbackScreen';
 import SendFundsErrorFeedbackScreen from '../../stacks/SendFundsErrorFeedbackScreen';
@@ -52,6 +53,7 @@ const _ROUTES = [
 	{ name: ROUTE_NAMES.SEND_FUNDS_FEEDBACK, component: SendFundsFeedbackScreen },
 	{ name: ROUTE_NAMES.SET_TRANSACTION_PIN, component: SetTransactionPinScreen },
 	{ name: ROUTE_NAMES.SEND_FUNDS_BENEFICIARY, component: SendFundsBeneficiaryScreen },
+	{ name: ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE, component: TailorYourExperienceScreen },
 	{ name: ROUTE_NAMES.EXCHANGE_FUNDS_FEEDBACK, component: ExchangeFundsFeedbackScreen },
 	{ name: ROUTE_NAMES.SEND_FUNDS_ERROR_FEEDBACK, component: SendFundsErrorFeedbackScreen },
 ];
@@ -66,9 +68,6 @@ export default function HomeNavigation() {
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
-				gestureEnabled: true,
-				...TransitionPresets.SlideFromRightIOS,
-				gestureDirection: 'horizontal',
 			}}
 		>
 			{/**

@@ -21,7 +21,7 @@ import HeaderWrapper from '@src/components/Header';
 import InputField from '@src/components/InputField';
 import ScreenWrapper from '@src/components/Wrapper';
 import { ROUTE_NAMES } from '@constants/routes.conts';
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { useForgotPassword } from '@services/auth.services';
 
 const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;

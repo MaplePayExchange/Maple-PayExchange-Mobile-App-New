@@ -24,7 +24,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import LoginSupportData from '@data/login-support.json';
 import { FAQItem } from '@interfaces/support.interface';
 //@ts-ignore
-import { RootStackParamList } from '@types/route.params';
+import { RootStackParamList } from '@constants/route.params';
 import { RedRightArrowIcon, SearchIcon } from '@assets/svgs';
 import TechnicalSupportData from '@data/technical-support.json';
 import PaymentSupportData from '@data/payment-wallet-support.json';

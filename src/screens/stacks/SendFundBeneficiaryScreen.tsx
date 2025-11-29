@@ -37,6 +37,8 @@ export default function SendFundsBeneficiaryScreen() {
     */
 	const { data, isLoading } = useGetBeneficiaries();
 
+	console.log(data, 'beneficiaries.data');
+
 	/**
     |--------------------------------------------------
     | States
