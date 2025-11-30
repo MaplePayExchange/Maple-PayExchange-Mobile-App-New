@@ -23,6 +23,7 @@ import { RootStackParamList } from '@constants/route.params';
 import { useStartVeriffSession } from '@services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@constants/app.constant';
 import { useCameraPermission } from '@src/hooks/useCameraPermission';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycStepsScreen'>;
 export default function KysStepsScreen() {
@@ -90,10 +91,14 @@ export default function KysStepsScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
+		<View className="h-[100%] px-6">
+			<SafeAreaView />
 			{!showBrowser && (
-				<ScrollView showsVerticalScrollIndicator={false}>
-					<View className="">
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={{ height: '105%', paddingBottom: 64 }}
+				>
+					<View className="h-[100%] pb-6">
 						<View className="mt-6 items-center">
 							<Image
 								width={195}
@@ -196,7 +201,7 @@ export default function KysStepsScreen() {
 						| Action buttons
 						|--------------------------------------------------
 						*/}
-						<View className="mt-[5%] justify-end">
+						<View className="mt-auto">
 							{/**
 							|--------------------------------------------------
 							| Starts the veriff process
@@ -266,6 +271,6 @@ export default function KysStepsScreen() {
 					/>
 				</View>
 			)}
-		</ScreenWrapper>
+		</View>
 	);
 }

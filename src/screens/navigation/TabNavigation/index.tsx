@@ -22,6 +22,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import TransactionNavigation from './TransactionNavigation';
 import AppStateManager from '@src/hooks/useAppStateManager';
 import { HomeIcon, SettingsIcon, SupportIcon, TransactionIcon } from '@assets/svgs';
+import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,11 +41,40 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 		<View className="min-h-[20px] w-max items-center justify-center">
 			<MPText
 				weight="semibold"
-				style={{ fontSize: 12 }}
-				className={clsx('text-[15px]', focused ? 'text-[#FF6A00]' : 'text-[#A3A3A3]')}
+				fontSize="FONT11"
+				className={clsx('', focused ? 'text-[#FF6A00]' : 'text-[#A3A3A3]')}
 			>
 				{children}
 			</MPText>
+
+			{/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/}
+			{focused && (
+				<View className="absolute bottom-[-10px]">
+					<Svg width="40" height="4" viewBox="0 0 40 4" fill="none">
+						<Path
+							d="M0 4C0 1.79086 1.79086 0 4 0H36C38.2091 0 40 1.79086 40 4H0Z"
+							fill="url(#paint0_linear_2752_8894)"
+						/>
+						<Defs>
+							<LinearGradient
+								id="paint0_linear_2752_8894"
+								x1="0"
+								y1="2"
+								x2="40"
+								y2="2"
+								gradientUnits="userSpaceOnUse"
+							>
+								<Stop stopColor="#EE0979" />
+								<Stop offset="1" stopColor="#FF6A00" />
+							</LinearGradient>
+						</Defs>
+					</Svg>
+				</View>
+			)}
 		</View>
 	);
 };

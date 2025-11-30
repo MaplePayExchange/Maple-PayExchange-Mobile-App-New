@@ -28,3 +28,4 @@ export { default as RoundRedBallIcon } from './RoundRedBallIcon';
 export { default as CheckboxFillIcon } from './CheckboxFillIcon';
 export { default as RedRightArrowIcon } from './RedRightArrowIcon';
 export { default as CheckboxOutlineIcon } from './CheckboxOutlineIcon';
+export { default as TransactionArrowIcon } from './TransactionArrowIcon';

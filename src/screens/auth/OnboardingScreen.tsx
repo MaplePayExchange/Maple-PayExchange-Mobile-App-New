@@ -180,11 +180,11 @@ export default function OnboardingScreen() {
 							</View>
 						</SafeAreaView>
 
-						<View className="absolute top-0 z-40 h-[70%] w-full">
+						<View className="absolute top-0 z-40 h-[65%] w-full">
 							<RNBlurView
 								blurAmount={1}
 								blurType="light"
-								style={{ height: '100%', opacity: Platform.OS === 'android' ? 0.4 : 0.71 }}
+								style={{ height: '100%', opacity: Platform.OS === 'android' ? 0.1 : 0.71 }}
 								reducedTransparencyFallbackColor="rgba(0,0,0,0.3)"
 							>
 								<View className="h-full" pointerEvents="none" style={{ ...StyleSheet.absoluteFill }}>
@@ -209,16 +209,14 @@ export default function OnboardingScreen() {
 						| ...
 						|--------------------------------------------------
 						*/}
-						<View className={clsx('z-40 mt-auto h-[35%] translate-y-12')}>
+						<View className={clsx('z-40 mt-auto h-[35%]')}>
 							<RNBlurView
 								blurAmount={1}
 								blurType="light"
+								style={{ height: '130%' }}
 								reducedTransparencyFallbackColor="rgba(0,0,0,0.3)"
 							>
-								<View
-									pointerEvents="none"
-									style={{ ...StyleSheet.absoluteFill, backgroundColor: 'transparent' }}
-								>
+								<View pointerEvents="none" style={{ ...StyleSheet.absoluteFill, height: '100%' }}>
 									<Svg style={StyleSheet.absoluteFill}>
 										<Defs>
 											<LinearGradient id="overlayGradient" x1="0" y1="0" x2="0" y2="1">
@@ -239,7 +237,7 @@ export default function OnboardingScreen() {
 								|--------------------------------------------------
 								*/}
 								<SafeAreaView edges={{ bottom: 'maximum' }}>
-									<View className="p-6 pb-8">
+									<View className="p-6 pb-12">
 										{/**
 										|--------------------------------------------------
 										| Title
@@ -286,11 +284,14 @@ export default function OnboardingScreen() {
 										| Login
 										|--------------------------------------------------
 										*/}
-										<MPButton onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}>
+										<MPButton
+											className="mt-3 bg-white"
+											onPress={() => navigation.navigate(ROUTE_NAMES.LOGIN, {})}
+										>
 											<MPText
 												weight="semibold"
 												style={{ lineHeight: 21, fontSize: 15 }}
-												className="w-max text-[15px] text-[#f84f21]"
+												className="w-max text-[15px] text-black"
 											>
 												Login
 											</MPText>

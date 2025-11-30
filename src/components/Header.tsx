@@ -66,7 +66,7 @@ export default function HeaderWrapper({
 
 				<View className={clsx(center && 'absolute left-1/2 -translate-x-[50%]')}>
 					<MPText
-						weight="semibold"
+						weight="bold"
 						className={clsx('text-[#1A1A1A]')}
 						style={{ lineHeight: 26, fontSize: fontSizes[titleFontSize || 'FONT16'] }}
 					>

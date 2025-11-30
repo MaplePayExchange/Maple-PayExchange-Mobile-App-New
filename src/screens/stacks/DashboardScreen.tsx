@@ -42,14 +42,23 @@ import CustomRefreshControl from '@src/components/CustomRefreshControl';
 import CurrencyConverter from '@src/components/Modals/CurrencyConverter';
 import WalletDetailsModal from '@src/components/Modals/WalletDetailsModal';
 import UnverifiedAcountModal from '@src/components/Modals/UnverifiedAccountModal';
-import { AddIcon, BellIcon, SendIcon, DetailsIcon, PadlockIcon, ExchangeIcon, RedRightArrowIcon } from '@assets/svgs';
+import {
+	AddIcon,
+	BellIcon,
+	SendIcon,
+	DetailsIcon,
+	PadlockIcon,
+	ExchangeIcon,
+	RedRightArrowIcon,
+	TransactionArrowIcon,
+} from '@assets/svgs';
 
 /**
 |--------------------------------------------------
 | Dashboard types
 |--------------------------------------------------
 */
-type PossibleActions = 'see_more_transactions' | 'details' | 'add' | 'send' | 'exchange' | 'notification';
+type PossibleActions = 'see_more_transactions' | 'details' | 'add' | 'send' | 'exchange' | 'notification' | 'profile';
 type DashboardScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 
 export default function DashboardScreen() {
@@ -136,6 +145,15 @@ export default function DashboardScreen() {
 			*/
 			case 'notification':
 				navigation.navigate(ROUTE_NAMES.NOTIFICATION_SCREEN as never);
+				break;
+
+			/**
+			|--------------------------------------------------
+			| To see notifications
+			|--------------------------------------------------
+			*/
+			case 'profile':
+				navigation.navigate(ROUTE_NAMES.PROFILE as never);
 				break;
 
 			/**
@@ -261,9 +279,12 @@ export default function DashboardScreen() {
 					| Profile wrapper
 					|--------------------------------------------------
 					*/}
-					<View className="mr-3 size-10 items-center justify-center rounded-full bg-[#909083]">
+					<Pressable
+						onPress={() => handleInitiateAction('profile')}
+						className="mr-3 size-10 items-center justify-center rounded-full bg-[#909083]"
+					>
 						<Image source={{ uri: data?.user.profileImage }} className="h-10 w-10 rounded-full" />
-					</View>
+					</Pressable>
 					{/**
 					|--------------------------------------------------
 					| Welcome text
@@ -272,7 +293,7 @@ export default function DashboardScreen() {
 					<MPText fontSize="FONT18" className="flex-1 text-xl text-[#A4A6AA]">
 						Hello,{' '}
 						<MPText fontSize="FONT18" weight="semibold" className="text-xl text-[#1A1A1A]">
-							{data?.user?.firstName || ''} {data?.user?.lastName || ''}
+							{data?.user?.firstName}
 						</MPText>
 					</MPText>
 
@@ -592,8 +613,11 @@ export default function DashboardScreen() {
 				| Transactions
 				|--------------------------------------------------
 				*/}
-				{data?.transactions.length === 0 && (
+				{(data?.transactions.length || 0) === 0 && (
 					<View className="h-[158px] items-center justify-center">
+						<View>
+							<TransactionArrowIcon />
+						</View>
 						<MPText fontSize="FONT14" weight="medium" className="text-[15px] text-[#767676]">
 							No transactions yet
 						</MPText>

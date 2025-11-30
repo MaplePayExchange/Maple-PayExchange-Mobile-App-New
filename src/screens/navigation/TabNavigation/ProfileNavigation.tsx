@@ -18,6 +18,8 @@ import SendCADScreen from '../../stacks/SendCADScreen';
 import SendNGNScreen from '../../stacks/SendNGNScreen';
 import ResetPinScreen from '../../stacks/ResetPinScreen';
 import KYCTermsScreen from '../../stacks/KYCTermsScreen';
+import HowToScreen from '@src/screens/stacks/HowToScreen';
+import KysStepsScreen from '@src/screens/stacks/KycStepsScreen';
 import ProfileSettingsScreen from '../../stacks/ProfileSettings';
 import ReferAndEarnScreen from '../../stacks/ReferAndEarnScreen';
 import ExchangeRatesScreen from '../../stacks/ExchangeRatesScreen';
@@ -29,7 +31,6 @@ import TermsAndCondtionsScreen from '../../stacks/TermsAndCondtionsScreen';
 import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
 import NotificationsSettingsScreen from '../../stacks/NotificationsSettingsScreen';
 import ReferralTermsAndConditionsScreen from '../../stacks/ReferralTermsAndConditionsScreen';
-import HowToScreen from '@src/screens/stacks/HowToScreen';
 
 /**
 |--------------------------------------------------
@@ -47,6 +48,7 @@ const _ROUTES = [
 	{ name: ROUTE_NAMES.PROFILE, component: ProfileScreen },
 	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.RESET_PIN, component: ResetPinScreen },
+	{ name: ROUTE_NAMES.KYC_STEPS, component: KysStepsScreen },
 	{ name: ROUTE_NAMES.KYC_TERMS, component: KYCTermsScreen },
 	{ name: ROUTE_NAMES.HOW_TO_SCREEN, component: HowToScreen },
 	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },

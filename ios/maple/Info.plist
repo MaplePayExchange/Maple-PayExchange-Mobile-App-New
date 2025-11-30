@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>6.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,8 +35,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to scan documents.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This access is needed to allow you to upload a profile picture from your device.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>This app uses Face ID and Touch ID to verify the user's identity and protect sensitive data.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -45,6 +43,8 @@
 	<string>This app uses your location to send you notifications based on your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses your location to send you notifications based on your location.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This access is needed to allow you to upload a profile picture from your device.</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIAppFonts</key>

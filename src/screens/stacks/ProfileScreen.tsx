@@ -390,7 +390,10 @@ export default function ProfileScreen() {
 										<MPButton
 											useGradientBg
 											className="mb-6 mt-8"
-											onPress={() => setShowVerificationModal(false)}
+											onPress={() => {
+												setShowVerificationModal(false);
+												if (isVerified) navigation.navigate(ROUTE_NAMES.KYC_STEPS as never);
+											}}
 										>
 											<MPText weight="semibold" fontSize="FONT14" className="text-white">
 												Continue

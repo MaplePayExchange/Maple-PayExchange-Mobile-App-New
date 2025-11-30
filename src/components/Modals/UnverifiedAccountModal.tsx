@@ -57,7 +57,7 @@ export default function UnverifiedAcountModal({
 			<ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1 }}>
 				<Pressable className="flex-1 bg-white" onPress={() => setShowBvnModal(false)}>
 					<View className="mt-[10%] w-full items-center justify-center p-3 px-6 py-5">
-						<View className="">
+						<View className="h-[100%]">
 							<View className="relative mt-6 items-center">
 								<Image
 									width={195}
@@ -161,7 +161,7 @@ export default function UnverifiedAcountModal({
                             | Action buttons
                             |--------------------------------------------------
                             */}
-							<View className="mb-[20px] mt-auto justify-end">
+							<View className="mt-auto justify-end">
 								{/**
                                 |--------------------------------------------------
                                 | Starts the veriff process

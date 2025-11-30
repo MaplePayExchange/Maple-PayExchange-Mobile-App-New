@@ -201,7 +201,7 @@ export default function ProfileSettingsScreen() {
 					| ...
 					|--------------------------------------------------
 					*/}
-					<Container className="mt-4 gap-6 rounded-lg">
+					<Container className="mt-4 gap-10 rounded-lg">
 						<DataRepresentation
 							label="First Name"
 							value={user?.firstName}

@@ -16,13 +16,13 @@ import { Pressable, TextInput, View, ScrollView, Modal, RefreshControl } from 'r
  | Custom imports
  |--------------------------------------------------
  */
-import { SearchIcon } from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import CalendarModal from '@src/components/Calendar';
 import Transaction from '@src/components/Transaction';
+import { SearchIcon, TransactionArrowIcon } from '@assets/svgs';
 import CustomRefreshControl from '@src/components/CustomRefreshControl';
 import { TransactionFilters, useGetUserTransactions } from '@services/auth.services';
 
@@ -116,7 +116,7 @@ export default function TransactionsScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper useNavigation={false} title="Recent transactions" center />
+			<HeaderWrapper useNavigation={false} title="Transactions" center />
 
 			<View className="flex-row items-center justify-between gap-4">
 				<View className="h-[42px] w-[85%] flex-row items-center gap-2 rounded-xl border-[0.5px] border-[#EEEEEE] px-5">
@@ -182,7 +182,7 @@ export default function TransactionsScreen() {
 					}
 				}}
 			>
-				{(!isLoading || !isPending || isFetchingNextPage) && (
+				{(!isLoading || !isPending || isFetchingNextPage) && transactions.length > 0 && (
 					<View className="gap-6">
 						{transactions
 							?.filter((trans) =>
@@ -204,6 +204,22 @@ export default function TransactionsScreen() {
 								No more transactions
 							</MPText>
 						)}
+					</View>
+				)}
+
+				{/**
+				|--------------------------------------------------
+				| No transactions
+				|--------------------------------------------------
+				*/}
+				{(!isLoading || !isPending || isFetchingNextPage) && transactions.length === 0 && (
+					<View className="h-full min-h-[1000%] flex-1 items-center justify-center">
+						<View>
+							<TransactionArrowIcon />
+						</View>
+						<MPText fontSize="FONT14" weight="medium" className="text-[15px] text-[#767676]">
+							No transactions yet
+						</MPText>
 					</View>
 				)}
 
