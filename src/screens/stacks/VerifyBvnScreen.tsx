@@ -169,18 +169,19 @@ export default function VerifyBvnScreen() {
 						|--------------------------------------------------
 						*/}
 						<MPText
+							fontSize="FONT24"
 							weight="semibold"
+							style={{ lineHeight: 32 }}
 							className="mt-4 text-center text-[20px]"
-							style={{ fontSize: 20, lineHeight: 32 }}
 						>
 							BVN Verification Complete
 						</MPText>
 						{typeof user.transactionPin !== 'string' ? (
-							<MPText className="max-w-[290px] text-center text-[15px] text-[#484848]">
+							<MPText fontSize="FONT16" className="max-w-[290px] text-center text-[#484848]">
 								You bvn has been verified! Let’s secure your account before you proceed.
 							</MPText>
 						) : (
-							<MPText className="max-w-[290px] text-center text-[15px] text-[#484848]">
+							<MPText fontSize="FONT16" className="max-w-[290px] text-center text-[#484848]">
 								Your BVN has been verified!.
 							</MPText>
 						)}

@@ -94,7 +94,12 @@ export default function VerifyPhoneNumberScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper useNavigation title="Verify Your Phone Number" />
+			<HeaderWrapper
+				useNavigation
+				titleFontSize="FONT24"
+				subTitleFontSize="FONT14"
+				title="Verify Your Phone Number"
+			/>
 			{/**
 			|--------------------------------------------------
 			| Subtext

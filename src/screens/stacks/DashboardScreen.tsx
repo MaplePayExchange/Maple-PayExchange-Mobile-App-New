@@ -8,7 +8,16 @@ import { Svg, Path } from 'react-native-svg';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Pressable, RefreshControl, View, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
+import {
+	Pressable,
+	RefreshControl,
+	View,
+	ScrollView,
+	Image,
+	TouchableOpacity,
+	Modal,
+	ImageBackground,
+} from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -26,7 +35,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import { RootStackParamList } from '@constants/route.params';
 import { useGetUserInformation } from '@services/auth.services';
 import SendFundsModal from '@src/components/Modals/SendFundsModal';
-import { MONEY_PAD, clampFontSize } from '@constants/app.constant';
+import { MONEY_PAD, WALLET_BG, clampFontSize } from '@constants/app.constant';
 import FundWalletModal from '@src/components/Modals/FundWalletModal';
 import BiometricsModal from '@src/components/Modals/BiometricsModal';
 import CustomRefreshControl from '@src/components/CustomRefreshControl';
@@ -293,205 +302,214 @@ export default function DashboardScreen() {
 				| Overview pane
 				|--------------------------------------------------
 				*/}
-				<View className="mt-8 h-[220px] w-full rounded-[24px] bg-[#031D30] px-5 py-6">
-					{/**
-					|--------------------------------------------------
-					| If bvn has not been verified, wallet is locked
-					|--------------------------------------------------
-					*/}
-					{!isProfileComplete && !isLoading && (
-						<View className="items-center justify-center">
-							<PadlockIcon />
-							<MPText style={{ fontSize: 12 }} className="mt-2 text-[13px] text-white" weight="semibold">
-								Wallet Locked
+				<View className="mt-8 h-[230px] overflow-hidden rounded-[24px] bg-[#031D30]">
+					<ImageBackground source={WALLET_BG} className="h-full w-full rounded-[24px] object-cover px-5 py-6">
+						{/**
+						|--------------------------------------------------
+						| If bvn has not been verified, wallet is locked
+						|--------------------------------------------------
+						*/}
+						{!isProfileComplete && !isLoading && (
+							<View className="items-center justify-center">
+								<PadlockIcon />
+								<MPText
+									style={{ fontSize: 12 }}
+									className="mt-2 text-[13px] text-white"
+									weight="semibold"
+								>
+									Wallet Locked
+								</MPText>
+								<MPText
+									weight="semibold"
+									className="text-2xl text-white"
+									style={{ lineHeight: 26, fontSize: 24 }}
+								>
+									00.00
+								</MPText>
+							</View>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| Wallet is unlocked
+						|--------------------------------------------------
+						*/}
+						{isProfileComplete && !isLoading && (
+							<Pressable
+								onPress={() => setShowWalletModal(true)}
+								className="h-[20px] w-[68px] flex-row items-center justify-center gap-1 self-center rounded-[8px] bg-[#F7F7F7]"
+							>
+								<MPText className="text-[15px]">
+									{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}
+								</MPText>
+								<MPText style={{ fontSize: 10 }} className="text-[13px]" weight="bold">
+									{selectedWallet?.currency}
+								</MPText>
+
+								<Svg width="10" height="7" viewBox="0 0 10 7" fill="none">
+									<Path
+										d="M9.68453 1.55977L5.30953 5.93477C5.2689 5.97545 5.22065 6.00772 5.16754 6.02974C5.11442 6.05176 5.05749 6.06309 5 6.06309C4.9425 6.06309 4.88557 6.05176 4.83246 6.02974C4.77935 6.00772 4.7311 5.97545 4.69047 5.93477L0.315468 1.55977C0.233375 1.47768 0.187256 1.36634 0.187256 1.25024C0.187256 1.13415 0.233375 1.0228 0.315468 0.940712C0.397561 0.858619 0.508902 0.8125 0.624999 0.8125C0.741096 0.8125 0.852438 0.858619 0.93453 0.940712L5 5.00673L9.06547 0.940712C9.10612 0.900064 9.15437 0.86782 9.20748 0.845821C9.26059 0.823822 9.31751 0.8125 9.375 0.8125C9.43248 0.8125 9.48941 0.823822 9.54252 0.845821C9.59563 0.86782 9.64388 0.900064 9.68453 0.940712C9.72518 0.98136 9.75742 1.02962 9.77942 1.08273C9.80142 1.13584 9.81274 1.19276 9.81274 1.25024C9.81274 1.30773 9.80142 1.36465 9.77942 1.41776C9.75742 1.47087 9.72518 1.51913 9.68453 1.55977Z"
+										fill="#1A1A1A"
+									/>
+								</Svg>
+
+								{/**
+								|--------------------------------------------------
+								| Modal to select wallet type
+								|--------------------------------------------------
+								*/}
+								<Modal transparent visible={showWalletModal} animationType="slide">
+									<TouchableOpacity
+										activeOpacity={0.98}
+										onPress={() => setShowWalletModal(false)}
+										className="flex-1 justify-center bg-black/10 p-6"
+									>
+										<View className="min-h-[186px] rounded-3xl bg-white p-4">
+											<MPText weight="semibold" className="text-center text-[15px]">
+												MY WALLETS
+											</MPText>
+
+											{/**
+											|--------------------------------------------------
+											| Wallets
+											|--------------------------------------------------
+											*/}
+											<View className="mt-6 gap-4">
+												{data?.wallets.map((wallet) => (
+													<Pressable
+														key={wallet?._id}
+														onPress={() => {
+															setSelectedWallet(wallet);
+															setShowWalletModal(false);
+														}}
+														className="h-[46px] w-full justify-center rounded-[10px] bg-[#F7F7F7] px-6"
+													>
+														<MPText weight="medium" className="text-[15px]">
+															{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '}{' '}
+															{wallet.currency}
+														</MPText>
+													</Pressable>
+												))}
+											</View>
+
+											{/**
+											|--------------------------------------------------
+											| Action button
+											|--------------------------------------------------
+											*/}
+											<MPButton useGradientBg className="mt-6 !hidden w-[128px] self-center">
+												<Pressable className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white">
+													<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
+														Add new wallet
+													</MPText>
+												</Pressable>
+											</MPButton>
+										</View>
+									</TouchableOpacity>
+								</Modal>
+							</Pressable>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| Wallet Balance
+						|--------------------------------------------------
+						*/}
+						{isProfileComplete && (
+							<MPText weight="semibold" className="mb-1 mt-4 self-center text-[13px] text-white">
+								Wallet Balance
 							</MPText>
+						)}
+
+						{/**
+						|--------------------------------------------------
+						| Balance
+						|--------------------------------------------------
+						*/}
+						{isProfileComplete && (
 							<MPText
 								weight="semibold"
-								className="text-2xl text-white"
-								style={{ lineHeight: 26, fontSize: 24 }}
+								style={{ fontSize: 24, lineHeight: 30 }}
+								className="self-center text-[24px] text-white"
 							>
-								00.00
+								{selectedWallet?.currency === 'CAD' ? '$' : '₦'}{' '}
+								{selectedWallet?.walletBalance.toLocaleString('en-US', {
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2,
+								})}
 							</MPText>
-						</View>
-					)}
+						)}
 
-					{/**
-					|--------------------------------------------------
-					| Wallet is unlocked
-					|--------------------------------------------------
-					*/}
-					{isProfileComplete && !isLoading && (
-						<Pressable
-							onPress={() => setShowWalletModal(true)}
-							className="h-[20px] w-[68px] flex-row items-center justify-center gap-1 self-center rounded-[8px] bg-[#F7F7F7]"
-						>
-							<MPText className="text-[15px]">{selectedWallet?.currency === 'NGN' ? '🇳🇬' : '🇨🇦'}</MPText>
-							<MPText style={{ fontSize: 10 }} className="text-[13px]" weight="bold">
-								{selectedWallet?.currency}
-							</MPText>
-
-							<Svg width="10" height="7" viewBox="0 0 10 7" fill="none">
-								<Path
-									d="M9.68453 1.55977L5.30953 5.93477C5.2689 5.97545 5.22065 6.00772 5.16754 6.02974C5.11442 6.05176 5.05749 6.06309 5 6.06309C4.9425 6.06309 4.88557 6.05176 4.83246 6.02974C4.77935 6.00772 4.7311 5.97545 4.69047 5.93477L0.315468 1.55977C0.233375 1.47768 0.187256 1.36634 0.187256 1.25024C0.187256 1.13415 0.233375 1.0228 0.315468 0.940712C0.397561 0.858619 0.508902 0.8125 0.624999 0.8125C0.741096 0.8125 0.852438 0.858619 0.93453 0.940712L5 5.00673L9.06547 0.940712C9.10612 0.900064 9.15437 0.86782 9.20748 0.845821C9.26059 0.823822 9.31751 0.8125 9.375 0.8125C9.43248 0.8125 9.48941 0.823822 9.54252 0.845821C9.59563 0.86782 9.64388 0.900064 9.68453 0.940712C9.72518 0.98136 9.75742 1.02962 9.77942 1.08273C9.80142 1.13584 9.81274 1.19276 9.81274 1.25024C9.81274 1.30773 9.80142 1.36465 9.77942 1.41776C9.75742 1.47087 9.72518 1.51913 9.68453 1.55977Z"
-									fill="#1A1A1A"
-								/>
-							</Svg>
+						{/**
+						|--------------------------------------------------
+						| Action icons
+						|--------------------------------------------------
+						*/}
+						<View className="mt-auto flex-row justify-evenly">
+							{[
+								{ name: 'details', icon: DetailsIcon, label: 'Details' },
+								{ name: 'add', icon: AddIcon, label: 'Add' },
+								{ name: 'send', icon: SendIcon, label: 'Send' },
+								{ name: 'exchange', icon: ExchangeIcon, label: 'Exchange' },
+							].map((action) => (
+								<View key={action.label} className="items-center justify-center">
+									<TouchableOpacity
+										activeOpacity={0.7}
+										onPress={() => handleInitiateAction(action.name as any)}
+										className="mb-2 size-[44px] items-center justify-center rounded-full bg-white"
+									>
+										<action.icon />
+									</TouchableOpacity>
+									{/**
+									|--------------------------------------------------
+									| Label
+									|--------------------------------------------------
+									*/}
+									<MPText fontSize="FONT12" weight="bold" className="text-[13px] text-white">
+										{action.label}
+									</MPText>
+								</View>
+							))}
 
 							{/**
 							|--------------------------------------------------
-							| Modal to select wallet type
+							| Wallet details
 							|--------------------------------------------------
 							*/}
-							<Modal transparent visible={showWalletModal} animationType="slide">
-								<TouchableOpacity
-									activeOpacity={0.98}
-									onPress={() => setShowWalletModal(false)}
-									className="flex-1 justify-center bg-black/10 p-6"
-								>
-									<View className="min-h-[186px] rounded-3xl bg-white p-4">
-										<MPText weight="semibold" className="text-center text-[15px]">
-											MY WALLETS
-										</MPText>
+							<WalletDetailsModal
+								selectedWallet={selectedWallet}
+								onDismiss={handleDismissAllModals}
+								showWalletDetails={showWalletDetails}
+								setShowWalletDetails={setShowWalletDetails}
+								accountName={`${data?.user.firstName} ${data?.user.lastName}`}
+							/>
 
-										{/**
-										|--------------------------------------------------
-										| Wallets
-										|--------------------------------------------------
-										*/}
-										<View className="mt-6 gap-4">
-											{data?.wallets.map((wallet) => (
-												<Pressable
-													key={wallet?._id}
-													onPress={() => {
-														setSelectedWallet(wallet);
-														setShowWalletModal(false);
-													}}
-													className="h-[46px] w-full justify-center rounded-[10px] bg-[#F7F7F7] px-6"
-												>
-													<MPText weight="medium" className="text-[15px]">
-														{wallet.currency === 'NGN' ? '🇳🇬 ' : '🇨🇦 '} {wallet.currency}
-													</MPText>
-												</Pressable>
-											))}
-										</View>
+							{/**
+							|--------------------------------------------------
+							| Fund wallet modal
+							|--------------------------------------------------
+							*/}
+							<FundWalletModal
+								selectedWallet={selectedWallet}
+								onDismiss={handleDismissAllModals}
+								showFundWalletModal={showFundWalletModal}
+								setShowFundWalletModal={setShowFundWalletModal}
+								interacEmail={data?.user?.mail?.email as string}
+								setShowCurrencyConverModal={setShowCurrencyConvertModal}
+							/>
 
-										{/**
-										|--------------------------------------------------
-										| Action button
-										|--------------------------------------------------
-										*/}
-										<MPButton useGradientBg className="mt-6 !hidden w-[128px] self-center">
-											<Pressable className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white">
-												<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
-													Add new wallet
-												</MPText>
-											</Pressable>
-										</MPButton>
-									</View>
-								</TouchableOpacity>
-							</Modal>
-						</Pressable>
-					)}
-
-					{/**
-					|--------------------------------------------------
-					| Wallet Balance
-					|--------------------------------------------------
-					*/}
-					{isProfileComplete && (
-						<MPText weight="semibold" className="mb-1 mt-4 self-center text-[13px] text-white">
-							Wallet Balance
-						</MPText>
-					)}
-
-					{/**
-					|--------------------------------------------------
-					| Balance
-					|--------------------------------------------------
-					*/}
-					{isProfileComplete && (
-						<MPText
-							weight="semibold"
-							style={{ fontSize: 24, lineHeight: 30 }}
-							className="self-center text-[24px] text-white"
-						>
-							{selectedWallet?.currency === 'CAD' ? '$' : '₦'}{' '}
-							{selectedWallet?.walletBalance.toLocaleString('en-US', {
-								minimumFractionDigits: 2,
-								maximumFractionDigits: 2,
-							})}
-						</MPText>
-					)}
-
-					{/**
-					|--------------------------------------------------
-					| Action icons
-					|--------------------------------------------------
-					*/}
-					<View className="mt-auto flex-row justify-evenly">
-						{[
-							{ name: 'details', icon: DetailsIcon, label: 'Details' },
-							{ name: 'add', icon: AddIcon, label: 'Add' },
-							{ name: 'send', icon: SendIcon, label: 'Send' },
-							{ name: 'exchange', icon: ExchangeIcon, label: 'Exchange' },
-						].map((action) => (
-							<View key={action.label} className="items-center justify-center">
-								<TouchableOpacity
-									activeOpacity={0.7}
-									onPress={() => handleInitiateAction(action.name as any)}
-									className="mb-2 size-9 items-center justify-center rounded-full bg-white"
-								>
-									<action.icon />
-								</TouchableOpacity>
-								{/**
-								|--------------------------------------------------
-								| Label
-								|--------------------------------------------------
-								*/}
-								<MPText style={{ fontSize: 12 }} weight="medium" className="text-[13px] text-white">
-									{action.label}
-								</MPText>
-							</View>
-						))}
-
-						{/**
-						|--------------------------------------------------
-						| Wallet details
-						|--------------------------------------------------
-						*/}
-						<WalletDetailsModal
-							selectedWallet={selectedWallet}
-							onDismiss={handleDismissAllModals}
-							showWalletDetails={showWalletDetails}
-							setShowWalletDetails={setShowWalletDetails}
-							accountName={`${data?.user.firstName} ${data?.user.lastName}`}
-						/>
-
-						{/**
-						|--------------------------------------------------
-						| Fund wallet modal
-						|--------------------------------------------------
-						*/}
-						<FundWalletModal
-							selectedWallet={selectedWallet}
-							onDismiss={handleDismissAllModals}
-							showFundWalletModal={showFundWalletModal}
-							setShowFundWalletModal={setShowFundWalletModal}
-							interacEmail={data?.user?.mail?.email as string}
-							setShowCurrencyConverModal={setShowCurrencyConvertModal}
-						/>
-
-						{/**
-						|--------------------------------------------------
-						| Send funds
-						|--------------------------------------------------
-						*/}
-						<SendFundsModal
-							visible={showSendFundsModal}
-							setVisible={setShowSendFundsModal}
-							type={selectedWallet?.currency as 'CAD' | 'NGN'}
-						/>
-					</View>
+							{/**
+							|--------------------------------------------------
+							| Send funds
+							|--------------------------------------------------
+							*/}
+							<SendFundsModal
+								visible={showSendFundsModal}
+								setVisible={setShowSendFundsModal}
+								type={selectedWallet?.currency as 'CAD' | 'NGN'}
+							/>
+						</View>
+					</ImageBackground>
 				</View>
 
 				{/**
@@ -550,8 +568,8 @@ export default function DashboardScreen() {
 				| Recent transactions
 				|--------------------------------------------------
 				*/}
-				<View className="mt-6 flex-row justify-between p-4">
-					<MPText fontSize="FONT14" className="text-[15px]" weight="semibold">
+				<View className="mt-10 flex-row justify-between p-4">
+					<MPText fontSize="FONT16" className="text-[15px]" weight="semibold">
 						Recent Transactions
 					</MPText>
 
@@ -560,11 +578,13 @@ export default function DashboardScreen() {
 					| See more
 					|--------------------------------------------------
 					*/}
-					<Pressable onPress={() => handleInitiateAction('see_more_transactions')}>
-						<MPText fontSize="FONT14" weight="semibold" className="text-[15px] text-[#FF6A00]">
-							See more
-						</MPText>
-					</Pressable>
+					{(data?.transactions?.length || 0) > 0 && (
+						<Pressable onPress={() => handleInitiateAction('see_more_transactions')}>
+							<MPText fontSize="FONT16" weight="semibold" className="text-[15px] text-[#FF6A00]">
+								See more
+							</MPText>
+						</Pressable>
+					)}
 				</View>
 
 				{/**

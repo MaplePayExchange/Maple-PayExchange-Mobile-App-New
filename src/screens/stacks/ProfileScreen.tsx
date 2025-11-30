@@ -5,8 +5,9 @@
 */
 import clsx from 'clsx';
 import React from 'react';
+import VersionCheck from 'react-native-version-check';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Image, Modal, Pressable, ScrollView, View } from 'react-native';
 import { Svg, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
 /**
@@ -14,12 +15,15 @@ import { Svg, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
  | Custom imports
  |--------------------------------------------------
  */
+import { CloseIcon } from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import Toggler from '@src/components/Toggler';
+import MPButton from '@src/components/MPButton';
 import { useUserStore } from '@zustand/userStore';
 import Container from '@src/components/Container';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
+import { MONEY_PAD } from '@constants/app.constant';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 import { useBiometricAuth } from '@hooks/useBiometrics';
 import { useGetUserInformation } from '@services/auth.services';
@@ -33,7 +37,16 @@ export default function ProfileScreen() {
 	const navigation = useNavigation();
 	const { authenticate } = useBiometricAuth();
 	const { data, isLoading } = useGetUserInformation();
+	const [showVerificationModal, setShowVerificationModal] = React.useState<boolean>(false);
 	const { biometricsInfo, setBiometricsInfo, setUserData, setIsLoggedIn } = useUserStore();
+
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
+	const currentVersion = VersionCheck.getCurrentVersion();
+	const isVerified = data?.user?.isVerified && data?.user?.isBvnVerified && data?.user?.transactionPin;
 
 	/**
 	|--------------------------------------------------
@@ -42,6 +55,15 @@ export default function ProfileScreen() {
 	*/
 	const handleNavigation = (key: keyof typeof IconTypes) => {
 		switch (key) {
+			/**
+			|--------------------------------------------------
+			| Account verification
+			|--------------------------------------------------
+			*/
+			case 'Account Verification':
+				setShowVerificationModal(true);
+				break;
+
 			/**
 			|--------------------------------------------------
 			| Profile settings
@@ -78,6 +100,15 @@ export default function ProfileScreen() {
 				navigation.navigate(
 					...([ROUTE_NAMES.REFER_AND_EARN, { referralCode: data?.user.referralCode }] as any)
 				);
+				break;
+
+			/**
+			|--------------------------------------------------
+			| How to videos
+			|--------------------------------------------------
+			*/
+			case 'How-To Videos & Guides':
+				navigation.navigate(ROUTE_NAMES.HOW_TO_SCREEN as any);
 				break;
 
 			/**
@@ -246,7 +277,10 @@ export default function ProfileScreen() {
 						| Account verification
 						|--------------------------------------------------
 						*/}
-						<Pressable className="flex-row items-center gap-4">
+						<Pressable
+							className="flex-row items-center gap-4"
+							onPress={() => handleNavigation('Account Verification')}
+						>
 							{IconTypes[Object.keys(IconTypes)[1] as keyof typeof IconTypes]}
 							<MPText className="mr-auto text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[1]}
@@ -257,7 +291,7 @@ export default function ProfileScreen() {
 							| Badge
 							|--------------------------------------------------
 							*/}
-							{data?.user?.isVerified && (
+							{isVerified && (
 								<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 									<Path
 										d="M8.00033 0.833984C8.37428 0.834076 8.67907 0.991545 8.95638 1.20312C9.21614 1.40133 9.50301 1.6882 9.83822 2.02344L9.86165 2.04688C10.2046 2.38975 10.5036 2.52439 10.9652 2.52441C11.0229 2.52441 11.0964 2.52285 11.179 2.52051C11.3888 2.51457 11.6599 2.50639 11.8968 2.52637C12.2444 2.55571 12.68 2.64947 13.012 2.97852C13.3466 3.31029 13.4427 3.74782 13.473 4.09766C13.4937 4.33687 13.4858 4.61091 13.4798 4.82227C13.4775 4.90453 13.4759 4.97739 13.4759 5.03516C13.4759 5.33571 13.5088 5.50414 13.5667 5.63672C13.6262 5.77283 13.7321 5.91728 13.9544 6.13965L13.9779 6.16309C14.3128 6.498 14.5991 6.78437 14.7972 7.04395C15.0088 7.32133 15.1663 7.62686 15.1663 8.00098C15.1662 8.37492 15.0088 8.67972 14.7972 8.95703C14.599 9.21676 14.313 9.50373 13.9779 9.83887L13.9544 9.8623C13.732 10.0847 13.6262 10.2291 13.5667 10.3652C13.5089 10.4977 13.4759 10.6656 13.4759 10.9658C13.4759 11.0237 13.4775 11.0973 13.4798 11.1797C13.4858 11.391 13.4937 11.6643 13.473 11.9033C13.4427 12.2532 13.3467 12.6906 13.012 13.0225C12.6799 13.3516 12.2444 13.4453 11.8968 13.4746C11.6599 13.4946 11.3888 13.4864 11.179 13.4805C11.0964 13.4781 11.0229 13.4766 10.9652 13.4766C10.6711 13.4766 10.5054 13.5059 10.3753 13.5596C10.2454 13.6133 10.1061 13.7096 9.89681 13.9189C9.85215 13.9636 9.7937 14.0269 9.72591 14.0996C9.57261 14.2639 9.37301 14.4779 9.18685 14.6406C8.90439 14.8875 8.49913 15.1669 8.00033 15.167C7.50135 15.167 7.09535 14.8876 6.81283 14.6406C6.62672 14.4779 6.428 14.2639 6.27474 14.0996C6.20676 14.0267 6.1476 13.9637 6.10287 13.9189C5.89341 13.7095 5.75436 13.6132 5.62435 13.5596C5.49422 13.5059 5.32863 13.4766 5.03451 13.4766C4.97693 13.4766 4.90402 13.4781 4.82162 13.4805C4.61177 13.4864 4.3399 13.4946 4.10287 13.4746C3.7552 13.4453 3.31974 13.3517 2.98763 13.0225C2.65295 12.6906 2.55697 12.2532 2.52669 11.9033C2.50602 11.6643 2.51391 11.391 2.51986 11.1797C2.52218 11.0972 2.52376 11.0237 2.52376 10.9658C2.52376 10.6655 2.49077 10.4978 2.43294 10.3652C2.37349 10.2291 2.26853 10.0846 2.04622 9.8623L2.02279 9.83887C1.68747 9.50359 1.40072 9.21684 1.20247 8.95703C0.990897 8.67972 0.833435 8.37492 0.833334 8.00098C0.833339 7.62688 0.990836 7.32133 1.20247 7.04395C1.40067 6.78424 1.68764 6.4982 2.02279 6.16309L2.04622 6.13965C2.38935 5.79652 2.52376 5.49677 2.52376 5.03516C2.52376 4.97757 2.52219 4.90467 2.51986 4.82227C2.51391 4.61242 2.5057 4.34055 2.52572 4.10352C2.55507 3.7559 2.64871 3.32038 2.97787 2.98828C3.30964 2.65371 3.74716 2.55764 4.09701 2.52734C4.33622 2.50666 4.61026 2.51456 4.82162 2.52051C4.90388 2.52282 4.97674 2.52441 5.03451 2.52441C5.49612 2.52441 5.79589 2.38998 6.139 2.04688L6.16244 2.02344C6.49755 1.68829 6.78359 1.40132 7.04329 1.20312C7.32068 0.991483 7.62622 0.833984 8.00033 0.833984ZM10.429 5.82422C10.1471 5.5874 9.7264 5.62433 9.48958 5.90625L7.13119 8.71289L6.44369 8.09961C6.16904 7.8544 5.7475 7.8777 5.50228 8.15234C5.25717 8.42698 5.28143 8.84855 5.55599 9.09375L6.75619 10.165C6.8906 10.285 7.06767 10.3458 7.2474 10.333C7.42722 10.3201 7.59432 10.2347 7.71029 10.0967L10.5101 6.76367C10.7469 6.4818 10.7108 6.06106 10.429 5.82422Z"
@@ -282,6 +316,89 @@ export default function ProfileScreen() {
 									</Defs>
 								</Svg>
 							)}
+
+							<Modal visible={showVerificationModal} animationType="slide" transparent>
+								{/**
+								|--------------------------------------------------
+								| View
+								|--------------------------------------------------
+								*/}
+								<View className="flex-1 bg-black/20">
+									{/**
+									|--------------------------------------------------
+									| Content
+									|--------------------------------------------------
+									*/}
+									<View className="mt-auto min-h-[100px] w-full rounded-t-xl bg-white p-6">
+										<Pressable className="ml-auto" onPress={() => setShowVerificationModal(false)}>
+											<CloseIcon />
+										</Pressable>
+
+										<Image
+											width={111}
+											height={109}
+											source={MONEY_PAD}
+											className="h-[109px] w-[111px] self-center"
+										/>
+										{/**
+										|--------------------------------------------------
+										| ...
+										|--------------------------------------------------
+										*/}
+										{isVerified ? (
+											<MPText
+												weight="semibold"
+												fontSize="FONT24"
+												style={{ lineHeight: 32 }}
+												className="mt-4 text-center tracking-tighter"
+											>
+												You’re Verified! 🎉
+											</MPText>
+										) : (
+											<MPText
+												weight="semibold"
+												fontSize="FONT24"
+												style={{ lineHeight: 32 }}
+												className="mt-4 text-center tracking-tighter"
+											>
+												You have not been verified yet!
+											</MPText>
+										)}
+
+										{/**
+										|--------------------------------------------------
+										| ...
+										|--------------------------------------------------
+										*/}
+										{isVerified ? (
+											<MPText fontSize="FONT14" className="mt-1 text-center">
+												Your account has been successfully verified. You now have full access to
+												all features.
+											</MPText>
+										) : (
+											<MPText fontSize="FONT14" className="mt-1 text-center">
+												Your account has not been verified. Complete your verification to get
+												full access
+											</MPText>
+										)}
+
+										{/**
+										|--------------------------------------------------
+										| ...
+										|--------------------------------------------------
+										*/}
+										<MPButton
+											useGradientBg
+											className="mb-6 mt-8"
+											onPress={() => setShowVerificationModal(false)}
+										>
+											<MPText weight="semibold" fontSize="FONT14" className="text-white">
+												Continue
+											</MPText>
+										</MPButton>
+									</View>
+								</View>
+							</Modal>
 						</Pressable>
 
 						{/**
@@ -319,7 +436,10 @@ export default function ProfileScreen() {
 						| Rewards
 						|--------------------------------------------------
 						*/}
-						<Pressable className="flex-row items-center gap-4">
+						<Pressable
+							className="flex-row items-center gap-4"
+							onPress={() => handleNavigation('How-To Videos & Guides')}
+						>
 							{IconTypes[Object.keys(IconTypes)[4] as keyof typeof IconTypes]}
 							<MPText className="text-[15px]" weight="semibold">
 								{Object.keys(IconTypes)[4]}
@@ -512,7 +632,7 @@ export default function ProfileScreen() {
 					| ...
 					|--------------------------------------------------
 					*/}
-					<MPText className="my-4 text-[15px]">v1.0.0</MPText>
+					<MPText className="my-4 text-[15px]">v{currentVersion}</MPText>
 				</View>
 			</ScrollView>
 		</ScreenWrapper>

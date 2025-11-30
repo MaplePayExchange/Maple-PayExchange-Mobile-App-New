@@ -82,11 +82,11 @@ export default function ResetPasswordScreen() {
     */
 	return (
 		<ScreenWrapper useBottomInset>
-			<HeaderWrapper title="Reset Password" />
-			<MPText weight="semibold" className="text-base">
+			<HeaderWrapper title="Reset Password" titleFontSize="FONT24" subTitleFontSize="FONT14" />
+			<MPText fontSize="FONT16" weight="semibold" className="">
 				Reset password
 			</MPText>
-			<MPText weight="medium" className="text-[15px] leading-5 text-[#484848]">
+			<MPText fontSize="FONT14" weight="medium" className="text-[15px] leading-5 text-[#484848]">
 				Reset password to login to your account
 			</MPText>
 

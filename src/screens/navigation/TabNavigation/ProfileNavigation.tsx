@@ -29,6 +29,7 @@ import TermsAndCondtionsScreen from '../../stacks/TermsAndCondtionsScreen';
 import SendFundsBeneficiaryScreen from '../../stacks/SendFundBeneficiaryScreen';
 import NotificationsSettingsScreen from '../../stacks/NotificationsSettingsScreen';
 import ReferralTermsAndConditionsScreen from '../../stacks/ReferralTermsAndConditionsScreen';
+import HowToScreen from '@src/screens/stacks/HowToScreen';
 
 /**
 |--------------------------------------------------
@@ -47,6 +48,7 @@ const _ROUTES = [
 	{ name: ROUTE_NAMES.LOGIN, component: LoginScreen },
 	{ name: ROUTE_NAMES.RESET_PIN, component: ResetPinScreen },
 	{ name: ROUTE_NAMES.KYC_TERMS, component: KYCTermsScreen },
+	{ name: ROUTE_NAMES.HOW_TO_SCREEN, component: HowToScreen },
 	{ name: ROUTE_NAMES.SEND_CAD_FUNDS, component: SendCADScreen },
 	{ name: ROUTE_NAMES.SEND_NGN_FUNDS, component: SendNGNScreen },
 	{ name: ROUTE_NAMES.REFER_AND_EARN, component: ReferAndEarnScreen },

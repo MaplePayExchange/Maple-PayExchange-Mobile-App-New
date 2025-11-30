@@ -145,31 +145,24 @@ export default function ProfileSettingsScreen() {
 						|--------------------------------------------------
 						*/}
 						<Pressable onPress={handlePickImage} className="absolute bottom-2 right-2 z-30">
-							<Svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<Rect
-									x="0.0609741"
-									y="0.191406"
-									width="17.2683"
-									height="17.2683"
-									rx="8.63415"
-									fill="url(#paint0_linear_290_3848)"
-								/>
+							<Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+								<Rect width="24" height="24" rx="12" fill="url(#paint0_linear_290_3848)" />
 								<Path
-									d="M6.81 12.4217H10.5802C11.5732 12.4217 11.9689 11.8137 12.0157 11.0726L12.2027 8.10101C12.2531 7.32394 11.6343 6.66559 10.8537 6.66559C10.6342 6.66559 10.4327 6.53967 10.332 6.3454L10.073 5.82376C9.9075 5.49638 9.4758 5.22656 9.10884 5.22656H8.285C7.91445 5.22656 7.48275 5.49638 7.31726 5.82376L7.05823 6.3454C6.9575 6.53967 6.75604 6.66559 6.53659 6.66559C5.75592 6.66559 5.13714 7.32394 5.1875 8.10101L5.37458 11.0726C5.41775 11.8137 5.81708 12.4217 6.81 12.4217Z"
+									d="M8.50677 18.6615H15.4934C17.3334 18.6615 18.0668 17.5348 18.1534 16.1615L18.5001 10.6548C18.5934 9.21479 17.4468 7.99479 16.0001 7.99479C15.5934 7.99479 15.2201 7.76146 15.0334 7.40146L14.5534 6.43479C14.2468 5.82813 13.4468 5.32812 12.7668 5.32812H11.2401C10.5534 5.32812 9.75343 5.82813 9.44677 6.43479L8.96677 7.40146C8.7801 7.76146 8.40677 7.99479 8.0001 7.99479C6.55343 7.99479 5.40677 9.21479 5.5001 10.6548L5.84677 16.1615C5.92677 17.5348 6.66677 18.6615 8.50677 18.6615Z"
 									stroke="white"
 									strokeWidth="0.719512"
 									strokeLinecap="round"
 									strokeLinejoin="round"
 								/>
 								<Path
-									d="M8.15546 7.38477H9.23472"
+									d="M11.0001 9.32812H13.0001"
 									stroke="white"
 									strokeWidth="0.719512"
 									strokeLinecap="round"
 									strokeLinejoin="round"
 								/>
 								<Path
-									d="M8.69506 10.981C9.33902 10.981 9.86426 10.4557 9.86426 9.81179C9.86426 9.16782 9.33902 8.64258 8.69506 8.64258C8.05109 8.64258 7.52585 9.16782 7.52585 9.81179C7.52585 10.4557 8.05109 10.981 8.69506 10.981Z"
+									d="M12 15.9915C13.1933 15.9915 14.1666 15.0182 14.1666 13.8249C14.1666 12.6315 13.1933 11.6582 12 11.6582C10.8066 11.6582 9.83331 12.6315 9.83331 13.8249C9.83331 15.0182 10.8066 15.9915 12 15.9915Z"
 									stroke="white"
 									strokeWidth="0.719512"
 									strokeLinecap="round"
@@ -178,10 +171,10 @@ export default function ProfileSettingsScreen() {
 								<Defs>
 									<LinearGradient
 										id="paint0_linear_290_3848"
-										x1="0.0609741"
-										y1="8.82555"
-										x2="17.3293"
-										y2="8.82555"
+										x1="0"
+										y1="12"
+										x2="24"
+										y2="12"
 										gradientUnits="userSpaceOnUse"
 									>
 										<Stop stopColor="#EE0979" />
@@ -208,17 +201,26 @@ export default function ProfileSettingsScreen() {
 					| ...
 					|--------------------------------------------------
 					*/}
-					<Container className="mt-4 gap-8 rounded-lg">
-						<DataRepresentation label="First Name" value={user?.firstName} />
-						<DataRepresentation label="Last Name" value={user?.lastName} />
-						<DataRepresentation label="Phone Number" value={user?.phone} />
-						<DataRepresentation label="Email" value={user?.mail?.email} />
+					<Container className="mt-4 gap-6 rounded-lg">
+						<DataRepresentation
+							label="First Name"
+							value={user?.firstName}
+							labelClassName="text-[#767676]"
+						/>
+						<DataRepresentation labelClassName="text-[#767676]" label="Last Name" value={user?.lastName} />
+						<DataRepresentation labelClassName="text-[#767676]" label="Phone Number" value={user?.phone} />
+						<DataRepresentation labelClassName="text-[#767676]" label="Email" value={user?.mail?.email} />
 						<DataRepresentation
 							label="Date of Birth"
+							labelClassName="text-[#767676]"
 							value={dayjs(user.birthDate?.slice(0, 10)).format('MMM DD, YYYY')}
 						/>
-						<DataRepresentation label="Country" value={user?.country} />
-						<DataRepresentation label="Address" value={user?.street || '- -'} />
+						<DataRepresentation labelClassName="text-[#767676]" label="Country" value={user?.country} />
+						<DataRepresentation
+							labelClassName="text-[#767676]"
+							label="Address"
+							value={user?.street || '- -'}
+						/>
 					</Container>
 
 					{/**
@@ -227,7 +229,24 @@ export default function ProfileSettingsScreen() {
                     |--------------------------------------------------
                     */}
 					<View className="my-4 flex-row items-center gap-2">
-						<MPText className="text-[15px]">Interac E-Transfer Tag</MPText>
+						<MPText className="text-[15px] text-[#484848]">Interac E-Transfer Tag</MPText>
+					</View>
+
+					{/**
+					|--------------------------------------------------
+					| ...
+					|--------------------------------------------------
+					*/}
+					<Container className="flex-row items-center justify-between rounded-lg">
+						<MPText className="text-[15px]" weight="medium">
+							{user?.mail?.email}
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
 						<Pressable onPress={() => utils.copyToClipboard(user?.mail?.email || '')}>
 							<Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 								<G clipPath="url(#clip0_290_3884)">
@@ -275,17 +294,6 @@ export default function ProfileSettingsScreen() {
 								</Defs>
 							</Svg>
 						</Pressable>
-					</View>
-
-					{/**
-					|--------------------------------------------------
-					| ...
-					|--------------------------------------------------
-					*/}
-					<Container className="rounded-lg">
-						<MPText className="text-[15px]" weight="medium">
-							{user?.mail?.email}
-						</MPText>
 					</Container>
 
 					{/**
@@ -296,8 +304,9 @@ export default function ProfileSettingsScreen() {
 					<Container className="mt-5 items-center !bg-[#9F0651]">
 						<MPText
 							weight="medium"
+							fontSize="FONT12"
 							style={{ lineHeight: 15 }}
-							className="max-w-[302px] text-center text-[13px] text-white"
+							className="max-w-[302px] text-center text-white"
 						>
 							You are unable to edit this profile because your account has already been verified. If you
 							need to edit, please reach out to support
@@ -312,7 +321,7 @@ export default function ProfileSettingsScreen() {
 							onPress={handleOpenWhatsApp}
 							className="mt-4 h-[32px] max-w-[142px] rounded-full bg-white"
 						>
-							<MPText weight="medium" className="text-[15px]">
+							<MPText fontSize="FONT14" weight="medium" className="">
 								Contact support
 							</MPText>
 						</MPButton>

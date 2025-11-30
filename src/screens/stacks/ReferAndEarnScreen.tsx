@@ -20,8 +20,8 @@ import MPText from '@src/components/MPText';
 import Container from '@src/components/Container';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
-import { useGetReferralHistory } from '@services/user.services';
 import { ROUTE_NAMES } from '@constants/routes.conts';
+import { useGetReferralHistory } from '@services/user.services';
 
 export default function ReferAndEarnScreen() {
 	const route = useRoute();
@@ -100,7 +100,7 @@ export default function ReferAndEarnScreen() {
 								Referral code
 							</MPText>
 
-							<View className="h-[46px] flex-row items-center justify-center gap-2 rounded-lg border border-dashed border-[#EE0979] px-2">
+							<View className="h-[46px] flex-row items-center justify-center rounded-lg border border-dashed border-[#EE0979] px-2">
 								<MPText weight="medium" className="text-[#EE0979]">
 									{params?.referralCode}
 								</MPText>
@@ -110,7 +110,7 @@ export default function ReferAndEarnScreen() {
                                 | ...
                                 |--------------------------------------------------
                                 */}
-								<Pressable onPress={() => utils.copyToClipboard(params?.referralCode)}>
+								<Pressable onPress={() => utils.copyToClipboard(params?.referralCode)} className="ml-3 mr-4">
 									<Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 										<Path
 											d="M16.875 2.1875H6.875C6.62636 2.1875 6.3879 2.28627 6.21209 2.46209C6.03627 2.6379 5.9375 2.87636 5.9375 3.125V5.9375H3.125C2.87636 5.9375 2.6379 6.03627 2.46209 6.21209C2.28627 6.3879 2.1875 6.62636 2.1875 6.875V16.875C2.1875 17.1236 2.28627 17.3621 2.46209 17.5379C2.6379 17.7137 2.87636 17.8125 3.125 17.8125H13.125C13.3736 17.8125 13.6121 17.7137 13.7879 17.5379C13.9637 17.3621 14.0625 17.1236 14.0625 16.875V14.0625H16.875C17.1236 14.0625 17.3621 13.9637 17.5379 13.7879C17.7137 13.6121 17.8125 13.3736 17.8125 13.125V3.125C17.8125 2.87636 17.7137 2.6379 17.5379 2.46209C17.3621 2.28627 17.1236 2.1875 16.875 2.1875ZM12.1875 15.9375H4.0625V7.8125H12.1875V15.9375ZM15.9375 12.1875H14.0625V6.875C14.0625 6.62636 13.9637 6.3879 13.7879 6.21209C13.6121 6.03627 13.3736 5.9375 13.125 5.9375H7.8125V4.0625H15.9375V12.1875Z"

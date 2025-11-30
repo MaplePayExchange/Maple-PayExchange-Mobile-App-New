@@ -109,6 +109,7 @@ export default function KysStepsScreen() {
 						|--------------------------------------------------
 						*/}
 						<MPText
+							fontSize="FONT24"
 							weight="semibold"
 							style={{ fontSize: 24, lineHeight: 32 }}
 							className="mt-8 text-[24px] text-[#1A1A1A]"
@@ -116,6 +117,7 @@ export default function KysStepsScreen() {
 							Almost there!
 						</MPText>
 						<MPText
+							fontSize="FONT24"
 							weight="semibold"
 							style={{ fontSize: 24, lineHeight: 32 }}
 							className="text-[24px] text-[#1A1A1A]"
@@ -128,7 +130,12 @@ export default function KysStepsScreen() {
 						| Subtext
 						|--------------------------------------------------
 						*/}
-						<MPText weight="medium" className="mt-4 text-[15px] leading-5 text-[#767676]">
+						<MPText
+							weight="medium"
+							fontSize="FONT14"
+							style={{ lineHeight: 24 }}
+							className="mt-4 text-[15px] leading-5 text-[#767676]"
+						>
 							This is a legal requirement, and verification protects you from fraud and identity theft.
 						</MPText>
 
@@ -137,7 +144,12 @@ export default function KysStepsScreen() {
 						| Next steps
 						|--------------------------------------------------
 						*/}
-						<MPText weight="medium" className="mt-10 text-[15px] leading-5 text-[#767676]">
+						<MPText
+							weight="medium"
+							fontSize="FONT14"
+							style={{ lineHeight: 24 }}
+							className="mt-10 text-[15px] leading-5 text-[#767676]"
+						>
 							The next step will require you to take a picture of your government issued ID and your face
 							(liveness test). Examples of ID include:
 						</MPText>
@@ -147,14 +159,14 @@ export default function KysStepsScreen() {
 						| Identities
 						|--------------------------------------------------
 						*/}
-						<View className="mb-12 mt-1">
+						<View className="mb-12 mt-8">
 							{/**
 							|--------------------------------------------------
 							| Passport
 							|--------------------------------------------------
 							*/}
 							<View className="flex-row items-center gap-1">
-								<Entypo name="dot-single" size={16} color="black" />
+								<MPText>-</MPText>
 								<MPText className="text-[15px] leading-5 text-[#767676]">International passport</MPText>
 							</View>
 
@@ -164,7 +176,7 @@ export default function KysStepsScreen() {
 							|--------------------------------------------------
 							*/}
 							<View className="flex-row items-center gap-1">
-								<Entypo name="dot-single" size={16} color="black" />
+								<MPText>-</MPText>
 								<MPText className="text-[15px] leading-5 text-[#767676]">Driver’s license</MPText>
 							</View>
 
@@ -174,7 +186,7 @@ export default function KysStepsScreen() {
 							|--------------------------------------------------
 							*/}
 							<View className="flex-row items-center gap-1">
-								<Entypo name="dot-single" size={16} color="black" />
+								<MPText>-</MPText>
 								<MPText className="text-[15px] leading-5 text-[#767676]">PR card</MPText>
 							</View>
 						</View>

@@ -106,7 +106,7 @@ export default function Toggler({
 				useGradientBg={checked === true}
 				customClassName={{ justifyContent: 'flex-start', borderRadius: 99999, width: 40 }}
 				className={clsx(
-					'w-[44px] h-[24px] rounded-full justify-center px-1',
+					'w-[44px] h-[24px] rounded-full justify-center px-1 items-center',
 					checked === true ? '' : 'bg-[#F5F5F5]'
 				)}
 			>
@@ -114,7 +114,7 @@ export default function Toggler({
 					style={{
 						transform: [{ translateX }],
 					}}
-					className={clsx('bg-white size-5 rounded-full')}
+					className={clsx('bg-white size-5 rounded-full mt-[2px]')}
 				/>
 			</MPButton>
 		</View>

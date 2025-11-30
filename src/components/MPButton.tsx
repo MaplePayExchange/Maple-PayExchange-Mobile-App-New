@@ -6,7 +6,7 @@
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -57,8 +57,8 @@ export default function MPButton({
 		<TouchableOpacity
 			{...rest}
 			activeOpacity={0.8}
-			className={`flex h-[40px] overflow-hidden rounded-[59px] items-center justify-center w-full ${
-				disabled && 'bg-[#EAECF0] text-[#D1D1D1] pointer-events-none'
+			className={`flex h-[44px] w-full items-center justify-center overflow-hidden rounded-[59px] ${
+				disabled && 'pointer-events-none bg-[#EAECF0] text-[#D1D1D1]'
 			} ${className}`}
 		>
 			<Animated.View
@@ -77,7 +77,11 @@ export default function MPButton({
 						style={[commonStyles as any, customClassName]}
 						colors={['#EE0979', '#FF6A00']}
 					>
-						{isLoading ? <SpinningSVG loading={isLoading} /> : children}
+						{isLoading ? (
+							<SpinningSVG loading={isLoading} />
+						) : (
+							<View className="pointer-events-none mb-1">{children}</View>
+						)}
 					</LinearGradient>
 				) : /**
 					|--------------------------------------------------
@@ -87,7 +91,7 @@ export default function MPButton({
 				isLoading ? (
 					<SpinningSVG color="#000000" loading={isLoading} />
 				) : (
-					children
+					<View className="pointer-events-none mb-1">{children}</View>
 				)}
 			</Animated.View>
 		</TouchableOpacity>

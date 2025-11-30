@@ -4,12 +4,22 @@
 |--------------------------------------------------
 */
 import clsx from 'clsx';
+import {
+	View,
+	FlatList,
+	Dimensions,
+	StyleSheet,
+	ImageBackground,
+	NativeScrollEvent,
+	NativeSyntheticEvent,
+	Platform,
+} from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { BlurView as RNBlurView } from '@react-native-community/blur';
+import Svg, { Defs, Rect, Stop, LinearGradient } from 'react-native-svg';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View, ImageBackground, FlatList, NativeSyntheticEvent, NativeScrollEvent, Dimensions } from 'react-native';
 
 /**
  |--------------------------------------------------
@@ -142,7 +152,7 @@ export default function OnboardingScreen() {
 			renderItem={({ item, index }) => {
 				return (
 					<ImageBackground source={item.image} className="h-full flex-1" style={{ width, flex: 1 }}>
-						<SafeAreaView className="z-30 mt-4">
+						<SafeAreaView className="z-50 mt-4">
 							{/**
 							|--------------------------------------------------
 							| Indicator
@@ -170,14 +180,64 @@ export default function OnboardingScreen() {
 							</View>
 						</SafeAreaView>
 
-						<View className="absolute bottom-[-60px] z-40 mt-auto max-h-[318px] min-h-[318px] overflow-hidden">
+						<View className="absolute top-0 z-40 h-[70%] w-full">
 							<RNBlurView
-								blurType="dark"
-								blurAmount={20}
-								className="min-h-[318px]"
-								reducedTransparencyFallbackColor="black"
-								style={{ paddingBottom: insets.bottom + 6 }}
+								blurAmount={1}
+								blurType="light"
+								style={{ height: '100%', opacity: Platform.OS === 'android' ? 0.4 : 0.71 }}
+								reducedTransparencyFallbackColor="rgba(0,0,0,0.3)"
 							>
+								<View className="h-full" pointerEvents="none" style={{ ...StyleSheet.absoluteFill }}>
+									<Svg style={{ ...StyleSheet.absoluteFill, height: '100%' }}>
+										<Defs>
+											<LinearGradient id="overlayGradient" x1="0" y1="0" x2="0" y2="1">
+												<Stop offset="1" stopColor="#000000" stopOpacity="0.54" />
+												<Stop offset="0" stopColor="#000000" stopOpacity="0.54" />
+												<Stop offset="0.7" stopColor="#000000" stopOpacity="0.54" />
+												<Stop offset="0.4" stopColor="#000000" stopOpacity="0.54" />
+											</LinearGradient>
+										</Defs>
+
+										<Rect width="100%" height="100%" fill="url(#overlayGradient)" />
+									</Svg>
+								</View>
+							</RNBlurView>
+						</View>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
+						<View className={clsx('z-40 mt-auto h-[35%] translate-y-12')}>
+							<RNBlurView
+								blurAmount={1}
+								blurType="light"
+								reducedTransparencyFallbackColor="rgba(0,0,0,0.3)"
+							>
+								<View
+									pointerEvents="none"
+									style={{ ...StyleSheet.absoluteFill, backgroundColor: 'transparent' }}
+								>
+									<Svg style={StyleSheet.absoluteFill}>
+										<Defs>
+											<LinearGradient id="overlayGradient" x1="0" y1="0" x2="0" y2="1">
+												<Stop offset="0" stopColor="#000000" stopOpacity="0.3" />
+												<Stop offset="0.4" stopColor="#000000" stopOpacity="0.3" />
+												<Stop offset="0.7" stopColor="#000000" stopOpacity="0.3" />
+												<Stop offset="1" stopColor="#000000" stopOpacity="0.3" />
+											</LinearGradient>
+										</Defs>
+
+										<Rect width="100%" height="100%" fill="url(#overlayGradient)" />
+									</Svg>
+								</View>
+
+								{/**
+								|--------------------------------------------------
+								| Content
+								|--------------------------------------------------
+								*/}
 								<SafeAreaView edges={{ bottom: 'maximum' }}>
 									<View className="p-6 pb-8">
 										{/**
@@ -188,7 +248,7 @@ export default function OnboardingScreen() {
 										<MPText
 											weight="bold"
 											style={{ fontSize: 24, lineHeight: 32 }}
-											className="mb-3 text-2xl tracking-tight text-white"
+											className="mb-3 max-w-[90%] text-2xl tracking-tight text-white"
 										>
 											{item.title}
 										</MPText>
@@ -239,13 +299,6 @@ export default function OnboardingScreen() {
 								</SafeAreaView>
 							</RNBlurView>
 						</View>
-
-						{/**
-						|--------------------------------------------------
-						| Overlay
-						|--------------------------------------------------
-						*/}
-						<View className="absolute z-20 h-full w-full flex-1 bg-black/30" />
 					</ImageBackground>
 				);
 			}}

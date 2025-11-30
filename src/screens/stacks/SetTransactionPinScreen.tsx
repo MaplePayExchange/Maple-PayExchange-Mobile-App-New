@@ -119,7 +119,7 @@ export default function SetTransactionPinScreen() {
                     */}
 					<MPButton
 						useGradientBg
-						className="mt-6 max-w-[142px]"
+						className="mt-6"
 						onPress={() => {
 							setShowSuccessModal(false);
 							navigation.navigate('DashboardScreen');

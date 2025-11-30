@@ -73,11 +73,11 @@ export default function ForgotPasswordScreen() {
     */
 	return (
 		<ScreenWrapper useBottomInset>
-			<HeaderWrapper title="Forgot Password" />
-			<MPText weight="semibold" className="text-base">
+			<HeaderWrapper title="Forgot Password" titleFontSize="FONT24" subTitleFontSize="FONT14" />
+			<MPText fontSize="FONT16" weight="semibold" className="text-base">
 				Reset password
 			</MPText>
-			<MPText weight="medium" className="text-[15px] leading-5 text-[#484848]">
+			<MPText fontSize="FONT14" weight="medium" className="leading-5 text-[#484848]">
 				Enter the email address you registered with.
 			</MPText>
 

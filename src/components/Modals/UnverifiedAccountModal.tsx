@@ -109,7 +109,8 @@ export default function UnverifiedAcountModal({
 							<MPText
 								weight="medium"
 								fontSize="FONT14"
-								className="mt-4 text-[15px] leading-5 text-[#767676]"
+								style={{ lineHeight: 24 }}
+								className="mt-4 leading-5 text-[#767676]"
 							>
 								This is a legal requirement, and verification protects you from fraud and identity
 								theft; this information is not shared with anyone.

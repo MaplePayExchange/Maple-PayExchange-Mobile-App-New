@@ -127,14 +127,10 @@ export default function SupportScreen() {
 		<LinearGradient
 			end={{ x: 0, y: 1 }}
 			start={{ x: 0, y: 0 }}
-			style={[
-				{
-					height: '100%',
-				},
-			]}
+			style={[{ height: '100%' }]}
 			colors={['#EE0979', '#EE0979']}
 		>
-			<SafeAreaView edges={{ bottom: 'off', top: 'maximum' }} className={`flex-1`}>
+			<SafeAreaView edges={{ bottom: 'off', top: 'maximum' }} className={`z-30 flex-1`}>
 				{/**
 				|--------------------------------------------------
 				| Status bar
@@ -148,7 +144,13 @@ export default function SupportScreen() {
 					| Content
 					|--------------------------------------------------
 					*/}
-					<View className={clsx('flex-1 bg-white pb-16')} style={{ width: Dimensions.get('screen').width }}>
+					<View
+						className={clsx('flex-1 bg-white pb-16')}
+						style={{
+							width: Dimensions.get('screen').width,
+							minHeight: Dimensions.get('screen').height - 150,
+						}}
+					>
 						<LinearGradient
 							end={{ x: 0, y: 1 }}
 							start={{ x: 0, y: 0 }}
@@ -223,11 +225,11 @@ export default function SupportScreen() {
 						|--------------------------------------------------
 						*/}
 						<View className="p-5">
-							<View className="pointer-events-none mb-5 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5 opacity-0">
+							<View className="mb-5 !hidden h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
 								<TextInput
-									className="text-[15px]"
 									value={searchQuery}
 									placeholder="Search"
+									className="text-[15px]"
 									placeholderTextColor="#484848"
 									onChangeText={(value) => setSearchQuery(value)}
 								/>
@@ -255,7 +257,7 @@ export default function SupportScreen() {
 												help.data as FAQItem[]
 											)
 										}
-										className="h-[43px] w-full flex-row items-center justify-between rounded-2xl border border-[#EEEEEE] px-5"
+										className="h-[51px] w-full flex-row items-center justify-between rounded-2xl border border-[#EEEEEE] px-5"
 									>
 										<MPText
 											weight="medium"
@@ -378,12 +380,11 @@ export default function SupportScreen() {
 									style={{ width: clampFontSize(40, 40, 100), height: clampFontSize(40, 40, 100) }}
 								/>
 							</View>
-
-							<View className="h-[120px]" />
 						</View>
 					</View>
 				</ScrollView>
 			</SafeAreaView>
+			<View className="absolute bottom-0 h-[200px] w-full bg-white" />
 		</LinearGradient>
 	);
 }

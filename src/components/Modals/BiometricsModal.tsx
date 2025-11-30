@@ -127,12 +127,14 @@ export default function BiometricsModal({ setVisible }: Props) {
                     | Title
                     |--------------------------------------------------
                     */}
-					<MPText weight="bold" style={{ fontSize: 18 }} className="mt-5">
-						Enable biometrics
-					</MPText>
-					<MPText weight="regular" className="mt-1 text-center text-[15px] text-[#767676]">
-						You can enable face ID/ touch ID to gain access to your account easily.
-					</MPText>
+					<View className="mt-5 border-b-[0.5px] border-b-[#d1d1d17d] pb-4">
+						<MPText weight="bold" style={{ lineHeight: 32 }} fontSize="FONT24" className="text-center">
+							Enable biometrics
+						</MPText>
+						<MPText fontSize="FONT14" weight="medium" className="mt-1 text-center text-[#767676]">
+							You can enable face ID/ touch ID to gain access to your account easily.
+						</MPText>
+					</View>
 
 					{/**
                     |--------------------------------------------------
@@ -152,13 +154,7 @@ export default function BiometricsModal({ setVisible }: Props) {
 					| Action buttons
 					|--------------------------------------------------
 					*/}
-					<View className="mb-8 mt-8 flex-row justify-between">
-						<MPButton onPress={() => setVisible()} className="w-[45%] max-w-[45%]">
-							<MPText className="text-[15px] text-[#FF6A00]" weight="semibold">
-								Cancel
-							</MPText>
-						</MPButton>
-
+					<View className="mb-8 mt-8 justify-between">
 						{/**
 						|--------------------------------------------------
 						| Remind me later
@@ -166,7 +162,7 @@ export default function BiometricsModal({ setVisible }: Props) {
 						*/}
 						<MPButton
 							useGradientBg
-							className="w-[45%] max-w-[45%]"
+							className="w-full"
 							onPress={() => {
 								setBiometricsModal(false);
 								setBiometricsInfo({ ...biometricsInfo, remindMeLater: true, hasPromptedUser: true });
@@ -174,6 +170,17 @@ export default function BiometricsModal({ setVisible }: Props) {
 						>
 							<MPText weight="semibold" className="text-[15px] text-white">
 								Remind me later
+							</MPText>
+						</MPButton>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
+						<MPButton onPress={() => setVisible()} className="w-full">
+							<MPText className="text-[15px] text-[#FF6A00]" weight="semibold">
+								Cancel
 							</MPText>
 						</MPButton>
 					</View>

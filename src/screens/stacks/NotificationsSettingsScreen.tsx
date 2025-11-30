@@ -54,8 +54,6 @@ export default function NotificationsSettingsScreen() {
 		}
 	}, [userData]);
 
-	console.log(notificationSettings, 'notificationSettings');
-
 	/**
     |--------------------------------------------------
     | Rendered View

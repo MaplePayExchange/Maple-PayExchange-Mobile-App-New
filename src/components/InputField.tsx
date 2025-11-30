@@ -27,6 +27,7 @@ import { Svg, Path as _Path, Stop, Defs, G, LinearGradient, ClipPath, Rect } fro
 import MPText from './MPText';
 import CountriesData from '@data/country.json';
 import { CarretDownIcon, CloseIcon, ErrorInfoIcon, EyeIcon, SearchIcon } from '@assets/svgs';
+import { fontSizes } from '@constants/app.constant';
 
 /**
 |--------------------------------------------------
@@ -111,10 +112,10 @@ export default function InputField<T extends FieldValues>({
 							)}
 
 							<Pressable
-								style={{ flexDirection: 'row' }}
+								style={{ flexDirection: 'row', minHeight: fontSizes['FONT44'] }}
 								onPress={() => inputRef?.current?.focus()}
 								className={clsx(
-									'min-h-[42px] items-center rounded-[12px] bg-[#1018280D] px-4 text-base',
+									'items-center rounded-[12px] bg-[#1018280D] px-4 text-base',
 									wrapperClassName
 								)}
 							>

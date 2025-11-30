@@ -181,7 +181,13 @@ export default function LoginScreen() {
     */
 	return (
 		<ScreenWrapper useBottomInset>
-			<HeaderWrapper useNavigation={false} title="Welcome Back!" subtitle="Login to your account" />
+			<HeaderWrapper
+				useNavigation={false}
+				titleFontSize="FONT24"
+				title="Welcome Back!"
+				subTitleFontSize="FONT14"
+				subtitle="Login to your account"
+			/>
 
 			{/**
 			|--------------------------------------------------
@@ -286,48 +292,59 @@ export default function LoginScreen() {
 						</MPText>
 
 						{biometricsInfo?.isTurnedOn && biometricsInfo.email && biometricsInfo.password && (
-							<Pressable onPress={handleUserBiometrics} className="mt-10 self-center">
-								<Svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-									<Rect width="56" height="56" rx="28" fill="#F5F5F5" />
-									<Path
-										d="M24.658 16.9165C21.5474 16.9874 19.7305 17.2835 18.4891 18.5206C17.4026 19.6033 17.0394 21.1253 16.918 23.5665M31.3446 16.9165C34.4552 16.9874 36.2721 17.2835 37.5136 18.5206C38.6 19.6033 38.9632 21.1253 39.0846 23.5665M31.3446 39.0832C34.4552 39.0123 36.2721 38.7162 37.5136 37.4791C38.6 36.3964 38.9632 34.8743 39.0846 32.4332M24.658 39.0832C21.5474 39.0123 19.7305 38.7162 18.4891 37.4791C17.4026 36.3964 17.0394 34.8743 16.918 32.4332"
-										stroke="url(#paint0_linear_1461_9842)"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<Path
-										d="M23.333 33.8333C25.4779 30.8054 30.4715 30.6401 32.6663 33.8333M30.9163 25.0833C30.9163 26.6941 29.6105 28 27.9997 28C26.3888 28 25.083 26.6941 25.083 25.0833C25.083 23.4725 26.3888 22.1666 27.9997 22.1666C29.6105 22.1666 30.9163 23.4725 30.9163 25.0833Z"
-										stroke="url(#paint1_linear_1461_9842)"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-									/>
-									<Defs>
-										<LinearGradient
-											id="paint0_linear_1461_9842"
-											x1="28.0013"
-											y1="16.9165"
-											x2="28.0013"
-											y2="39.0832"
-											gradientUnits="userSpaceOnUse"
-										>
-											<Stop stopColor="#EE0979" />
-											<Stop offset="1" stopColor="#FF6A00" />
-										</LinearGradient>
-										<LinearGradient
-											id="paint1_linear_1461_9842"
-											x1="27.9997"
-											y1="22.1666"
-											x2="27.9997"
-											y2="33.8333"
-											gradientUnits="userSpaceOnUse"
-										>
-											<Stop stopColor="#EE0979" />
-											<Stop offset="1" stopColor="#FF6A00" />
-										</LinearGradient>
-									</Defs>
-								</Svg>
-							</Pressable>
+							<React.Fragment>
+								<Pressable onPress={handleUserBiometrics} className="mt-auto self-center">
+									<Svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+										<Rect width="56" height="56" rx="28" fill="#F5F5F5" />
+										<Path
+											d="M24.658 16.9165C21.5474 16.9874 19.7305 17.2835 18.4891 18.5206C17.4026 19.6033 17.0394 21.1253 16.918 23.5665M31.3446 16.9165C34.4552 16.9874 36.2721 17.2835 37.5136 18.5206C38.6 19.6033 38.9632 21.1253 39.0846 23.5665M31.3446 39.0832C34.4552 39.0123 36.2721 38.7162 37.5136 37.4791C38.6 36.3964 38.9632 34.8743 39.0846 32.4332M24.658 39.0832C21.5474 39.0123 19.7305 38.7162 18.4891 37.4791C17.4026 36.3964 17.0394 34.8743 16.918 32.4332"
+											stroke="url(#paint0_linear_1461_9842)"
+											strokeWidth="1.5"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+										<Path
+											d="M23.333 33.8333C25.4779 30.8054 30.4715 30.6401 32.6663 33.8333M30.9163 25.0833C30.9163 26.6941 29.6105 28 27.9997 28C26.3888 28 25.083 26.6941 25.083 25.0833C25.083 23.4725 26.3888 22.1666 27.9997 22.1666C29.6105 22.1666 30.9163 23.4725 30.9163 25.0833Z"
+											stroke="url(#paint1_linear_1461_9842)"
+											strokeWidth="1.5"
+											strokeLinecap="round"
+										/>
+										<Defs>
+											<LinearGradient
+												id="paint0_linear_1461_9842"
+												x1="28.0013"
+												y1="16.9165"
+												x2="28.0013"
+												y2="39.0832"
+												gradientUnits="userSpaceOnUse"
+											>
+												<Stop stopColor="#EE0979" />
+												<Stop offset="1" stopColor="#FF6A00" />
+											</LinearGradient>
+											<LinearGradient
+												id="paint1_linear_1461_9842"
+												x1="27.9997"
+												y1="22.1666"
+												x2="27.9997"
+												y2="33.8333"
+												gradientUnits="userSpaceOnUse"
+											>
+												<Stop stopColor="#EE0979" />
+												<Stop offset="1" stopColor="#FF6A00" />
+											</LinearGradient>
+										</Defs>
+									</Svg>
+								</Pressable>
+
+								{/**
+								|--------------------------------------------------
+								| ...
+								|--------------------------------------------------
+								*/}
+								<MPText weight="medium" fontSize="FONT14" className="mx-auto mt-2">
+									Tap to use biometrics
+								</MPText>
+							</React.Fragment>
 						)}
 					</ScrollView>
 				</TouchableWithoutFeedback>
