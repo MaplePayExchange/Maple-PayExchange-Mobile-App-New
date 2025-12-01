@@ -3,6 +3,7 @@
 | Npm imports
 |--------------------------------------------------
 */
+import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
 
 export const useCameraPermission = () => {
@@ -15,20 +16,59 @@ export const useCameraPermission = () => {
 		try {
 			/**
             |--------------------------------------------------
-            | For iOS: prompt user to open settings manually
+            | IOS: Request camera permission
             |--------------------------------------------------
             */
 			if (Platform.OS === 'ios') {
-				Alert.alert('Camera Access', 'Camera permission is required. Please enable it in Settings.', [
-					{ text: 'Cancel', style: 'cancel' },
-					{ text: 'Open Settings', onPress: () => Linking.openSettings() },
-				]);
-				return true;
+				/**
+                |--------------------------------------------------
+                | Check & request iOS camera access
+                |--------------------------------------------------
+                */
+				const result = await request(PERMISSIONS.IOS.CAMERA);
+
+				/**
+                |--------------------------------------------------
+                | If permission is already granted
+                |--------------------------------------------------
+                */
+				if (result === RESULTS.GRANTED || result === RESULTS.LIMITED) {
+					return true;
+				}
+
+				/**
+                |--------------------------------------------------
+                | If permission is blocked (user must go to settings)
+                |--------------------------------------------------
+                */
+				if (result === RESULTS.BLOCKED) {
+					Alert.alert(
+						'Camera Access Blocked',
+						'Camera permission is blocked. Please enable it in your device settings.',
+						[
+							{ text: 'Cancel', style: 'cancel' },
+							{ text: 'Open Settings', onPress: () => Linking.openSettings() },
+						]
+					);
+					return false;
+				}
+
+				/**
+                |--------------------------------------------------
+                | If permission is denied or not granted
+                |--------------------------------------------------
+                */
+				Alert.alert(
+					'Camera Permission Needed',
+					'Camera access is required to continue. Please grant permission in Settings.'
+				);
+
+				return false;
 			}
 
 			/**
             |--------------------------------------------------
-            | For Android: request camera permission
+            | ANDROID: Request camera permission
             |--------------------------------------------------
             */
 			const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
@@ -40,10 +80,15 @@ export const useCameraPermission = () => {
 
 			/**
             |--------------------------------------------------
-            | If permission is denied or never ask again
+            | Handle Android permission denial
             |--------------------------------------------------
             */
 			if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+				/**
+                |--------------------------------------------------
+                | Handle "never ask again"
+                |--------------------------------------------------
+                */
 				if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
 					Alert.alert('Camera Permission Blocked', 'Please enable camera access in your device settings.', [
 						{ text: 'Cancel', style: 'cancel' },
@@ -53,17 +98,12 @@ export const useCameraPermission = () => {
 					Alert.alert('Permission Needed', 'Camera access is required to continue. Please grant access.');
 				}
 
-				/**
-                |--------------------------------------------------
-                | ...
-                |--------------------------------------------------
-                */
 				return false;
 			}
 
 			/**
             |--------------------------------------------------
-            | ...
+            | If permission is granted
             |--------------------------------------------------
             */
 			return true;

@@ -163,7 +163,8 @@ export default function DashboardScreen() {
 			|--------------------------------------------------
 			*/
 			case 'details':
-				setShowWalletDetails(true);
+				setShowBvnModal(true);
+				// setShowWalletDetails(true);
 				break;
 
 			/**

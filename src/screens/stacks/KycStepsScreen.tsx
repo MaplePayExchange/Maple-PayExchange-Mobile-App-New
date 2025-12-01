@@ -5,38 +5,28 @@
 */
 import React from 'react';
 import { WebView } from 'react-native-webview';
-import Entypo from 'react-native-vector-icons/Entypo';
-import { useQueryClient } from '@tanstack/react-query';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Image, ScrollView, Linking, Alert, Platform, Pressable } from 'react-native';
+import { View, Image, ScrollView, Platform, Pressable } from 'react-native';
 
 /**
 |--------------------------------------------------
 | Custom imports
 |--------------------------------------------------
 */
+import { CloseIcon } from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
-import ScreenWrapper from '@src/components/Wrapper';
 import { RootStackParamList } from '@constants/route.params';
 import { useStartVeriffSession } from '@services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@constants/app.constant';
 import { useCameraPermission } from '@src/hooks/useCameraPermission';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon } from '@assets/svgs';
 
 type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycStepsScreen'>;
 export default function KysStepsScreen() {
 	const route = useRoute();
 	const params = route.params as any;
-
-	/**
-	|--------------------------------------------------
-	| ...
-	|--------------------------------------------------
-	*/
-	const queryClient = useQueryClient();
 
 	/**
 	|--------------------------------------------------
@@ -71,6 +61,8 @@ export default function KysStepsScreen() {
 				*/
 				const allowed = await ensureCameraAccess();
 				await new Promise((resolve) => setTimeout(resolve, 600));
+
+				console.log(allowed, 'allowed');
 
 				/**
 				|--------------------------------------------------
@@ -279,7 +271,7 @@ export default function KysStepsScreen() {
 							 */
 							if (event.url.startsWith(redirectUrl)) {
 								setShowBrowser(false);
-								navigation.navigate('DashboardScreen');
+								navigation.navigate('TabNavigation');
 							}
 						}}
 						mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"
