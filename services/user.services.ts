@@ -818,7 +818,6 @@ export const useMarkNotificationAsRead = () => {
 |--------------------------------------------------
 */
 export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
-	const navigation = useNavigation();
 	/**
 	|--------------------------------------------------
 	| Query client from Tanstack
@@ -850,13 +849,34 @@ export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
+			let _payload: any = {};
+
+			if (updateType === 'setTailorYourExperience') {
+				_payload = {
+					occupation: payload.occupation,
+					usagePurpose: payload.usagePurpose,
+					annualSalaryRange: payload.annualSalaryRange,
+					primarySourceOfFunds: payload.primarySourceOfFunds,
+					isPolliticallyExposed: payload.isPolliticallyExposed,
+					countryUserMostlySendsMoneyTo: payload.countryUserMostlySendsMoneyTo,
+				};
+			} else {
+				_payload = {
+					rateAlerts: payload.rateAlerts,
+					loginAlerts: payload.loginAlerts,
+					promotionAlerts: payload.promotionAlerts,
+					transactionAlerts: payload.transactionAlerts,
+					inAppNotifications: payload.inAppNotifications,
+				};
+			}
+
 			/**
 			|--------------------------------------------------
 			| Send request
 			|--------------------------------------------------
 			*/
 			const url = '/users/profile';
-			const response = await axiosInstance.patch(url, payload);
+			const response = await axiosInstance.patch(url, _payload);
 			return response.data;
 		},
 
@@ -866,8 +886,8 @@ export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
 		|--------------------------------------------------
 		*/
 		onSuccess: (data) => {
+			console.log(data, 'data');
 			if (updateType === 'setTailorYourExperience') {
-				navigation.goBack();
 				useUserStore.getState().setTailorYourExperienceSkipCount(0);
 			} else {
 				useUserStore.getState().setNotificationSettings(data?.data as any);
@@ -887,7 +907,7 @@ export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
 		|--------------------------------------------------
 		*/
 		onError: (error: any) => {
-			console.log(error?.response?.data);
+			console.log(error?.response?.data, 'error');
 		},
 	});
 };

@@ -37,8 +37,6 @@ export default function SendFundsBeneficiaryScreen() {
     */
 	const { data, isLoading } = useGetBeneficiaries();
 
-	console.log(data, 'beneficiaries.data');
-
 	/**
     |--------------------------------------------------
     | States
@@ -52,7 +50,6 @@ export default function SendFundsBeneficiaryScreen() {
     |--------------------------------------------------
     */
 	const handleSelectBeneficiary = (beneficiary: BankAccount) => {
-		console.log(beneficiary);
 		if (beneficiary.type === 'Bank') navigation.navigate(...([ROUTE_NAMES.SEND_NGN_FUNDS, beneficiary] as any));
 		if (beneficiary.type === 'Interac') navigation.navigate(...([ROUTE_NAMES.SEND_CAD_FUNDS, beneficiary] as any));
 	};

@@ -14,6 +14,7 @@ import {
 	TouchableOpacity,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
+	Image,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
@@ -25,19 +26,20 @@ import { useNavigation } from '@react-navigation/native';
  | Custom imports
  |--------------------------------------------------
  */
+import utils from '@lib/utils';
 import Countries from '@data/country.json';
 import MPText from '@src/components/MPText';
 import Checkbox from '@src/components/Checkbox';
 import MPButton from '@src/components/MPButton';
+import Occupations from '@data/occupation.json';
 import { useUserStore } from '@zustand/userStore';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
-import { fontSizes } from '@constants/app.constant';
+import { fontSizes, MONEY_PAD } from '@constants/app.constant';
 import InputField from '@src/components/InputField';
 import { useUpdateProfile } from '@services/user.services';
 import TooltipPopover from '@src/components/TooltipPopover';
 import { CarretDownIcon, CloseIcon, SearchIcon } from '@assets/svgs';
-import utils from '@lib/utils';
 
 export interface UserKycInfo {
 	occupation: string;
@@ -66,6 +68,7 @@ export default function TailorYourExperienceScreen() {
     */
 	const [showOccupation, setShowOccupation] = React.useState<boolean>(false);
 	const [showSalaryRange, setShowSalaryRange] = React.useState<boolean>(false);
+	const [showSuccessModal, setShowSuccessModal] = React.useState<boolean>(false);
 	const [showUsagePurpose, setShowUsagePurpose] = React.useState<boolean>(false);
 	const [showSourceOfIncome, setShowSourceOfIncome] = React.useState<boolean>(false);
 	const [showCountriesModal, setShowCountriesModal] = React.useState<boolean>(false);
@@ -106,7 +109,7 @@ export default function TailorYourExperienceScreen() {
 		},
 	});
 
-	const { mutate, isPending } = useUpdateProfile();
+	const { mutateAsync, isPending } = useUpdateProfile();
 
 	/**
     |--------------------------------------------------
@@ -128,12 +131,14 @@ export default function TailorYourExperienceScreen() {
     | Submit handler
     |--------------------------------------------------
     */
-	const onSubmit = (data: UserKycInfo) => {
+	const onSubmit = async (data: UserKycInfo) => {
 		let payload: any = {
 			occupation: data.occupation,
+			usagePurpose: data.usagePurpose,
 			annualSalaryRange: data.annualSalaryRange,
+			primarySourceOfFunds: data.primarySourceOfFunds,
 			isPolliticallyExposed: data.isPolliticallyExposed,
-			countryUserMostlySendsMoneyTo: selectedCountries.join(', '),
+			countryUserMostlySendsMoneyTo: selectedCountries.map((_item) => _item.name).join(', '),
 		};
 
 		/**
@@ -144,12 +149,17 @@ export default function TailorYourExperienceScreen() {
 		if (data.usagePurposeOthers.length > 0) payload.usagePurpose = data.usagePurposeOthers;
 		if (data.primarySourceOfFundsOthers.length > 0) payload.primarySourceOfFunds = data.primarySourceOfFundsOthers;
 
-		/**
-        |--------------------------------------------------
-        | ...
-        |--------------------------------------------------
-        */
-		mutate(payload);
+		try {
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			await mutateAsync(payload);
+			setShowSuccessModal(true);
+		} catch (error) {
+			console.log(error, 'Error.tailor');
+		}
 	};
 
 	/**
@@ -265,7 +275,7 @@ export default function TailorYourExperienceScreen() {
 										selectedCountries.map((country) => (
 											<Pressable
 												key={country.name}
-												className="flex-row gap-2"
+												className="flex-row items-center gap-2"
 												style={{ marginInline: 3 }}
 												onPress={() => {
 													/**
@@ -318,14 +328,19 @@ export default function TailorYourExperienceScreen() {
 								| Modal for country of residence
 								|--------------------------------------------------
 								*/}
-								<Modal animationType="slide" transparent visible={showCountriesModal}>
-									<View className="mt-auto h-[78%] w-full rounded-t-3xl bg-white p-6">
+								<Modal
+									transparent
+									animationType="slide"
+									visible={showCountriesModal}
+									onDismiss={() => setSearchQuery('')}
+								>
+									<View className="mt-auto h-[80%] w-full rounded-t-3xl bg-white p-6">
 										<View
 											style={{ flexDirection: 'row' }}
 											className="mb-4 items-center justify-between"
 										>
 											<MPText fontSize="FONT16" weight="semibold" className="text-base">
-												Country of residence
+												Country
 											</MPText>
 
 											{/**
@@ -679,7 +694,7 @@ export default function TailorYourExperienceScreen() {
                                 |--------------------------------------------------
                                 */}
 								<Modal animationType="slide" transparent visible={showOccupation}>
-									<View className="border-t-1 mt-auto h-[70%] w-full rounded-t-3xl border border-gray-200 bg-white p-6">
+									<View className="border-t-1 mt-auto h-[80%] w-full rounded-t-3xl border border-gray-200 bg-white p-6">
 										<View
 											style={{ flexDirection: 'row' }}
 											className="mb-4 items-center justify-between"
@@ -699,30 +714,40 @@ export default function TailorYourExperienceScreen() {
 										</View>
 
 										{/**
+										|--------------------------------------------------
+										| Content
+										|--------------------------------------------------
+										*/}
+										<View className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
+											<TextInput
+												value={searchQuery}
+												placeholder="Search"
+												returnKeyType="done"
+												className="text-[15px]"
+												submitBehavior="blurAndSubmit"
+												placeholderTextColor="#484848"
+												style={{ fontSize: fontSizes['FONT14'] }}
+												onChangeText={(value) => setSearchQuery(value)}
+											/>
+
+											{/**
+											|--------------------------------------------------
+											| Search icon
+											|--------------------------------------------------
+											*/}
+											<SearchIcon />
+										</View>
+
+										{/**
                                         |--------------------------------------------------
                                         | Options
                                         |--------------------------------------------------
                                         */}
 										<ScrollView showsVerticalScrollIndicator={false}>
 											<View>
-												{[
-													'Software Developer',
-													'Teacher / Educator',
-													'Accountant',
-													'Nurse',
-													'Customer Service Representative',
-													'Business Analyst',
-													'Civil Engineer',
-													'Sales Representative',
-													'Banker / Financial Services Officer',
-													'Administrative Assistant',
-													'Entrepreneur / Business Owner',
-													'Marketing Specialist',
-													'Project Manager',
-													'Graphic Designer',
-													'Driver / Logistics Personnel',
-													'Others',
-												].map((option) => (
+												{Occupations?.filter((_option) =>
+													_option.toLowerCase().includes(searchQuery.toLowerCase())
+												)?.map((option) => (
 													<Pressable
 														key={option}
 														onPress={() => {
@@ -977,6 +1002,79 @@ export default function TailorYourExperienceScreen() {
 					</ScrollView>
 				</TouchableWithoutFeedback>
 			</KeyboardAvoidingView>
+
+			{/**
+			|--------------------------------------------------
+			| Success modal
+			|--------------------------------------------------
+			*/}
+			<Modal visible={showSuccessModal} animationType="slide" transparent>
+				{/**
+				|--------------------------------------------------
+				| View
+				|--------------------------------------------------
+				*/}
+				<View className="flex-1 bg-black/20">
+					{/**
+					|--------------------------------------------------
+					| Content
+					|--------------------------------------------------
+					*/}
+					<View className="mt-auto min-h-[100px] w-full rounded-t-xl bg-white p-6">
+						<Pressable className="ml-auto" onPress={() => setShowSuccessModal(false)}>
+							<CloseIcon />
+						</Pressable>
+
+						<Image
+							width={111}
+							height={109}
+							source={MONEY_PAD}
+							className="h-[109px] w-[111px] self-center"
+						/>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
+						<MPText
+							weight="semibold"
+							fontSize="FONT24"
+							style={{ lineHeight: 32 }}
+							className="mt-4 text-center tracking-tighter"
+						>
+							Profile Update Completed! 🎉
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
+						<MPText fontSize="FONT14" className="mt-1 text-center">
+							Your profile has been successfully updated.
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
+						<MPButton
+							useGradientBg
+							className="mb-6 mt-8"
+							onPress={() => {
+								setShowSuccessModal(false);
+								navigation.goBack();
+							}}
+						>
+							<MPText weight="semibold" fontSize="FONT14" className="text-white">
+								Continue
+							</MPText>
+						</MPButton>
+					</View>
+				</View>
+			</Modal>
 		</ScreenWrapper>
 	);
 }

@@ -18,6 +18,7 @@ import Svg, { ClipPath, Defs, G, LinearGradient, Path, Rect, Stop } from 'react-
  */
 import utils from '@lib/utils';
 import MPText from '@src/components/MPText';
+import { CarretDownIcon } from '@assets/svgs';
 import MPButton from '@src/components/MPButton';
 import { User } from '@interfaces/user.interface';
 import Container from '@src/components/Container';
@@ -35,7 +36,10 @@ export default function ProfileSettingsScreen() {
 	const route = useRoute();
 	const { user } = route.params as { user: User };
 	const { mutate, isPending } = useUploadProfileImage();
+	const [showFullUserInfo, setShowFullUserInfo] = React.useState<boolean>(false);
 	const [imageUri, setImageUri] = React.useState<string | null>(user.profileImage || null);
+
+	console.log(user);
 
 	/**
 	|--------------------------------------------------
@@ -92,8 +96,6 @@ export default function ProfileSettingsScreen() {
 			utils.errorHandler(err, 'An unexpected error occurred while picking the image.');
 		}
 	};
-
-	console.log(user?.street);
 
 	/**
     |--------------------------------------------------
@@ -221,6 +223,70 @@ export default function ProfileSettingsScreen() {
 							label="Address"
 							value={user?.street || '- -'}
 						/>
+
+						{/**
+						|--------------------------------------------------
+						| Others
+						|--------------------------------------------------
+						*/}
+						{showFullUserInfo ? (
+							<View className="gap-10">
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Occupation"
+									value={user?.occupation || '- -'}
+								/>
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Usage Purpose"
+									value={user?.usagePurpose || '- -'}
+								/>
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Annual Salary Range"
+									value={user?.annualSalaryRange || '- -'}
+								/>
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Primary Source of Funds"
+									value={user?.primarySourceOfFunds || '- -'}
+								/>
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Is Politically Exposed"
+									valueClassName="capitalize pr-1"
+									value={String(user?.isPolliticallyExposed) || '- -'}
+								/>
+								<DataRepresentation
+									labelClassName="text-[#767676]"
+									label="Country You Mostly Send Money To"
+									value={user?.countryUserMostlySendsMoneyTo || '- -'}
+								/>
+							</View>
+						) : null}
+
+						{/**
+						|--------------------------------------------------
+						| See more
+						|--------------------------------------------------
+						*/}
+						<Pressable
+							onPress={() => setShowFullUserInfo(!showFullUserInfo)}
+							className="w-[120px] flex-row items-center justify-center gap-1 self-center rounded-full border border-[#EEEEEE] p-2"
+						>
+							<MPText fontSize="FONT12" weight="regular">
+								{showFullUserInfo ? 'Hide more' : 'View more'}
+							</MPText>
+							{showFullUserInfo ? (
+								<View className="" style={{ transform: [{ rotate: '180deg' }] }}>
+									<CarretDownIcon />
+								</View>
+							) : (
+								<View className="mt-[2px]">
+									<CarretDownIcon />
+								</View>
+							)}
+						</Pressable>
 					</Container>
 
 					{/**

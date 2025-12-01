@@ -15,13 +15,13 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 */
 import utils from '@lib/utils';
 import axiosInstance from '@lib/axiosInstance';
+import { useUserStore } from '@zustand/userStore';
 import { User } from '@interfaces/user.interface';
 import { Wallet } from '@interfaces/wallet.interface';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
 import { RootStackParamList } from '@constants/route.params';
 import { Currency, TransactionInterface } from '@interfaces/transaction.interface';
-import { useUserStore } from '@zustand/userStore';
 
 export interface TransactionFilters {
 	page?: number;
@@ -279,7 +279,7 @@ export const useCreateUser = () => {
         | If api call is successful
         |--------------------------------------------------
         */
-		onSuccess: (data) => {
+		onSuccess: () => {
 			useUserStore.setState((state) => ({
 				verificationData: { ...state.verificationData, currentStep: 'veriff' },
 			}));
@@ -433,7 +433,7 @@ export const useForgotPassword = (email: string) => {
 | Forgot password
 |--------------------------------------------------
 */
-export const useResetPassword = (email: string) => {
+export const useResetPassword = () => {
 	/**
 	|--------------------------------------------------
 	| Navigation
@@ -478,7 +478,7 @@ export const useResetPassword = (email: string) => {
 		| Success handler
 		|--------------------------------------------------
 		*/
-		onSuccess: (data) => {
+		onSuccess: () => {
 			utils.successNotificationHanlder('Password Reset!', 'Password successfully reset, please log in');
 			navigation.navigate(ROUTE_NAMES.LOGIN, {});
 		},
@@ -573,7 +573,7 @@ export const useResetTransactionPin = () => {
 		| Success
 		|--------------------------------------------------
 		*/
-		onSuccess: (data) => {
+		onSuccess: () => {
 			utils.successNotificationHanlder('PIN!', 'Transaction successfully updated');
 			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
 		},

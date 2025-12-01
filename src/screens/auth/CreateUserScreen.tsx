@@ -126,7 +126,7 @@ export default function CreateUserScreen() {
 
 		console.log(verificationData);
 
-		if (data.referral !== '') payload.referral = data.referral;
+		if (data.referral !== '') payload.referralCode = data.referral;
 		if (data.middleName !== '') payload.middleName = data.middleName;
 		if (data.maidenLastName !== '') payload.maidenLastName = data.maidenLastName;
 
