@@ -545,6 +545,7 @@ export const useStartVeriffSession = () => {
 |--------------------------------------------------
 */
 export const useResetTransactionPin = () => {
+	const navigation = useNavigation();
 	/**
 	|--------------------------------------------------
 	| Query client
@@ -557,13 +558,14 @@ export const useResetTransactionPin = () => {
 	| Mutation
 	|--------------------------------------------------
 	*/
-	return useMutation<any, Error, { pin: string; password: string }>({
+	return useMutation<any, Error, { oldPin: string; newPin: string }>({
 		/**
 		|--------------------------------------------------
 		| Api call
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
+			console.log(payload, 'transaction.payload');
 			const response = await axiosInstance.post('users/reset-transaction-pin', payload);
 			return response.data;
 		},
@@ -576,6 +578,7 @@ export const useResetTransactionPin = () => {
 		onSuccess: () => {
 			utils.successNotificationHanlder('PIN!', 'Transaction successfully updated');
 			queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+			navigation.navigate(ROUTE_NAMES.PROFILE as never);
 		},
 
 		/**

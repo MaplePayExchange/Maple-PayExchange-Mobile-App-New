@@ -87,7 +87,7 @@ export default function HowToScreen() {
             */}
 			{!showBrowser && (
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<View className="gap-6">
+					<View className="gap-8">
 						{HOW_TOS.filter((_how) => _how.label.toLowerCase().includes(searchQuery.toLowerCase())).map(
 							(how) => (
 								<View key={how.label}>

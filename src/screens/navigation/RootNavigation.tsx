@@ -17,6 +17,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabNavigation from './TabNavigation';
 import AuthNavigation from './AuthNavigation';
 import { useUserStore } from '@zustand/userStore';
+import { ROUTE_NAMES } from '@constants/routes.conts';
+import KysStepsScreen from '../stacks/KycStepsScreen';
 
 /**
 |--------------------------------------------------
@@ -43,13 +45,22 @@ export default function RootNavigation() {
 			<NavigationContainer>
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					{isLoggedIn ? (
-						<Stack.Screen
-							name="TabNavigation"
-							component={TabNavigation}
-							layout={({ children }: { children: any }) => {
-								return <View className="flex-1 bg-white">{children}</View>;
-							}}
-						/>
+						<>
+							<Stack.Screen
+								name="TabNavigation"
+								component={TabNavigation}
+								layout={({ children }: { children: any }) => {
+									return <View className="flex-1 bg-white">{children}</View>;
+								}}
+							/>
+							<Stack.Screen
+								component={KysStepsScreen}
+								name={ROUTE_NAMES.KYC_STEPS}
+								layout={({ children }: { children: any }) => {
+									return <View className="flex-1 bg-white">{children}</View>;
+								}}
+							/>
+						</>
 					) : (
 						<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
 					)}

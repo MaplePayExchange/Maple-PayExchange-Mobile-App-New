@@ -276,7 +276,7 @@ export default function TabNavigation() {
 					component={HomeNavigation}
 					name={ROUTE_NAMES.DASHBOARD}
 					options={{
-						tabBarIcon: ({ focused }: { focused: boolean }) => <HomeIcon color={iconConfig(focused)} />,
+						tabBarIcon: ({ focused }: { focused: boolean }) => <HomeIcon focused={focused} />,
 						tabBarLabel: 'Home',
 					}}
 				/>
@@ -290,9 +290,7 @@ export default function TabNavigation() {
 					name={ROUTE_NAMES.TRANSACTION}
 					component={TransactionNavigation}
 					options={{
-						tabBarIcon: ({ focused }: { focused: boolean }) => (
-							<TransactionIcon color={iconConfig(focused)} />
-						),
+						tabBarIcon: ({ focused }: { focused: boolean }) => <TransactionIcon focused={focused} />,
 						tabBarLabel: 'Transaction',
 					}}
 				/>
@@ -306,7 +304,7 @@ export default function TabNavigation() {
 					name={ROUTE_NAMES.SUPPORT}
 					component={SupportNavigation}
 					options={{
-						tabBarIcon: ({ focused }: { focused: boolean }) => <SupportIcon color={iconConfig(focused)} />,
+						tabBarIcon: ({ focused }: { focused: boolean }) => <SupportIcon focused={focused} />,
 						tabBarLabel: 'Support',
 					}}
 				/>
@@ -320,7 +318,7 @@ export default function TabNavigation() {
 					name={ROUTE_NAMES.PROFILE}
 					component={ProfileNavigation}
 					options={{
-						tabBarIcon: ({ focused }: { focused: boolean }) => <SettingsIcon color={iconConfig(focused)} />,
+						tabBarIcon: ({ focused }: { focused: boolean }) => <SettingsIcon focused={focused} />,
 						tabBarLabel: 'Profile',
 					}}
 				/>

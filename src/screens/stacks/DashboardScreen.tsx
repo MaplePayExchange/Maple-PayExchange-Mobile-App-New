@@ -232,7 +232,6 @@ export default function DashboardScreen() {
 		if (
 			(data?.transactions?.length || 0) > 0 &&
 			(!userData?.user?.occupation ||
-				!userData?.user?.isPolliticallyExposed ||
 				!userData?.user?.primarySourceOfFunds ||
 				!userData?.user?.usagePurpose ||
 				!userData?.user?.countryUserMostlySendsMoneyTo ||

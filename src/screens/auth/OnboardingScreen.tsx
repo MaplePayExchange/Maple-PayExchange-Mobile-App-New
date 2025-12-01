@@ -48,7 +48,7 @@ const ONBOARDING_DATA = [
 	},
 	{
 		image: ONBOARDING_TWO,
-		title: 'Made for people on the move.',
+		title: 'Seamless transactions for people on the move.',
 		subtitle:
 			"Whether you're supporting loved ones, relocating, or investing abroad, we're here for every transfer.",
 	},
@@ -246,7 +246,7 @@ export default function OnboardingScreen() {
 										<MPText
 											weight="bold"
 											style={{ fontSize: 24, lineHeight: 32 }}
-											className="mb-3 max-w-[90%] text-2xl tracking-tight text-white"
+											className="mb-3 max-w-[100%] text-2xl tracking-tight text-white"
 										>
 											{item.title}
 										</MPText>

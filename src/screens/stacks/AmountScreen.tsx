@@ -30,7 +30,7 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import DataRepresentation from '@src/components/DataRepresentation';
 import ConfirmTransactionModal from '@src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@src/components/Modals/TransactionConfirmationModal';
-import { useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@services/user.services';
+import { generateIdempotencyKey, useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@services/user.services';
 
 type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
@@ -243,6 +243,7 @@ export default function AmountScreen() {
 	|--------------------------------------------------
 	*/
 	const handleSubmission = (pin: string) => {
+		console.log(pin);
 		if (params.transactionType === 'CAD-to-CAD') {
 			mutateCAD({
 				currency: 'CAD',
@@ -266,6 +267,14 @@ export default function AmountScreen() {
 				accountNumber: params.accountNumber as string,
 				amount: Number(amountToSend.replaceAll(',', '')),
 			});
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			const idempotencyKey = generateIdempotencyKey();
+			console.log(idempotencyKey, 'idempotency');
 		} else {
 			mutateExchange({
 				transactionPin: pin,

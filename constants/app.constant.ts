@@ -155,4 +155,5 @@ export const KYC_VERIFICATION = require(`${_IMAGE_PATH}/kyc_verification.png`);
 export const BVN_VERIFICATION = require(`${_IMAGE_PATH}/bvn_verification.png`);
 export const MAPLE_LOGO_WHITE = require(`${_IMAGE_PATH}/maple_logo_white.png`);
 export const SEND_FUNDS_FEEDBACK = require(`${_IMAGE_PATH}/send_money_feedback.png`);
+export const BENEFICIARY_EMPTY_STATE = require(`${_IMAGE_PATH}/beneficiary-card.png`);
 export const SEND_FUNDS_FEEDBACK_ERROR = require(`${_IMAGE_PATH}/send_funds_error.png`);

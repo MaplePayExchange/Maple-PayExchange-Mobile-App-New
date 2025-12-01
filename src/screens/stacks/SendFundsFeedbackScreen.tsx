@@ -37,7 +37,12 @@ export default function SendFundsFeedbackScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper useNavigation center title="Transaction feedback" />
+			<HeaderWrapper
+				center
+				useNavigation
+				title="Transaction feedback"
+				onlClick={() => navigation.navigate('DashboardScreen' as never)}
+			/>
 
 			{/**
             |--------------------------------------------------

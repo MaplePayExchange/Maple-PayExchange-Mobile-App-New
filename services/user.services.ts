@@ -3,6 +3,7 @@
  | Npm imports
  |--------------------------------------------------
  */
+import { v4 as uuidv4 } from 'uuid';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient, InfiniteData } from '@tanstack/react-query';
@@ -26,6 +27,15 @@ import { useUserStore } from '@zustand/userStore';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 //@ts-ignore
 import { RootStackParamList } from '@constants/route.params';
+
+/**
+|--------------------------------------------------
+| Generate an idempotency key (UUID v4).
+|--------------------------------------------------
+*/
+export function generateIdempotencyKey(): string {
+	return uuidv4();
+}
 
 interface NotificationResponse {
 	notifications: INotification[];
@@ -261,7 +271,24 @@ export const useSendFundsToInterac = (onError: () => void) => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
-			const response = await axiosInstance.post('/wallet/wallet-to-interac', payload);
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			const idempotencyKey = await generateIdempotencyKey();
+			console.log(idempotencyKey, 'idempotency');
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			const response = await axiosInstance.post('/wallet/wallet-to-interac', payload, {
+				headers: {
+					'Idempotency-Key': idempotencyKey,
+				},
+			});
 
 			/**
 			|--------------------------------------------------
@@ -333,8 +360,19 @@ export const useSendWalletToBank = (onError: () => void) => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
-			console.log(payload, ':send.payload');
-			const response = await axiosInstance.post('/wallet/wallet-to-bank', payload);
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			const idempotencyKey = uuidv4();
+			console.log(idempotencyKey, 'key');
+
+			console.log(payload, 'payload');
+
+			const response = await axiosInstance.post('/wallet/wallet-to-bank', payload, {
+				headers: { 'Idempotency-Key': idempotencyKey },
+			});
 
 			/**
 			|--------------------------------------------------
@@ -414,8 +452,15 @@ export const useExchangeCurrency = (onError: () => void) => {
 		|--------------------------------------------------
 		*/
 		mutationFn: async (payload) => {
-			console.log(payload, ':send.payload');
-			const response = await axiosInstance.post('/wallet/currency-conversion', payload);
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			const idempotencyKey = uuidv4();
+			const response = await axiosInstance.post('/wallet/currency-conversion', payload, {
+				headers: { 'Idempotency-Key': idempotencyKey },
+			});
 
 			/**
 			|--------------------------------------------------

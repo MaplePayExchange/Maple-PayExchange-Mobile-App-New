@@ -3,10 +3,9 @@
 | Npm imports
 |--------------------------------------------------
 */
-import clsx from 'clsx';
 import React from 'react';
 import { View } from 'react-native';
-import { useForm } from 'react-hook-form';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -14,40 +13,34 @@ import { useForm } from 'react-hook-form';
  |--------------------------------------------------
  */
 import MPText from '@src/components/MPText';
-import MPButton from '@src/components/MPButton';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
-import InputField from '@src/components/InputField';
-import { FormWrapper } from '@src/components/FormWrapper';
+import CustomKeyboard from '@src/components/CustomKeyboard';
 import { useResetTransactionPin } from '@services/auth.services';
 
 export default function ResetPinScreen() {
+	const navigation = useNavigation();
 	/**
     |--------------------------------------------------
     | API
     |--------------------------------------------------
     */
-	const { mutate, isPending } = useResetTransactionPin();
+	const { mutate, isPending, error } = useResetTransactionPin();
 
 	/**
-    |--------------------------------------------------
-    | Form handler
-    |--------------------------------------------------
-    */
-	const {
-		control,
-		handleSubmit,
-		formState: { isValid },
-	} = useForm({ defaultValues: { pin: '', password: '' } });
-
-	/**
-    |--------------------------------------------------
-    | Sumbit handler
-    |--------------------------------------------------
-    */
-	const onSubmit = async (data: any) => {
-		mutate(data);
-	};
+	|--------------------------------------------------
+	| States
+	|--------------------------------------------------
+	*/
+	const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+	const [screenState, setScreenState] = React.useState<
+		'old_pin_screen' | 'new_pin_screen' | 'confirm_new_pin_screen'
+	>('old_pin_screen');
+	const [formValues, setFormValues] = React.useState<{ oldPin: string; newPin: string; confirmNewPin: string }>({
+		oldPin: '',
+		newPin: '',
+		confirmNewPin: '',
+	});
 
 	/**
     |--------------------------------------------------
@@ -56,76 +49,91 @@ export default function ResetPinScreen() {
     */
 	return (
 		<ScreenWrapper usePadding={false}>
-			<View className='px-6'>
-				<HeaderWrapper center title="Reset PIN" titleFontSize="FONT24" />
+			<View className="px-6">
+				<HeaderWrapper
+					title="Reset PIN"
+					titleFontSize="FONT24"
+					onlClick={() => {
+						if (screenState === 'new_pin_screen') setScreenState('old_pin_screen');
+						else if (screenState === 'confirm_new_pin_screen') setScreenState('new_pin_screen');
+						else navigation.goBack();
+					}}
+				/>
 			</View>
 
 			{/**
-            |--------------------------------------------------
-            | ...
-            |--------------------------------------------------
-            */}
-			<FormWrapper>
-				{/**
-                |--------------------------------------------------
-                | Password
-                |--------------------------------------------------
-                */}
-				<InputField
-					name="pin"
-					type="text"
-					maxLength={4}
-					label="New PIN"
-					control={control}
-					placeholder="PIN"
-					keyboardType="number-pad"
-					rules={{
-						required: { value: true, message: 'PIN is required' },
-						minLength: { value: 4, message: 'PIN cannot be less than 4 digits long.' },
-						maxLength: { value: 4, message: 'PIN cannot be more than 4 digits long.' },
-					}}
-				/>
-
-				<View className="my-2" />
-
-				{/**
-                |--------------------------------------------------
-                | Password
-                |--------------------------------------------------
-                */}
-				<InputField
-					type="password"
-					name="password"
-					label="Password"
-					control={control}
-					placeholder="Password"
-					rules={{
-						required: { value: true, message: 'Password is required' },
-						minLength: { value: 8, message: 'Password cannot be less than 8 characters long.' },
-					}}
-				/>
-
-				{/**
-                |--------------------------------------------------
-                | Button
-                |--------------------------------------------------
-                */}
-				<MPButton
-					isLoading={isPending}
-					useGradientBg={isValid}
-					onPress={handleSubmit(onSubmit)}
-					disabled={!isValid || isPending}
-					className="mx-auto mt-10 max-w-[150px]"
+			|--------------------------------------------------
+			| Sub text
+			|--------------------------------------------------
+			*/}
+			<View className="mb-8 items-center">
+				<MPText fontSize="FONT16" weight="semibold" className="text-center text-base" style={{ fontSize: 18 }}>
+					{screenState === 'old_pin_screen'
+						? 'Enter Old PIN'
+						: screenState === 'new_pin_screen'
+							? 'Enter New PIN'
+							: 'Confirm New PIN'}
+				</MPText>
+				<MPText
+					weight="medium"
+					fontSize="FONT14"
+					className="mt-2 max-w-[280px] text-center text-[15px] leading-5 text-[#484848]"
 				>
-					<MPText
-						fontSize="FONT14"
-						weight="semibold"
-						className={clsx(isValid ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
-					>
-						Reset PIN
-					</MPText>
-				</MPButton>
-			</FormWrapper>
+					This PIN will serve as confirmation for transactions on MaplePay.
+				</MPText>
+			</View>
+
+			{/**
+			|--------------------------------------------------
+			| Keyboard and input box
+			|--------------------------------------------------
+			*/}
+			<CustomKeyboard
+				length={4}
+				useActionButton
+				loadingState={isPending}
+				errorMessage={
+					errorMessage || error?.message ? (
+						<MPText className="mt-4 self-center text-center text-[#EE4139]" fontSize="FONT12">
+							{errorMessage || (error as any)?.response?.data?.message || error?.message}
+						</MPText>
+					) : undefined
+				}
+				shouldResetValues={screenState === 'old_pin_screen' || screenState === 'new_pin_screen'}
+				onComplete={(value) => {
+					/**
+					|--------------------------------------------------
+					| ...
+					|--------------------------------------------------
+					*/
+					if (screenState === 'old_pin_screen') {
+						setFormValues((prevValues) => ({ ...prevValues, oldPin: value }));
+						setScreenState('new_pin_screen');
+					} else if (screenState === 'new_pin_screen') {
+						/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/
+						setFormValues((prevValues) => ({ ...prevValues, newPin: value }));
+						setScreenState('confirm_new_pin_screen');
+					} else {
+						setErrorMessage(null);
+						/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/
+						if (formValues.newPin !== value) {
+							setErrorMessage('PINs do not match');
+							return;
+						}
+
+						console.log(formValues, value);
+						mutate({ oldPin: formValues.oldPin, newPin: formValues.newPin });
+					}
+				}}
+			/>
 		</ScreenWrapper>
 	);
 }

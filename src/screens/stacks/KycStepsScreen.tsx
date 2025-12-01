@@ -99,7 +99,7 @@ export default function KysStepsScreen() {
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ height: '105%', paddingBottom: 64 }}
 				>
-					<View className="h-[100%] pb-6">
+					<View className="h-[100%]">
 						{/**
 						|--------------------------------------------------
 						| Close icon

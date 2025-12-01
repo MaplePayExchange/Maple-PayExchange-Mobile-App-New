@@ -13,6 +13,8 @@ import { View, TouchableOpacity } from 'react-native';
 |--------------------------------------------------
 */
 import MPText from './MPText';
+import MPButton from './MPButton';
+import clsx from 'clsx';
 
 /**
 |--------------------------------------------------
@@ -21,10 +23,21 @@ import MPText from './MPText';
 */
 interface Props {
 	length?: number;
+	loadingState?: boolean;
+	useActionButton?: boolean;
+	shouldResetValues?: boolean;
+	errorMessage?: React.ReactNode;
 	onComplete?: (pin: string) => void;
 }
 
-export default function CustomKeyboard({ length = 4, onComplete }: Props) {
+export default function CustomKeyboard({
+	length = 4,
+	onComplete,
+	loadingState,
+	errorMessage,
+	useActionButton,
+	shouldResetValues,
+}: Props) {
 	/**
     |--------------------------------------------------
     | States
@@ -53,7 +66,7 @@ export default function CustomKeyboard({ length = 4, onComplete }: Props) {
             | is maxed out
             |--------------------------------------------------
             */
-			if (newPin.length === length && onComplete) {
+			if (newPin.length === length && onComplete && !useActionButton) {
 				onComplete(newPin.join(''));
 			}
 		}
@@ -74,36 +87,69 @@ export default function CustomKeyboard({ length = 4, onComplete }: Props) {
     |--------------------------------------------------
     */
 	return (
-		<View className="max-w-[260px] w-full self-center">
+		<View className="w-full max-w-[260px] self-center">
 			{/**
             |--------------------------------------------------
             | PIN Boxes
             |--------------------------------------------------
             */}
-			<View className="flex-row justify-center mb-12">
+			<View className="flex-row justify-center">
 				{Array.from({ length }).map((_, index) => (
 					<View
 						key={index}
-						className={`w-12 h-12 mx-2 rounded-xl flex bg-[#F7F7F7] items-center justify-center`}
+						className={`mx-2 flex h-12 w-12 items-center justify-center rounded-xl bg-[#F7F7F7]`}
 					>
-						{pin[index] && <View className="w-3 h-3 rounded-full bg-green-500" />}
+						{pin[index] && <View className="h-3 w-3 rounded-full bg-green-500" />}
 					</View>
 				))}
 			</View>
+
+			{/**
+			|--------------------------------------------------
+			| If use action button is true
+			|--------------------------------------------------
+			*/}
+			{useActionButton && (
+				<MPButton
+					isLoading={loadingState}
+					useGradientBg={pin.length === 4}
+					className="mx-auto mt-6 max-w-[100px]"
+					onPress={() => {
+						onComplete?.(pin.join(''));
+						if (shouldResetValues) setPin([]);
+					}}
+					disabled={pin.length !== 4 || loadingState}
+				>
+					<MPText
+						fontSize="FONT14"
+						weight="semibold"
+						className={clsx(pin.length === 4 ? 'text-white' : 'text-[15px] text-[#D1D1D1]')}
+					>
+						Continue
+					</MPText>
+				</MPButton>
+			)}
+
+			{/**
+			|--------------------------------------------------
+			| If error messages are allowed
+			|--------------------------------------------------
+			*/}
+			{errorMessage && errorMessage}
 
 			{/**
             |--------------------------------------------------
             | Keypad
             |--------------------------------------------------
             */}
-			<View>
+			<View className={clsx('', useActionButton ? 'mt-6' : 'mt-12')}>
 				{[
 					['1', '2', '3'],
 					['4', '5', '6'],
 					['7', '8', '9'],
 					['', '0', '⌫'],
 				].map((row, rowIndex) => (
-					<View key={rowIndex} className="flex-row my-2 justify-between">
+					<View key={rowIndex} className="my-2 flex-row justify-between">
 						{row.map((key, keyIndex) => (
 							<TouchableOpacity
 								key={keyIndex}
@@ -111,7 +157,7 @@ export default function CustomKeyboard({ length = 4, onComplete }: Props) {
 									if (key === '⌫') handleDelete();
 									else if (key) handlePress(key);
 								}}
-								className={`w-16 h-16 mb-[7%] rounded-full flex items-center justify-center ${key ? 'bg-gray-100' : 'bg-transparent'}`}
+								className={`mb-[7%] flex h-16 w-16 items-center justify-center rounded-full ${key ? 'bg-gray-100' : 'bg-transparent'}`}
 							>
 								<MPText weight="medium" style={{ lineHeight: 30, fontSize: 24 }} className="text-2xl">
 									{key === '⌫' ? (

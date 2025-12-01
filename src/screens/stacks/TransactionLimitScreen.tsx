@@ -81,7 +81,7 @@ export default function TransactionLimitScreen() {
                     | CAD
                     |--------------------------------------------------
                     */}
-					<Container className="mt-4">
+					<Container className="mt-4 bg-white">
 						<View className="flex-row items-center justify-between">
 							<MPText className="text-[15px]" weight="semibold">
 								CAD
@@ -274,7 +274,7 @@ export default function TransactionLimitScreen() {
                     | NGN
                     |--------------------------------------------------
                     */}
-					<Container className="mt-5">
+					<Container className="mt-5 bg-white">
 						<View className="flex-row items-center justify-between">
 							<MPText className="text-[15px]" weight="semibold">
 								NGN
