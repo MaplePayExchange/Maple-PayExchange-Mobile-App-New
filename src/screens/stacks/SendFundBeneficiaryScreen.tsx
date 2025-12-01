@@ -135,7 +135,7 @@ export default function SendFundsBeneficiaryScreen() {
             |
             |--------------------------------------------------
             */}
-			<ScrollView>
+			<ScrollView showsVerticalScrollIndicator={false}>
 				<View className="gap-6">
 					{data?.items?.map((beneficiary) => (
 						<Pressable

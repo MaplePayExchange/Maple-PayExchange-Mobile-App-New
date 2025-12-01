@@ -38,7 +38,7 @@ export default function TransactionLimitScreen() {
     | States
     |--------------------------------------------------
     */
-	const [showDropDown, setShowDropDown] = React.useState<{ cad: boolean; ngn: boolean }>({ cad: false, ngn: false });
+	const [showDropDown, setShowDropDown] = React.useState<{ cad: boolean; ngn: boolean }>({ cad: true, ngn: false });
 
 	/**
     |--------------------------------------------------

@@ -44,7 +44,7 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
     |--------------------------------------------------
     */
 	return (
-		<View className="relative mt-auto h-[480px] w-full rounded-t-3xl bg-white">
+		<View className="relative mt-auto h-[497px] w-full rounded-t-3xl bg-white">
 			{/**
             |--------------------------------------------------
             | Calendar
@@ -152,7 +152,7 @@ export default function CalendarModal({ onClose, initialDate, onApply, dateType 
             | Action buttons
             |--------------------------------------------------
             */}
-			<View className="mt-4 flex-1 flex-row gap-4 border-t border-t-[#EAECF0] p-6">
+			<View className="my-4 flex-1 flex-row gap-4 border-t border-t-[#EAECF0] p-6">
 				<MPButton onPress={onClose} className="h-[40px] max-w-[48%] rounded-[12px] border border-[#D0D5DD]">
 					<MPText weight="semibold" className="text-[15px]">
 						Cancel

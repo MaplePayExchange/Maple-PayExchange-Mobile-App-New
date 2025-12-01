@@ -135,7 +135,7 @@ export default function FundWalletModal({
                             | Instructions
                             |--------------------------------------------------
                             */}
-							<MPText weight="medium" style={{lineHeight:21}} className="text-[15px] text-[#767676]">
+							<MPText weight="medium" style={{ lineHeight: 21 }} className="text-[15px] text-[#767676]">
 								Follow the instructions below to fund your Maple CAD wallet, payment details can be
 								shared across apps:
 							</MPText>
@@ -297,7 +297,7 @@ export default function FundWalletModal({
 										setShowFundWalletModal(false);
 										setShowCurrencyConverModal(true);
 									}}
-									className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white"
+									className="min-h-[93%] mt-[3px] min-w-[99%] items-center justify-center rounded-[40px] bg-white"
 								>
 									<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 										See rate

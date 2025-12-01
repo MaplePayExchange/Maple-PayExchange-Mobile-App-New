@@ -129,8 +129,9 @@ export default function NotificationScreen() {
 									</View>
 									<MPText
 										weight="medium"
-										style={{ lineHeight: 15 }}
-										className="flex-1 text-[13px] text-[#484848]"
+										fontSize="FONT12"
+										style={{ lineHeight: 18 }}
+										className="flex-1 text-[#484848]"
 									>
 										{notification.message}
 									</MPText>

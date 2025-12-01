@@ -52,6 +52,7 @@ import {
 	RedRightArrowIcon,
 	TransactionArrowIcon,
 } from '@assets/svgs';
+import clsx from 'clsx';
 
 /**
 |--------------------------------------------------
@@ -589,57 +590,65 @@ export default function DashboardScreen() {
 				| Recent transactions
 				|--------------------------------------------------
 				*/}
-				<View className="mt-10 flex-row justify-between p-4">
-					<MPText fontSize="FONT16" className="text-[15px]" weight="semibold">
-						Recent Transactions
-					</MPText>
+				<View className="mt-10 w-full rounded-3xl border-[0.5px] border-[#EEEEEE]">
+					<View className="h-[56px] flex-row items-center justify-between border-b-[0.5px] border-[#EEEEEE] p-4">
+						<MPText fontSize="FONT16" className="text-[15px]" weight="semibold">
+							Recent Transactions
+						</MPText>
+
+						{/**
+						|--------------------------------------------------
+						| See more
+						|--------------------------------------------------
+						*/}
+						{(data?.transactions?.length || 0) > 0 && (
+							<Pressable onPress={() => handleInitiateAction('see_more_transactions')}>
+								<MPText fontSize="FONT16" weight="semibold" className="text-[15px] text-[#FF6A00]">
+									See more
+								</MPText>
+							</Pressable>
+						)}
+					</View>
 
 					{/**
 					|--------------------------------------------------
-					| See more
+					| Transactions
 					|--------------------------------------------------
 					*/}
-					{(data?.transactions?.length || 0) > 0 && (
-						<Pressable onPress={() => handleInitiateAction('see_more_transactions')}>
-							<MPText fontSize="FONT16" weight="semibold" className="text-[15px] text-[#FF6A00]">
-								See more
+					{(data?.transactions.length || 0) === 0 && (
+						<View className="h-[158px] items-center justify-center">
+							<View>
+								<TransactionArrowIcon />
+							</View>
+							<MPText fontSize="FONT14" weight="medium" className="text-[15px] text-[#767676]">
+								No transactions yet
 							</MPText>
-						</Pressable>
-					)}
-				</View>
-
-				{/**
-				|--------------------------------------------------
-				| Transactions
-				|--------------------------------------------------
-				*/}
-				{(data?.transactions.length || 0) === 0 && (
-					<View className="h-[158px] items-center justify-center">
-						<View>
-							<TransactionArrowIcon />
 						</View>
-						<MPText fontSize="FONT14" weight="medium" className="text-[15px] text-[#767676]">
-							No transactions yet
-						</MPText>
-					</View>
-				)}
+					)}
 
-				{/**
-				|--------------------------------------------------
-				| When there are transactions
-				|--------------------------------------------------
-				*/}
-				<View className="gap-5 px-4">
-					{data?.transactions.map((transaction) => (
-						<React.Fragment key={transaction.reference}>
-							{/**
-							|--------------------------------------------------
-							| Transaction component
-							|--------------------------------------------------
-							*/}
-							<Transaction transaction={transaction} />
-						</React.Fragment>
-					))}
+					{/**
+					|--------------------------------------------------
+					| When there are transactions
+					|--------------------------------------------------
+					*/}
+					<View className="mt-4 gap-5 px-4">
+						{data?.transactions.map((transaction, index) => (
+							<View
+								key={transaction.reference}
+								className={clsx(
+									'pb-4',
+									index !== data.transactions.length - 1 ? 'border-b-[0.5px] border-[#EEEEEE]' : ''
+								)}
+							>
+								{/**
+								|--------------------------------------------------
+								| Transaction component
+								|--------------------------------------------------
+								*/}
+								<Transaction transaction={transaction} />
+							</View>
+						))}
+					</View>
 				</View>
 
 				{/**

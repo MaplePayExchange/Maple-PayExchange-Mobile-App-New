@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import { View, Image, Pressable } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
@@ -19,9 +19,8 @@ import ScreenWrapper from '@src/components/Wrapper';
 import { RootStackParamList } from '@constants/route.params';
 import { clampFontSize, SEND_FUNDS_FEEDBACK } from '@constants/app.constant';
 
-type FeedbackScreenProps = RouteProp<RootStackParamList, 'SendFundsFeedbackScreen'>;
 export default function SendFundsFeedbackScreen() {
-	const route = useRoute<FeedbackScreenProps>();
+	const route = useRoute<RootStackParamList['SendFundsFeedbackScreen']>();
 	const params = route.params;
 
 	/**
@@ -38,7 +37,7 @@ export default function SendFundsFeedbackScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper useNavigation center title="Fund CAD Wallet" />
+			<HeaderWrapper useNavigation center title="Transaction feedback" />
 
 			{/**
             |--------------------------------------------------
@@ -57,10 +56,10 @@ export default function SendFundsFeedbackScreen() {
                 |--------------------------------------------------
                 */}
 				<MPText weight="semibold" className="mt-4 text-[18px]">
-					Wallet funding complete
+					Wallet transaction complete
 				</MPText>
 				<MPText weight="medium" className="text-[15px] text-[#767676]">
-					Your wallet funding request was successful
+					Your wallet transaction request was successful
 				</MPText>
 
 				{/**
@@ -88,7 +87,7 @@ export default function SendFundsFeedbackScreen() {
 					className="mt-3 self-center"
 					onPress={() => navigation.navigate('DashboardScreen' as never)}
 				>
-					<Pressable className="h-[93%] w-[99%] items-center justify-center rounded-[40px] bg-white">
+					<Pressable className="mt-[3px] min-h-[93%] min-w-[99%] items-center justify-center rounded-[40px] bg-white">
 						<MPText weight="semibold" className="text-[15px] text-[#FF6A00]">
 							Exchange funds
 						</MPText>

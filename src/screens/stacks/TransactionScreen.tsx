@@ -228,7 +228,7 @@ export default function TransactionsScreen() {
 				| IsLoading
 				|--------------------------------------------------
 				*/}
-				{(isLoading || isPending) && (
+				{(isLoading || isPending || isFetchingNextPage) && (
 					<View className="mt-[50%] w-full flex-1 items-center justify-center">
 						<CustomRefreshControl refreshing={isPending || isLoading} />
 					</View>
@@ -250,7 +250,7 @@ export default function TransactionsScreen() {
 					<View
 						className={clsx(
 							'mt-auto w-full rounded-2xl bg-white p-4 pt-8',
-							showCalendarModal ? 'h-[487px]' : 'h-[387px]'
+							showCalendarModal ? 'h-[497px]' : 'h-[387px]'
 						)}
 					>
 						{showCalendarModal ? (

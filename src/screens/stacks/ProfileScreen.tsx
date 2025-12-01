@@ -392,7 +392,7 @@ export default function ProfileScreen() {
 											className="mb-6 mt-8"
 											onPress={() => {
 												setShowVerificationModal(false);
-												if (isVerified) navigation.navigate(ROUTE_NAMES.KYC_STEPS as never);
+												if (!isVerified) navigation.navigate(ROUTE_NAMES.KYC_STEPS as never);
 											}}
 										>
 											<MPText weight="semibold" fontSize="FONT14" className="text-white">

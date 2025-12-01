@@ -9,7 +9,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View, Image, ScrollView, Linking, Alert, Platform } from 'react-native';
+import { View, Image, ScrollView, Linking, Alert, Platform, Pressable } from 'react-native';
 
 /**
 |--------------------------------------------------
@@ -24,6 +24,7 @@ import { useStartVeriffSession } from '@services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@constants/app.constant';
 import { useCameraPermission } from '@src/hooks/useCameraPermission';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { CloseIcon } from '@assets/svgs';
 
 type KycStepsScreenProps = NativeStackNavigationProp<RootStackParamList, 'KycStepsScreen'>;
 export default function KysStepsScreen() {
@@ -91,7 +92,7 @@ export default function KysStepsScreen() {
     |--------------------------------------------------
     */
 	return (
-		<View className="h-[100%] px-6">
+		<View className="h-[100%] bg-white px-6">
 			<SafeAreaView />
 			{!showBrowser && (
 				<ScrollView
@@ -99,6 +100,20 @@ export default function KysStepsScreen() {
 					contentContainerStyle={{ height: '105%', paddingBottom: 64 }}
 				>
 					<View className="h-[100%] pb-6">
+						{/**
+						|--------------------------------------------------
+						| Close icon
+						|--------------------------------------------------
+						*/}
+						<Pressable onPress={() => navigation.goBack()} className="absolute left-0">
+							<CloseIcon />
+						</Pressable>
+
+						{/**
+						|--------------------------------------------------
+						| ...
+						|--------------------------------------------------
+						*/}
 						<View className="mt-6 items-center">
 							<Image
 								width={195}

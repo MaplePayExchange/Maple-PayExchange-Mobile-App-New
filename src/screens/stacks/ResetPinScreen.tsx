@@ -55,8 +55,10 @@ export default function ResetPinScreen() {
     |--------------------------------------------------
     */
 	return (
-		<ScreenWrapper>
-			<HeaderWrapper center title="Reset PIN" titleFontSize="FONT24" />
+		<ScreenWrapper usePadding={false}>
+			<View className='px-6'>
+				<HeaderWrapper center title="Reset PIN" titleFontSize="FONT24" />
+			</View>
 
 			{/**
             |--------------------------------------------------
