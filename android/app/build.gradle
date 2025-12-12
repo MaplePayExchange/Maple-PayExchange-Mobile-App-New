@@ -77,12 +77,12 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.mpexchange.mobileapp"
+    namespace "com.mpexchange.mobile"
     defaultConfig {
-        applicationId "com.mpexchange.mobileapp"
+        applicationId "com.mpexchange.mobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 4
         versionName "1.0"
     }
     signingConfigs {

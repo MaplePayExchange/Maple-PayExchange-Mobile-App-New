@@ -3,8 +3,8 @@
 | Npm imports
 |--------------------------------------------------
 */
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -261,7 +261,7 @@ export const useCreateUser = () => {
 	| Navigation
 	|--------------------------------------------------
 	*/
-	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const navigation = useNavigation();
 
 	return useMutation<any, Error, CreateUser>({
 		/**
@@ -279,17 +279,40 @@ export const useCreateUser = () => {
         | If api call is successful
         |--------------------------------------------------
         */
-		onSuccess: () => {
-			useUserStore.setState((state) => ({
-				verificationData: { ...state.verificationData, currentStep: 'veriff' },
-			}));
+		onSuccess: async (data) => {
+			const response = data?.data;
+
+			useUserStore.getState().setUserData({
+				user: response?.user,
+				token_type: response?.token_type,
+				access_token: response?.access_token,
+				refresh_token: response?.refresh_token,
+			});
 
 			/**
 			|--------------------------------------------------
-			| Navigates the user to the next steps screen
+			| ...
 			|--------------------------------------------------
 			*/
-			navigation.navigate(ROUTE_NAMES.LOGIN, {});
+			useUserStore.getState().setIsRegistered(true);
+			useUserStore.getState().setCompleteOnboarding(true);
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			await AsyncStorage.setItem('lastBackgroundTime', Date.now().toString());
+			useUserStore.getState().setIsLoggedIn(true);
+			useUserStore.setState((state) => ({ ...state, isSessionExpired: false }));
+
+			/**
+			|--------------------------------------------------
+			| ...
+			|--------------------------------------------------
+			*/
+			await new Promise((resolve) => setTimeout(resolve, 100));
+			navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN);
 		},
 
 		/**

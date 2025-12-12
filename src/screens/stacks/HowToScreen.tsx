@@ -19,6 +19,7 @@ import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import { CloseIcon, SearchIcon } from '@assets/svgs';
 import { ONBOARDING_ONE } from '@constants/app.constant';
+import TooltipPopover from '@src/components/TooltipPopover';
 
 const HOW_TOS = [
 	{
@@ -117,9 +118,11 @@ export default function HowToScreen() {
 												setShowBrowser(true);
 											}}
 										>
-											<MPText weight="semibold" fontSize="FONT14" className="text-[#FF6A00]">
-												Watch video
-											</MPText>
+											<TooltipPopover text="We’re working on providing helpful video guides. You’ll be informed as soon as they go live.">
+												<MPText weight="semibold" fontSize="FONT14" className="text-[#FF6A00]">
+													Watch video
+												</MPText>
+											</TooltipPopover>
 
 											{/**
                                             |--------------------------------------------------

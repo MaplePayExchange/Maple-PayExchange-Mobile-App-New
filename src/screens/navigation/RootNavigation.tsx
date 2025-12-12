@@ -19,6 +19,9 @@ import AuthNavigation from './AuthNavigation';
 import { useUserStore } from '@zustand/userStore';
 import { ROUTE_NAMES } from '@constants/routes.conts';
 import KysStepsScreen from '../stacks/KycStepsScreen';
+import VerifyBvnScreen from '../stacks/VerifyBvnScreen';
+import VerificationStepsScreen from '../stacks/VerificationStepsScreen';
+import SetTransactionPinScreen from '../stacks/SetTransactionPinScreen';
 
 /**
 |--------------------------------------------------
@@ -53,6 +56,12 @@ export default function RootNavigation() {
 									return <View className="flex-1 bg-white">{children}</View>;
 								}}
 							/>
+
+							{/**
+							|--------------------------------------------------
+							| For veriff
+							|--------------------------------------------------
+							*/}
 							<Stack.Screen
 								component={KysStepsScreen}
 								name={ROUTE_NAMES.KYC_STEPS}
@@ -60,9 +69,50 @@ export default function RootNavigation() {
 									return <View className="flex-1 bg-white">{children}</View>;
 								}}
 							/>
+
+							{/**
+							|--------------------------------------------------
+							| ...
+							|--------------------------------------------------
+							*/}
+							<Stack.Screen
+								component={VerificationStepsScreen}
+								name={ROUTE_NAMES.VERIFICATION_STEPS_SCREEN}
+								layout={({ children }: { children: any }) => {
+									return <View className="flex-1 bg-white">{children}</View>;
+								}}
+							/>
+
+							{/**
+							|--------------------------------------------------
+							| ...
+							|--------------------------------------------------
+							*/}
+							<Stack.Screen
+								component={SetTransactionPinScreen}
+								name={ROUTE_NAMES.SET_TRANSACTION_PIN}
+								layout={({ children }: { children: any }) => {
+									return <View className="flex-1 bg-white">{children}</View>;
+								}}
+							/>
+
+							{/**
+							|--------------------------------------------------
+							| ...
+							|--------------------------------------------------
+							*/}
+							<Stack.Screen
+								component={VerifyBvnScreen}
+								name={ROUTE_NAMES.BVN_VERIFICATION}
+								layout={({ children }: { children: any }) => {
+									return <View className="flex-1 bg-white">{children}</View>;
+								}}
+							/>
 						</>
 					) : (
-						<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
+						<>
+							<Stack.Screen name="AuthNavigation" component={AuthNavigation} />
+						</>
 					)}
 				</Stack.Navigator>
 			</NavigationContainer>

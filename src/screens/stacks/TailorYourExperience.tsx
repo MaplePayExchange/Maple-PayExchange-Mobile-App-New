@@ -6,6 +6,7 @@
 import {
 	View,
 	Modal,
+	Image,
 	Keyboard,
 	Platform,
 	Pressable,
@@ -14,7 +15,6 @@ import {
 	TouchableOpacity,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
-	Image,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
@@ -22,10 +22,10 @@ import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 /**
- |--------------------------------------------------
- | Custom imports
- |--------------------------------------------------
- */
+|--------------------------------------------------
+| Custom imports
+|--------------------------------------------------
+*/
 import utils from '@lib/utils';
 import Countries from '@data/country.json';
 import MPText from '@src/components/MPText';
@@ -35,10 +35,10 @@ import Occupations from '@data/occupation.json';
 import { useUserStore } from '@zustand/userStore';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
-import { fontSizes, MONEY_PAD } from '@constants/app.constant';
 import InputField from '@src/components/InputField';
 import { useUpdateProfile } from '@services/user.services';
 import TooltipPopover from '@src/components/TooltipPopover';
+import { fontSizes, MONEY_PAD } from '@constants/app.constant';
 import { CarretDownIcon, CloseIcon, SearchIcon } from '@assets/svgs';
 
 export interface UserKycInfo {
@@ -66,6 +66,8 @@ export default function TailorYourExperienceScreen() {
     | states
     |--------------------------------------------------
     */
+	const jobsRef = React.useRef<TextInput>(null);
+	const countryRef = React.useRef<TextInput>(null);
 	const [showOccupation, setShowOccupation] = React.useState<boolean>(false);
 	const [showSalaryRange, setShowSalaryRange] = React.useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = React.useState<boolean>(false);
@@ -90,13 +92,7 @@ export default function TailorYourExperienceScreen() {
     | Form handler
     |--------------------------------------------------
     */
-	const {
-		watch,
-		control,
-		setValue,
-		handleSubmit,
-		formState: { isValid },
-	} = useForm({
+	const { watch, control, setValue, handleSubmit } = useForm({
 		defaultValues: {
 			occupation: '',
 			usagePurpose: '',
@@ -109,7 +105,7 @@ export default function TailorYourExperienceScreen() {
 		},
 	});
 
-	const { mutateAsync, isPending } = useUpdateProfile();
+	const { mutateAsync, isPending } = useUpdateProfile('setTailorYourExperience');
 
 	/**
     |--------------------------------------------------
@@ -156,6 +152,7 @@ export default function TailorYourExperienceScreen() {
 			|--------------------------------------------------
 			*/
 			await mutateAsync(payload);
+			setTailorYourExperienceSkipCount(0);
 			setShowSuccessModal(true);
 		} catch (error) {
 			console.log(error, 'Error.tailor');
@@ -358,8 +355,12 @@ export default function TailorYourExperienceScreen() {
 										| Content
 										|--------------------------------------------------
 										*/}
-										<View className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
+										<Pressable
+											onPress={() => countryRef.current?.focus()}
+											className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5"
+										>
 											<TextInput
+												ref={countryRef}
 												value={searchQuery}
 												placeholder="Search"
 												returnKeyType="done"
@@ -376,7 +377,7 @@ export default function TailorYourExperienceScreen() {
 											|--------------------------------------------------
 											*/}
 											<SearchIcon />
-										</View>
+										</Pressable>
 
 										{/**
 										|--------------------------------------------------
@@ -718,8 +719,12 @@ export default function TailorYourExperienceScreen() {
 										| Content
 										|--------------------------------------------------
 										*/}
-										<View className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5">
+										<Pressable
+											onPress={() => jobsRef.current?.focus()}
+											className="mb-3 h-[42px] flex-row items-center justify-between rounded-[24px] bg-[#1018280D] px-5"
+										>
 											<TextInput
+												ref={jobsRef}
 												value={searchQuery}
 												placeholder="Search"
 												returnKeyType="done"
@@ -736,7 +741,7 @@ export default function TailorYourExperienceScreen() {
 											|--------------------------------------------------
 											*/}
 											<SearchIcon />
-										</View>
+										</Pressable>
 
 										{/**
                                         |--------------------------------------------------

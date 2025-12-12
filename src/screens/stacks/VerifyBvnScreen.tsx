@@ -6,8 +6,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Image, Modal, View } from 'react-native';
-import { useQueryClient } from '@tanstack/react-query';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -18,7 +17,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import { useUserStore } from '@zustand/userStore';
-import { User } from '@interfaces/user.interface';
 import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import InputField from '@src/components/InputField';
@@ -31,16 +29,15 @@ import { RootStackParamList } from '@constants/route.params';
 type VerifyBvnScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 
 export default function VerifyBvnScreen() {
+	const route = useRoute();
+	const params = route.params as any;
+
 	/**
 	|--------------------------------------------------
 	| Navigation
 	|--------------------------------------------------
 	*/
 	const navigation = useNavigation<VerifyBvnScreenProps>();
-
-	const queryClient = useQueryClient();
-	const data: any = queryClient.getQueryData(['maple_user_data']);
-	const user = data?.user as User;
 
 	/**
 	|--------------------------------------------------
@@ -71,16 +68,6 @@ export default function VerifyBvnScreen() {
 
 	/**
 	|--------------------------------------------------
-	| Handles navigation withing the modal
-	|--------------------------------------------------
-	*/
-	const handleNavigationWithinModal = () => {
-		setShowSuccessModal(false);
-		navigation.navigate(ROUTE_NAMES.SET_TRANSACTION_PIN);
-	};
-
-	/**
-	|--------------------------------------------------
 	| Show success modal
 	|--------------------------------------------------
 	*/
@@ -100,7 +87,14 @@ export default function VerifyBvnScreen() {
             | Header
             |--------------------------------------------------
             */}
-			<HeaderWrapper title="Verify Account" titleFontSize="FONT24" />
+			<HeaderWrapper
+				title="Verify Account"
+				titleFontSize="FONT24"
+				onlClick={() => {
+					if (params?.isLastStep === true) navigation.navigate('TabNavigation');
+					else navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN);
+				}}
+			/>
 
 			<MPText weight="semibold" className="text-base" fontSize="FONT18">
 				Add BVN Number
@@ -176,41 +170,34 @@ export default function VerifyBvnScreen() {
 						>
 							BVN Verification Complete
 						</MPText>
-						{typeof user.transactionPin !== 'string' ? (
-							<MPText fontSize="FONT16" className="max-w-[290px] text-center text-[#484848]">
-								You bvn has been verified! Let’s secure your account before you proceed.
-							</MPText>
-						) : (
-							<MPText fontSize="FONT16" className="max-w-[290px] text-center text-[#484848]">
-								Your BVN has been verified!.
-							</MPText>
-						)}
+						<MPText fontSize="FONT16" className="max-w-[290px] text-center text-[#484848]">
+							Your BVN has been verified!.
+						</MPText>
 
 						{/**
 						|--------------------------------------------------
 						| Action button
 						|--------------------------------------------------
 						*/}
-						{typeof user.transactionPin !== 'string' ? (
-							<MPButton onPress={handleNavigationWithinModal} useGradientBg className="mt-8">
-								<MPText weight="semibold" className="text-[15px] text-white">
-									Create transaction pin
-								</MPText>
-							</MPButton>
-						) : (
-							<MPButton
-								onPress={() => {
-									setShowSuccessModal(false);
-									navigation.navigate('DashboardScreen');
-								}}
-								useGradientBg
-								className="mt-8"
-							>
-								<MPText weight="semibold" className="text-[15px] text-white">
-									Go to dashboard
-								</MPText>
-							</MPButton>
-						)}
+						<MPButton
+							onPress={() => {
+								setShowSuccessModal(false);
+
+								/**
+								|--------------------------------------------------
+								| ...
+								|--------------------------------------------------
+								*/
+								if (params?.isLastStep === true) navigation.navigate('TabNavigation');
+								else navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN);
+							}}
+							useGradientBg
+							className="mt-8"
+						>
+							<MPText weight="semibold" className="text-[15px] text-white">
+								{params?.isLastStep === true ? 'Go to dashboard' : 'Continue'}
+							</MPText>
+						</MPButton>
 					</View>
 				</View>
 			</Modal>

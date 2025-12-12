@@ -379,7 +379,7 @@ export default function CreateUserScreen() {
 											},
 										}}
 									/>
-									<MPText className="mt-1 text-[15px]" fontSize="FONT14">
+									<MPText className="mt-1 text-[15px]" fontSize="FONT12">
 										(Please fill this field if BVN is registered in your maiden name)
 									</MPText>
 								</View>

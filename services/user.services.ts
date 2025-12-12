@@ -915,6 +915,8 @@ export const useUpdateProfile = (updateType?: 'setTailorYourExperience') => {
 				};
 			}
 
+			console.log(_payload, '_payload');
+
 			/**
 			|--------------------------------------------------
 			| Send request

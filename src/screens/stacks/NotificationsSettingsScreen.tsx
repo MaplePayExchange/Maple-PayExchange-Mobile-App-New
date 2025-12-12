@@ -16,24 +16,19 @@ import MPText from '@src/components/MPText';
 import Toggler from '@src/components/Toggler';
 import Container from '@src/components/Container';
 import { useUserStore } from '@zustand/userStore';
-import { User } from '@interfaces/user.interface';
 import HeaderWrapper from '@src/components/Header';
-import { useRoute } from '@react-navigation/native';
 import ScreenWrapper from '@src/components/Wrapper';
 import { useUpdateProfile } from '@services/user.services';
 import { useGetUserInformation } from '@services/auth.services';
 
 export default function NotificationsSettingsScreen() {
-	const route = useRoute();
-	const user = route.params as User;
-
 	/**
 	|--------------------------------------------------
 	| API
 	|--------------------------------------------------
 	*/
 	const { mutate, isPending } = useUpdateProfile();
-	const { data: userData, isSuccess } = useGetUserInformation();
+	const { data: userData } = useGetUserInformation();
 
 	/**
     |--------------------------------------------------

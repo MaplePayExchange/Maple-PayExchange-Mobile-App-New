@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>11</string>
+	<string>14</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -43,6 +43,8 @@
 	<string>This app uses your location to send you notifications based on your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses your location to send you notifications based on your location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access is required for video recording</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This access is needed to allow you to upload a profile picture from your device.</string>
 	<key>RCTNewArchEnabled</key>

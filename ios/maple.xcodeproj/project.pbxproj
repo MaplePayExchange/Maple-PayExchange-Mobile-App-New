@@ -27,9 +27,9 @@
 		03EBAF88AA4A4D64BBD977F5 /* Manrope_700Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope_700Bold.ttf; path = ../assets/fonts/Manrope_700Bold.ttf; sourceTree = "<group>"; };
 		076563135C9916314EFF4D3F /* Pods-maple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maple.debug.xcconfig"; path = "Target Support Files/Pods-maple/Pods-maple.debug.xcconfig"; sourceTree = "<group>"; };
 		110751183ED44BD69D61587D /* Manrope-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Manrope-Light.ttf"; path = "../assets/fonts/Manrope-Light.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* maple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = maple.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = maple/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = maple/Info.plist; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* maple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maple.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "maple/Images.xcassets"; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "maple/Info.plist"; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = maple/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1BBCC2442EAFFF6A00FB6029 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BC891262ED1AFFA0004259C /* maple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = maple.entitlements; path = maple/maple.entitlements; sourceTree = "<group>"; };
@@ -38,7 +38,7 @@
 		63655F9AB53E4D84B4E5579B /* Manrope-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Manrope-ExtraLight.ttf"; path = "../assets/fonts/Manrope-ExtraLight.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = maple/AppDelegate.swift; sourceTree = "<group>"; };
 		77C72B337267493BBACEDBEC /* Manrope_400Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope_400Regular.ttf; path = ../assets/fonts/Manrope_400Regular.ttf; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = maple/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "maple/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		9DF384470D7246CDB91EFF9C /* Manrope_600SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope_600SemiBold.ttf; path = ../assets/fonts/Manrope_600SemiBold.ttf; sourceTree = "<group>"; };
 		A7C6CEEA269343F9A7B8A343 /* Manrope_800ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Manrope_800ExtraBold.ttf; path = ../assets/fonts/Manrope_800ExtraBold.ttf; sourceTree = "<group>"; };
 		AD4D6DBCB3475DBDEB657459 /* Pods_maple.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_maple.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,7 +69,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
-			name = maple;
+			name = "maple";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -155,8 +155,8 @@
 			);
 			dependencies = (
 			);
-			name = maple;
-			productName = maple;
+			name = "maple";
+			productName = "maple";
 			productReference = 13B07F961A680F5B00A75B9A /* maple.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -320,24 +320,25 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = maple/maple.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = C277859SL5;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = maple/Info.plist;
+				INFOPLIST_FILE = "maple/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "maple";
 				INFOPLIST_KEY_CFBundleDisplayName = maple;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mpexchange.mobileapp;
-				PRODUCT_NAME = maple;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mpexchange.mobile";
+				PRODUCT_NAME = "maple";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -351,23 +352,24 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = maple/maple.entitlements;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = C277859SL5;
-				INFOPLIST_FILE = maple/Info.plist;
+				INFOPLIST_FILE = "maple/Info.plist";
+             INFOPLIST_KEY_CFBundleDisplayName = "maple";
 				INFOPLIST_KEY_CFBundleDisplayName = maple;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mpexchange.mobileapp;
-				PRODUCT_NAME = maple;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mpexchange.mobile";
+				PRODUCT_NAME = "maple";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

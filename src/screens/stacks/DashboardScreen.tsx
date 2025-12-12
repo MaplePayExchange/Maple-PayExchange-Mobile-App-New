@@ -3,27 +3,38 @@
 | Npm imports
 |--------------------------------------------------
 */
+import {
+	View,
+	Image,
+	Modal,
+	Pressable,
+	ScrollView,
+	RefreshControl,
+	TouchableOpacity,
+	ImageBackground,
+} from 'react-native';
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-	Pressable,
-	RefreshControl,
-	View,
-	ScrollView,
-	Image,
-	TouchableOpacity,
-	Modal,
-	ImageBackground,
-} from 'react-native';
+import clsx from 'clsx';
 
 /**
  |--------------------------------------------------
  | Custom imports
  |--------------------------------------------------
  */
+import {
+	AddIcon,
+	BellIcon,
+	SendIcon,
+	DetailsIcon,
+	PadlockIcon,
+	ExchangeIcon,
+	RedRightArrowIcon,
+	TransactionArrowIcon,
+} from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
 import { useUserStore } from '@zustand/userStore';
@@ -35,30 +46,19 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import { RootStackParamList } from '@constants/route.params';
 import { useGetUserInformation } from '@services/auth.services';
 import SendFundsModal from '@src/components/Modals/SendFundsModal';
-import { MONEY_PAD, WALLET_BG, clampFontSize } from '@constants/app.constant';
 import FundWalletModal from '@src/components/Modals/FundWalletModal';
 import BiometricsModal from '@src/components/Modals/BiometricsModal';
 import CustomRefreshControl from '@src/components/CustomRefreshControl';
 import CurrencyConverter from '@src/components/Modals/CurrencyConverter';
 import WalletDetailsModal from '@src/components/Modals/WalletDetailsModal';
-import UnverifiedAcountModal from '@src/components/Modals/UnverifiedAccountModal';
-import {
-	AddIcon,
-	BellIcon,
-	SendIcon,
-	DetailsIcon,
-	PadlockIcon,
-	ExchangeIcon,
-	RedRightArrowIcon,
-	TransactionArrowIcon,
-} from '@assets/svgs';
-import clsx from 'clsx';
+import { MONEY_PAD, WALLET_BG, clampFontSize } from '@constants/app.constant';
+import BVNVerificationModal from '@src/components/Modals/BVNVerificationModal';
 
 /**
-|--------------------------------------------------
-| Dashboard types
-|--------------------------------------------------
-*/
+ |--------------------------------------------------
+ | Dashboard types
+ |--------------------------------------------------
+ */
 type PossibleActions = 'see_more_transactions' | 'details' | 'add' | 'send' | 'exchange' | 'notification' | 'profile';
 type DashboardScreenProps = NativeStackNavigationProp<RootStackParamList, 'DashboardScreen'>;
 
@@ -76,7 +76,7 @@ export default function DashboardScreen() {
 	|--------------------------------------------------
 	*/
 	const queryClient = useQueryClient();
-	const { data, isPending, isLoading, error } = useGetUserInformation();
+	const { data, isPending, isLoading } = useGetUserInformation();
 	const [showBvnModal, setShowBvnModal] = React.useState<boolean>(false);
 	const [showWalletModal, setShowWalletModal] = React.useState<boolean>(false);
 	const [showWalletDetails, setShowWalletDetails] = React.useState<boolean>(false);
@@ -120,7 +120,7 @@ export default function DashboardScreen() {
 		|--------------------------------------------------
 		*/
 		if (!isProfileComplete) {
-			setShowBvnModal(true);
+			navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN as any);
 			return;
 		}
 
@@ -162,7 +162,7 @@ export default function DashboardScreen() {
 			| Case details
 			|--------------------------------------------------
 			*/
-			case 'details': 
+			case 'details':
 				setShowWalletDetails(true);
 				break;
 
@@ -214,6 +214,8 @@ export default function DashboardScreen() {
 		setShowFundWalletModal(false);
 	};
 
+	console.log(data, 'data.data.dashbaord');
+
 	/**
 	|--------------------------------------------------
 	| Effect
@@ -239,7 +241,29 @@ export default function DashboardScreen() {
 		) {
 			navigation.navigate(ROUTE_NAMES.TAILOR_YOUR_EXPERIENCE);
 		}
+
+		/**
+		|--------------------------------------------------
+		| ...
+		|--------------------------------------------------
+		*/
+		if (!isLoading && !isPending && data?.user?.isBvnVerified === false) {
+			setTimeout(() => setShowBvnModal(true), 1000);
+		}
 	}, [data]);
+
+	/**
+	|--------------------------------------------------
+	| Handle navigation back action
+	|--------------------------------------------------
+	*/
+	React.useEffect(() => {
+		const unsubscribe = navigation.addListener('blur', () => {
+			setShowBvnModal(false);
+		});
+
+		return unsubscribe;
+	}, []);
 
 	/**
     |--------------------------------------------------
@@ -655,11 +679,9 @@ export default function DashboardScreen() {
 				| Modal for unverified account
 				|--------------------------------------------------
 				*/}
-				<UnverifiedAcountModal
-					userData={data?.user}
+				<BVNVerificationModal
 					showBvnModal={showBvnModal}
 					setShowBvnModal={setShowBvnModal}
-					isVerified={isVerified as boolean}
 					isBvnVerified={isBvnVerified as boolean}
 				/>
 

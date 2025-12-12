@@ -5,6 +5,7 @@
 */
 import React from 'react';
 import { WebView } from 'react-native-webview';
+import { useQueryClient } from '@tanstack/react-query';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,6 +19,7 @@ import { View, Image, ScrollView, Platform, Pressable } from 'react-native';
 import { CloseIcon } from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
+import { ROUTE_NAMES } from '@constants/routes.conts';
 import { RootStackParamList } from '@constants/route.params';
 import { useStartVeriffSession } from '@services/auth.services';
 import { clampFontSize, MONEY_PAD } from '@constants/app.constant';
@@ -34,6 +36,7 @@ export default function KysStepsScreen() {
 	|--------------------------------------------------
 	*/
 	const navigation = useNavigation<KycStepsScreenProps>();
+	const queryClient = useQueryClient();
 
 	/**
 	|--------------------------------------------------
@@ -51,6 +54,11 @@ export default function KysStepsScreen() {
 	*/
 	const ensureCameraAccess = useCameraPermission();
 
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
 	React.useEffect(() => {
 		(async () => {
 			try {
@@ -97,7 +105,10 @@ export default function KysStepsScreen() {
 						| Close icon
 						|--------------------------------------------------
 						*/}
-						<Pressable onPress={() => navigation.goBack()} className="absolute left-0">
+						<Pressable
+							className="absolute left-0"
+							onPress={() => navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN)}
+						>
 							<CloseIcon />
 						</Pressable>
 
@@ -229,7 +240,7 @@ export default function KysStepsScreen() {
 							| Takes the user to the login screen
 							|--------------------------------------------------
 							*/}
-							<MPButton onPress={() => navigation.goBack()}>
+							<MPButton onPress={() => navigation.navigate('TabNavigation')}>
 								<MPText weight="semibold" className="text-[15px] text-[#EE0979]">
 									I’ll do this later
 								</MPText>
@@ -252,11 +263,17 @@ export default function KysStepsScreen() {
 						domStorageEnabled={true}
 						cacheMode="LOAD_NO_CACHE"
 						startInLoadingState={true}
-						source={{ uri: data?.veriffUrl }}
 						allowsInlineMediaPlayback
+						allowsCameraCapture={true}
+						allowsMicrophoneCapture={true}
+						source={{ uri: data?.veriffUrl }}
 						mediaPlaybackRequiresUserAction={false}
 						originWhitelist={['*']}
 						mixedContentMode="always"
+						webViewConfiguration={{
+							allowsInlineMediaPlayback: true,
+							mediaTypesRequiringUserAction: [],
+						}}
 						onPermissionRequest={(event: any) => {
 							console.log(event);
 							if (Platform.OS === 'android') {
@@ -271,7 +288,15 @@ export default function KysStepsScreen() {
 							 */
 							if (event.url.startsWith(redirectUrl)) {
 								setShowBrowser(false);
-								navigation.navigate('TabNavigation');
+								queryClient.invalidateQueries({ queryKey: ['maple_user_data'] });
+
+								/**
+								|--------------------------------------------------
+								| ...
+								|--------------------------------------------------
+								*/
+								if (params?.isLastStep === true) navigation.navigate('TabNavigation');
+								else navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN);
 							}
 						}}
 						mediaCapturePermissionGrantType="grantIfSameHostElsePrompt"

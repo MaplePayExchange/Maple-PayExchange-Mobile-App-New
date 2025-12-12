@@ -1,4 +1,4 @@
-package com.mpexchange.mobileapp
+package com.mpexchange.mobile
 
 import android.app.Application
 import com.facebook.react.PackageList

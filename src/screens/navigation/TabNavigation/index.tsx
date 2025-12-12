@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { View, TouchableOpacity, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 /**
@@ -22,7 +23,6 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import TransactionNavigation from './TransactionNavigation';
 import AppStateManager from '@src/hooks/useAppStateManager';
 import { HomeIcon, SettingsIcon, SupportIcon, TransactionIcon } from '@assets/svgs';
-import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,15 +77,6 @@ const TabLabel = ({ children, focused }: { children: string; focused: boolean })
 			)}
 		</View>
 	);
-};
-
-/**
-|--------------------------------------------------
-| Icon config
-|--------------------------------------------------
-*/
-const iconConfig = (focused: boolean) => {
-	return focused ? undefined : { stopColor: '#484848', offsetColor: '#484848', fillColor: '#484848' };
 };
 
 /**

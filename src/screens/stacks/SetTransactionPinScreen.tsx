@@ -5,7 +5,7 @@
 */
 import React from 'react';
 import { Image, Modal, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 /**
@@ -19,6 +19,7 @@ import HeaderWrapper from '@src/components/Header';
 import ScreenWrapper from '@src/components/Wrapper';
 import { SUCCESS_BADGE } from '@constants/app.constant';
 //@ts-ignore
+import { ROUTE_NAMES } from '@constants/routes.conts';
 import { RootStackParamList } from '@constants/route.params';
 import CustomKeyboard from '@src/components/CustomKeyboard';
 import { useSetTransactionPin } from '@services/auth.services';
@@ -26,6 +27,9 @@ import { useSetTransactionPin } from '@services/auth.services';
 type SetTransactionPinScreenProps = NativeStackNavigationProp<RootStackParamList, 'SetTransactionPinScreen'>;
 
 export default function SetTransactionPinScreen() {
+	const route = useRoute();
+	const params = route.params as any;
+
 	/**
     |--------------------------------------------------
     | Navigation
@@ -38,7 +42,7 @@ export default function SetTransactionPinScreen() {
     | States
     |--------------------------------------------------
     */
-	const { mutate, isPending, isSuccess } = useSetTransactionPin();
+	const { mutate, isSuccess } = useSetTransactionPin();
 	const [showSuccessModal, setShowSuccessModal] = React.useState<boolean>(false);
 
 	/**
@@ -58,7 +62,14 @@ export default function SetTransactionPinScreen() {
     */
 	return (
 		<ScreenWrapper>
-			<HeaderWrapper title="Set Transaction Pin" titleFontSize="FONT24" />
+			<HeaderWrapper
+				title="Set Transaction Pin"
+				titleFontSize="FONT24"
+				onlClick={() => {
+					if (params?.isLastStep === true) navigation.navigate('TabNavigation');
+					else navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN);
+				}}
+			/>
 
 			{/**
             |--------------------------------------------------
@@ -97,7 +108,7 @@ export default function SetTransactionPinScreen() {
             |--------------------------------------------------
             */}
 			<Modal visible={showSuccessModal} animationType="slide">
-				<View className="flex-1 items-center justify-center">
+				<View className="flex-1 items-center justify-center p-6">
 					<Image source={SUCCESS_BADGE} />
 
 					{/**
@@ -106,7 +117,7 @@ export default function SetTransactionPinScreen() {
                     |--------------------------------------------------
                     */}
 					<MPText fontSize="FONT18" weight="semibold" className="mt-8 text-xl">
-						You’re all set!
+						{params?.isLastStep === true ? 'You’re all set!' : 'You are almost all set!'}
 					</MPText>
 					<MPText fontSize="FONT14" weight="medium" className="text-[15px]">
 						You have successfully set up your pin.
@@ -122,11 +133,13 @@ export default function SetTransactionPinScreen() {
 						className="mt-6"
 						onPress={() => {
 							setShowSuccessModal(false);
-							navigation.navigate('DashboardScreen');
+
+							if (params?.isLastStep === true) navigation.navigate('TabNavigation');
+							else navigation.navigate(ROUTE_NAMES.VERIFICATION_STEPS_SCREEN as never);
 						}}
 					>
 						<MPText fontSize="FONT14" className="text-[15px] text-white" weight="semibold">
-							Go to dashboard
+							{params?.isLastStep === true ? 'Go to dashboard' : 'Continue'}
 						</MPText>
 					</MPButton>
 				</View>

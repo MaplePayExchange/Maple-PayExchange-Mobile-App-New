@@ -6,17 +6,22 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-//@ts-ignore
 import { RootStackParamList } from '@constants/route.params';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Pressable, TextInput, Keyboard, ScrollView } from 'react-native';
-//@ts-ignore
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 /**
  |--------------------------------------------------
  | Custom imports
  |--------------------------------------------------
  */
+import {
+	useGetRates,
+	useExchangeCurrency,
+	useSendWalletToBank,
+	useSendFundsToInterac,
+	generateIdempotencyKey,
+} from '@services/user.services';
 import { WalletIcon } from '@assets/svgs';
 import MPText from '@src/components/MPText';
 import MPButton from '@src/components/MPButton';
@@ -30,13 +35,16 @@ import { ROUTE_NAMES } from '@constants/routes.conts';
 import DataRepresentation from '@src/components/DataRepresentation';
 import ConfirmTransactionModal from '@src/components/Modals/ConfirmTransactionModal';
 import TransactionConfirmationModal from '@src/components/Modals/TransactionConfirmationModal';
-import { generateIdempotencyKey, useExchangeCurrency, useGetRates, useSendFundsToInterac, useSendWalletToBank } from '@services/user.services';
 
-type AmountScreenProps = RouteProp<RootStackParamList, 'AmountScreen'>;
 export default function AmountScreen() {
-	const route = useRoute<AmountScreenProps>();
-	const params = route.params;
+	const route = useRoute();
+	const params = route.params as RootStackParamList['AmountScreen'];
 
+	/**
+	|--------------------------------------------------
+	| ...
+	|--------------------------------------------------
+	*/
 	const navigation = useNavigation();
 	const queryClient = useQueryClient();
 	const userData = queryClient.getQueryData(['maple_user_data']) as any;
@@ -438,7 +446,7 @@ export default function AmountScreen() {
 				</Pressable>
 			</View>
 
-			<ScrollView>
+			<ScrollView showsVerticalScrollIndicator={false}>
 				{/**
 				|--------------------------------------------------
 				| ...

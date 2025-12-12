@@ -47,5 +47,6 @@ export type RootStackParamList = {
 	SupportDetailsScreen: FAQItem[];
 	KYCTermsScreen: undefined;
 	PrivacyPolicyScreen: undefined;
+	VerificationStepsScreen: undefined;
 	TermsAndConditionsScreen: undefined;
 };

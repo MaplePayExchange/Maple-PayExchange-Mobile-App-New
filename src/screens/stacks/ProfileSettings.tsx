@@ -255,7 +255,7 @@ export default function ProfileSettingsScreen() {
 									labelClassName="text-[#767676]"
 									label="Is Politically Exposed"
 									valueClassName="capitalize pr-1"
-									value={String(user?.isPolliticallyExposed) || '- -'}
+									value={String(user?.isPolliticallyExposed || false) || '- -'}
 								/>
 								<DataRepresentation
 									labelClassName="text-[#767676]"

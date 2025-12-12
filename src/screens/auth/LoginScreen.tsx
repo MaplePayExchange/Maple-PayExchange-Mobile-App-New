@@ -6,6 +6,8 @@
 import {
 	View,
 	Modal,
+	Image,
+	Linking,
 	Keyboard,
 	Platform,
 	Pressable,
@@ -13,16 +15,14 @@ import {
 	SafeAreaView,
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
-	Image,
-	Linking,
 } from 'react-native';
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-//@ts-ignore
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import Svg, { Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
+//@ts-ignore
+import { RouteProp, useNavigation } from '@react-navigation/native';
 
 /**
 |--------------------------------------------------
@@ -50,8 +50,6 @@ const emailPattern = /^[A-Za-z0-9]+(?:[._%+-][A-Za-z0-9]+)*@[A-Za-z0-9-]+(?:\.[A
 type LoginScreenProps = NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>;
 type LoginProps = RouteProp<RootStackParamList, 'LoginScreen'>;
 export default function LoginScreen() {
-	const route = useRoute<LoginProps>();
-
 	/**
 	|--------------------------------------------------
 	| Navigation
